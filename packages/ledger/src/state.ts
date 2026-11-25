@@ -59,6 +59,7 @@ export interface Span {
 
 /** Annotation groups that carry document positions. */
 export type TrackedGroup =
+  | 'feedbackRequests'
   | 'comments'
   | 'questions'
   | 'suggestions'

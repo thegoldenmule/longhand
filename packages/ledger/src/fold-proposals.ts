@@ -224,11 +224,13 @@ export function foldProposalAccepted(tx: Tx, c: CommitOf<'ProposalAccepted'>): b
   }
   const base = tx.s.docs[p.documentId];
   if (!base) throw new FoldError(c.seq, 'unknown-document', `no document ${p.documentId}`);
-  if (p.baseVersion !== base.version) {
+  // Accepted at any baseVersion the writer saw (coordinator decision): the steps come
+  // from the proposal's mapped positions, so an older baseVersion needs no rebase.
+  if (p.baseVersion > base.version) {
     throw new FoldError(
       c.seq,
       'base-version-mismatch',
-      `baseVersion ${p.baseVersion} but document ${p.documentId} is at version ${base.version}`,
+      `baseVersion ${p.baseVersion} is ahead of document ${p.documentId} (version ${base.version})`,
     );
   }
   const dc = beginDocCommit(tx, base);

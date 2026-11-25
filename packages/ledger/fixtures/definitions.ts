@@ -204,6 +204,8 @@ function feedbackSession(): LedgerBuilder {
   b.requestFeedback('req-2', { scope: { kind: 'selection', documentId: 'doc-ch1', from: 1, to: 20, version: b.version('doc-ch1') }, lenses: ['word-choice'], intensity: 'light' });
   b.startReview('fs-2', 'req-2', 'sonnet');
   b.system('FeedbackSessionFailed', { feedbackSessionId: 'fs-2', requestId: 'req-2', threadId: null, reason: 'model timeout' });
+  // The selection scope of req-2 is mapped through later edits.
+  b.type('doc-ch1', 'Night. ', { at: 1 });
   return b;
 }
 
@@ -279,7 +281,11 @@ function proposals(): LedgerBuilder {
   b.startReview('fs-p2', 'req-p2');
   b.proposeMerge('fs-p2', 'merge-1', 'doc-p', 'p3', 'p4', 'The marsh line finishes the farmers thought.');
   b.finishReview('fs-p2', 'One merge.');
-  b.acceptProposal('merge-1');
+  // The writer keeps typing elsewhere, then accepts from the card they saw earlier:
+  // ProposalAccepted at an older baseVersion uses the proposal's mapped positions.
+  const seen = b.version('doc-p');
+  b.type('doc-p', 'Every year ', { at: 1 });
+  b.acceptProposal('merge-1', { baseVersion: seen });
   return b;
 }
 
@@ -308,6 +314,7 @@ function research(): LedgerBuilder {
   b.addSource('src-okafor', csl.okafor, { kind: 'doi', value: '10.1000/jrc.2014.012' });
   b.saveClipping('clip-1', 'src-okafor', 'Annual totals rose from 610 mm to 1,240 mm.\nThe change was steady rather than sudden.', 'p. 114');
   b.saveClipping('clip-2', 'src-okafor', 'No single year accounts for the trend.', 'p. 117');
+  b.saveClipping('clip-3', 'src-okafor', 'Wet years cluster.\n\nDry years do not.', 'p. 120');
   b.requestFeedback('req-r', { scope: { kind: 'document', documentId: 'doc-r' }, lenses: ['claims-citations'], intensity: 'standard' });
   b.startReview('fs-r', 'req-r');
   b.flagCitationNeeded('fs-r', 'flag-1', { documentId: 'doc-r', sentenceId: 'p1.s1', quote: 'Rainfall in the valley doubled between 1950 and 2000' }, 'Valley rainfall doubled from 1950 to 2000.');
@@ -325,6 +332,8 @@ function research(): LedgerBuilder {
   b.cite('doc-r', 'src-okafor', 'p. 114', { at: { after: '2000' } });
   // Place a clipping as a quote block (quoted).
   b.placeClipping('doc-r', 'clip-1');
+  // Blank lines are collapsed on both sides before comparing: still quoted.
+  b.placeClipping('doc-r', 'clip-3', { text: 'Wet years cluster.\nDry years do not.' });
   // A clipping run whose text does not match the clipping is downgraded.
   b.placeClipping('doc-r', 'clip-2', { text: 'No single year accounts for it.' });
   b.dismiss('ss-1', 'later', null);
@@ -355,12 +364,17 @@ function binder(): LedgerBuilder {
   b.human('FolderMoved', { folderId: 'f-ch2', parentId: 'f-part2', index: 0 });
   b.human('FolderRenamed', { folderId: 'f-ch2', title: 'Chapter 2 (draft)' });
   b.human('FolderArchived', { folderId: 'f-part2', archived: true });
+  // The fold accepts moves into an archived folder (the UI refuses them).
+  b.human('DocumentMoved', { documentId: 'doc-s2', parentId: 'f-part2', index: 1 });
   b.human('FolderArchived', { folderId: 'f-part2', archived: false });
   b.human('DocumentArchived', { documentId: 'doc-s1', archived: true });
   b.human('DocumentArchived', { documentId: 'doc-s1', archived: false });
   b.human('DocumentArchived', { documentId: 'doc-s3', archived: true });
   // Move Part Two before Part One.
   b.human('FolderMoved', { folderId: 'f-part2', parentId: null, index: 0 });
+  // Ids are unique per collection: a folder and a document may share one.
+  b.createFolder('shared-id', 'Drafts', { parentId: 'f-part1' });
+  b.createDocument('shared-id', 'Draft scene', { parentId: 'shared-id' });
   b.human('ProjectSettingsChanged', { patch: { genre: 'literary fiction', audience: 'adult readers', dailyWordGoal: 750 } });
   return b;
 }
@@ -437,7 +451,7 @@ export const FIXTURE_DEFINITIONS: Readonly<Record<string, FixtureDefinition>> = 
   },
   'feedback-session': {
     description: 'A feedback request, a review session with anchored and span comments, anchored and unanchored questions and finish_review; a dismissal; a second session that fails.',
-    covers: ['feedback-request', 'agent-session', 'comments', 'questions', 'finish-review', 'dismiss', 'session-failed', 'selection-scope'],
+    covers: ['feedback-request', 'agent-session', 'comments', 'questions', 'finish-review', 'dismiss', 'session-failed', 'selection-scope', 'selection-scope-mapped'],
     build: feedbackSession,
   },
   suggestions: {
@@ -447,7 +461,7 @@ export const FIXTURE_DEFINITIONS: Readonly<Record<string, FixtureDefinition>> = 
   },
   proposals: {
     description: 'Move (sentence and paragraph), cut, split and merge proposals: accepted, rejected and gone stale; moved text keeps its provenance.',
-    covers: ['move', 'cut', 'split', 'merge', 'accepted', 'rejected', 'stale', 'joining-whitespace'],
+    covers: ['move', 'cut', 'split', 'merge', 'accepted', 'rejected', 'stale', 'joining-whitespace', 'accept-old-base-version'],
     build: proposals,
   },
   discuss: {
@@ -457,12 +471,12 @@ export const FIXTURE_DEFINITIONS: Readonly<Record<string, FixtureDefinition>> = 
   },
   research: {
     description: 'Sources, clippings, citation-needed flags (one becomes cited), AI-surfaced sources with a verified candidate added, a source suggestion, a clipping placed as a quote block, a mismatching clipping run downgraded.',
-    covers: ['sources', 'clippings', 'citation', 'quoted', 'citation-flag', 'cited', 'surfaced-sources', 'source-suggestion', 'quote-block'],
+    covers: ['sources', 'clippings', 'citation', 'quoted', 'citation-flag', 'cited', 'surfaced-sources', 'source-suggestion', 'quote-block', 'clipping-blank-lines'],
     build: research,
   },
   binder: {
     description: 'Folders nested three deep, documents and notes, reorder and move, rename, synopsis, archive and restore, project settings.',
-    covers: ['binder', 'folders', 'notes', 'reorder', 'archive', 'synopsis', 'settings'],
+    covers: ['binder', 'folders', 'notes', 'reorder', 'archive', 'synopsis', 'settings', 'move-into-archived', 'shared-id-across-collections'],
     build: binder,
   },
   novel: {

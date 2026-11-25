@@ -5,13 +5,16 @@
  * 1. its actor kind may emit its type, and it is the authenticated actor;
  * 2. it parses as a `CommitDraft` (payload schema included);
  * 3. it belongs to this project (or is the `ProjectCreated` of an empty ledger);
- * 4. **rebase policy — reject, never rebase:** a `TextEdited` or
- *    `ProposalAccepted` must carry `baseVersion` equal to the document's current
- *    version. A lower one is rejected with `stale-base-version` (the client must
- *    rebase its pending steps over the steps it has not seen, as in
- *    prosemirror-collab, and resubmit); a higher one with `future-base-version`.
- *    The service never transforms a writer's steps, so the ledger holds exactly
- *    what the client applied and its keystroke timeline describes;
+ * 4. **rebase policy — reject, never rebase:** a `TextEdited` must carry
+ *    `baseVersion` equal to the document's current version. A lower one is
+ *    rejected with `stale-base-version` (the client must rebase its pending steps
+ *    over the steps it has not seen, as in prosemirror-collab, and resubmit); a
+ *    higher one with `future-base-version`. The service never transforms a
+ *    writer's steps, so the ledger holds exactly what the client applied and its
+ *    keystroke timeline describes. A `ProposalAccepted` is accepted at any
+ *    `baseVersion` up to the current one while the proposal is open (not stale):
+ *    the fold derives its steps from the proposal's mapped positions, so there is
+ *    nothing to rebase;
  * 5. agent position stamps are at the document's current `version`;
  * 6. folding it raises no `FoldError` and records no fold issue (unknown or
  *    closed targets, sessions not running, caps, positions that do not match the
@@ -177,7 +180,7 @@ export function validateDraft(
   if (d.type === 'TextEdited' || d.type === 'ProposalAccepted') {
     const doc = s.docs[d.payload.documentId];
     if (!doc) return fail('unknown-document', `no document ${d.payload.documentId}`, 'payload.documentId');
-    if (d.payload.baseVersion < doc.version) {
+    if (d.type === 'TextEdited' && d.payload.baseVersion < doc.version) {
       return fail(
         'stale-base-version',
         `baseVersion ${d.payload.baseVersion} is behind document ${doc.id} (version ${doc.version}); rebase and resubmit`,

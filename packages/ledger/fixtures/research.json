@@ -10,7 +10,8 @@
     "cited",
     "surfaced-sources",
     "source-suggestion",
-    "quote-block"
+    "quote-block",
+    "clipping-blank-lines"
   ],
   "commits": [
     {
@@ -1978,9 +1979,34 @@
       "accountId": "acct-1",
       "seq": 8,
       "prevHash": "278f83c773533ebaa3b5bc740f7416ace90cbcdef4ce3e626ebe7c032f2baa06",
-      "hash": "9e03ce98671a7268a6df4959fa7fb1488d97a2064a514f4c68a2dc53a853d308",
+      "hash": "f7def5ce38665d676243534d06af499ef5bdfe7c5aa71e2fcba4cbd32e43b8e0",
       "clientTime": "2026-11-02T09:00:19.793Z",
       "serverTime": "2026-11-02T09:00:20.043Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "ClippingSaved",
+      "payload": {
+        "clippingId": "clip-3",
+        "sourceId": "src-okafor",
+        "text": "Wet years cluster.\n\nDry years do not.",
+        "locator": "p. 120",
+        "note": null
+      }
+    },
+    {
+      "commitId": "c-0009",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 9,
+      "prevHash": "f7def5ce38665d676243534d06af499ef5bdfe7c5aa71e2fcba4cbd32e43b8e0",
+      "hash": "403f390faaefbc7c2ad3a718fdaba94e8cc68dc63b026b72c0f7f4db308d6967",
+      "clientTime": "2026-11-02T09:00:20.193Z",
+      "serverTime": "2026-11-02T09:00:20.443Z",
       "actor": {
         "kind": "human",
         "id": "writer-1"
@@ -2003,14 +2029,14 @@
       }
     },
     {
-      "commitId": "c-0009",
+      "commitId": "c-0010",
       "projectId": "proj-1",
       "accountId": "acct-1",
-      "seq": 9,
-      "prevHash": "9e03ce98671a7268a6df4959fa7fb1488d97a2064a514f4c68a2dc53a853d308",
-      "hash": "a940228e4be7b695701aa377fcdb49863790e23516700b76fcb568cf4ee00f16",
-      "clientTime": "2026-11-02T09:00:21.693Z",
-      "serverTime": "2026-11-02T09:00:21.743Z",
+      "seq": 10,
+      "prevHash": "403f390faaefbc7c2ad3a718fdaba94e8cc68dc63b026b72c0f7f4db308d6967",
+      "hash": "7bc62b2b14d32aba379d54e34530acbb1850c8f35bd5dcc6a30d071cc883ab6a",
+      "clientTime": "2026-11-02T09:00:22.093Z",
+      "serverTime": "2026-11-02T09:00:22.143Z",
       "actor": {
         "kind": "agent",
         "id": "opus"
@@ -2029,14 +2055,14 @@
       }
     },
     {
-      "commitId": "c-0010",
+      "commitId": "c-0011",
       "projectId": "proj-1",
       "accountId": "acct-1",
-      "seq": 10,
-      "prevHash": "a940228e4be7b695701aa377fcdb49863790e23516700b76fcb568cf4ee00f16",
-      "hash": "fed6201ba0e23a096764675ad3c1446e762444f02eb8a712ee55f0e1065f62bb",
-      "clientTime": "2026-11-02T09:00:23.193Z",
-      "serverTime": "2026-11-02T09:00:23.243Z",
+      "seq": 11,
+      "prevHash": "7bc62b2b14d32aba379d54e34530acbb1850c8f35bd5dcc6a30d071cc883ab6a",
+      "hash": "2883fbd7c6594905486ff2669a01a51a3abd7d0641b0444917ff3b908bc6fa44",
+      "clientTime": "2026-11-02T09:00:23.593Z",
+      "serverTime": "2026-11-02T09:00:23.643Z",
       "actor": {
         "kind": "agent",
         "id": "opus"
@@ -2064,14 +2090,14 @@
       }
     },
     {
-      "commitId": "c-0011",
+      "commitId": "c-0012",
       "projectId": "proj-1",
       "accountId": "acct-1",
-      "seq": 11,
-      "prevHash": "fed6201ba0e23a096764675ad3c1446e762444f02eb8a712ee55f0e1065f62bb",
-      "hash": "d363b0cc2c850d6553a5081688554de4a8abb8345478683ec9c96ced560a763e",
-      "clientTime": "2026-11-02T09:00:24.693Z",
-      "serverTime": "2026-11-02T09:00:24.743Z",
+      "seq": 12,
+      "prevHash": "2883fbd7c6594905486ff2669a01a51a3abd7d0641b0444917ff3b908bc6fa44",
+      "hash": "afd79e21d8333792b258e0af44cba0296e8268ec3c8bb84276541cdaf1f5edca",
+      "clientTime": "2026-11-02T09:00:25.093Z",
+      "serverTime": "2026-11-02T09:00:25.143Z",
       "actor": {
         "kind": "agent",
         "id": "opus"
@@ -2099,14 +2125,14 @@
       }
     },
     {
-      "commitId": "c-0012",
+      "commitId": "c-0013",
       "projectId": "proj-1",
       "accountId": "acct-1",
-      "seq": 12,
-      "prevHash": "d363b0cc2c850d6553a5081688554de4a8abb8345478683ec9c96ced560a763e",
-      "hash": "a8df57e7df7dd600822072ed96d33e0cc6a39a6f08636a4fe31ae6925c884995",
-      "clientTime": "2026-11-02T09:00:26.193Z",
-      "serverTime": "2026-11-02T09:00:26.243Z",
+      "seq": 13,
+      "prevHash": "afd79e21d8333792b258e0af44cba0296e8268ec3c8bb84276541cdaf1f5edca",
+      "hash": "edd830963daefc7dd03fa5d59aefd7294d8cb0dfc6de0acf9ffa1dd4075449a9",
+      "clientTime": "2026-11-02T09:00:26.593Z",
+      "serverTime": "2026-11-02T09:00:26.643Z",
       "actor": {
         "kind": "agent",
         "id": "opus"
@@ -2169,14 +2195,14 @@
       }
     },
     {
-      "commitId": "c-0013",
+      "commitId": "c-0014",
       "projectId": "proj-1",
       "accountId": "acct-1",
-      "seq": 13,
-      "prevHash": "a8df57e7df7dd600822072ed96d33e0cc6a39a6f08636a4fe31ae6925c884995",
-      "hash": "bfe8fc9c9feff88089df5198ed41512e17daba8e6219af4adc789a34d2046e18",
-      "clientTime": "2026-11-02T09:00:27.693Z",
-      "serverTime": "2026-11-02T09:00:27.743Z",
+      "seq": 14,
+      "prevHash": "edd830963daefc7dd03fa5d59aefd7294d8cb0dfc6de0acf9ffa1dd4075449a9",
+      "hash": "88946ecfb6715c0d5ed3088373e769464870d217c71690ced724f30320d3a5f2",
+      "clientTime": "2026-11-02T09:00:28.093Z",
+      "serverTime": "2026-11-02T09:00:28.143Z",
       "actor": {
         "kind": "agent",
         "id": "opus"
@@ -2205,14 +2231,14 @@
       }
     },
     {
-      "commitId": "c-0014",
+      "commitId": "c-0015",
       "projectId": "proj-1",
       "accountId": "acct-1",
-      "seq": 14,
-      "prevHash": "bfe8fc9c9feff88089df5198ed41512e17daba8e6219af4adc789a34d2046e18",
-      "hash": "af9f2ca6c940d58075692f9229e1cb9d32cb6a5ba617a6c8ab6de3f68497606c",
-      "clientTime": "2026-11-02T09:00:29.193Z",
-      "serverTime": "2026-11-02T09:00:29.243Z",
+      "seq": 15,
+      "prevHash": "88946ecfb6715c0d5ed3088373e769464870d217c71690ced724f30320d3a5f2",
+      "hash": "48209ea2ed5282b52c8671ceda3842da52a6964a95e5074a20aec17b839f8aa3",
+      "clientTime": "2026-11-02T09:00:29.593Z",
+      "serverTime": "2026-11-02T09:00:29.643Z",
       "actor": {
         "kind": "agent",
         "id": "opus"
@@ -2231,14 +2257,14 @@
       }
     },
     {
-      "commitId": "c-0015",
+      "commitId": "c-0016",
       "projectId": "proj-1",
       "accountId": "acct-1",
-      "seq": 15,
-      "prevHash": "af9f2ca6c940d58075692f9229e1cb9d32cb6a5ba617a6c8ab6de3f68497606c",
-      "hash": "95a878ff29af102d2ad5e0001c1638325c73adeb5e0f62f43cc579541024670d",
-      "clientTime": "2026-11-02T09:00:29.193Z",
-      "serverTime": "2026-11-02T09:00:29.443Z",
+      "seq": 16,
+      "prevHash": "48209ea2ed5282b52c8671ceda3842da52a6964a95e5074a20aec17b839f8aa3",
+      "hash": "dc9e218cd5e0c2019858e96b27fff18fd783d21020239e570038b4126a982a10",
+      "clientTime": "2026-11-02T09:00:29.593Z",
+      "serverTime": "2026-11-02T09:00:29.843Z",
       "actor": {
         "kind": "human",
         "id": "writer-1"
@@ -2278,14 +2304,14 @@
       }
     },
     {
-      "commitId": "c-0016",
+      "commitId": "c-0017",
       "projectId": "proj-1",
       "accountId": "acct-1",
-      "seq": 16,
-      "prevHash": "95a878ff29af102d2ad5e0001c1638325c73adeb5e0f62f43cc579541024670d",
-      "hash": "057c6a1ee783df1c9eb3f7eb507fa0ac53301a7e0720f187dff660d3aeb50802",
-      "clientTime": "2026-11-02T09:00:29.593Z",
-      "serverTime": "2026-11-02T09:00:29.843Z",
+      "seq": 17,
+      "prevHash": "dc9e218cd5e0c2019858e96b27fff18fd783d21020239e570038b4126a982a10",
+      "hash": "7a36bc298697acb17d6cf2888c774f791a3b2a5037fd7f0d85c0b1ccb7695474",
+      "clientTime": "2026-11-02T09:00:29.993Z",
+      "serverTime": "2026-11-02T09:00:30.243Z",
       "actor": {
         "kind": "human",
         "id": "writer-1"
@@ -2300,14 +2326,14 @@
       }
     },
     {
-      "commitId": "c-0018",
+      "commitId": "c-0019",
       "projectId": "proj-1",
       "accountId": "acct-1",
-      "seq": 17,
-      "prevHash": "057c6a1ee783df1c9eb3f7eb507fa0ac53301a7e0720f187dff660d3aeb50802",
-      "hash": "8c750c687547ebf7240efc02f6a86a60ecc65e17507dd101ad1f0cb2e699b4e2",
-      "clientTime": "2026-11-02T09:00:29.993Z",
-      "serverTime": "2026-11-02T09:00:30.243Z",
+      "seq": 18,
+      "prevHash": "7a36bc298697acb17d6cf2888c774f791a3b2a5037fd7f0d85c0b1ccb7695474",
+      "hash": "42126dadf275f662363b2382da5b99aafbff66f600c9e7ba2ce690cd78dd85b7",
+      "clientTime": "2026-11-02T09:00:30.393Z",
+      "serverTime": "2026-11-02T09:00:30.643Z",
       "actor": {
         "kind": "human",
         "id": "writer-1"
@@ -2317,21 +2343,21 @@
       "schemaVersion": 1,
       "type": "CitationInserted",
       "payload": {
-        "citationId": "cite-0017",
+        "citationId": "cite-0018",
         "documentId": "doc-r",
         "sourceId": "src-okafor",
         "locator": "p. 114"
       }
     },
     {
-      "commitId": "c-0019",
+      "commitId": "c-0020",
       "projectId": "proj-1",
       "accountId": "acct-1",
-      "seq": 18,
-      "prevHash": "8c750c687547ebf7240efc02f6a86a60ecc65e17507dd101ad1f0cb2e699b4e2",
-      "hash": "232d382b4d0a8d36307268a95982303ef59008d6660fea2063857d38fb07e6ba",
-      "clientTime": "2026-11-02T09:00:30.393Z",
-      "serverTime": "2026-11-02T09:00:30.643Z",
+      "seq": 19,
+      "prevHash": "42126dadf275f662363b2382da5b99aafbff66f600c9e7ba2ce690cd78dd85b7",
+      "hash": "ce5ba76471a5ece8dbf8c5ce0e704f3daeacd2b9a75e0ba5e543f1d57c74fe52",
+      "clientTime": "2026-11-02T09:00:30.793Z",
+      "serverTime": "2026-11-02T09:00:31.043Z",
       "actor": {
         "kind": "human",
         "id": "writer-1"
@@ -2365,7 +2391,7 @@
           {
             "steps": 1,
             "method": "citation",
-            "citationId": "cite-0017"
+            "citationId": "cite-0018"
           }
         ],
         "timeline": [
@@ -2380,14 +2406,14 @@
       }
     },
     {
-      "commitId": "c-0020",
+      "commitId": "c-0021",
       "projectId": "proj-1",
       "accountId": "acct-1",
-      "seq": 19,
-      "prevHash": "232d382b4d0a8d36307268a95982303ef59008d6660fea2063857d38fb07e6ba",
-      "hash": "859e2ba64d9207fa34efd3ebb6f6c30b6a305575abd2d01a2d6be376a4ceb6fa",
-      "clientTime": "2026-11-02T09:00:32.393Z",
-      "serverTime": "2026-11-02T09:00:32.643Z",
+      "seq": 20,
+      "prevHash": "ce5ba76471a5ece8dbf8c5ce0e704f3daeacd2b9a75e0ba5e543f1d57c74fe52",
+      "hash": "705ca4e4f1c421ae7947d3402e10ab0eac063fb3e81316ee85961f7f9efb9145",
+      "clientTime": "2026-11-02T09:00:32.793Z",
+      "serverTime": "2026-11-02T09:00:33.043Z",
       "actor": {
         "kind": "human",
         "id": "writer-1"
@@ -2457,14 +2483,14 @@
       }
     },
     {
-      "commitId": "c-0021",
+      "commitId": "c-0022",
       "projectId": "proj-1",
       "accountId": "acct-1",
-      "seq": 20,
-      "prevHash": "859e2ba64d9207fa34efd3ebb6f6c30b6a305575abd2d01a2d6be376a4ceb6fa",
-      "hash": "ef70e2b5fe09088376bf7efe0995dd8535a759ded708c2e51c2c99e210b68b99",
-      "clientTime": "2026-11-02T09:00:34.393Z",
-      "serverTime": "2026-11-02T09:00:34.643Z",
+      "seq": 21,
+      "prevHash": "705ca4e4f1c421ae7947d3402e10ab0eac063fb3e81316ee85961f7f9efb9145",
+      "hash": "2f68e44c6686666130fe55ea0a1c3d4a08b554a8e98e4b72f4da6062feb69f49",
+      "clientTime": "2026-11-02T09:00:34.793Z",
+      "serverTime": "2026-11-02T09:00:35.043Z",
       "actor": {
         "kind": "human",
         "id": "writer-1"
@@ -2481,6 +2507,83 @@
             "stepType": "replace",
             "from": 190,
             "to": 190,
+            "slice": {
+              "content": [
+                {
+                  "type": "quote_block",
+                  "attrs": {
+                    "sourceId": "src-okafor",
+                    "clippingId": "clip-3",
+                    "locator": "p. 120"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Wet years cluster."
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Dry years do not."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 1,
+            "method": "clipping",
+            "clippingId": "clip-3"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "paste",
+            "len": 36
+          }
+        ],
+        "characters": 36,
+        "durationMs": 0
+      }
+    },
+    {
+      "commitId": "c-0023",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 22,
+      "prevHash": "2f68e44c6686666130fe55ea0a1c3d4a08b554a8e98e4b72f4da6062feb69f49",
+      "hash": "7a02c8b1300f15f8606d7dd1b086242d2cb993fd80b11a30130389e396410777",
+      "clientTime": "2026-11-02T09:00:36.793Z",
+      "serverTime": "2026-11-02T09:00:37.043Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-r",
+        "baseVersion": 100,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 231,
+            "to": 231,
             "slice": {
               "content": [
                 {
@@ -2525,14 +2628,14 @@
       }
     },
     {
-      "commitId": "c-0022",
+      "commitId": "c-0024",
       "projectId": "proj-1",
       "accountId": "acct-1",
-      "seq": 21,
-      "prevHash": "ef70e2b5fe09088376bf7efe0995dd8535a759ded708c2e51c2c99e210b68b99",
-      "hash": "5610b7c030668df94078b1c888404fda1ca9cc1d29780fae3866d1a76d4db669",
-      "clientTime": "2026-11-02T09:00:36.393Z",
-      "serverTime": "2026-11-02T09:00:36.643Z",
+      "seq": 23,
+      "prevHash": "7a02c8b1300f15f8606d7dd1b086242d2cb993fd80b11a30130389e396410777",
+      "hash": "187895eb723d02baf5e0da47cf7cabfe9dadd4f3f002ecef758cd0cd0eb9c90c",
+      "clientTime": "2026-11-02T09:00:38.793Z",
+      "serverTime": "2026-11-02T09:00:39.043Z",
       "actor": {
         "kind": "human",
         "id": "writer-1"
@@ -2548,14 +2651,14 @@
       }
     },
     {
-      "commitId": "c-0023",
+      "commitId": "c-0025",
       "projectId": "proj-1",
       "accountId": "acct-1",
-      "seq": 22,
-      "prevHash": "5610b7c030668df94078b1c888404fda1ca9cc1d29780fae3866d1a76d4db669",
-      "hash": "20b54bb9b50f5f87cb79255c5bca0e8ab11acabd63c07e81a84cd8f92e2a8b4d",
-      "clientTime": "2026-11-02T09:00:36.793Z",
-      "serverTime": "2026-11-02T09:00:37.043Z",
+      "seq": 24,
+      "prevHash": "187895eb723d02baf5e0da47cf7cabfe9dadd4f3f002ecef758cd0cd0eb9c90c",
+      "hash": "c46df6bf5549454b9b437ec13ca762090aef50f9e0152ffac6b7b7d16540fb46",
+      "clientTime": "2026-11-02T09:00:39.193Z",
+      "serverTime": "2026-11-02T09:00:39.443Z",
       "actor": {
         "kind": "human",
         "id": "writer-1"
@@ -2570,13 +2673,13 @@
     }
   ],
   "expected": {
-    "headSeq": 22,
-    "headHash": "20b54bb9b50f5f87cb79255c5bca0e8ab11acabd63c07e81a84cd8f92e2a8b4d",
+    "headSeq": 24,
+    "headHash": "c46df6bf5549454b9b437ec13ca762090aef50f9e0152ffac6b7b7d16540fb46",
     "state": {
       "projectId": "proj-1",
       "accountId": "acct-1",
-      "headSeq": 22,
-      "headHash": "20b54bb9b50f5f87cb79255c5bca0e8ab11acabd63c07e81a84cd8f92e2a8b4d",
+      "headSeq": 24,
+      "headHash": "c46df6bf5549454b9b437ec13ca762090aef50f9e0152ffac6b7b7d16540fb46",
       "settings": {
         "genre": "",
         "audience": "",
@@ -2660,6 +2763,34 @@
                 "type": "quote_block",
                 "attrs": {
                   "sourceId": "src-okafor",
+                  "clippingId": "clip-3",
+                  "locator": "p. 120"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Wet years cluster."
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Dry years do not."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "quote_block",
+                "attrs": {
+                  "sourceId": "src-okafor",
                   "clippingId": "clip-2",
                   "locator": "p. 117"
                 },
@@ -2677,7 +2808,7 @@
               }
             ]
           },
-          "version": 100,
+          "version": 101,
           "provenance": [
             {
               "from": 1,
@@ -2695,7 +2826,7 @@
               "from": 53,
               "to": 54,
               "class": "quoted",
-              "originSeq": 18
+              "originSeq": 19
             },
             {
               "from": 54,
@@ -2707,34 +2838,46 @@
               "from": 102,
               "to": 145,
               "class": "quoted",
-              "originSeq": 19
+              "originSeq": 20
             },
             {
               "from": 147,
               "to": 188,
               "class": "quoted",
-              "originSeq": 19
+              "originSeq": 20
             },
             {
               "from": 192,
-              "to": 223,
+              "to": 210,
+              "class": "quoted",
+              "originSeq": 21
+            },
+            {
+              "from": 212,
+              "to": 229,
+              "class": "quoted",
+              "originSeq": 21
+            },
+            {
+              "from": 233,
+              "to": 264,
               "class": "pasted-external",
-              "originSeq": 20
+              "originSeq": 22
             }
           ],
           "archived": false,
           "imported": null,
           "createdSeq": 2,
-          "contentSeq": 20,
-          "updatedSeq": 20
+          "contentSeq": 22,
+          "updatedSeq": 22
         }
       },
       "annotations": {
         "feedbackRequests": {
           "req-r": {
             "id": "req-r",
-            "seq": 8,
-            "createdAt": "2026-11-02T09:00:20.043Z",
+            "seq": 9,
+            "createdAt": "2026-11-02T09:00:20.443Z",
             "scope": {
               "kind": "document",
               "documentId": "doc-r"
@@ -2755,9 +2898,9 @@
             "requestId": "req-r",
             "threadId": null,
             "model": "opus",
-            "startedSeq": 9,
-            "startedAt": "2026-11-02T09:00:21.743Z",
-            "endedSeq": 14,
+            "startedSeq": 10,
+            "startedAt": "2026-11-02T09:00:22.143Z",
+            "endedSeq": 15,
             "status": "finished",
             "failureReason": null,
             "review": {
@@ -2791,8 +2934,8 @@
           "flag-1": {
             "id": "flag-1",
             "feedbackSessionId": "fs-r",
-            "seq": 10,
-            "createdAt": "2026-11-02T09:00:23.243Z",
+            "seq": 11,
+            "createdAt": "2026-11-02T09:00:23.643Z",
             "target": {
               "kind": "anchor",
               "anchor": {
@@ -2818,8 +2961,8 @@
           "flag-2": {
             "id": "flag-2",
             "feedbackSessionId": "fs-r",
-            "seq": 11,
-            "createdAt": "2026-11-02T09:00:24.743Z",
+            "seq": 12,
+            "createdAt": "2026-11-02T09:00:25.143Z",
             "target": {
               "kind": "anchor",
               "anchor": {
@@ -2847,8 +2990,8 @@
           "surf-1": {
             "id": "surf-1",
             "feedbackSessionId": "fs-r",
-            "seq": 12,
-            "createdAt": "2026-11-02T09:00:26.243Z",
+            "seq": 13,
+            "createdAt": "2026-11-02T09:00:26.643Z",
             "query": "farmers adaptation flood plain",
             "target": {
               "kind": "anchor",
@@ -2917,8 +3060,8 @@
           "ss-1": {
             "id": "ss-1",
             "feedbackSessionId": "fs-r",
-            "seq": 13,
-            "createdAt": "2026-11-02T09:00:27.743Z",
+            "seq": 14,
+            "createdAt": "2026-11-02T09:00:28.143Z",
             "target": {
               "kind": "anchor",
               "anchor": {
@@ -2941,7 +3084,7 @@
             "rationale": "Table 3 gives the annual totals.",
             "status": "dismissed",
             "dismissal": {
-              "seq": 21,
+              "seq": 23,
               "reason": "later",
               "note": null
             }
@@ -3015,8 +3158,8 @@
           "candidateIndex": 0,
           "note": "Library copy, chapter 4.",
           "archived": false,
-          "addedSeq": 15,
-          "updatedSeq": 16
+          "addedSeq": 16,
+          "updatedSeq": 17
         }
       },
       "clippings": {
@@ -3037,6 +3180,15 @@
           "note": null,
           "savedSeq": 7,
           "removed": true
+        },
+        "clip-3": {
+          "id": "clip-3",
+          "sourceId": "src-okafor",
+          "text": "Wet years cluster.\n\nDry years do not.",
+          "locator": "p. 120",
+          "note": null,
+          "savedSeq": 8,
+          "removed": false
         }
       },
       "pastes": {},
@@ -3044,12 +3196,12 @@
         {
           "index": 0,
           "startSeq": 3,
-          "endSeq": 20,
+          "endSeq": 22,
           "startTime": "2026-11-02T09:00:00.800Z",
-          "endTime": "2026-11-02T09:00:34.393Z",
+          "endTime": "2026-11-02T09:00:36.793Z",
           "activeMs": 13793,
-          "commits": 5,
-          "charactersInserted": 212,
+          "commits": 6,
+          "charactersInserted": 247,
           "documentIds": [
             "doc-r"
           ]
@@ -3058,7 +3210,7 @@
     },
     "documents": {
       "doc-r": {
-        "text": "Rainfall in the valley doubled between 1950 and 2000. Farmers adapted slowly, and some never did.\nAnnual totals rose from 610 mm to 1,240 mm.\nThe change was steady rather than sudden.\nNo single year accounts for it.",
+        "text": "Rainfall in the valley doubled between 1950 and 2000. Farmers adapted slowly, and some never did.\nAnnual totals rose from 610 mm to 1,240 mm.\nThe change was steady rather than sudden.\nWet years cluster.\nDry years do not.\nNo single year accounts for it.",
         "words": [
           {
             "from": 1,
@@ -3228,7 +3380,7 @@
             "class": "quoted",
             "blockId": "p2",
             "originSeqs": [
-              19
+              20
             ]
           },
           {
@@ -3238,7 +3390,7 @@
             "class": "quoted",
             "blockId": "p2",
             "originSeqs": [
-              19
+              20
             ]
           },
           {
@@ -3248,7 +3400,7 @@
             "class": "quoted",
             "blockId": "p2",
             "originSeqs": [
-              19
+              20
             ]
           },
           {
@@ -3258,7 +3410,7 @@
             "class": "quoted",
             "blockId": "p2",
             "originSeqs": [
-              19
+              20
             ]
           },
           {
@@ -3268,7 +3420,7 @@
             "class": "quoted",
             "blockId": "p2",
             "originSeqs": [
-              19
+              20
             ]
           },
           {
@@ -3278,7 +3430,7 @@
             "class": "quoted",
             "blockId": "p2",
             "originSeqs": [
-              19
+              20
             ]
           },
           {
@@ -3288,7 +3440,7 @@
             "class": "quoted",
             "blockId": "p2",
             "originSeqs": [
-              19
+              20
             ]
           },
           {
@@ -3298,7 +3450,7 @@
             "class": "quoted",
             "blockId": "p2",
             "originSeqs": [
-              19
+              20
             ]
           },
           {
@@ -3308,7 +3460,7 @@
             "class": "quoted",
             "blockId": "p2",
             "originSeqs": [
-              19
+              20
             ]
           },
           {
@@ -3318,7 +3470,7 @@
             "class": "quoted",
             "blockId": "p3",
             "originSeqs": [
-              19
+              20
             ]
           },
           {
@@ -3328,7 +3480,7 @@
             "class": "quoted",
             "blockId": "p3",
             "originSeqs": [
-              19
+              20
             ]
           },
           {
@@ -3338,7 +3490,7 @@
             "class": "quoted",
             "blockId": "p3",
             "originSeqs": [
-              19
+              20
             ]
           },
           {
@@ -3348,7 +3500,7 @@
             "class": "quoted",
             "blockId": "p3",
             "originSeqs": [
-              19
+              20
             ]
           },
           {
@@ -3358,7 +3510,7 @@
             "class": "quoted",
             "blockId": "p3",
             "originSeqs": [
-              19
+              20
             ]
           },
           {
@@ -3368,7 +3520,7 @@
             "class": "quoted",
             "blockId": "p3",
             "originSeqs": [
-              19
+              20
             ]
           },
           {
@@ -3378,114 +3530,184 @@
             "class": "quoted",
             "blockId": "p3",
             "originSeqs": [
-              19
+              20
             ]
           },
           {
             "from": 192,
-            "to": 194,
-            "text": "No",
-            "class": "pasted-external",
+            "to": 195,
+            "text": "Wet",
+            "class": "quoted",
             "blockId": "p4",
             "originSeqs": [
-              20
+              21
             ]
           },
           {
-            "from": 195,
+            "from": 196,
             "to": 201,
-            "text": "single",
-            "class": "pasted-external",
+            "text": "years",
+            "class": "quoted",
             "blockId": "p4",
             "originSeqs": [
-              20
+              21
             ]
           },
           {
             "from": 202,
-            "to": 206,
-            "text": "year",
-            "class": "pasted-external",
+            "to": 209,
+            "text": "cluster",
+            "class": "quoted",
             "blockId": "p4",
             "originSeqs": [
-              20
+              21
             ]
           },
           {
-            "from": 207,
+            "from": 212,
             "to": 215,
-            "text": "accounts",
-            "class": "pasted-external",
-            "blockId": "p4",
+            "text": "Dry",
+            "class": "quoted",
+            "blockId": "p5",
             "originSeqs": [
-              20
+              21
             ]
           },
           {
             "from": 216,
-            "to": 219,
-            "text": "for",
-            "class": "pasted-external",
-            "blockId": "p4",
+            "to": 221,
+            "text": "years",
+            "class": "quoted",
+            "blockId": "p5",
             "originSeqs": [
-              20
+              21
             ]
           },
           {
-            "from": 220,
-            "to": 222,
+            "from": 222,
+            "to": 224,
+            "text": "do",
+            "class": "quoted",
+            "blockId": "p5",
+            "originSeqs": [
+              21
+            ]
+          },
+          {
+            "from": 225,
+            "to": 228,
+            "text": "not",
+            "class": "quoted",
+            "blockId": "p5",
+            "originSeqs": [
+              21
+            ]
+          },
+          {
+            "from": 233,
+            "to": 235,
+            "text": "No",
+            "class": "pasted-external",
+            "blockId": "p6",
+            "originSeqs": [
+              22
+            ]
+          },
+          {
+            "from": 236,
+            "to": 242,
+            "text": "single",
+            "class": "pasted-external",
+            "blockId": "p6",
+            "originSeqs": [
+              22
+            ]
+          },
+          {
+            "from": 243,
+            "to": 247,
+            "text": "year",
+            "class": "pasted-external",
+            "blockId": "p6",
+            "originSeqs": [
+              22
+            ]
+          },
+          {
+            "from": 248,
+            "to": 256,
+            "text": "accounts",
+            "class": "pasted-external",
+            "blockId": "p6",
+            "originSeqs": [
+              22
+            ]
+          },
+          {
+            "from": 257,
+            "to": 260,
+            "text": "for",
+            "class": "pasted-external",
+            "blockId": "p6",
+            "originSeqs": [
+              22
+            ]
+          },
+          {
+            "from": 261,
+            "to": 263,
             "text": "it",
             "class": "pasted-external",
-            "blockId": "p4",
+            "blockId": "p6",
             "originSeqs": [
-              20
+              22
             ]
           }
         ],
         "wordsByClass": {
-          "total": 38,
+          "total": 45,
           "byClass": {
             "typed": 16,
             "typed-from-suggestion": 0,
             "pasted-external": 6,
             "pasted-internal": 0,
             "imported": 0,
-            "quoted": 16
+            "quoted": 23
           }
         },
         "charactersByClass": {
-          "total": 212,
+          "total": 247,
           "byClass": {
             "typed": 97,
             "typed-from-suggestion": 0,
             "pasted-external": 31,
             "pasted-internal": 0,
             "imported": 0,
-            "quoted": 84
+            "quoted": 119
           }
         }
       }
     },
     "projectWords": {
-      "total": 38,
+      "total": 45,
       "byClass": {
         "typed": 16,
         "typed-from-suggestion": 0,
         "pasted-external": 6,
         "pasted-internal": 0,
         "imported": 0,
-        "quoted": 16
+        "quoted": 23
       }
     },
     "projectCharacters": {
-      "total": 212,
+      "total": 247,
       "byClass": {
         "typed": 97,
         "typed-from-suggestion": 0,
         "pasted-external": 31,
         "pasted-internal": 0,
         "imported": 0,
-        "quoted": 84
+        "quoted": 119
       }
     },
     "issues": []
@@ -3550,121 +3772,137 @@
     {
       "projectId": "proj-1",
       "seq": 8,
-      "hash": "9e03ce98671a7268a6df4959fa7fb1488d97a2064a514f4c68a2dc53a853d308",
+      "hash": "f7def5ce38665d676243534d06af499ef5bdfe7c5aa71e2fcba4cbd32e43b8e0",
       "serverTime": "2026-11-02T09:00:20.043Z",
-      "signature": "H3/rhG3zt2kHClGTfmiTAP59aaNt7oybyVcAUXq0luJ10OzQiTaaEJBqsBOBmGAiOSkuW5XVS4sqqscmi/OUQA==",
+      "signature": "IMhUbzgw2Pw4JzjUJvBTAt6lyKSuAedbRfmHO8UO9EykUgi4+MTt1fh8Br2ixuNtsF+6iVVWsWZn0Mdbexshtg==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 9,
-      "hash": "a940228e4be7b695701aa377fcdb49863790e23516700b76fcb568cf4ee00f16",
-      "serverTime": "2026-11-02T09:00:21.743Z",
-      "signature": "oxf1mKDEpVu+qWECdZoajQmF9nFrVO+pxQOmPeTEmp4u6U+r3xIaaLLfXBNw5bInhzLoVmrzJmsYKGFck1s0OA==",
+      "hash": "403f390faaefbc7c2ad3a718fdaba94e8cc68dc63b026b72c0f7f4db308d6967",
+      "serverTime": "2026-11-02T09:00:20.443Z",
+      "signature": "ODUGzmfNG3OFdfWc70bF7VSu6hbEzEeAcOEZoYpHqmAdGU7SBsi2gTaDtOKJRlWPg+fjZmSBUUTDpqMxSm6NzA==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 10,
-      "hash": "fed6201ba0e23a096764675ad3c1446e762444f02eb8a712ee55f0e1065f62bb",
-      "serverTime": "2026-11-02T09:00:23.243Z",
-      "signature": "0COeSHVLjCqhyghatMTDFwFHFDpPJ6svLa8JDEaEIvYL9gqzOSBe6IfMIt4ssTbgqS99ILtNB8d2z8Bmv3i91w==",
+      "hash": "7bc62b2b14d32aba379d54e34530acbb1850c8f35bd5dcc6a30d071cc883ab6a",
+      "serverTime": "2026-11-02T09:00:22.143Z",
+      "signature": "wA4lR5KCjbvr25hfLVwFd4iK2PTRu1UhjLAli310M2QvQCAs6wfhzY8hSL4mnEtVIRM5Mh1C7MEuWFVmX5uK3w==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 11,
-      "hash": "d363b0cc2c850d6553a5081688554de4a8abb8345478683ec9c96ced560a763e",
-      "serverTime": "2026-11-02T09:00:24.743Z",
-      "signature": "k9QQUgQ4dut1EsL8z3tG7+rzF7t02fJPHjP1GJTqseoR68xTcVLJs1DNdjVLMt2cK7T3SsfSidgbtNcVIgkogQ==",
+      "hash": "2883fbd7c6594905486ff2669a01a51a3abd7d0641b0444917ff3b908bc6fa44",
+      "serverTime": "2026-11-02T09:00:23.643Z",
+      "signature": "nmXgcXzIRux3sTG9sEaow6rZfIFq01ONF3N4yHooBd/FNo1kcuFLXiqgynWXK9x0BvvC73i+kZEZJNGQ4P9gHQ==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 12,
-      "hash": "a8df57e7df7dd600822072ed96d33e0cc6a39a6f08636a4fe31ae6925c884995",
-      "serverTime": "2026-11-02T09:00:26.243Z",
-      "signature": "BLP2dNGsPHRSM48Vrueq2PmjNQh5d66rNvnJstii+vMdoC3tkZ15CC0UNHYJ7yI+BGKU8by5q+YbNjmgtETq/w==",
+      "hash": "afd79e21d8333792b258e0af44cba0296e8268ec3c8bb84276541cdaf1f5edca",
+      "serverTime": "2026-11-02T09:00:25.143Z",
+      "signature": "N4+Gm4EgoV6EJtgsGQ3QHY+Y4ImiCGMuPMac+vF0jgSdIMVYll8Fl8U24BcqWBSUJTGjG7xuQPrmawlmeabNrg==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 13,
-      "hash": "bfe8fc9c9feff88089df5198ed41512e17daba8e6219af4adc789a34d2046e18",
-      "serverTime": "2026-11-02T09:00:27.743Z",
-      "signature": "cSZah1+d1E3SWOZDwL4zAXKippjc5X2S93z+sg5MVZ/qtEVP/nRfLo235TalJD+pL1rUuVVRT77cpsN/2O6osg==",
+      "hash": "edd830963daefc7dd03fa5d59aefd7294d8cb0dfc6de0acf9ffa1dd4075449a9",
+      "serverTime": "2026-11-02T09:00:26.643Z",
+      "signature": "c4KGZnYO2tz7zp2eM7HmwIX6syAblmsZ881UH5M0OVHlAa7Y4XkaO2cOEkmaftBnNLUZ8Sgahrzqi7Zbdy1fSA==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 14,
-      "hash": "af9f2ca6c940d58075692f9229e1cb9d32cb6a5ba617a6c8ab6de3f68497606c",
-      "serverTime": "2026-11-02T09:00:29.243Z",
-      "signature": "B53HicydHF5a2mIWi7ls7PhwZ+OhvEG+EHUpOe28RkxFTISZOtl8Zkd1ZF8UWygWxFQaB0aEG+Lmp5CwMmhMlQ==",
+      "hash": "88946ecfb6715c0d5ed3088373e769464870d217c71690ced724f30320d3a5f2",
+      "serverTime": "2026-11-02T09:00:28.143Z",
+      "signature": "be12c2SYpUV/xV62Ln9HKW4qTM1auf5SrRk0Bb94ZC6yj+QhCB7+1mbEmUNmRFCN/bgoT7soNi/JqiM7Eh7zAg==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 15,
-      "hash": "95a878ff29af102d2ad5e0001c1638325c73adeb5e0f62f43cc579541024670d",
-      "serverTime": "2026-11-02T09:00:29.443Z",
-      "signature": "XCQ6ElN35VpPO07f6Rxd4Lxkr0a7NcqJOiU4X6gPwRAs4LLsBd8i7OQIF3Fu31BX3NWdDGCOq7J4x3ZXtxfywA==",
+      "hash": "48209ea2ed5282b52c8671ceda3842da52a6964a95e5074a20aec17b839f8aa3",
+      "serverTime": "2026-11-02T09:00:29.643Z",
+      "signature": "jGhCUKcvmMhAmyiOJtvPQFsA3rVnb79V0KuLqPbqU1XnMV496IF33z7FoArfp9iP/xYnnNzxw+TkK5w1579dYw==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 16,
-      "hash": "057c6a1ee783df1c9eb3f7eb507fa0ac53301a7e0720f187dff660d3aeb50802",
+      "hash": "dc9e218cd5e0c2019858e96b27fff18fd783d21020239e570038b4126a982a10",
       "serverTime": "2026-11-02T09:00:29.843Z",
-      "signature": "P3OYTBkojanE8g2Pc/1ZKyMMQ4R1Hx2Tc7Ybdiss2g4uyz3QJBvcCa7Yr6atio7PrqBgY0tj+UvPkeCDssbszw==",
+      "signature": "NjAoL7frJ2LD6J1at4NUg3S8XJN6WCWYf6SqCRxs6jkg2TFLE/pKrA9IKsQkVuG1mNNHvT1ZEUFcsMCpRyVKpA==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 17,
-      "hash": "8c750c687547ebf7240efc02f6a86a60ecc65e17507dd101ad1f0cb2e699b4e2",
+      "hash": "7a36bc298697acb17d6cf2888c774f791a3b2a5037fd7f0d85c0b1ccb7695474",
       "serverTime": "2026-11-02T09:00:30.243Z",
-      "signature": "UXjDqwNRw3+NYZwe9GNhnxAR9eLqbSdTUxNLYm2QXU2O8oCt0jgYeyHeWllsK2p1m8zgWldW9BoAa3/Ri8647A==",
+      "signature": "0pvlXVSmBXTDbRNiLhThLVHEbvV2GfFXJThdVa/N5ejUxcxauv/U3ZHuxa7a/qP+cpyH0Gti1NwiJp6JM1Aa2Q==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 18,
-      "hash": "232d382b4d0a8d36307268a95982303ef59008d6660fea2063857d38fb07e6ba",
+      "hash": "42126dadf275f662363b2382da5b99aafbff66f600c9e7ba2ce690cd78dd85b7",
       "serverTime": "2026-11-02T09:00:30.643Z",
-      "signature": "e2IYzYg7S9Yx1C8Cx+6px8zX7DJaKgHtgbIAUO6uIaDG5+9IVhT4EATZNtsHdffYmE89hXOEBnQel64VJrr7NQ==",
+      "signature": "N8VWbCYL7z65C9iqqzUVJQiofwIXMtAtUI81rI3vcP06wcPdt+DkWjDBpiN0MNFhwG6IuK9mQHV5uyE5KfDmtA==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 19,
-      "hash": "859e2ba64d9207fa34efd3ebb6f6c30b6a305575abd2d01a2d6be376a4ceb6fa",
-      "serverTime": "2026-11-02T09:00:32.643Z",
-      "signature": "JCvd9bjU3v3B3MMeddIVy0ZIfnYGIBTnboXrhWI51VOv1cdYEJUeAso5lknxiNaGivWdKqO05GrdnA+9FXeAmQ==",
+      "hash": "ce5ba76471a5ece8dbf8c5ce0e704f3daeacd2b9a75e0ba5e543f1d57c74fe52",
+      "serverTime": "2026-11-02T09:00:31.043Z",
+      "signature": "+OQTENFqmNoznWZQ9jKOOQj26ToGfzWo3E0Htwc9Rq6+VZbHhl563qXrafxTlQhShxV3HED17Jc30zEvhDTKKQ==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 20,
-      "hash": "ef70e2b5fe09088376bf7efe0995dd8535a759ded708c2e51c2c99e210b68b99",
-      "serverTime": "2026-11-02T09:00:34.643Z",
-      "signature": "9stySUEAZNpYlyhUp31Rx2H0x1Z2dJ+DPAn4OCbTPAIPvbTfvCwg/YfVJ5kup8FZhStdnfk9s4tzM4uKFBmFaQ==",
+      "hash": "705ca4e4f1c421ae7947d3402e10ab0eac063fb3e81316ee85961f7f9efb9145",
+      "serverTime": "2026-11-02T09:00:33.043Z",
+      "signature": "ZTv3pNq/OHDukadsscOKqyfvYJTxUQBjeSAKRrGTkBngBOgbJXpORfB2P13T07KUxZ3F+dBEdWeCei8ub45RlQ==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 21,
-      "hash": "5610b7c030668df94078b1c888404fda1ca9cc1d29780fae3866d1a76d4db669",
-      "serverTime": "2026-11-02T09:00:36.643Z",
-      "signature": "PjyXUgOcP7M+p9czGujQ2Xu9D1v6QEgAlEqUo3Om179mSFWt8DMtC9bk8CPhhahj3aOJ3tJmugULoJ1OzG6ftg==",
+      "hash": "2f68e44c6686666130fe55ea0a1c3d4a08b554a8e98e4b72f4da6062feb69f49",
+      "serverTime": "2026-11-02T09:00:35.043Z",
+      "signature": "Rlf0dPHafM/HS6vRlYJlh5VLbaLnHHgGUy13TGWWL7E4OzFotd7Q6CVjON4oCDt+7W7LhVI9FYe6ulgZb8a/9w==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 22,
-      "hash": "20b54bb9b50f5f87cb79255c5bca0e8ab11acabd63c07e81a84cd8f92e2a8b4d",
+      "hash": "7a02c8b1300f15f8606d7dd1b086242d2cb993fd80b11a30130389e396410777",
       "serverTime": "2026-11-02T09:00:37.043Z",
-      "signature": "mt5k/ubA5s0WKWqvsxB87eUF6gZnEtfreTv5kXrlq9E51K6z/GzM/rDF1/m5wRCzQfna7CBHKwE66QsQ0dRkiA==",
+      "signature": "AZj/wXS8/gIhV3tadhu3WhbBf0xmkVTYis0WeSZCVftGzmeA0jJc0Goh1RhZ2KQrnXKPELQyWDiaBeTm8pwhTw==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 23,
+      "hash": "187895eb723d02baf5e0da47cf7cabfe9dadd4f3f002ecef758cd0cd0eb9c90c",
+      "serverTime": "2026-11-02T09:00:39.043Z",
+      "signature": "6ru7/CuNk0b0eDA9ynspH5qjSn60xEKAmnXHdEKFsKNXvo+Xtuhi5o9bzCdDJft7uTHuy9SwIR72sPnUHI0K5A==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 24,
+      "hash": "c46df6bf5549454b9b437ec13ca762090aef50f9e0152ffac6b7b7d16540fb46",
+      "serverTime": "2026-11-02T09:00:39.443Z",
+      "signature": "ArEcYFveqo72FrXcUk7wx9S/UYhEcfjkKwI2o4BANJoh5njxx7hTtuLQ3yXmYrIkrWjRHbkhdqjq+dXU7iMKSA==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     }
   ],

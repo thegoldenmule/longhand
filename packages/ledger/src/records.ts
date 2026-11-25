@@ -14,8 +14,16 @@ function current(t: Tracker, r: Span | null): CurrentRange | null {
 }
 
 /** Writes `t`'s positions into its annotation record (only when they changed). */
-export function syncTrackerRecord(tx: Tx, t: Tracker): void {
+export function syncTrackerRecord(tx: Tx, t: Tracker, version: number): void {
   switch (t.group) {
+    case 'feedbackRequests': {
+      const rec = tx.s.ann.feedbackRequests[t.id];
+      if (!rec || rec.scope.kind !== 'selection' || !t.range) return;
+      const sc = rec.scope;
+      if (sc.from === t.range.from && sc.to === t.range.to && sc.version === version) return;
+      tx.ann('feedbackRequests')[t.id] = { ...rec, scope: { ...sc, from: t.range.from, to: t.range.to, version } };
+      return;
+    }
     case 'comments':
     case 'questions':
     case 'citationFlags':

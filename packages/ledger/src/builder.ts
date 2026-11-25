@@ -1009,10 +1009,14 @@ export class LedgerBuilder {
   }
 
   /** The writer accepts a proposal. */
-  acceptProposal(proposalId: string): this {
+  acceptProposal(proposalId: string, opts: { baseVersion?: number } = {}): this {
     const p = this.project.annotations.proposals[proposalId];
     if (!p) throw new Error(`builder: no proposal ${proposalId}`);
-    this.human('ProposalAccepted', { proposalId, documentId: p.documentId, baseVersion: this.version(p.documentId) });
+    this.human('ProposalAccepted', {
+      proposalId,
+      documentId: p.documentId,
+      baseVersion: opts.baseVersion ?? this.version(p.documentId),
+    });
     this.undoStack.length = 0;
     return this;
   }

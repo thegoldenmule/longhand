@@ -9,7 +9,8 @@
     "finish-review",
     "dismiss",
     "session-failed",
-    "selection-scope"
+    "selection-scope",
+    "selection-scope-mapped"
   ],
   "commits": [
     {
@@ -5313,16 +5314,176 @@
         "threadId": null,
         "reason": "model timeout"
       }
+    },
+    {
+      "commitId": "c-0020",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 20,
+      "prevHash": "df86257a6219d0268fbcaf592b73cd5ccd401c1ee1eb120a2d83dc74916e768f",
+      "hash": "ec8ef3464c2c4d9e86bbd8962a29b9797b2e4f4b21befdc4f0bab00fb63a17d7",
+      "clientTime": "2026-11-02T09:02:00.963Z",
+      "serverTime": "2026-11-02T09:02:01.213Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-ch1",
+        "baseVersion": 262,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 1,
+            "to": 1,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "N"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 2,
+            "to": 2,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 3,
+            "to": 3,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "g"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 4,
+            "to": 4,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 5,
+            "to": 5,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 6,
+            "to": 6,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 7,
+            "to": 7,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 7,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 151,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 344,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 428,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 552,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 694,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 851,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 7,
+        "durationMs": 851
+      }
     }
   ],
   "expected": {
-    "headSeq": 19,
-    "headHash": "df86257a6219d0268fbcaf592b73cd5ccd401c1ee1eb120a2d83dc74916e768f",
+    "headSeq": 20,
+    "headHash": "ec8ef3464c2c4d9e86bbd8962a29b9797b2e4f4b21befdc4f0bab00fb63a17d7",
     "state": {
       "projectId": "proj-1",
       "accountId": "acct-1",
-      "headSeq": 19,
-      "headHash": "df86257a6219d0268fbcaf592b73cd5ccd401c1ee1eb120a2d83dc74916e768f",
+      "headSeq": 20,
+      "headHash": "ec8ef3464c2c4d9e86bbd8962a29b9797b2e4f4b21befdc4f0bab00fb63a17d7",
       "settings": {
         "genre": "",
         "audience": "",
@@ -5359,7 +5520,7 @@
                 "content": [
                   {
                     "type": "text",
-                    "text": "The lighthouse had been dark for three winters. Elena climbed the stairs anyway, counting each one. She wanted to know who had let it fail."
+                    "text": "Night. The lighthouse had been dark for three winters. Elena climbed the stairs anyway, counting each one. She wanted to know who had let it fail."
                   }
                 ]
               },
@@ -5374,41 +5535,47 @@
               }
             ]
           },
-          "version": 262,
+          "version": 269,
           "provenance": [
             {
               "from": 1,
-              "to": 51,
+              "to": 8,
+              "class": "typed",
+              "originSeq": 20
+            },
+            {
+              "from": 8,
+              "to": 58,
               "class": "typed",
               "originSeq": 3
             },
             {
-              "from": 51,
-              "to": 100,
+              "from": 58,
+              "to": 107,
               "class": "typed",
               "originSeq": 4
             },
             {
-              "from": 100,
-              "to": 140,
+              "from": 107,
+              "to": 147,
               "class": "typed",
               "originSeq": 16
             },
             {
-              "from": 142,
-              "to": 192,
+              "from": 149,
+              "to": 199,
               "class": "typed",
               "originSeq": 5
             },
             {
-              "from": 192,
-              "to": 242,
+              "from": 199,
+              "to": 249,
               "class": "typed",
               "originSeq": 6
             },
             {
-              "from": 242,
-              "to": 264,
+              "from": 249,
+              "to": 271,
               "class": "typed",
               "originSeq": 7
             }
@@ -5416,8 +5583,8 @@
           "archived": false,
           "imported": null,
           "createdSeq": 2,
-          "contentSeq": 16,
-          "updatedSeq": 16
+          "contentSeq": 20,
+          "updatedSeq": 20
         }
       },
       "annotations": {
@@ -5447,9 +5614,9 @@
             "scope": {
               "kind": "selection",
               "documentId": "doc-ch1",
-              "from": 1,
-              "to": 20,
-              "version": 262
+              "from": 8,
+              "to": 27,
+              "version": 269
             },
             "lenses": [
               "word-choice"
@@ -5542,8 +5709,8 @@
             },
             "range": {
               "documentId": "doc-ch1",
-              "from": 82,
-              "to": 99
+              "from": 89,
+              "to": 106
             },
             "category": "character-dialogue",
             "severity": "minor",
@@ -5576,8 +5743,8 @@
             },
             "range": {
               "documentId": "doc-ch1",
-              "from": 141,
-              "to": 265
+              "from": 148,
+              "to": 272
             },
             "category": "pacing",
             "severity": "moderate",
@@ -5607,8 +5774,8 @@
             },
             "range": {
               "documentId": "doc-ch1",
-              "from": 34,
-              "to": 47
+              "from": 41,
+              "to": 54
             },
             "question": "Why has the lighthouse been dark for three winters, and does Elena know?",
             "status": "open",
@@ -5640,12 +5807,12 @@
         {
           "index": 0,
           "startSeq": 3,
-          "endSeq": 16,
+          "endSeq": 20,
           "startTime": "2026-11-02T09:00:00.800Z",
-          "endTime": "2026-11-02T09:01:57.063Z",
-          "activeMs": 36463,
-          "commits": 6,
-          "charactersInserted": 261,
+          "endTime": "2026-11-02T09:02:01.814Z",
+          "activeMs": 37314,
+          "commits": 7,
+          "charactersInserted": 268,
           "documentIds": [
             "doc-ch1"
           ]
@@ -5654,11 +5821,21 @@
     },
     "documents": {
       "doc-ch1": {
-        "text": "The lighthouse had been dark for three winters. Elena climbed the stairs anyway, counting each one. She wanted to know who had let it fail.\nAt the top she found the lamp, cracked and furred with salt. She sat down beside it and waited for the light to come back.",
+        "text": "Night. The lighthouse had been dark for three winters. Elena climbed the stairs anyway, counting each one. She wanted to know who had let it fail.\nAt the top she found the lamp, cracked and furred with salt. She sat down beside it and waited for the light to come back.",
         "words": [
           {
             "from": 1,
-            "to": 4,
+            "to": 6,
+            "text": "Night",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              20
+            ]
+          },
+          {
+            "from": 8,
+            "to": 11,
             "text": "The",
             "class": "typed",
             "blockId": "p1",
@@ -5667,8 +5844,8 @@
             ]
           },
           {
-            "from": 5,
-            "to": 15,
+            "from": 12,
+            "to": 22,
             "text": "lighthouse",
             "class": "typed",
             "blockId": "p1",
@@ -5677,8 +5854,8 @@
             ]
           },
           {
-            "from": 16,
-            "to": 19,
+            "from": 23,
+            "to": 26,
             "text": "had",
             "class": "typed",
             "blockId": "p1",
@@ -5687,8 +5864,8 @@
             ]
           },
           {
-            "from": 20,
-            "to": 24,
+            "from": 27,
+            "to": 31,
             "text": "been",
             "class": "typed",
             "blockId": "p1",
@@ -5697,8 +5874,8 @@
             ]
           },
           {
-            "from": 25,
-            "to": 29,
+            "from": 32,
+            "to": 36,
             "text": "dark",
             "class": "typed",
             "blockId": "p1",
@@ -5707,8 +5884,8 @@
             ]
           },
           {
-            "from": 30,
-            "to": 33,
+            "from": 37,
+            "to": 40,
             "text": "for",
             "class": "typed",
             "blockId": "p1",
@@ -5717,8 +5894,8 @@
             ]
           },
           {
-            "from": 34,
-            "to": 39,
+            "from": 41,
+            "to": 46,
             "text": "three",
             "class": "typed",
             "blockId": "p1",
@@ -5727,8 +5904,8 @@
             ]
           },
           {
-            "from": 40,
-            "to": 47,
+            "from": 47,
+            "to": 54,
             "text": "winters",
             "class": "typed",
             "blockId": "p1",
@@ -5737,8 +5914,8 @@
             ]
           },
           {
-            "from": 49,
-            "to": 54,
+            "from": 56,
+            "to": 61,
             "text": "Elena",
             "class": "typed",
             "blockId": "p1",
@@ -5748,8 +5925,8 @@
             ]
           },
           {
-            "from": 55,
-            "to": 62,
+            "from": 62,
+            "to": 69,
             "text": "climbed",
             "class": "typed",
             "blockId": "p1",
@@ -5758,19 +5935,9 @@
             ]
           },
           {
-            "from": 63,
-            "to": 66,
-            "text": "the",
-            "class": "typed",
-            "blockId": "p1",
-            "originSeqs": [
-              4
-            ]
-          },
-          {
-            "from": 67,
+            "from": 70,
             "to": 73,
-            "text": "stairs",
+            "text": "the",
             "class": "typed",
             "blockId": "p1",
             "originSeqs": [
@@ -5780,6 +5947,16 @@
           {
             "from": 74,
             "to": 80,
+            "text": "stairs",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 81,
+            "to": 87,
             "text": "anyway",
             "class": "typed",
             "blockId": "p1",
@@ -5788,8 +5965,8 @@
             ]
           },
           {
-            "from": 82,
-            "to": 90,
+            "from": 89,
+            "to": 97,
             "text": "counting",
             "class": "typed",
             "blockId": "p1",
@@ -5798,8 +5975,8 @@
             ]
           },
           {
-            "from": 91,
-            "to": 95,
+            "from": 98,
+            "to": 102,
             "text": "each",
             "class": "typed",
             "blockId": "p1",
@@ -5808,8 +5985,8 @@
             ]
           },
           {
-            "from": 96,
-            "to": 99,
+            "from": 103,
+            "to": 106,
             "text": "one",
             "class": "typed",
             "blockId": "p1",
@@ -5818,19 +5995,9 @@
             ]
           },
           {
-            "from": 101,
-            "to": 104,
-            "text": "She",
-            "class": "typed",
-            "blockId": "p1",
-            "originSeqs": [
-              16
-            ]
-          },
-          {
-            "from": 105,
+            "from": 108,
             "to": 111,
-            "text": "wanted",
+            "text": "She",
             "class": "typed",
             "blockId": "p1",
             "originSeqs": [
@@ -5839,7 +6006,17 @@
           },
           {
             "from": 112,
-            "to": 114,
+            "to": 118,
+            "text": "wanted",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              16
+            ]
+          },
+          {
+            "from": 119,
+            "to": 121,
             "text": "to",
             "class": "typed",
             "blockId": "p1",
@@ -5848,8 +6025,8 @@
             ]
           },
           {
-            "from": 115,
-            "to": 119,
+            "from": 122,
+            "to": 126,
             "text": "know",
             "class": "typed",
             "blockId": "p1",
@@ -5858,8 +6035,8 @@
             ]
           },
           {
-            "from": 120,
-            "to": 123,
+            "from": 127,
+            "to": 130,
             "text": "who",
             "class": "typed",
             "blockId": "p1",
@@ -5868,8 +6045,8 @@
             ]
           },
           {
-            "from": 124,
-            "to": 127,
+            "from": 131,
+            "to": 134,
             "text": "had",
             "class": "typed",
             "blockId": "p1",
@@ -5878,8 +6055,8 @@
             ]
           },
           {
-            "from": 128,
-            "to": 131,
+            "from": 135,
+            "to": 138,
             "text": "let",
             "class": "typed",
             "blockId": "p1",
@@ -5888,19 +6065,9 @@
             ]
           },
           {
-            "from": 132,
-            "to": 134,
+            "from": 139,
+            "to": 141,
             "text": "it",
-            "class": "typed",
-            "blockId": "p1",
-            "originSeqs": [
-              16
-            ]
-          },
-          {
-            "from": 135,
-            "to": 139,
-            "text": "fail",
             "class": "typed",
             "blockId": "p1",
             "originSeqs": [
@@ -5909,7 +6076,17 @@
           },
           {
             "from": 142,
-            "to": 144,
+            "to": 146,
+            "text": "fail",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              16
+            ]
+          },
+          {
+            "from": 149,
+            "to": 151,
             "text": "At",
             "class": "typed",
             "blockId": "p2",
@@ -5918,8 +6095,8 @@
             ]
           },
           {
-            "from": 145,
-            "to": 148,
+            "from": 152,
+            "to": 155,
             "text": "the",
             "class": "typed",
             "blockId": "p2",
@@ -5928,8 +6105,8 @@
             ]
           },
           {
-            "from": 149,
-            "to": 152,
+            "from": 156,
+            "to": 159,
             "text": "top",
             "class": "typed",
             "blockId": "p2",
@@ -5938,8 +6115,8 @@
             ]
           },
           {
-            "from": 153,
-            "to": 156,
+            "from": 160,
+            "to": 163,
             "text": "she",
             "class": "typed",
             "blockId": "p2",
@@ -5948,8 +6125,8 @@
             ]
           },
           {
-            "from": 157,
-            "to": 162,
+            "from": 164,
+            "to": 169,
             "text": "found",
             "class": "typed",
             "blockId": "p2",
@@ -5958,8 +6135,8 @@
             ]
           },
           {
-            "from": 163,
-            "to": 166,
+            "from": 170,
+            "to": 173,
             "text": "the",
             "class": "typed",
             "blockId": "p2",
@@ -5968,8 +6145,8 @@
             ]
           },
           {
-            "from": 167,
-            "to": 171,
+            "from": 174,
+            "to": 178,
             "text": "lamp",
             "class": "typed",
             "blockId": "p2",
@@ -5978,8 +6155,8 @@
             ]
           },
           {
-            "from": 173,
-            "to": 180,
+            "from": 180,
+            "to": 187,
             "text": "cracked",
             "class": "typed",
             "blockId": "p2",
@@ -5988,19 +6165,9 @@
             ]
           },
           {
-            "from": 181,
-            "to": 184,
-            "text": "and",
-            "class": "typed",
-            "blockId": "p2",
-            "originSeqs": [
-              5
-            ]
-          },
-          {
-            "from": 185,
+            "from": 188,
             "to": 191,
-            "text": "furred",
+            "text": "and",
             "class": "typed",
             "blockId": "p2",
             "originSeqs": [
@@ -6009,7 +6176,17 @@
           },
           {
             "from": 192,
-            "to": 196,
+            "to": 198,
+            "text": "furred",
+            "class": "typed",
+            "blockId": "p2",
+            "originSeqs": [
+              5
+            ]
+          },
+          {
+            "from": 199,
+            "to": 203,
             "text": "with",
             "class": "typed",
             "blockId": "p2",
@@ -6018,8 +6195,8 @@
             ]
           },
           {
-            "from": 197,
-            "to": 201,
+            "from": 204,
+            "to": 208,
             "text": "salt",
             "class": "typed",
             "blockId": "p2",
@@ -6028,8 +6205,8 @@
             ]
           },
           {
-            "from": 203,
-            "to": 206,
+            "from": 210,
+            "to": 213,
             "text": "She",
             "class": "typed",
             "blockId": "p2",
@@ -6038,8 +6215,8 @@
             ]
           },
           {
-            "from": 207,
-            "to": 210,
+            "from": 214,
+            "to": 217,
             "text": "sat",
             "class": "typed",
             "blockId": "p2",
@@ -6048,8 +6225,8 @@
             ]
           },
           {
-            "from": 211,
-            "to": 215,
+            "from": 218,
+            "to": 222,
             "text": "down",
             "class": "typed",
             "blockId": "p2",
@@ -6058,8 +6235,8 @@
             ]
           },
           {
-            "from": 216,
-            "to": 222,
+            "from": 223,
+            "to": 229,
             "text": "beside",
             "class": "typed",
             "blockId": "p2",
@@ -6068,8 +6245,8 @@
             ]
           },
           {
-            "from": 223,
-            "to": 225,
+            "from": 230,
+            "to": 232,
             "text": "it",
             "class": "typed",
             "blockId": "p2",
@@ -6078,8 +6255,8 @@
             ]
           },
           {
-            "from": 226,
-            "to": 229,
+            "from": 233,
+            "to": 236,
             "text": "and",
             "class": "typed",
             "blockId": "p2",
@@ -6088,8 +6265,8 @@
             ]
           },
           {
-            "from": 230,
-            "to": 236,
+            "from": 237,
+            "to": 243,
             "text": "waited",
             "class": "typed",
             "blockId": "p2",
@@ -6098,8 +6275,8 @@
             ]
           },
           {
-            "from": 237,
-            "to": 240,
+            "from": 244,
+            "to": 247,
             "text": "for",
             "class": "typed",
             "blockId": "p2",
@@ -6108,8 +6285,8 @@
             ]
           },
           {
-            "from": 241,
-            "to": 244,
+            "from": 248,
+            "to": 251,
             "text": "the",
             "class": "typed",
             "blockId": "p2",
@@ -6119,8 +6296,8 @@
             ]
           },
           {
-            "from": 245,
-            "to": 250,
+            "from": 252,
+            "to": 257,
             "text": "light",
             "class": "typed",
             "blockId": "p2",
@@ -6129,8 +6306,8 @@
             ]
           },
           {
-            "from": 251,
-            "to": 253,
+            "from": 258,
+            "to": 260,
             "text": "to",
             "class": "typed",
             "blockId": "p2",
@@ -6139,8 +6316,8 @@
             ]
           },
           {
-            "from": 254,
-            "to": 258,
+            "from": 261,
+            "to": 265,
             "text": "come",
             "class": "typed",
             "blockId": "p2",
@@ -6149,8 +6326,8 @@
             ]
           },
           {
-            "from": 259,
-            "to": 263,
+            "from": 266,
+            "to": 270,
             "text": "back",
             "class": "typed",
             "blockId": "p2",
@@ -6160,9 +6337,9 @@
           }
         ],
         "wordsByClass": {
-          "total": 50,
+          "total": 51,
           "byClass": {
-            "typed": 50,
+            "typed": 51,
             "typed-from-suggestion": 0,
             "pasted-external": 0,
             "pasted-internal": 0,
@@ -6171,9 +6348,9 @@
           }
         },
         "charactersByClass": {
-          "total": 261,
+          "total": 268,
           "byClass": {
-            "typed": 261,
+            "typed": 268,
             "typed-from-suggestion": 0,
             "pasted-external": 0,
             "pasted-internal": 0,
@@ -6184,9 +6361,9 @@
       }
     },
     "projectWords": {
-      "total": 50,
+      "total": 51,
       "byClass": {
-        "typed": 50,
+        "typed": 51,
         "typed-from-suggestion": 0,
         "pasted-external": 0,
         "pasted-internal": 0,
@@ -6195,9 +6372,9 @@
       }
     },
     "projectCharacters": {
-      "total": 261,
+      "total": 268,
       "byClass": {
-        "typed": 261,
+        "typed": 268,
         "typed-from-suggestion": 0,
         "pasted-external": 0,
         "pasted-internal": 0,
@@ -6358,6 +6535,14 @@
       "hash": "df86257a6219d0268fbcaf592b73cd5ccd401c1ee1eb120a2d83dc74916e768f",
       "serverTime": "2026-11-02T09:02:01.014Z",
       "signature": "yrN9+MBVbwdljpfbRNxuawuryBV+iN0HmggWnU8X4HmP+/FHRsATEOA0Rsv2jTWE78x7kMh8qCXv88YfKeCvGg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 20,
+      "hash": "ec8ef3464c2c4d9e86bbd8962a29b9797b2e4f4b21befdc4f0bab00fb63a17d7",
+      "serverTime": "2026-11-02T09:02:01.213Z",
+      "signature": "cSgBWDYAS3NdzLo/oEgRLv62hTX2GjcdKIjSbx1wHTycPKIfBQgpLk25xglaYmiuEqDsT81ljWOl/cI8QhI8AQ==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     }
   ],

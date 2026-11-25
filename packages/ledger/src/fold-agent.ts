@@ -809,11 +809,33 @@ export function foldFeedbackRequested(tx: Tx, c: CommitOf<'FeedbackRequested'>):
     tx.issue('unknown-document', `no document ${p.scope.documentId}`);
     return;
   }
+  let scope = p.scope;
+  if (scope.kind === 'selection') {
+    // Selection positions are mapped to the current version, and then through every later step.
+    const d = tx.s.docs[scope.documentId]!;
+    const maps = scope.version <= d.version ? mapsBetween(d.maps, scope.version, d.version) : null;
+    if (!maps || scope.from > scope.to) {
+      tx.issue('invalid-version', `selection at version ${scope.version} cannot be mapped to ${d.version}`);
+      return;
+    }
+    let from = scope.from;
+    let to = scope.to;
+    for (const m of maps) {
+      from = m.map(from, 1);
+      to = Math.max(from, m.map(to, -1));
+    }
+    if (to > d.node.content.size) {
+      tx.issue('invalid-position', `selection ${scope.from}-${scope.to} is outside document ${d.id}`);
+      return;
+    }
+    scope = { ...scope, from, to, version: d.version };
+    tx.addTracker(newTracker(p.requestId, d.id, 'feedbackRequests', { from, to }));
+  }
   tx.ann('feedbackRequests')[p.requestId] = {
     id: p.requestId,
     seq: c.seq,
     createdAt: c.serverTime,
-    scope: p.scope,
+    scope,
     lenses: p.lenses,
     intensity: p.intensity,
     ask: p.ask,

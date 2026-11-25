@@ -62,6 +62,15 @@ function sameKeys(a: readonly { key: string }[], b: readonly { key: string }[]):
   return true;
 }
 
+/**
+ * Clipping text compared with blank lines collapsed on both sides (coordinator
+ * decision): empty paragraphs and `\n\n` runs carry no words, and editors and
+ * `inlineTextBetween` drop them.
+ */
+export function collapseBlankLines(s: string): string {
+  return s.replace(/\n{2,}/g, '\n').replace(/^\n+|\n+$/g, '');
+}
+
 function verifyClipping(dc: DocCommit, pending: readonly UnitRef[], clippingId: string): boolean {
   const clip = dc.tx.s.clippings[clippingId];
   if (!clip || clip.removed || pending.length === 0) return false;
@@ -80,7 +89,7 @@ function verifyClipping(dc: DocCommit, pending: readonly UnitRef[], clippingId: 
   const inside = unitsBetween(dc.node, qbPos + 1, qbPos + qb.nodeSize - 1);
   if (inside.length !== pending.length) return false;
   for (let i = 0; i < inside.length; i++) if ((inside[i] as UnitRef).pos !== (pending[i] as UnitRef).pos) return false;
-  return quoteBlockText(qb) === clip.text;
+  return collapseBlankLines(quoteBlockText(qb)) === collapseBlankLines(clip.text);
 }
 
 function verifyCitation(dc: DocCommit, pending: readonly UnitRef[], citationId: string): boolean {

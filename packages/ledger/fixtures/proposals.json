@@ -9,7 +9,8 @@
     "accepted",
     "rejected",
     "stale",
-    "joining-whitespace"
+    "joining-whitespace",
+    "accept-old-base-version"
   ],
   "commits": [
     {
@@ -5225,9 +5226,241 @@
       "accountId": "acct-1",
       "seq": 29,
       "prevHash": "853ebc45bdf1d035a600195891f60099cb084fece048e7dd023f4f9a050162cf",
-      "hash": "68c0346c6b024690e9d6808fc7dc58714eb1f1b239cf4317f523e4a2fa2b3e56",
+      "hash": "de8e614c8c5a3bedec9ffe3d9380d36e1d680b6dbe70442b8f9f6802659f6fd1",
       "clientTime": "2026-11-02T09:01:05.691Z",
       "serverTime": "2026-11-02T09:01:05.941Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-p",
+        "baseVersion": 251,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 1,
+            "to": 1,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "E"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 2,
+            "to": 2,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "v"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 3,
+            "to": 3,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 4,
+            "to": 4,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 5,
+            "to": 5,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "y"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 6,
+            "to": 6,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 7,
+            "to": 7,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "y"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 8,
+            "to": 8,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 9,
+            "to": 9,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 10,
+            "to": 10,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 11,
+            "to": 11,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 11,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 153,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 351,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 486,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 694,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 885,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1072,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1276,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1385,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1484,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1580,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 11,
+        "durationMs": 1580
+      }
+    },
+    {
+      "commitId": "c-0030",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 30,
+      "prevHash": "de8e614c8c5a3bedec9ffe3d9380d36e1d680b6dbe70442b8f9f6802659f6fd1",
+      "hash": "3d2583cccd734463186a146f21b2a8d687c4fed77740a90559f26a42768206d5",
+      "clientTime": "2026-11-02T09:01:09.271Z",
+      "serverTime": "2026-11-02T09:01:09.521Z",
       "actor": {
         "kind": "human",
         "id": "writer-1"
@@ -5244,13 +5477,13 @@
     }
   ],
   "expected": {
-    "headSeq": 29,
-    "headHash": "68c0346c6b024690e9d6808fc7dc58714eb1f1b239cf4317f523e4a2fa2b3e56",
+    "headSeq": 30,
+    "headHash": "3d2583cccd734463186a146f21b2a8d687c4fed77740a90559f26a42768206d5",
     "state": {
       "projectId": "proj-1",
       "accountId": "acct-1",
-      "headSeq": 29,
-      "headHash": "68c0346c6b024690e9d6808fc7dc58714eb1f1b239cf4317f523e4a2fa2b3e56",
+      "headSeq": 30,
+      "headHash": "3d2583cccd734463186a146f21b2a8d687c4fed77740a90559f26a42768206d5",
       "settings": {
         "genre": "",
         "audience": "",
@@ -5287,7 +5520,7 @@
                 "content": [
                   {
                     "type": "text",
-                    "text": "The town was built anyway. The river floods every spring. Nobody remembers a dry year."
+                    "text": "Every year The town was built anyway. The river floods every spring. Nobody remembers a dry year."
                   }
                 ]
               },
@@ -5320,11 +5553,17 @@
               }
             ]
           },
-          "version": 252,
+          "version": 263,
           "provenance": [
             {
               "from": 1,
-              "to": 27,
+              "to": 12,
+              "class": "typed",
+              "originSeq": 29
+            },
+            {
+              "from": 12,
+              "to": 38,
               "class": "typed",
               "originSeq": 4,
               "moves": [
@@ -5332,26 +5571,26 @@
               ]
             },
             {
-              "from": 27,
-              "to": 28,
+              "from": 38,
+              "to": 39,
               "class": "typed",
               "originSeq": 18
             },
             {
-              "from": 28,
-              "to": 73,
+              "from": 39,
+              "to": 84,
               "class": "typed",
               "originSeq": 3
             },
             {
-              "from": 73,
-              "to": 87,
+              "from": 84,
+              "to": 98,
               "class": "typed",
               "originSeq": 4
             },
             {
-              "from": 89,
-              "to": 133,
+              "from": 100,
+              "to": 144,
               "class": "typed",
               "originSeq": 6,
               "moves": [
@@ -5359,8 +5598,8 @@
               ]
             },
             {
-              "from": 133,
-              "to": 145,
+              "from": 144,
+              "to": 156,
               "class": "typed",
               "originSeq": 7,
               "moves": [
@@ -5368,38 +5607,38 @@
               ]
             },
             {
-              "from": 147,
-              "to": 155,
+              "from": 158,
+              "to": 166,
               "class": "typed",
               "originSeq": 4
             },
             {
-              "from": 155,
-              "to": 179,
+              "from": 166,
+              "to": 190,
               "class": "typed",
               "originSeq": 5
             },
             {
-              "from": 179,
-              "to": 180,
+              "from": 190,
+              "to": 191,
               "class": "typed",
-              "originSeq": 29
+              "originSeq": 30
             },
             {
-              "from": 180,
-              "to": 205,
+              "from": 191,
+              "to": 216,
               "class": "typed",
               "originSeq": 5
             },
             {
-              "from": 205,
-              "to": 210,
+              "from": 216,
+              "to": 221,
               "class": "typed",
               "originSeq": 6
             },
             {
-              "from": 212,
-              "to": 242,
+              "from": 223,
+              "to": 253,
               "class": "typed",
               "originSeq": 7
             }
@@ -5407,8 +5646,8 @@
           "archived": false,
           "imported": null,
           "createdSeq": 2,
-          "contentSeq": 29,
-          "updatedSeq": 29
+          "contentSeq": 30,
+          "updatedSeq": 30
         }
       },
       "annotations": {
@@ -5677,7 +5916,7 @@
             "documentId": "doc-p",
             "rationale": "The marsh line finishes the farmers thought.",
             "status": "accepted",
-            "resolvedSeq": 29,
+            "resolvedSeq": 30,
             "rejectReason": null,
             "kind": "merge",
             "firstParagraphId": "p3",
@@ -5698,12 +5937,12 @@
         {
           "index": 0,
           "startSeq": 3,
-          "endSeq": 29,
+          "endSeq": 30,
           "startTime": "2026-11-02T09:00:00.800Z",
-          "endTime": "2026-11-02T09:01:05.691Z",
-          "activeMs": 33691,
-          "commits": 10,
-          "charactersInserted": 242,
+          "endTime": "2026-11-02T09:01:09.271Z",
+          "activeMs": 35271,
+          "commits": 11,
+          "charactersInserted": 253,
           "documentIds": [
             "doc-p"
           ]
@@ -5712,11 +5951,31 @@
     },
     "documents": {
       "doc-p": {
-        "text": "The town was built anyway. The river floods every spring. Nobody remembers a dry year.\nThe church still stands. Its bell rings for every flood.\nFarmers moved uphill after 1952. Their old fields became marsh.\nIn the end, the river decides.",
+        "text": "Every year The town was built anyway. The river floods every spring. Nobody remembers a dry year.\nThe church still stands. Its bell rings for every flood.\nFarmers moved uphill after 1952. Their old fields became marsh.\nIn the end, the river decides.",
         "words": [
           {
             "from": 1,
-            "to": 4,
+            "to": 6,
+            "text": "Every",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              29
+            ]
+          },
+          {
+            "from": 7,
+            "to": 11,
+            "text": "year",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              29
+            ]
+          },
+          {
+            "from": 12,
+            "to": 15,
             "text": "The",
             "class": "typed",
             "blockId": "p1",
@@ -5725,8 +5984,8 @@
             ]
           },
           {
-            "from": 5,
-            "to": 9,
+            "from": 16,
+            "to": 20,
             "text": "town",
             "class": "typed",
             "blockId": "p1",
@@ -5735,8 +5994,8 @@
             ]
           },
           {
-            "from": 10,
-            "to": 13,
+            "from": 21,
+            "to": 24,
             "text": "was",
             "class": "typed",
             "blockId": "p1",
@@ -5745,8 +6004,8 @@
             ]
           },
           {
-            "from": 14,
-            "to": 19,
+            "from": 25,
+            "to": 30,
             "text": "built",
             "class": "typed",
             "blockId": "p1",
@@ -5755,8 +6014,8 @@
             ]
           },
           {
-            "from": 20,
-            "to": 26,
+            "from": 31,
+            "to": 37,
             "text": "anyway",
             "class": "typed",
             "blockId": "p1",
@@ -5765,8 +6024,8 @@
             ]
           },
           {
-            "from": 28,
-            "to": 31,
+            "from": 39,
+            "to": 42,
             "text": "The",
             "class": "typed",
             "blockId": "p1",
@@ -5775,8 +6034,8 @@
             ]
           },
           {
-            "from": 32,
-            "to": 37,
+            "from": 43,
+            "to": 48,
             "text": "river",
             "class": "typed",
             "blockId": "p1",
@@ -5785,8 +6044,8 @@
             ]
           },
           {
-            "from": 38,
-            "to": 44,
+            "from": 49,
+            "to": 55,
             "text": "floods",
             "class": "typed",
             "blockId": "p1",
@@ -5795,8 +6054,8 @@
             ]
           },
           {
-            "from": 45,
-            "to": 50,
+            "from": 56,
+            "to": 61,
             "text": "every",
             "class": "typed",
             "blockId": "p1",
@@ -5805,8 +6064,8 @@
             ]
           },
           {
-            "from": 51,
-            "to": 57,
+            "from": 62,
+            "to": 68,
             "text": "spring",
             "class": "typed",
             "blockId": "p1",
@@ -5815,8 +6074,8 @@
             ]
           },
           {
-            "from": 59,
-            "to": 65,
+            "from": 70,
+            "to": 76,
             "text": "Nobody",
             "class": "typed",
             "blockId": "p1",
@@ -5825,8 +6084,8 @@
             ]
           },
           {
-            "from": 66,
-            "to": 75,
+            "from": 77,
+            "to": 86,
             "text": "remembers",
             "class": "typed",
             "blockId": "p1",
@@ -5836,29 +6095,9 @@
             ]
           },
           {
-            "from": 76,
-            "to": 77,
+            "from": 87,
+            "to": 88,
             "text": "a",
-            "class": "typed",
-            "blockId": "p1",
-            "originSeqs": [
-              4
-            ]
-          },
-          {
-            "from": 78,
-            "to": 81,
-            "text": "dry",
-            "class": "typed",
-            "blockId": "p1",
-            "originSeqs": [
-              4
-            ]
-          },
-          {
-            "from": 82,
-            "to": 86,
-            "text": "year",
             "class": "typed",
             "blockId": "p1",
             "originSeqs": [
@@ -5868,6 +6107,26 @@
           {
             "from": 89,
             "to": 92,
+            "text": "dry",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 93,
+            "to": 97,
+            "text": "year",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 100,
+            "to": 103,
             "text": "The",
             "class": "typed",
             "blockId": "p2",
@@ -5876,8 +6135,8 @@
             ]
           },
           {
-            "from": 93,
-            "to": 99,
+            "from": 104,
+            "to": 110,
             "text": "church",
             "class": "typed",
             "blockId": "p2",
@@ -5886,8 +6145,8 @@
             ]
           },
           {
-            "from": 100,
-            "to": 105,
+            "from": 111,
+            "to": 116,
             "text": "still",
             "class": "typed",
             "blockId": "p2",
@@ -5896,8 +6155,8 @@
             ]
           },
           {
-            "from": 106,
-            "to": 112,
+            "from": 117,
+            "to": 123,
             "text": "stands",
             "class": "typed",
             "blockId": "p2",
@@ -5906,8 +6165,8 @@
             ]
           },
           {
-            "from": 114,
-            "to": 117,
+            "from": 125,
+            "to": 128,
             "text": "Its",
             "class": "typed",
             "blockId": "p2",
@@ -5916,8 +6175,8 @@
             ]
           },
           {
-            "from": 118,
-            "to": 122,
+            "from": 129,
+            "to": 133,
             "text": "bell",
             "class": "typed",
             "blockId": "p2",
@@ -5926,8 +6185,8 @@
             ]
           },
           {
-            "from": 123,
-            "to": 128,
+            "from": 134,
+            "to": 139,
             "text": "rings",
             "class": "typed",
             "blockId": "p2",
@@ -5936,8 +6195,8 @@
             ]
           },
           {
-            "from": 129,
-            "to": 132,
+            "from": 140,
+            "to": 143,
             "text": "for",
             "class": "typed",
             "blockId": "p2",
@@ -5946,8 +6205,8 @@
             ]
           },
           {
-            "from": 133,
-            "to": 138,
+            "from": 144,
+            "to": 149,
             "text": "every",
             "class": "typed",
             "blockId": "p2",
@@ -5956,8 +6215,8 @@
             ]
           },
           {
-            "from": 139,
-            "to": 144,
+            "from": 150,
+            "to": 155,
             "text": "flood",
             "class": "typed",
             "blockId": "p2",
@@ -5966,8 +6225,8 @@
             ]
           },
           {
-            "from": 147,
-            "to": 154,
+            "from": 158,
+            "to": 165,
             "text": "Farmers",
             "class": "typed",
             "blockId": "p3",
@@ -5976,8 +6235,8 @@
             ]
           },
           {
-            "from": 155,
-            "to": 160,
+            "from": 166,
+            "to": 171,
             "text": "moved",
             "class": "typed",
             "blockId": "p3",
@@ -5986,8 +6245,8 @@
             ]
           },
           {
-            "from": 161,
-            "to": 167,
+            "from": 172,
+            "to": 178,
             "text": "uphill",
             "class": "typed",
             "blockId": "p3",
@@ -5996,8 +6255,8 @@
             ]
           },
           {
-            "from": 168,
-            "to": 173,
+            "from": 179,
+            "to": 184,
             "text": "after",
             "class": "typed",
             "blockId": "p3",
@@ -6006,8 +6265,8 @@
             ]
           },
           {
-            "from": 174,
-            "to": 178,
+            "from": 185,
+            "to": 189,
             "text": "1952",
             "class": "typed",
             "blockId": "p3",
@@ -6016,8 +6275,8 @@
             ]
           },
           {
-            "from": 180,
-            "to": 185,
+            "from": 191,
+            "to": 196,
             "text": "Their",
             "class": "typed",
             "blockId": "p3",
@@ -6026,8 +6285,8 @@
             ]
           },
           {
-            "from": 186,
-            "to": 189,
+            "from": 197,
+            "to": 200,
             "text": "old",
             "class": "typed",
             "blockId": "p3",
@@ -6036,8 +6295,8 @@
             ]
           },
           {
-            "from": 190,
-            "to": 196,
+            "from": 201,
+            "to": 207,
             "text": "fields",
             "class": "typed",
             "blockId": "p3",
@@ -6046,8 +6305,8 @@
             ]
           },
           {
-            "from": 197,
-            "to": 203,
+            "from": 208,
+            "to": 214,
             "text": "became",
             "class": "typed",
             "blockId": "p3",
@@ -6056,8 +6315,8 @@
             ]
           },
           {
-            "from": 204,
-            "to": 209,
+            "from": 215,
+            "to": 220,
             "text": "marsh",
             "class": "typed",
             "blockId": "p3",
@@ -6067,8 +6326,8 @@
             ]
           },
           {
-            "from": 212,
-            "to": 214,
+            "from": 223,
+            "to": 225,
             "text": "In",
             "class": "typed",
             "blockId": "p4",
@@ -6077,8 +6336,8 @@
             ]
           },
           {
-            "from": 215,
-            "to": 218,
+            "from": 226,
+            "to": 229,
             "text": "the",
             "class": "typed",
             "blockId": "p4",
@@ -6087,8 +6346,8 @@
             ]
           },
           {
-            "from": 219,
-            "to": 222,
+            "from": 230,
+            "to": 233,
             "text": "end",
             "class": "typed",
             "blockId": "p4",
@@ -6097,8 +6356,8 @@
             ]
           },
           {
-            "from": 224,
-            "to": 227,
+            "from": 235,
+            "to": 238,
             "text": "the",
             "class": "typed",
             "blockId": "p4",
@@ -6107,8 +6366,8 @@
             ]
           },
           {
-            "from": 228,
-            "to": 233,
+            "from": 239,
+            "to": 244,
             "text": "river",
             "class": "typed",
             "blockId": "p4",
@@ -6117,8 +6376,8 @@
             ]
           },
           {
-            "from": 234,
-            "to": 241,
+            "from": 245,
+            "to": 252,
             "text": "decides",
             "class": "typed",
             "blockId": "p4",
@@ -6128,9 +6387,9 @@
           }
         ],
         "wordsByClass": {
-          "total": 41,
+          "total": 43,
           "byClass": {
-            "typed": 41,
+            "typed": 43,
             "typed-from-suggestion": 0,
             "pasted-external": 0,
             "pasted-internal": 0,
@@ -6139,9 +6398,9 @@
           }
         },
         "charactersByClass": {
-          "total": 235,
+          "total": 246,
           "byClass": {
-            "typed": 235,
+            "typed": 246,
             "typed-from-suggestion": 0,
             "pasted-external": 0,
             "pasted-internal": 0,
@@ -6152,9 +6411,9 @@
       }
     },
     "projectWords": {
-      "total": 41,
+      "total": 43,
       "byClass": {
-        "typed": 41,
+        "typed": 43,
         "typed-from-suggestion": 0,
         "pasted-external": 0,
         "pasted-internal": 0,
@@ -6163,9 +6422,9 @@
       }
     },
     "projectCharacters": {
-      "total": 235,
+      "total": 246,
       "byClass": {
-        "typed": 235,
+        "typed": 246,
         "typed-from-suggestion": 0,
         "pasted-external": 0,
         "pasted-internal": 0,
@@ -6403,9 +6662,17 @@
     {
       "projectId": "proj-1",
       "seq": 29,
-      "hash": "68c0346c6b024690e9d6808fc7dc58714eb1f1b239cf4317f523e4a2fa2b3e56",
+      "hash": "de8e614c8c5a3bedec9ffe3d9380d36e1d680b6dbe70442b8f9f6802659f6fd1",
       "serverTime": "2026-11-02T09:01:05.941Z",
-      "signature": "YRyZ61ZygSb7kQyg1oqaQI/iHvhC80PTGSTWgG2I25Ssbbj5wwp4kVBZQhV6La06V6+JuUtfhVArUKTlTJTLvw==",
+      "signature": "EIEN3mM/oi0uBRw6i2gStXYRXmyMndH0PZLij4D46ml1TsLnTYcgoLMx8QGVo/79roYc5MUTRC98h3W6pdkdoQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 30,
+      "hash": "3d2583cccd734463186a146f21b2a8d687c4fed77740a90559f26a42768206d5",
+      "serverTime": "2026-11-02T09:01:09.521Z",
+      "signature": "AEwY0+0Bg4CrQUgX/duG78rn29GWsQvhnpIBI4ZT6Uf2NF6aQbYsCz5EPxVC8pg5z4CyixDsTiTGJBTKTZwJ+w==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     }
   ],

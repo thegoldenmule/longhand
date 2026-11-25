@@ -5304,6 +5304,166 @@
         "threadId": null,
         "reason": "model timeout"
       }
+    },
+    {
+      "commitId": "c-0020",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 20,
+      "prevHash": "df86257a6219d0268fbcaf592b73cd5ccd401c1ee1eb120a2d83dc74916e768f",
+      "hash": "ec8ef3464c2c4d9e86bbd8962a29b9797b2e4f4b21befdc4f0bab00fb63a17d7",
+      "clientTime": "2026-11-02T09:02:00.963Z",
+      "serverTime": "2026-11-02T09:02:01.213Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-ch1",
+        "baseVersion": 262,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 1,
+            "to": 1,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "N"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 2,
+            "to": 2,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 3,
+            "to": 3,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "g"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 4,
+            "to": 4,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 5,
+            "to": 5,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 6,
+            "to": 6,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 7,
+            "to": 7,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 7,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 151,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 344,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 428,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 552,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 694,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 851,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 7,
+        "durationMs": 851
+      }
     }
   ],
   "witnesses": [
@@ -5458,13 +5618,21 @@
       "serverTime": "2026-11-02T09:02:01.014Z",
       "signature": "yrN9+MBVbwdljpfbRNxuawuryBV+iN0HmggWnU8X4HmP+/FHRsATEOA0Rsv2jTWE78x7kMh8qCXv88YfKeCvGg==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 20,
+      "hash": "ec8ef3464c2c4d9e86bbd8962a29b9797b2e4f4b21befdc4f0bab00fb63a17d7",
+      "serverTime": "2026-11-02T09:02:01.213Z",
+      "signature": "cSgBWDYAS3NdzLo/oEgRLv62hTX2GjcdKIjSbx1wHTycPKIfBQgpLk25xglaYmiuEqDsT81ljWOl/cI8QhI8AQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     }
   ],
   "publicKeyPem": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEoInrdRkLs5lWE+qtD8cpCVp0gkEn\n0tllAdSMj9iVyF0MaAHny/cdaByyk3aWbk6dqMaXuaekIuWmvEJCsgbJBg==\n-----END PUBLIC KEY-----\n",
   "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a",
   "trueHead": {
-    "seq": 19,
-    "hash": "df86257a6219d0268fbcaf592b73cd5ccd401c1ee1eb120a2d83dc74916e768f"
+    "seq": 20,
+    "hash": "ec8ef3464c2c4d9e86bbd8962a29b9797b2e4f4b21befdc4f0bab00fb63a17d7"
   },
   "expected": {
     "chain": {

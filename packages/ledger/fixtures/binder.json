@@ -8,7 +8,9 @@
     "reorder",
     "archive",
     "synopsis",
-    "settings"
+    "settings",
+    "move-into-archived",
+    "shared-id-across-collections"
   ],
   "commits": [
     {
@@ -2167,9 +2169,32 @@
       "accountId": "acct-1",
       "seq": 22,
       "prevHash": "a45280142f1de658d3601dd6079fba89ffc3b23192afbf2d80e6ab008d2c945c",
-      "hash": "8a56689ff0363559ed4c346e0ddfab4a43ef712b393e9aabeff3b5a857398e2f",
+      "hash": "13aa083aa7263616e3dc76e5a0c8c8d74ec73d17f9fbf631a9a6c861f3f520af",
       "clientTime": "2026-11-02T09:00:25.159Z",
       "serverTime": "2026-11-02T09:00:25.409Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "DocumentMoved",
+      "payload": {
+        "documentId": "doc-s2",
+        "parentId": "f-part2",
+        "index": 1
+      }
+    },
+    {
+      "commitId": "c-0023",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 23,
+      "prevHash": "13aa083aa7263616e3dc76e5a0c8c8d74ec73d17f9fbf631a9a6c861f3f520af",
+      "hash": "4f95e52fc2bf4688cb7101798f497eac2a1b791c9e75ac0adceaab3896b84e30",
+      "clientTime": "2026-11-02T09:00:25.559Z",
+      "serverTime": "2026-11-02T09:00:25.809Z",
       "actor": {
         "kind": "human",
         "id": "writer-1"
@@ -2184,14 +2209,14 @@
       }
     },
     {
-      "commitId": "c-0023",
+      "commitId": "c-0024",
       "projectId": "proj-1",
       "accountId": "acct-1",
-      "seq": 23,
-      "prevHash": "8a56689ff0363559ed4c346e0ddfab4a43ef712b393e9aabeff3b5a857398e2f",
-      "hash": "198a4646ae9473153acadec2574ebc4ef5f140ba7d366fac6ef6fad5cbb42cdd",
-      "clientTime": "2026-11-02T09:00:25.559Z",
-      "serverTime": "2026-11-02T09:00:25.809Z",
+      "seq": 24,
+      "prevHash": "4f95e52fc2bf4688cb7101798f497eac2a1b791c9e75ac0adceaab3896b84e30",
+      "hash": "ab83c98c9c921ac6de14f5629567e2b84cc0e4fa083bfa96f4a507e112b256e0",
+      "clientTime": "2026-11-02T09:00:25.959Z",
+      "serverTime": "2026-11-02T09:00:26.209Z",
       "actor": {
         "kind": "human",
         "id": "writer-1"
@@ -2206,14 +2231,14 @@
       }
     },
     {
-      "commitId": "c-0024",
+      "commitId": "c-0025",
       "projectId": "proj-1",
       "accountId": "acct-1",
-      "seq": 24,
-      "prevHash": "198a4646ae9473153acadec2574ebc4ef5f140ba7d366fac6ef6fad5cbb42cdd",
-      "hash": "847b24fb98e7f413e020668a1b50c3130d80e20b2ba791f6d989c3cfd18982ac",
-      "clientTime": "2026-11-02T09:00:25.959Z",
-      "serverTime": "2026-11-02T09:00:26.209Z",
+      "seq": 25,
+      "prevHash": "ab83c98c9c921ac6de14f5629567e2b84cc0e4fa083bfa96f4a507e112b256e0",
+      "hash": "86c9e5c8208b31a62c471e119ff595dd8ac70c254d073903255f7ea8b6f3262b",
+      "clientTime": "2026-11-02T09:00:26.359Z",
+      "serverTime": "2026-11-02T09:00:26.609Z",
       "actor": {
         "kind": "human",
         "id": "writer-1"
@@ -2228,14 +2253,14 @@
       }
     },
     {
-      "commitId": "c-0025",
+      "commitId": "c-0026",
       "projectId": "proj-1",
       "accountId": "acct-1",
-      "seq": 25,
-      "prevHash": "847b24fb98e7f413e020668a1b50c3130d80e20b2ba791f6d989c3cfd18982ac",
-      "hash": "8af833cb09cc8d29fdafbb96789e4700668cfb4ac03bfe383f26b6465af055b2",
-      "clientTime": "2026-11-02T09:00:26.359Z",
-      "serverTime": "2026-11-02T09:00:26.609Z",
+      "seq": 26,
+      "prevHash": "86c9e5c8208b31a62c471e119ff595dd8ac70c254d073903255f7ea8b6f3262b",
+      "hash": "911f70ef493bc88effe3f14eb2cb7f10aed893e6e45ed6374eec6ce27d8dec8a",
+      "clientTime": "2026-11-02T09:00:26.759Z",
+      "serverTime": "2026-11-02T09:00:27.009Z",
       "actor": {
         "kind": "human",
         "id": "writer-1"
@@ -2250,14 +2275,14 @@
       }
     },
     {
-      "commitId": "c-0026",
+      "commitId": "c-0027",
       "projectId": "proj-1",
       "accountId": "acct-1",
-      "seq": 26,
-      "prevHash": "8af833cb09cc8d29fdafbb96789e4700668cfb4ac03bfe383f26b6465af055b2",
-      "hash": "d7d216abd4ee88b36d865f0cb20f1308ad6ddaf6a3308b146e1da9abaaf373e0",
-      "clientTime": "2026-11-02T09:00:26.759Z",
-      "serverTime": "2026-11-02T09:00:27.009Z",
+      "seq": 27,
+      "prevHash": "911f70ef493bc88effe3f14eb2cb7f10aed893e6e45ed6374eec6ce27d8dec8a",
+      "hash": "cb91e3339efd10277579afddf63e347b96d91d0597015bd8208a09ced8cc1232",
+      "clientTime": "2026-11-02T09:00:27.159Z",
+      "serverTime": "2026-11-02T09:00:27.409Z",
       "actor": {
         "kind": "human",
         "id": "writer-1"
@@ -2273,14 +2298,64 @@
       }
     },
     {
-      "commitId": "c-0027",
+      "commitId": "c-0028",
       "projectId": "proj-1",
       "accountId": "acct-1",
-      "seq": 27,
-      "prevHash": "d7d216abd4ee88b36d865f0cb20f1308ad6ddaf6a3308b146e1da9abaaf373e0",
-      "hash": "96bbc7c5a639ae162895f2b9bc6594706faeb37677c76b3b5100c322f02fa8c0",
-      "clientTime": "2026-11-02T09:00:27.159Z",
-      "serverTime": "2026-11-02T09:00:27.409Z",
+      "seq": 28,
+      "prevHash": "cb91e3339efd10277579afddf63e347b96d91d0597015bd8208a09ced8cc1232",
+      "hash": "1e094c76e928198a817b4a605485020b9b3398207a4852890b5723d247374571",
+      "clientTime": "2026-11-02T09:00:27.559Z",
+      "serverTime": "2026-11-02T09:00:27.809Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "FolderCreated",
+      "payload": {
+        "folderId": "shared-id",
+        "area": "manuscript",
+        "title": "Drafts",
+        "parentId": "f-part1",
+        "index": 1
+      }
+    },
+    {
+      "commitId": "c-0029",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 29,
+      "prevHash": "1e094c76e928198a817b4a605485020b9b3398207a4852890b5723d247374571",
+      "hash": "8a3334f3a25c1ed63662062f0d98f9b8142805275d3ca4a6c2d62d861f73f5a4",
+      "clientTime": "2026-11-02T09:00:27.959Z",
+      "serverTime": "2026-11-02T09:00:28.209Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "DocumentCreated",
+      "payload": {
+        "documentId": "shared-id",
+        "kind": "manuscript",
+        "title": "Draft scene",
+        "parentId": "shared-id",
+        "index": 0
+      }
+    },
+    {
+      "commitId": "c-0030",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 30,
+      "prevHash": "8a3334f3a25c1ed63662062f0d98f9b8142805275d3ca4a6c2d62d861f73f5a4",
+      "hash": "91331f0b366565ea766c03b7e4c1932902f3cb471fdc3775e5428ed2c2d884ad",
+      "clientTime": "2026-11-02T09:00:28.359Z",
+      "serverTime": "2026-11-02T09:00:28.609Z",
       "actor": {
         "kind": "human",
         "id": "writer-1"
@@ -2299,13 +2374,13 @@
     }
   ],
   "expected": {
-    "headSeq": 27,
-    "headHash": "96bbc7c5a639ae162895f2b9bc6594706faeb37677c76b3b5100c322f02fa8c0",
+    "headSeq": 30,
+    "headHash": "91331f0b366565ea766c03b7e4c1932902f3cb471fdc3775e5428ed2c2d884ad",
     "state": {
       "projectId": "proj-1",
       "accountId": "acct-1",
-      "headSeq": 27,
-      "headHash": "96bbc7c5a639ae162895f2b9bc6594706faeb37677c76b3b5100c322f02fa8c0",
+      "headSeq": 30,
+      "headHash": "91331f0b366565ea766c03b7e4c1932902f3cb471fdc3775e5428ed2c2d884ad",
       "settings": {
         "genre": "literary fiction",
         "audience": "adult readers",
@@ -2348,11 +2423,15 @@
             {
               "kind": "folder",
               "id": "f-ch1"
+            },
+            {
+              "kind": "folder",
+              "id": "shared-id"
             }
           ],
           "archived": false,
           "createdSeq": 2,
-          "updatedSeq": 19
+          "updatedSeq": 28
         },
         "f-ch1": {
           "id": "f-ch1",
@@ -2360,10 +2439,6 @@
           "title": "Chapter 1",
           "parentId": "f-part1",
           "children": [
-            {
-              "kind": "document",
-              "id": "doc-s2"
-            },
             {
               "kind": "document",
               "id": "doc-s3"
@@ -2375,7 +2450,7 @@
           ],
           "archived": false,
           "createdSeq": 3,
-          "updatedSeq": 18
+          "updatedSeq": 22
         },
         "f-ch2": {
           "id": "f-ch2",
@@ -2396,11 +2471,15 @@
             {
               "kind": "folder",
               "id": "f-ch2"
+            },
+            {
+              "kind": "document",
+              "id": "doc-s2"
             }
           ],
           "archived": false,
           "createdSeq": 8,
-          "updatedSeq": 26
+          "updatedSeq": 27
         },
         "f-chars": {
           "id": "f-chars",
@@ -2416,6 +2495,21 @@
           "archived": false,
           "createdSeq": 9,
           "updatedSeq": 10
+        },
+        "shared-id": {
+          "id": "shared-id",
+          "area": "manuscript",
+          "title": "Drafts",
+          "parentId": "f-part1",
+          "children": [
+            {
+              "kind": "document",
+              "id": "shared-id"
+            }
+          ],
+          "archived": false,
+          "createdSeq": 28,
+          "updatedSeq": 29
         }
       },
       "documents": {
@@ -2453,14 +2547,14 @@
           "imported": null,
           "createdSeq": 5,
           "contentSeq": 14,
-          "updatedSeq": 24
+          "updatedSeq": 25
         },
         "doc-s2": {
           "id": "doc-s2",
           "kind": "manuscript",
           "area": "manuscript",
           "title": "Scene 2: The keeper",
-          "parentId": "f-ch1",
+          "parentId": "f-part2",
           "synopsis": "",
           "content": {
             "type": "doc",
@@ -2476,7 +2570,7 @@
           "imported": null,
           "createdSeq": 6,
           "contentSeq": 6,
-          "updatedSeq": 17
+          "updatedSeq": 22
         },
         "doc-s3": {
           "id": "doc-s3",
@@ -2499,7 +2593,7 @@
           "imported": null,
           "createdSeq": 7,
           "contentSeq": 7,
-          "updatedSeq": 25
+          "updatedSeq": 26
         },
         "note-elena": {
           "id": "note-elena",
@@ -2565,6 +2659,29 @@
           "createdSeq": 11,
           "contentSeq": 11,
           "updatedSeq": 11
+        },
+        "shared-id": {
+          "id": "shared-id",
+          "kind": "manuscript",
+          "area": "manuscript",
+          "title": "Draft scene",
+          "parentId": "shared-id",
+          "synopsis": "",
+          "content": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph"
+              }
+            ]
+          },
+          "version": 0,
+          "provenance": [],
+          "archived": false,
+          "imported": null,
+          "createdSeq": 29,
+          "contentSeq": 29,
+          "updatedSeq": 29
         }
       },
       "annotations": {
@@ -2882,6 +2999,32 @@
             "quoted": 0
           }
         }
+      },
+      "shared-id": {
+        "text": "",
+        "words": [],
+        "wordsByClass": {
+          "total": 0,
+          "byClass": {
+            "typed": 0,
+            "typed-from-suggestion": 0,
+            "pasted-external": 0,
+            "pasted-internal": 0,
+            "imported": 0,
+            "quoted": 0
+          }
+        },
+        "charactersByClass": {
+          "total": 0,
+          "byClass": {
+            "typed": 0,
+            "typed-from-suggestion": 0,
+            "pasted-external": 0,
+            "pasted-internal": 0,
+            "imported": 0,
+            "quoted": 0
+          }
+        }
       }
     },
     "projectWords": {
@@ -3080,49 +3223,73 @@
     {
       "projectId": "proj-1",
       "seq": 22,
-      "hash": "8a56689ff0363559ed4c346e0ddfab4a43ef712b393e9aabeff3b5a857398e2f",
+      "hash": "13aa083aa7263616e3dc76e5a0c8c8d74ec73d17f9fbf631a9a6c861f3f520af",
       "serverTime": "2026-11-02T09:00:25.409Z",
-      "signature": "DKGVaNhCEqVs/YfzFQbDLJvcAbeRVN0CocyKkDS32Gj4K4a9tFXLPOCP9nJSSbkbjDYqj4U7MP20AOmHI60Nvg==",
+      "signature": "L53FPYSJOI0CgVRaf/6yDLOyYVIKeu4Kc7WBBXs2obmdM5REFDPcS5BETC/w01FKiFm/g/9dMDh7CCtH4PZ7vA==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 23,
-      "hash": "198a4646ae9473153acadec2574ebc4ef5f140ba7d366fac6ef6fad5cbb42cdd",
+      "hash": "4f95e52fc2bf4688cb7101798f497eac2a1b791c9e75ac0adceaab3896b84e30",
       "serverTime": "2026-11-02T09:00:25.809Z",
-      "signature": "yVScrj9OtOjJRKI5+NZ+5Dg6WrspkEHRUdUbZrtx/5zJcC7+gGeKhs1yx6TAokeo3t91mytguHmYroa8GGxX8w==",
+      "signature": "bIRnj4RIokZ1AHr2qyU2XLqS7uovOzkJNxs5RkCLV28qP8E17JtBtPIWw+3MJOMKqbKKPvE94t3HIE6FzLPUUQ==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 24,
-      "hash": "847b24fb98e7f413e020668a1b50c3130d80e20b2ba791f6d989c3cfd18982ac",
+      "hash": "ab83c98c9c921ac6de14f5629567e2b84cc0e4fa083bfa96f4a507e112b256e0",
       "serverTime": "2026-11-02T09:00:26.209Z",
-      "signature": "JBT3z8MwWIF9xXx299zhJfQd6bFjscYHnS0LvMjhgynkFPGQ2HrTrETg1WrCRewxHYh0TIEFRKKHDYu596BgJw==",
+      "signature": "Ky0ZBpmoJV21FboaD0FJEUz90M2vFwjx2BRKPZH2ghYe0wzZGp0pgFlB6/hpaW8EOcHF/P6LSqDdfIW/D/cZdg==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 25,
-      "hash": "8af833cb09cc8d29fdafbb96789e4700668cfb4ac03bfe383f26b6465af055b2",
+      "hash": "86c9e5c8208b31a62c471e119ff595dd8ac70c254d073903255f7ea8b6f3262b",
       "serverTime": "2026-11-02T09:00:26.609Z",
-      "signature": "wBJSYlSIaWuf9Vf+XpTfXWK6sawJ3hF4bsItttA2YvefBj3nolT2Q6zLXPrJ+UVhOlX64zihkKpQWq5t8o4AfA==",
+      "signature": "2xZEQfYGVEZitwoKMR8WTecEOsz2r5RtEz2mCfJsNxWwiAv4R5nwyEz/Uo0m58vFiAaA30qW7xt2afl806Ug+Q==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 26,
-      "hash": "d7d216abd4ee88b36d865f0cb20f1308ad6ddaf6a3308b146e1da9abaaf373e0",
+      "hash": "911f70ef493bc88effe3f14eb2cb7f10aed893e6e45ed6374eec6ce27d8dec8a",
       "serverTime": "2026-11-02T09:00:27.009Z",
-      "signature": "lhdPpK68tffjWu8HDQve6Ed4QfsBzku12R1Mxb2Ho2ZJM7CML3ZndbL9LI01PEbVNZc7FIHSWZo61LebgBMIFg==",
+      "signature": "z4FNLa4CaZqce8BcT2U4bsOZBK4jvk1jcyGTRNATMUen7+F4oEsIOZXTsKNRdxt3T9d6HU919r3glLSKNow36A==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 27,
-      "hash": "96bbc7c5a639ae162895f2b9bc6594706faeb37677c76b3b5100c322f02fa8c0",
+      "hash": "cb91e3339efd10277579afddf63e347b96d91d0597015bd8208a09ced8cc1232",
       "serverTime": "2026-11-02T09:00:27.409Z",
-      "signature": "u8tEyLkgxGR3FUpN3KxnvIx8qbIFJJBqhBxGQCMEKzZUae9x9FYKA+RIrAgJshdoTJEtG1/nqjpo5fmWleUAVg==",
+      "signature": "iSZ+MdLs5XKHFZJBFsusW45UDl/3674xyTgyYmmVJvaJUaLHqWAKzK6eYieM6AV+GylKnd16jR9n0QXHx7adWg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 28,
+      "hash": "1e094c76e928198a817b4a605485020b9b3398207a4852890b5723d247374571",
+      "serverTime": "2026-11-02T09:00:27.809Z",
+      "signature": "G1tL1iXB3WLT7OWRTOR3kbjZU3FmZiDfXl8eiPBARTbFsdgu0ZZnBJVvbOXRk0XrrI+OvfCAqiIhOkL9HigZFA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 29,
+      "hash": "8a3334f3a25c1ed63662062f0d98f9b8142805275d3ca4a6c2d62d861f73f5a4",
+      "serverTime": "2026-11-02T09:00:28.209Z",
+      "signature": "3f9Qhxh0LajtiOknRzCndxm5ZwhAo0mWgw0YzmXHH8dnsZRGaoFwj5rJQyN7KJo8s0pY50FyRD2xowuCdEI2Fw==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 30,
+      "hash": "91331f0b366565ea766c03b7e4c1932902f3cb471fdc3775e5428ed2c2d884ad",
+      "serverTime": "2026-11-02T09:00:28.609Z",
+      "signature": "tjNb9sFlnkxvfskMGpFh2nSC3oSH609arwLD5NPOo9xpWBGEG/WE49uzLeMFi62XF4W6d04YkQjhK25gBOMh2Q==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     }
   ],

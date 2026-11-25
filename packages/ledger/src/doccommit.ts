@@ -333,7 +333,7 @@ export function finishDocCommit(dc: DocCommit, opts: FinishOptions): void {
 
   for (const t of dc.trackers) {
     tx.setTracker(t);
-    syncTrackerRecord(tx, t);
+    syncTrackerRecord(tx, t, dc.version);
   }
   tx.setDoc({
     ...dc.base,
