@@ -1,0 +1,8 @@
+{
+  "url": "https://api.crossref.org/works/10.5555%2Flonghand-does-not-exist",
+  "status": 404,
+  "contentType": "text/plain",
+  "recordedAt": "2026-11-25T00:58:55.178Z",
+  "trimmed": false,
+  "body": "Resource not found."
+}
