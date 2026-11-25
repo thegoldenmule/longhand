@@ -4,10 +4,29 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./markdown": "./src/markdown.ts",
+    "./docx": "./src/docx.ts",
+    "./pdf": "./src/pdf.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@expo-google-fonts/eb-garamond": "^0.4.3",
+    "@longhand/schema": "workspace:*",
+    "docx": "^9.16.0",
+    "pdfkit": "^0.21.0"
+  },
+  "devDependencies": {
+    "@types/markdown-it": "^14.2.0",
+    "@types/markdown-it-footnote": "^3.0.4",
+    "@types/node": "^24.19.2",
+    "@types/pdfkit": "^0.17.7",
+    "fflate": "^0.8.3",
+    "markdown-it": "^15.0.3",
+    "markdown-it-footnote": "^4.0.0",
+    "pdfjs-dist": "^6.5.438"
   }
 }
