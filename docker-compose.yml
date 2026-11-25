@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: longhand
+      POSTGRES_USER: longhand
+      POSTGRES_PASSWORD: longhand
+    ports:
+      - '5434:5432'
+    volumes:
+      - longhand-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U longhand -d longhand']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  longhand-pgdata:

@@ -1,0 +1,33 @@
+{
+  "name": "longhand",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.1.3",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json && pnpm -r --no-bail typecheck",
+    "test": "vitest run --passWithNoTests",
+    "test:watch": "vitest",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "dev:setup": "tsx scripts/dev-setup.ts",
+    "dev": "echo \"pnpm dev is filled in by the integration phase (see docs/BUILD_STATUS.md)\"",
+    "e2e": "echo \"pnpm e2e is filled in by the integration phase (see docs/BUILD_STATUS.md)\""
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.0.0",
+    "eslint": "^10.15.0",
+    "eslint-config-prettier": "^10.1.8",
+    "fast-check": "^4.11.0",
+    "globals": "^17.14.0",
+    "prettier": "^3.10.1",
+    "tsx": "^4.23.15",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.74.0",
+    "vitest": "^5.1.1"
+  }
+}
