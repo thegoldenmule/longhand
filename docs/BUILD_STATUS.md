@@ -6,8 +6,9 @@ The coordinator updates this file after every phase. A resumed session reads it 
 | --- | --- | --- | --- |
 | 0 | Preflight, spec export, build brief | done | — |
 | 1 | Scaffold + contracts (`packages/schema`) | done (270 tests) | dec3bd6 |
-| 2a | Ledger core + golden fixtures (`packages/ledger`) | running | |
-| 2b | Lanes needing contracts: editor, agent, binder, export, research | running | |
+| 2a | Ledger core + golden fixtures (`packages/ledger`) | done (136 tests, 13 fixtures + 6 tampered) | merged |
+| 2b | Lanes needing contracts: editor, agent, binder, export, research | done | merged |
+| 2c | Contract revision pass (pending list below) | running | |
 | 3 | Lanes needing ledger core: server, provenance-ui, report + verifier | pending | |
 | 4 | Annotations lane | pending | |
 | 5 | Integration: `apps/web`, dev orchestration, end-to-end in Chrome | pending | |
@@ -41,6 +42,8 @@ The coordinator updates this file after every phase. A resumed session reads it 
 
 - Move `EDITOR_INPUT_META` / `DeclaredInput` into schema as `INPUT_METHOD_META`; keystroke kinds `cite`/`clip`. (editor, research)
 - Server/web must implement the editor's `CommitTransport` (`packages/editor/src/sync/transport.ts`): submit → ack/duplicate/conflict/rejected/offline; subscribe in ledger order incl. own commits; `fetchSince` with fold-derived steps for ProposalAccepted. (editor → server)
+
+- `ProvenanceRun.suggestionId` can name any annotation under the 4-word rule: add `matchedKind` (or reword). Document that folded `FeedbackScope` selection from/to/version are mapped. (ledger)
 
 ## Notes
 
