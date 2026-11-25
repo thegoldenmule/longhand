@@ -1,9 +1,5 @@
 import { foldCommits, projectState } from '@longhand/ledger';
-import {
-  STARTER_EDITORS,
-  type EditorProfile,
-  type ProjectState,
-} from '@longhand/schema';
+import { STARTER_EDITORS, type EditorProfile, type ProjectState } from '@longhand/schema';
 import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
