@@ -86,9 +86,6 @@ export function ProjectsHome() {
       <main className="lh-home-main">
         <section className="lh-home-intro">
           <h1>Your projects</h1>
-          <p className="lh-muted">
-            Every word here is one you typed. The editor reads and suggests only when you ask.
-          </p>
           <div className="lh-home-actions">
             <button
               type="button"

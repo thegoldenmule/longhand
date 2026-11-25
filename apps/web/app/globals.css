@@ -397,10 +397,6 @@ kbd {
   letter-spacing: -0.01em;
   margin: 0 0 8px;
 }
-.lh-home-intro p {
-  margin: 0;
-  font-size: 15px;
-}
 .lh-home-actions {
   display: flex;
   gap: 10px;
