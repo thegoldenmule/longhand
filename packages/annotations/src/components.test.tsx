@@ -1,0 +1,399 @@
+import { foldCommits, projectState } from '@longhand/ledger';
+import { FeedbackRequestedSchema, LENSES, type ProjectState } from '@longhand/schema';
+import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import {
+  ANNOTATION_FIXTURES,
+  fixtureCommits,
+  fixtureState,
+  harness,
+  settle,
+  type Harness,
+} from '../test-support/fixtures';
+import { untilFirstReview } from '../test-support/foldingTransport';
+import { AnnotationsController } from './controller';
+import type { AnnotationEventOf } from './drafts';
+import { cardsFromState } from './model';
+import { AnnotationCard } from './react/cards';
+import { FeedbackRequestForm } from './react/form';
+import { AnnotationMargin } from './react/margin';
+import { FeedbackPanel } from './react/panel';
+
+const harnesses: Harness[] = [];
+afterEach(() => {
+  cleanup();
+  for (const h of harnesses.splice(0)) h.destroy();
+  document.body.innerHTML = '';
+});
+
+function prefixState(name: Parameters<typeof fixtureCommits>[0]): ProjectState {
+  return projectState(foldCommits(untilFirstReview(fixtureCommits(name))));
+}
+
+describe('<FeedbackRequestForm>', () => {
+  it('emits a FeedbackRequested event with scope, lenses, intensity and ask', () => {
+    const onRequest = vi.fn<(e: AnnotationEventOf<'FeedbackRequested'>) => void>();
+    render(
+      <FeedbackRequestForm
+        documentId="doc-1"
+        documentTitle="Chapter 1"
+        onRequest={onRequest}
+        newId={() => 'req-x'}
+      />,
+    );
+    const form = screen.getByTestId('feedback-form');
+    // Selection is unavailable without a selection.
+    expect((within(form).getByLabelText('Selection') as HTMLInputElement).disabled).toBe(true);
+    fireEvent.click(within(form).getByLabelText('Pacing'));
+    fireEvent.click(within(form).getByLabelText('Clarity')); // default on → off
+    fireEvent.click(within(form).getByLabelText('Character and dialogue'));
+    fireEvent.click(within(form).getByLabelText('Light touch'));
+    fireEvent.change(within(form).getByPlaceholderText('Is the opening too slow?'), {
+      target: { value: '  Is the opening too slow? ' },
+    });
+    fireEvent.click(within(form).getByRole('button', { name: 'Ask the editor' }));
+    expect(onRequest).toHaveBeenCalledTimes(1);
+    const event = onRequest.mock.calls[0]![0];
+    expect(event.type).toBe('FeedbackRequested');
+    expect(event.payload).toEqual({
+      requestId: 'req-x',
+      scope: { kind: 'document', documentId: 'doc-1' },
+      lenses: ['pacing', 'character-dialogue'],
+      intensity: 'light',
+      ask: 'Is the opening too slow?',
+    });
+    expect(FeedbackRequestedSchema.safeParse(event.payload).success).toBe(true);
+  });
+
+  it('offers every lens and the selection and project scopes', () => {
+    const onRequest = vi.fn<(e: AnnotationEventOf<'FeedbackRequested'>) => void>();
+    const { rerender } = render(
+      <FeedbackRequestForm
+        documentId="doc-1"
+        selection={{ documentId: 'doc-1', from: 3, to: 20, version: 42 }}
+        onRequest={onRequest}
+        newId={() => 'r1'}
+      />,
+    );
+    expect(screen.getAllByRole('checkbox')).toHaveLength(LENSES.length);
+    // A selection makes it the default scope.
+    fireEvent.click(screen.getByRole('button', { name: 'Ask the editor' }));
+    expect(onRequest.mock.calls[0]![0].payload).toMatchObject({
+      scope: { kind: 'selection', documentId: 'doc-1', from: 3, to: 20, version: 42 },
+      lenses: ['clarity'],
+      intensity: 'standard',
+      ask: null,
+    });
+    rerender(<FeedbackRequestForm documentId="doc-1" onRequest={onRequest} newId={() => 'r2'} />);
+    fireEvent.click(screen.getByLabelText('Whole project'));
+    fireEvent.click(screen.getByLabelText('Thorough'));
+    fireEvent.click(screen.getByRole('button', { name: 'Ask the editor' }));
+    expect(onRequest.mock.calls[1]![0].payload).toMatchObject({
+      scope: { kind: 'project' },
+      intensity: 'thorough',
+    });
+  });
+
+  it('needs at least one lens', () => {
+    const onRequest = vi.fn();
+    render(<FeedbackRequestForm documentId="d" onRequest={onRequest} />);
+    fireEvent.click(screen.getByLabelText('Clarity'));
+    expect(
+      (screen.getByRole('button', { name: 'Ask the editor' }) as HTMLButtonElement).disabled,
+    ).toBe(true);
+  });
+});
+
+describe('cards for every annotation kind', () => {
+  it.each(ANNOTATION_FIXTURES)('renders a card for each annotation in %s', (name) => {
+    for (const state of [fixtureState(name), prefixState(name)]) {
+      const controller = new AnnotationsController({ documentId: '', state });
+      const cards = cardsFromState(state);
+      const { container, unmount } = render(
+        <div>
+          {cards.map((c) => (
+            <AnnotationCard key={c.id} controller={controller} card={c} variant="list" />
+          ))}
+        </div>,
+      );
+      for (const c of cards) {
+        const el = container.querySelector(`[data-card-id="${c.id}"]`) as HTMLElement;
+        expect(el, c.id).not.toBeNull();
+        expect(el.dataset.kind).toBe(c.kind);
+        expect(el.dataset.phase).toBe(c.phase);
+        if (c.aiSurfaced) expect(el.textContent).toContain('AI-surfaced — unverified');
+        if (c.outcome) expect(el.textContent).toContain(c.outcome);
+      }
+      unmount();
+    }
+  });
+
+  it('shows ghost alternatives on cards as unselectable, aria-hidden decoration', () => {
+    const state = prefixState('suggestions');
+    const controller = new AnnotationsController({ documentId: 'doc-s', state });
+    const card = cardsFromState(state).find((c) => c.id === 'sug-adopt')!;
+    const { container } = render(<AnnotationCard controller={controller} card={card} />);
+    const ghosts = [...container.querySelectorAll('[data-lh-ghost]')];
+    expect(ghosts.map((g) => g.textContent)).toEqual(['weathered', 'sagging']);
+    for (const g of ghosts) expect(g.getAttribute('aria-hidden')).toBe('true');
+    const article = container.querySelector('article')!;
+    expect(article.getAttribute('aria-describedby')).toBe('lh-ann-desc-sug-adopt');
+    // Rephrase hints carry guidance and no ghost text.
+    const hint = cardsFromState(state).find((c) => c.id === 'sug-rephrase')!;
+    const r = render(<AnnotationCard controller={controller} card={hint} />);
+    expect(r.container.querySelector('[data-lh-ghost]')).toBeNull();
+    expect(r.container.textContent).toContain('Name what makes the hedges black');
+  });
+
+  it('labels research cards and calls the citation picker', async () => {
+    const onCite = vi.fn();
+    const h = harness('research', { controller: { onCite } });
+    harnesses.push(h);
+    await settle();
+    render(<FeedbackPanel controller={h.controller} />);
+    const panel = screen.getByTestId('panel-cards');
+    const flag = panel.querySelector('[data-card-id="flag-1"]') as HTMLElement;
+    expect(flag.textContent).toContain('AI-surfaced — unverified');
+    fireEvent.click(within(flag).getByRole('button', { name: 'Cite' }));
+    expect(onCite).toHaveBeenCalledWith(
+      expect.objectContaining({ cardId: 'flag-1', kind: 'citation-flag' }),
+    );
+    const surf = panel.querySelector('[data-card-id="surf-1"]') as HTMLElement;
+    expect(surf.textContent).toContain('AI-surfaced — unverified');
+    expect(surf.textContent).toContain('Flood farming forum thread');
+  });
+});
+
+describe('card actions emit events', () => {
+  it('dismiss with a reason', async () => {
+    const h = harness('suggestions');
+    harnesses.push(h);
+    await settle();
+    render(<AnnotationMargin controller={h.controller} />);
+    const card = screen
+      .getByTestId('annotation-margin')
+      .querySelector('[data-card-id="sug-dismiss"]') as HTMLElement;
+    fireEvent.click(within(card).getByRole('button', { name: 'Dismiss' }));
+    fireEvent.click(within(card).getByRole('button', { name: 'Not my voice' }));
+    expect(h.drafts.filter((d) => d.type === 'SuggestionDismissed').map((d) => d.payload)).toEqual([
+      { targetId: 'sug-dismiss', reason: 'not-my-voice', note: null },
+    ]);
+    await act(async () => {
+      await h.commit();
+    });
+    expect(h.transport.projectState().annotations.suggestions['sug-dismiss']!.status).toBe(
+      'dismissed',
+    );
+  });
+
+  it('discuss shows the thread with the editor’s reply', async () => {
+    const h = harness('discuss');
+    harnesses.push(h);
+    await settle();
+    render(<AnnotationMargin controller={h.controller} />);
+    const margin = screen.getByTestId('annotation-margin');
+    const card = margin.querySelector('[data-card-id="sug-d"]') as HTMLElement;
+    fireEvent.click(within(card).getByRole('button', { name: 'Discuss' }));
+    fireEvent.change(within(card).getByLabelText('Ask the editor about this'), {
+      target: { value: 'Why not keep ruined?' },
+    });
+    fireEvent.click(within(card).getByRole('button', { name: 'Ask' }));
+    const d = h.drafts.find((x) => x.type === 'DiscussRequested')!;
+    expect(d.payload).toMatchObject({ targetId: 'sug-d', message: 'Why not keep ruined?' });
+    await act(async () => {
+      await h.commit();
+    });
+    expect(within(card).getByRole('status').textContent).toContain('The editor is replying');
+    // The agent answers in the annotation layer.
+    const threadId = (d.payload as { threadId: string }).threadId;
+    await act(async () => {
+      h.transport.append({
+        commitId: 'c-start',
+        projectId: 'proj-1',
+        clientTime: new Date().toISOString(),
+        actor: { kind: 'agent', id: 'sonnet' },
+        deviceId: 'server',
+        sessionId: 'fs-x',
+        type: 'FeedbackSessionStarted',
+        schemaVersion: 1,
+        payload: {
+          feedbackSessionId: 'fs-x',
+          trigger: { kind: 'discuss', threadId },
+          model: 'sonnet',
+        },
+      });
+      h.transport.append({
+        commitId: 'c-answer',
+        projectId: 'proj-1',
+        clientTime: new Date().toISOString(),
+        actor: { kind: 'agent', id: 'sonnet' },
+        deviceId: 'server',
+        sessionId: 'fs-x',
+        type: 'DiscussAnswered',
+        schemaVersion: 1,
+        payload: {
+          feedbackSessionId: 'fs-x',
+          threadId,
+          targetId: 'sug-d',
+          body: 'Keep it if it is true.',
+        },
+      });
+      await settle();
+    });
+    expect(h.transport.rejected).toEqual([]);
+    const messages = within(card).getByRole('list', { name: 'Discussion' });
+    expect(messages.textContent).toContain('Why not keep ruined?');
+    expect(messages.textContent).toContain('Keep it if it is true.');
+    expect(messages.querySelector('[data-role="editor"]')).not.toBeNull();
+  });
+
+  it('a failed discuss offers a retry of the same message', async () => {
+    const h = harness('discuss', { prefix: 'all' });
+    harnesses.push(h);
+    await settle();
+    render(<FeedbackPanel controller={h.controller} />);
+    // sug-d was dismissed in the full fixture: show resolved cards.
+    fireEvent.click(screen.getByRole('button', { name: 'Everything' }));
+    const card = screen
+      .getByTestId('panel-cards')
+      .querySelector('[data-card-id="sug-d"]') as HTMLElement;
+    expect(card.textContent).toContain('couldn’t reply this time (model unavailable)');
+    fireEvent.click(within(card).getByRole('button', { name: 'Try again' }));
+    expect(h.drafts.find((x) => x.type === 'DiscussRequested')!.payload).toEqual({
+      threadId: 'thr-1',
+      targetId: 'sug-d',
+      message: 'And gone to seed?',
+    });
+  });
+
+  it('accept and reject proposals', async () => {
+    const h = harness('proposals');
+    harnesses.push(h);
+    await settle();
+    render(<AnnotationMargin controller={h.controller} />);
+    const margin = screen.getByTestId('annotation-margin');
+    const reject = margin.querySelector('[data-card-id="cut-rejected"]') as HTMLElement;
+    fireEvent.click(within(reject).getByRole('button', { name: 'Reject' }));
+    fireEvent.click(within(reject).getByRole('button', { name: 'Wrong' }));
+    const accept = margin.querySelector('[data-card-id="split-1"]') as HTMLElement;
+    fireEvent.click(within(accept).getByRole('button', { name: 'Accept' }));
+    expect(h.drafts.filter((d) => d.type !== 'TextEdited').map((d) => [d.type, d.payload])).toEqual(
+      [
+        ['ProposalRejected', { proposalId: 'cut-rejected', reason: 'wrong' }],
+        [
+          'ProposalAccepted',
+          expect.objectContaining({ proposalId: 'split-1', documentId: 'doc-p' }),
+        ],
+      ],
+    );
+    await act(async () => {
+      await h.commit();
+      await settle(10);
+    });
+    expect(h.transport.rejected).toEqual([]);
+    expect(h.text().split('\n').slice(0, 3)).toEqual([
+      'The river floods every spring. Nobody here remembers a dry year. The town was built anyway.',
+      'Farmers moved uphill after 1952.',
+      'Their old fields became marsh.',
+    ]);
+  });
+});
+
+describe('<FeedbackPanel>', () => {
+  it('offers only the request form until a review is requested', () => {
+    const commits = fixtureCommits('feedback-session');
+    const before = projectState(
+      foldCommits(
+        commits.slice(
+          0,
+          commits.findIndex((c) => c.type === 'FeedbackRequested'),
+        ),
+      ),
+    );
+    const controller = new AnnotationsController({ documentId: 'doc-ch1', state: before });
+    render(<FeedbackPanel controller={controller} />);
+    expect(screen.getByTestId('feedback-form')).toBeTruthy();
+    expect(screen.queryByTestId('review-session')).toBeNull();
+    expect(screen.getByText(/speaks only when you ask/)).toBeTruthy();
+    const margin = render(<AnnotationMargin controller={controller} />);
+    expect(margin.container.querySelector('[data-card-id]')).toBeNull();
+  });
+
+  it('shows the summary, a calm failure with retry, and questions for the writer', async () => {
+    const h = harness('feedback-session', { prefix: 'all' });
+    harnesses.push(h);
+    await settle();
+    render(<FeedbackPanel controller={h.controller} />);
+    const sessions = screen.getAllByTestId('review-session');
+    expect(sessions.map((s) => s.dataset.phase)).toEqual(['failed', 'finished']);
+    expect(sessions[0]!.textContent).toContain('This review didn’t finish (model timeout)');
+    const summary = within(sessions[1]!).getByTestId('review-summary');
+    expect(summary.textContent).toContain('A quiet, confident opening.');
+    expect(summary.textContent).toContain('Restraint');
+    expect(summary.textContent).toContain('Plant the reason the light failed');
+    const questions = screen.getByTestId('panel-questions');
+    expect(questions.querySelectorAll('[data-kind="question"]')).toHaveLength(2);
+    fireEvent.click(within(sessions[0]!).getByRole('button', { name: 'Try again' }));
+    expect(h.drafts.find((d) => d.type === 'FeedbackRequested')!.payload).toMatchObject({
+      lenses: ['word-choice'],
+      intensity: 'light',
+    });
+  });
+
+  it('groups open cards by kind with filters', async () => {
+    const h = harness('suggestions');
+    harnesses.push(h);
+    await settle();
+    render(<FeedbackPanel controller={h.controller} />);
+    const panel = screen.getByTestId('panel-cards');
+    const groups = () =>
+      [...panel.querySelectorAll('[data-group]')].map((g) => (g as HTMLElement).dataset.group);
+    expect(groups()).toEqual(['suggestions', 'comments']);
+    fireEvent.click(within(panel).getByRole('button', { name: /^Comments/ }));
+    expect(groups()).toEqual(['comments']);
+    fireEvent.click(within(panel).getByRole('button', { name: 'All' }));
+    fireEvent.click(within(panel).getByRole('button', { name: 'Resolved' }));
+    expect(panel.querySelectorAll('[data-card-id]')).toHaveLength(0);
+  });
+
+  it('streams a live review from progress events and new annotations', async () => {
+    const commits = fixtureCommits('feedback-session');
+    const started = commits.findIndex((c) => c.type === 'FeedbackSessionStarted');
+    const controller = new AnnotationsController({
+      documentId: 'doc-ch1',
+      state: projectState(foldCommits(commits.slice(0, started + 1))),
+    });
+    render(<FeedbackPanel controller={controller} />);
+    const session = screen.getByTestId('review-session');
+    expect(session.dataset.phase).toBe('reviewing');
+    expect(session.textContent).toContain('Reviewing');
+    act(() => {
+      controller.pushProgress({ kind: 'started', feedbackSessionId: 'fs-1', model: 'opus' });
+      controller.pushProgress({
+        kind: 'model',
+        event: { type: 'tool-call', id: 't1', name: 'mcp__longhand__comment', input: {} },
+      });
+    });
+    expect(session.textContent).toContain('Writing a margin note');
+    act(() => {
+      controller.pushProgress({
+        kind: 'annotation',
+        seq: 10,
+        draft: {
+          type: 'CommentAdded',
+          sessionId: 'fs-1',
+          payload: { commentId: 'com-1', feedbackSessionId: 'fs-1' },
+        },
+      });
+    });
+    expect(session.textContent).toContain('1 note so far');
+    act(() => controller.setState(projectState(foldCommits(commits.slice(0, started + 3)))));
+    expect(session.textContent).toContain('2 notes so far');
+    act(() => controller.setState(fixtureState('feedback-session')));
+    const done = screen
+      .getAllByTestId('review-session')
+      .find((s) => s.dataset.requestId === 'req-1')!;
+    expect(done.dataset.phase).toBe('finished');
+    expect(done.textContent).toContain('4 notes');
+  });
+});

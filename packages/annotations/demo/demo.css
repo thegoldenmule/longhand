@@ -1,0 +1,90 @@
+/* Demo page chrome only. The package's own styles are in src/styles.css. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  background: var(--lh-ann-paper);
+  color: var(--lh-ann-ink);
+}
+body {
+  font-family: var(--lh-ann-font-ui);
+}
+.demo-shell {
+  --demo-panel: 23rem;
+  padding-right: var(--demo-panel);
+}
+.demo-bar {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  right: var(--demo-panel);
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.6rem 1.25rem;
+  font-size: 0.75rem;
+  color: var(--lh-ann-ink-soft);
+  background: color-mix(in srgb, var(--lh-ann-paper) 92%, transparent);
+  border-bottom: 1px solid var(--lh-ann-rule-soft);
+}
+.demo-title {
+  font-family: var(--lh-ann-font-text);
+  font-size: 0.95rem;
+  color: var(--lh-ann-ink);
+}
+.demo-seeds {
+  display: flex;
+  gap: 0.6rem;
+  margin-left: auto;
+}
+.demo-seeds a {
+  color: var(--lh-ann-ink-faint);
+  text-decoration: none;
+}
+.demo-seeds a[aria-current='page'] {
+  color: var(--lh-ann-ai);
+}
+.demo-theme {
+  font: inherit;
+  border: 1px solid var(--lh-ann-rule);
+  border-radius: 4px;
+  background: none;
+  color: inherit;
+  padding: 0.1rem 0.5rem;
+  cursor: pointer;
+}
+.demo-page {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--lh-ann-margin-width);
+  gap: 1.5rem;
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+.demo-editor .lh-editor {
+  --lh-font-size: 1.1875rem;
+  background: transparent;
+}
+.demo-editor .lh-manuscript {
+  max-width: 34rem;
+}
+.demo-margin {
+  align-self: stretch;
+}
+.demo-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: var(--demo-panel);
+  overflow-y: auto;
+  padding: 1.1rem 1.25rem 3rem;
+  background: var(--lh-ann-paper);
+  border-left: 1px solid var(--lh-ann-rule);
+}

@@ -1,0 +1,934 @@
+/*
+ * Longhand annotation styles. Import once: `import '@longhand/annotations/styles.css'`.
+ *
+ * Everything is themed through the `--lh-ann-*` variables below. The AI has its
+ * own ink (a quiet indigo) that never resembles the writer's; ghost text, AI
+ * underlines and card accents use it, and the writer's own text keeps the
+ * editor's `--lh-ink`. Dark mode follows `prefers-color-scheme` unless an
+ * ancestor sets `data-theme="light"` or `data-theme="dark"`, like the editor.
+ */
+:root {
+  --lh-ann-font-ui: ui-sans-serif, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --lh-ann-font-text:
+    'Iowan Old Style', 'Charter', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+  --lh-ann-ink: #23211e;
+  --lh-ann-ink-soft: #6b665e;
+  --lh-ann-ink-faint: #9b958a;
+  --lh-ann-paper: #fbf9f5;
+  --lh-ann-card: #fffefb;
+  --lh-ann-rule: #e6e0d5;
+  --lh-ann-rule-soft: #f1ece3;
+  /* The writer's colour (inside the editor the editor's --lh-ink wins). */
+  --lh-ann-writer: #23211e;
+  /* The AI's colour: ghost text, AI underlines, card accents. */
+  --lh-ann-ai: #3d58a3;
+  --lh-ann-ai-line: rgb(61 88 163 / 0.55);
+  --lh-ann-ai-soft: rgb(61 88 163 / 0.08);
+  --lh-ann-ai-wash: rgb(61 88 163 / 0.14);
+  --lh-ann-stale: #a39a8c;
+  --lh-ann-cut: #a5473c;
+  --lh-ann-done: #4f7a55;
+  --lh-ann-margin-width: 17.5rem;
+  --lh-ann-radius: 6px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --lh-ann-ink: #e6e1d8;
+    --lh-ann-ink-soft: #a29b8f;
+    --lh-ann-ink-faint: #6f695f;
+    --lh-ann-paper: #1c1b19;
+    --lh-ann-card: #22211e;
+    --lh-ann-rule: #3a3731;
+    --lh-ann-rule-soft: #2b2925;
+    --lh-ann-writer: #e6e1d8;
+    --lh-ann-ai: #9fb3ef;
+    --lh-ann-ai-line: rgb(159 179 239 / 0.55);
+    --lh-ann-ai-soft: rgb(159 179 239 / 0.09);
+    --lh-ann-ai-wash: rgb(159 179 239 / 0.16);
+    --lh-ann-stale: #6f695f;
+    --lh-ann-cut: #d98a7f;
+    --lh-ann-done: #93bf98;
+  }
+}
+[data-theme='dark'] {
+  --lh-ann-ink: #e6e1d8;
+  --lh-ann-ink-soft: #a29b8f;
+  --lh-ann-ink-faint: #6f695f;
+  --lh-ann-paper: #1c1b19;
+  --lh-ann-card: #22211e;
+  --lh-ann-rule: #3a3731;
+  --lh-ann-rule-soft: #2b2925;
+  --lh-ann-writer: #e6e1d8;
+  --lh-ann-ai: #9fb3ef;
+  --lh-ann-ai-line: rgb(159 179 239 / 0.55);
+  --lh-ann-ai-soft: rgb(159 179 239 / 0.09);
+  --lh-ann-ai-wash: rgb(159 179 239 / 0.16);
+  --lh-ann-stale: #6f695f;
+  --lh-ann-cut: #d98a7f;
+  --lh-ann-done: #93bf98;
+}
+
+/* ------------------------------------------------------------------------- */
+/* In the manuscript                                                          */
+/* ------------------------------------------------------------------------- */
+
+.lh-ann-mark {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.24em;
+  text-decoration-skip-ink: auto;
+  transition:
+    background-color 200ms ease,
+    text-decoration-color 200ms ease;
+  border-radius: 2px;
+}
+.lh-ann-suggestion {
+  text-decoration-style: dotted;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--lh-ann-ai);
+}
+.lh-ann-comment {
+  text-decoration-style: solid;
+  text-decoration-color: var(--lh-ann-ai-line);
+}
+.lh-ann-comment.lh-ann-severity-minor {
+  text-decoration-color: var(--lh-ann-ai-wash);
+  text-decoration-thickness: 2px;
+}
+.lh-ann-question {
+  text-decoration-style: dashed;
+  text-decoration-color: var(--lh-ann-ai-line);
+}
+.lh-ann-flag {
+  text-decoration-style: wavy;
+  text-decoration-color: var(--lh-ann-ai-line);
+  text-decoration-thickness: 1px;
+}
+.lh-ann-source {
+  text-decoration-style: dotted;
+  text-decoration-color: var(--lh-ann-ai-line);
+}
+.lh-ann-mark.lh-ann-stale {
+  text-decoration-color: var(--lh-ann-stale);
+  text-decoration-style: dotted;
+}
+.lh-ann-active,
+.lh-ann-mark.lh-ann-active {
+  background-color: var(--lh-ann-ai-wash);
+  animation: lh-ann-flash 900ms ease-out 1;
+}
+.lh-ann-point.lh-ann-active {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  vertical-align: -0.15em;
+  background: var(--lh-ann-ai);
+  animation: none;
+}
+@keyframes lh-ann-flash {
+  0% {
+    background-color: var(--lh-ann-ai-line);
+  }
+  100% {
+    background-color: var(--lh-ann-ai-wash);
+  }
+}
+
+/* Ghost text: AI wording drawn beside the writer's text, never part of it. */
+.lh-ghost,
+[data-lh-ghost] {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.lh-ghost {
+  color: var(--lh-ann-ai);
+  text-indent: 0;
+  pointer-events: none;
+  font-style: normal;
+}
+.lh-editor .lh-ghost-alt {
+  margin-left: 0.3em;
+  padding: 0 0.2em;
+  border-radius: 3px;
+  background: var(--lh-ann-ai-soft);
+}
+.lh-editor .lh-ghost-insertion {
+  background: var(--lh-ann-ai-soft);
+  border-radius: 3px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.lh-editor .lh-ghost-trace {
+  opacity: 0.9;
+}
+
+/* Trace-over: characters the writer has retyped turn from the AI colour to theirs. */
+.lh-trace-region {
+  background-image: linear-gradient(var(--lh-ann-ai-line), var(--lh-ann-ai-line));
+  background-size: 100% 1px;
+  background-position: 0 calc(100% - 0.08em);
+  background-repeat: no-repeat;
+}
+.lh-trace-region.lh-ann-mark {
+  text-decoration: none;
+}
+.lh-trace-typed {
+  color: var(--lh-ink, var(--lh-ann-writer));
+  animation: lh-trace-turn 420ms ease-out 1;
+}
+@keyframes lh-trace-turn {
+  from {
+    color: var(--lh-ann-ai);
+  }
+  to {
+    color: var(--lh-ink, var(--lh-ann-writer));
+  }
+}
+.lh-trace-diverged {
+  color: var(--lh-ink, var(--lh-ann-writer));
+  text-decoration: underline dotted var(--lh-ann-ink-faint);
+  text-underline-offset: 0.24em;
+}
+
+/* Proposal previews. */
+.lh-prop-mark {
+  text-decoration: underline dashed var(--lh-ann-ai-wash);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
+}
+.lh-prop-source {
+  outline: 1.5px dashed var(--lh-ann-ai-line);
+  outline-offset: 2px;
+  border-radius: 2px;
+  background: var(--lh-ann-ai-soft);
+}
+.lh-prop-source-block,
+.lh-prop-merge-block {
+  outline: 1.5px dashed var(--lh-ann-ai-line);
+  outline-offset: 4px;
+  border-radius: 3px;
+  background: var(--lh-ann-ai-soft);
+}
+.lh-prop-cut-text,
+.lh-prop-cut-block {
+  text-decoration: line-through;
+  text-decoration-color: var(--lh-ann-cut);
+  text-decoration-thickness: 1.5px;
+  color: var(--lh-ann-ink-soft);
+}
+.lh-prop-drop,
+.lh-prop-split-mark,
+.lh-prop-join-mark {
+  font-family: var(--lh-ann-font-ui);
+  font-size: 0.62em;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--lh-ann-ai);
+  text-indent: 0;
+  white-space: nowrap;
+  vertical-align: 0.25em;
+}
+.lh-prop-drop {
+  position: relative;
+  display: inline-block;
+  padding: 0 0.35em 0 0.45em;
+  margin: 0 0.15em;
+  border-left: 2px solid var(--lh-ann-ai);
+  line-height: 1.3;
+  background: var(--lh-ann-ai-soft);
+  border-radius: 0 3px 3px 0;
+}
+.lh-prop-drop.lh-prop-drop-block {
+  display: block;
+  margin: 0.4em 0;
+  padding: 0.1em 0.5em;
+  border-left: none;
+  border-top: 2px solid var(--lh-ann-ai);
+  border-radius: 0;
+  background: none;
+  vertical-align: baseline;
+}
+.lh-prop-split-mark,
+.lh-prop-join-mark {
+  padding: 0 0.25em;
+}
+.lh-prop-preview {
+  background: var(--lh-ann-ai-soft);
+  border-radius: 3px;
+}
+
+/* ------------------------------------------------------------------------- */
+/* Cards                                                                      */
+/* ------------------------------------------------------------------------- */
+
+.lh-ann {
+  font-family: var(--lh-ann-font-ui);
+  color: var(--lh-ann-ink);
+  -webkit-font-smoothing: antialiased;
+}
+.lh-ann *,
+.lh-ann *::before,
+.lh-ann *::after {
+  box-sizing: border-box;
+}
+
+.lh-margin {
+  position: relative;
+  width: var(--lh-ann-margin-width);
+  min-height: 1px;
+}
+.lh-margin > .lh-card {
+  left: 0;
+  right: 0;
+  transition: top 180ms ease;
+}
+
+.lh-card {
+  background: var(--lh-ann-card);
+  border: 1px solid var(--lh-ann-rule);
+  border-left: 2px solid var(--lh-ann-ai-line);
+  border-radius: var(--lh-ann-radius);
+  padding: 0.6rem 0.75rem 0.55rem;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  cursor: default;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    opacity 160ms ease;
+}
+.lh-card:hover {
+  border-color: var(--lh-ann-ai-line);
+}
+.lh-card.is-active {
+  border-color: var(--lh-ann-ai);
+  box-shadow: 0 4px 18px rgb(0 0 0 / 0.06);
+}
+.lh-card.is-stale {
+  border-left-color: var(--lh-ann-stale);
+  opacity: 0.66;
+}
+.lh-card.is-resolved {
+  border-left-color: var(--lh-ann-rule);
+  opacity: 0.78;
+}
+.lh-card-list + .lh-card-list {
+  margin-top: 0.5rem;
+}
+
+.lh-card-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.5rem;
+  margin-bottom: 0.25rem;
+}
+.lh-card-kind {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--lh-ann-ai);
+}
+.is-stale .lh-card-kind,
+.is-resolved .lh-card-kind {
+  color: var(--lh-ann-ink-soft);
+}
+.lh-card-meta {
+  font-size: 0.6875rem;
+  color: var(--lh-ann-ink-faint);
+}
+.lh-card-outcome {
+  margin-left: auto;
+  font-size: 0.6875rem;
+  color: var(--lh-ann-ink-soft);
+}
+.lh-outcome-adopted,
+.lh-outcome-accepted,
+.lh-outcome-cited {
+  color: var(--lh-ann-done);
+}
+.lh-card-quote {
+  margin: 0.15rem 0 0.35rem;
+  font-family: var(--lh-ann-font-text);
+  font-style: italic;
+  font-size: 0.875rem;
+  color: var(--lh-ann-ink-soft);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.lh-card-quote::before {
+  content: '“';
+}
+.lh-card-quote::after {
+  content: '”';
+}
+.lh-card-title {
+  margin: 0.2rem 0;
+  font-weight: 550;
+}
+.lh-card-text {
+  margin: 0.3rem 0;
+}
+.lh-card-question {
+  font-family: var(--lh-ann-font-text);
+  font-size: 0.9375rem;
+}
+.lh-card-guidance {
+  font-style: italic;
+}
+.lh-card-ghost-line {
+  margin: 0.3rem 0;
+  font-family: var(--lh-ann-font-text);
+  font-size: 0.9375rem;
+}
+.lh-alts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin: 0.35rem 0;
+}
+.lh-alt {
+  font: inherit;
+  font-family: var(--lh-ann-font-text);
+  font-size: 0.9375rem;
+  padding: 0.05rem 0.5rem;
+  border: 1px solid var(--lh-ann-ai-wash);
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+}
+.lh-alt.is-on {
+  background: var(--lh-ann-ai-soft);
+  border-color: var(--lh-ann-ai-line);
+}
+.lh-alt.is-adopted {
+  border-color: var(--lh-ann-done);
+}
+.lh-alt:disabled {
+  cursor: default;
+}
+.lh-alt .lh-ghost {
+  pointer-events: none;
+}
+.lh-trace-status {
+  margin: 0.3rem 0 0;
+  font-size: 0.75rem;
+  color: var(--lh-ann-ink-soft);
+}
+.lh-badge {
+  display: inline-block;
+  margin: 0.1rem 0 0.35rem;
+  padding: 0.02rem 0.45rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.02em;
+  color: var(--lh-ann-ai);
+  border: 1px dashed var(--lh-ann-ai-line);
+  border-radius: 999px;
+}
+.lh-candidates {
+  list-style: none;
+  margin: 0.35rem 0;
+  padding: 0;
+}
+.lh-candidate {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+  padding: 0.35rem 0;
+  border-top: 1px solid var(--lh-ann-rule-soft);
+}
+.lh-candidate-title {
+  font-family: var(--lh-ann-font-text);
+  font-size: 0.875rem;
+}
+.lh-candidate-meta {
+  font-size: 0.72rem;
+  color: var(--lh-ann-ink-faint);
+}
+.lh-candidate-meta a {
+  color: inherit;
+}
+.lh-candidate-added {
+  font-size: 0.72rem;
+  color: var(--lh-ann-done);
+}
+.lh-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.2rem;
+  margin-top: 0.45rem;
+  margin-left: -0.4rem;
+}
+.lh-reasons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.2rem;
+}
+.lh-reasons-q {
+  font-size: 0.72rem;
+  color: var(--lh-ann-ink-faint);
+  padding: 0 0.2rem 0 0.4rem;
+}
+
+.lh-btn {
+  font: inherit;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  padding: 0.18rem 0.5rem;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: none;
+  color: var(--lh-ann-ink-soft);
+  cursor: pointer;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease,
+    border-color 120ms ease;
+}
+.lh-btn:hover:not(:disabled) {
+  background: var(--lh-ann-rule-soft);
+  color: var(--lh-ann-ink);
+}
+.lh-btn:focus-visible,
+.lh-alt:focus-visible,
+.lh-chip:focus-visible,
+.lh-card:focus-visible {
+  outline: 2px solid var(--lh-ann-ai);
+  outline-offset: 1px;
+}
+.lh-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.lh-btn-primary {
+  color: var(--lh-ann-ai);
+  border-color: var(--lh-ann-ai-line);
+}
+.lh-btn-primary:hover:not(:disabled) {
+  background: var(--lh-ann-ai-soft);
+  color: var(--lh-ann-ai);
+}
+.lh-btn-chip {
+  border-color: var(--lh-ann-rule);
+  border-radius: 999px;
+}
+.lh-btn-plain {
+  border-style: dashed;
+}
+.lh-btn-x {
+  padding: 0.1rem 0.4rem;
+}
+.lh-btn-link {
+  padding: 0.1rem 0.2rem;
+  color: var(--lh-ann-ai);
+  text-decoration: underline;
+  text-decoration-color: var(--lh-ann-ai-wash);
+  text-underline-offset: 0.2em;
+  text-align: left;
+}
+.lh-muted {
+  color: var(--lh-ann-ink-faint);
+}
+
+/* Discuss */
+.lh-thread {
+  margin-top: 0.5rem;
+  border-top: 1px solid var(--lh-ann-rule-soft);
+  padding-top: 0.4rem;
+}
+.lh-thread:empty {
+  display: none;
+}
+.lh-thread-messages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.lh-msg {
+  margin: 0.3rem 0;
+}
+.lh-msg p {
+  margin: 0.1rem 0 0;
+}
+.lh-msg-who {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--lh-ann-ink-faint);
+}
+.lh-msg-editor {
+  padding-left: 0.55rem;
+  border-left: 2px solid var(--lh-ann-ai-wash);
+}
+.lh-msg-editor .lh-msg-who {
+  color: var(--lh-ann-ai);
+}
+.lh-thread-wait,
+.lh-thread-failed {
+  margin: 0.35rem 0;
+  font-size: 0.75rem;
+  color: var(--lh-ann-ink-soft);
+}
+.lh-thread-compose textarea,
+.lh-request textarea {
+  width: 100%;
+  font: inherit;
+  font-size: 0.8125rem;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--lh-ann-rule);
+  border-radius: 4px;
+  background: var(--lh-ann-paper);
+  color: var(--lh-ann-ink);
+  resize: vertical;
+}
+.lh-thread-compose textarea:focus,
+.lh-request textarea:focus {
+  outline: none;
+  border-color: var(--lh-ann-ai-line);
+}
+.lh-thread-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.25rem;
+  margin-top: 0.3rem;
+}
+
+.lh-dots::after {
+  content: '…';
+  display: inline-block;
+  animation: lh-ann-breathe 1.6s ease-in-out infinite;
+}
+@keyframes lh-ann-breathe {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ------------------------------------------------------------------------- */
+/* Feedback panel and request form                                           */
+/* ------------------------------------------------------------------------- */
+
+.lh-panel {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--lh-ann-ink);
+}
+.lh-panel h2 {
+  margin: 0;
+  font-family: var(--lh-ann-font-text);
+  font-size: 1.15rem;
+  font-weight: 500;
+}
+.lh-panel h3 {
+  margin: 1.4rem 0 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--lh-ann-ink-faint);
+}
+.lh-panel h4 {
+  margin: 0.8rem 0 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--lh-ann-ink-soft);
+}
+.lh-panel-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+.lh-panel-empty {
+  color: var(--lh-ann-ink-soft);
+  font-family: var(--lh-ann-font-text);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+.lh-panel-none {
+  margin: 0.4rem 0;
+}
+
+.lh-review {
+  padding: 0.65rem 0;
+  border-top: 1px solid var(--lh-ann-rule);
+}
+.lh-review:first-of-type {
+  border-top: none;
+}
+.lh-review-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 0.6rem;
+}
+.lh-review-scope {
+  font-weight: 600;
+}
+.lh-review-meta {
+  font-size: 0.75rem;
+  color: var(--lh-ann-ink-faint);
+}
+.lh-review-ask {
+  flex-basis: 100%;
+  margin: 0.2rem 0 0;
+  font-family: var(--lh-ann-font-text);
+  font-style: italic;
+  color: var(--lh-ann-ink-soft);
+}
+.lh-review-live {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  margin: 0.45rem 0 0.2rem;
+  color: var(--lh-ann-ai);
+}
+.lh-review-activity {
+  font-size: 0.75rem;
+  color: var(--lh-ann-ink-soft);
+}
+.lh-review-failed {
+  margin: 0.45rem 0 0.2rem;
+  padding: 0.5rem 0.65rem;
+  border-radius: var(--lh-ann-radius);
+  background: var(--lh-ann-rule-soft);
+  color: var(--lh-ann-ink-soft);
+}
+.lh-review-failed p {
+  margin: 0 0 0.3rem;
+}
+.lh-review-failed .lh-btn {
+  margin-left: -0.5rem;
+}
+.lh-review-summary {
+  margin-top: 0.3rem;
+}
+.lh-review-summary p {
+  margin: 0;
+  font-family: var(--lh-ann-font-text);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+.lh-review-summary ul,
+.lh-review-summary ol {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+.lh-review-summary li {
+  margin: 0.15rem 0;
+}
+.lh-review-items {
+  margin-top: 0.5rem;
+}
+.lh-review-items summary {
+  cursor: pointer;
+  font-size: 0.75rem;
+  color: var(--lh-ann-ink-soft);
+}
+.lh-review-items ul {
+  list-style: none;
+  margin: 0.25rem 0 0;
+  padding: 0;
+}
+.lh-review-items li .lh-btn-link {
+  color: var(--lh-ann-ink);
+  text-decoration: none;
+}
+
+.lh-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+  margin-bottom: 0.4rem;
+}
+.lh-filters-sep {
+  width: 1px;
+  align-self: stretch;
+  margin: 0 0.25rem;
+  background: var(--lh-ann-rule);
+}
+.lh-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font: inherit;
+  font-size: 0.72rem;
+  padding: 0.12rem 0.55rem;
+  border: 1px solid var(--lh-ann-rule);
+  border-radius: 999px;
+  background: none;
+  color: var(--lh-ann-ink-soft);
+  cursor: pointer;
+}
+.lh-chip.is-on {
+  border-color: var(--lh-ann-ai-line);
+  background: var(--lh-ann-ai-soft);
+  color: var(--lh-ann-ai);
+}
+.lh-chip input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 1px;
+  height: 1px;
+}
+.lh-chip:has(input:focus-visible) {
+  outline: 2px solid var(--lh-ann-ai);
+  outline-offset: 1px;
+}
+.lh-chip-count {
+  font-size: 0.65rem;
+  color: var(--lh-ann-ink-faint);
+}
+.lh-group h4 {
+  margin-top: 0.9rem;
+}
+
+.lh-request {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid var(--lh-ann-rule);
+  border-radius: var(--lh-ann-radius);
+  background: var(--lh-ann-card);
+  font-size: 0.8125rem;
+}
+.lh-request-group {
+  margin: 0;
+  padding: 0;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+.lh-request legend,
+.lh-request .lh-legend {
+  padding: 0;
+  margin-bottom: 0.35rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--lh-ann-ink-faint);
+}
+.lh-lenses {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+/* Quiet cards: until a card is active, long text is clamped and older thread
+   messages fold away, so the margin stays close to the text it annotates. */
+.lh-card:not(.is-active) .lh-card-quote {
+  -webkit-line-clamp: 1;
+}
+.lh-card:not(.is-active) .lh-card-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.lh-card:not(.is-active) .lh-thread-messages > li:not(:last-child) {
+  display: none;
+}
+/* Panel list items are summaries: click one to open it (and its margin card). */
+.lh-card-list:not(.is-active) {
+  cursor: pointer;
+}
+.lh-card-list:not(.is-active) .lh-card-actions,
+.lh-card-list:not(.is-active) .lh-alts,
+.lh-card-list:not(.is-active) .lh-thread,
+.lh-card-list:not(.is-active) .lh-trace-status {
+  display: none;
+}
+.lh-card-list:not(.is-active) .lh-card-text {
+  -webkit-line-clamp: 2;
+}
+.lh-card-margin.is-resolved:not(.is-active) .lh-card-text,
+.lh-card-margin.is-resolved:not(.is-active) .lh-alts,
+.lh-card-margin.is-stale:not(.is-active) .lh-alts {
+  display: none;
+}
+
+.lh-segmented {
+  display: inline-flex;
+  flex-wrap: wrap;
+  border: 1px solid var(--lh-ann-rule);
+  border-radius: 6px;
+  overflow: hidden;
+  align-self: flex-start;
+}
+.lh-segmented label {
+  position: relative;
+  padding: 0.22rem 0.65rem;
+  font-size: 0.75rem;
+  color: var(--lh-ann-ink-soft);
+  cursor: pointer;
+  border-left: 1px solid var(--lh-ann-rule);
+}
+.lh-segmented label:first-child {
+  border-left: none;
+}
+.lh-segmented label.is-on {
+  background: var(--lh-ann-ai-soft);
+  color: var(--lh-ann-ai);
+}
+.lh-segmented label[aria-disabled='true'] {
+  opacity: 0.45;
+  cursor: default;
+}
+.lh-segmented input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 1px;
+  height: 1px;
+}
+.lh-segmented label:has(input:focus-visible) {
+  outline: 2px solid var(--lh-ann-ai);
+  outline-offset: -2px;
+}
+.lh-hint {
+  margin: 0;
+  font-size: 0.72rem;
+  color: var(--lh-ann-ink-faint);
+}
+.lh-request-error {
+  margin: 0;
+  color: var(--lh-ann-cut);
+  font-size: 0.75rem;
+}
+.lh-request-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.3rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lh-ann-active,
+  .lh-trace-typed,
+  .lh-dots::after {
+    animation: none;
+  }
+  .lh-margin > .lh-card,
+  .lh-card,
+  .lh-ann-mark {
+    transition: none;
+  }
+}
