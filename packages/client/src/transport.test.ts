@@ -8,6 +8,7 @@ import { randomUUID } from 'node:crypto';
 import { afterAll, beforeAll, describe, expect, inject, it } from 'vitest';
 import type { CommitTransport as EditorCommitTransport } from '@longhand/editor';
 import {
+  STARTER_EDITORS,
   docFromJSON,
   schema,
   type CommitDraft,
@@ -244,5 +245,32 @@ describe.skipIf(!inject('dbAvailable'))('HttpCommitTransport against the ledger 
       status: 404,
       code: 'unknown-project',
     });
+  });
+
+  it('manages the account editors', async () => {
+    const starters = await client.listEditors();
+    expect(starters.map((e) => e.name)).toEqual(STARTER_EDITORS.map((s) => s.name));
+    const ed = await client.createEditor({
+      name: 'Theo',
+      brief: 'A blunt line editor who hates adverbs.',
+      lenses: ['word-choice'],
+      intensity: 'light',
+      questions: ['Which adverbs would you cut?'],
+    });
+    expect(await client.getEditor(ed.id)).toEqual(ed);
+    const up = await client.updateEditor(ed.id, { ...ed, name: 'Theodora' });
+    expect(up).toMatchObject({ id: ed.id, name: 'Theodora' });
+    await expect(client.createEditor({ ...ed, lenses: [] })).rejects.toMatchObject({
+      status: 422,
+      code: 'invalid-editor',
+    });
+    await client.deleteEditor(ed.id);
+    await expect(client.getEditor(ed.id)).rejects.toMatchObject({
+      status: 404,
+      code: 'unknown-editor',
+    });
+    expect((await client.resetEditors()).map((e) => e.name)).toEqual(
+      STARTER_EDITORS.map((s) => s.name),
+    );
   });
 });

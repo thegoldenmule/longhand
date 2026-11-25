@@ -1,7 +1,13 @@
 /**
  * Typed client for the ledger service API (`apps/server`, README "API reference").
  */
-import type { Commit, CommitDraft, ProvenanceSummary } from '@longhand/schema';
+import type {
+  Commit,
+  CommitDraft,
+  EditorProfile,
+  EditorProfileInput,
+  ProvenanceSummary,
+} from '@longhand/schema';
 import { subscribeSse, type Backoff, type SseSubscription } from './sse';
 import type {
   BundleData,
@@ -124,6 +130,49 @@ export class LonghandClient {
 
   me(): Promise<{ accountId: string; actorId: string; authMode: 'dev' | 'cognito' }> {
     return this.json('GET', '/v1/me');
+  }
+
+  // -------------------------------------------------------------- editors
+
+  /** The account's named editors, in roster order (the service seeds the starters on first read). */
+  async listEditors(): Promise<EditorProfile[]> {
+    return (await this.json<{ editors: EditorProfile[] }>('GET', '/v1/editors')).editors;
+  }
+
+  /** One editor (404 `unknown-editor` if it is not the account's). */
+  async getEditor(editorId: string): Promise<EditorProfile> {
+    return (
+      await this.json<{ editor: EditorProfile }>(
+        'GET',
+        `/v1/editors/${encodeURIComponent(editorId)}`,
+      )
+    ).editor;
+  }
+
+  /** Adds an editor (422 `invalid-editor`, 409 `too-many-editors`). */
+  async createEditor(input: EditorProfileInput): Promise<EditorProfile> {
+    return (await this.json<{ editor: EditorProfile }>('POST', '/v1/editors', input)).editor;
+  }
+
+  /** Replaces an editor's name, brief, lenses, intensity and questions. */
+  async updateEditor(editorId: string, input: EditorProfileInput): Promise<EditorProfile> {
+    return (
+      await this.json<{ editor: EditorProfile }>(
+        'PUT',
+        `/v1/editors/${encodeURIComponent(editorId)}`,
+        input,
+      )
+    ).editor;
+  }
+
+  /** Deletes an editor. Past feedback requests keep their own record of it. */
+  async deleteEditor(editorId: string): Promise<void> {
+    await this.json('DELETE', `/v1/editors/${encodeURIComponent(editorId)}`);
+  }
+
+  /** Replaces the roster with fresh copies of the starter editors. */
+  async resetEditors(): Promise<EditorProfile[]> {
+    return (await this.json<{ editors: EditorProfile[] }>('POST', '/v1/editors/reset')).editors;
   }
 
   // ------------------------------------------------------------- projects

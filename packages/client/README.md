@@ -47,23 +47,24 @@ The wire types (`SubmitResult`, `RemoteUpdate`, `CatchUp`, `CommitTransport`, �
 
 ## `LonghandClient`
 
-| Method                                                                                             | Route                                                                        |
-| -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `me()`                                                                                             | `GET /v1/me`                                                                 |
-| `listProjects()`, `createProject({title} \| {draft})`, `getProject(id)`                            | `/v1/projects`                                                               |
-| `getState(id)`                                                                                     | `GET …/state` → `{headSeq, headHash, state}`                                 |
-| `getCommits(id, after, limit)`                                                                     | `GET …/commits`                                                              |
-| `fetchSince(id, documentId, version)`                                                              | `GET …/documents/:did/updates`                                               |
-| `subscribeProject(id, listener, {after})`                                                          | SSE `…/events`; it resumes after the last delivered seq                      |
-| `subscribeDocument(id, documentId, {since, onUpdate, onSnapshot})`                                 | SSE `…/documents/:did/stream`                                                |
-| `requestFeedback(id, draft)`, `requestDiscuss(id, draft)`                                          | `POST …/feedback`, `POST …/discuss` → `{status, seq, sessionId}`             |
-| `getSession`, `cancelSession`, `subscribeSession`, `waitForSession`                                | `…/sessions/:sid`                                                            |
-| `searchSources(query, limit)`                                                                      | `GET /v1/research/search`                                                    |
-| `pageFetch`                                                                                        | A `fetch` that goes through `GET /v1/research/page` (the SSRF-guarded proxy) |
-| `exportProject(id, {format, documentIds?, style?, author?, provenance?})`, `exportUrl(id, format)` | `…/export` → `{bytes, mimeType, filename}`                                   |
-| `bundle(id)`                                                                                       | `GET …/bundle`: commits, witnesses, public key and keyId                     |
-| `witnessKey()`                                                                                     | `GET /.well-known/longhand-witness-key`                                      |
-| `raw(method, path, body?)`, `json(method, path, body?)`                                            | Anything else. `json` throws `ApiError {status, code, message, body}`.       |
+| Method                                                                                                                   | Route                                                                                                |
+| ------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| `me()`                                                                                                                   | `GET /v1/me`                                                                                         |
+| `listEditors()`, `getEditor(id)`, `createEditor(input)`, `updateEditor(id, input)`, `deleteEditor(id)`, `resetEditors()` | `/v1/editors`: the account's named editors (`EditorProfile`, seeded with the starters on first read) |
+| `listProjects()`, `createProject({title} \| {draft})`, `getProject(id)`                                                  | `/v1/projects`                                                                                       |
+| `getState(id)`                                                                                                           | `GET …/state` → `{headSeq, headHash, state}`                                                         |
+| `getCommits(id, after, limit)`                                                                                           | `GET …/commits`                                                                                      |
+| `fetchSince(id, documentId, version)`                                                                                    | `GET …/documents/:did/updates`                                                                       |
+| `subscribeProject(id, listener, {after})`                                                                                | SSE `…/events`; it resumes after the last delivered seq                                              |
+| `subscribeDocument(id, documentId, {since, onUpdate, onSnapshot})`                                                       | SSE `…/documents/:did/stream`                                                                        |
+| `requestFeedback(id, draft)`, `requestDiscuss(id, draft)`                                                                | `POST …/feedback`, `POST …/discuss` → `{status, seq, sessionId}`                                     |
+| `getSession`, `cancelSession`, `subscribeSession`, `waitForSession`                                                      | `…/sessions/:sid`                                                                                    |
+| `searchSources(query, limit)`                                                                                            | `GET /v1/research/search`                                                                            |
+| `pageFetch`                                                                                                              | A `fetch` that goes through `GET /v1/research/page` (the SSRF-guarded proxy)                         |
+| `exportProject(id, {format, documentIds?, style?, author?, provenance?})`, `exportUrl(id, format)`                       | `…/export` → `{bytes, mimeType, filename}`                                                           |
+| `bundle(id)`                                                                                                             | `GET …/bundle`: commits, witnesses, public key and keyId                                             |
+| `witnessKey()`                                                                                                           | `GET /.well-known/longhand-witness-key`                                                              |
+| `raw(method, path, body?)`, `json(method, path, body?)`                                                                  | Anything else. `json` throws `ApiError {status, code, message, body}`.                               |
 
 `subscribeSse({url, headers, onEvent, onOpen, onError, backoff, fatalStatuses})` is the SSE helper underneath. It sends `Last-Event-ID`, does not retry on 400, 401, 403 or 404, and takes `url` as a function so each reconnect can resume from a new point.
 
