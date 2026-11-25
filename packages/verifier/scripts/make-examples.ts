@@ -2,7 +2,7 @@
  * Writes the example bundles in `examples/` from the ledger's golden fixtures
  * (signed with the test-only fixture key):
  *
- * - `novel.bundle.json` verifies;
+ * - `novel.bundle.json` and `research.bundle.json` verify;
  * - `novel-doctored-report.bundle.json` has one number changed in its report;
  * - `tampered-edited.bundle.json` has a commit edited after it was witnessed.
  *
@@ -24,6 +24,7 @@ export function exampleBundles(): Record<string, unknown> {
   doctored.report.words.byClass.typed += 3;
   return {
     'novel.bundle.json': good,
+    'research.bundle.json': fixtureBundle('research'),
     'novel-doctored-report.bundle.json': doctored,
     'tampered-edited.bundle.json': tamperedBundle('tampered-edited'),
   };

@@ -208,30 +208,33 @@ function Sessions({ report }: { report: AuthorshipReport }) {
   const span = Math.max(end - start, 1);
   return (
     <>
-      <div
-        className="lh-report-timeline"
-        role="img"
-        aria-label={`${list.length} writing sessions from ${formatUtc(list[0]!.startTime)} to ${formatUtc(new Date(end).toISOString())}`}
-      >
-        <div className="lh-report-timeline-track">
-          {list.map((s, i) => {
-            const left = ((Date.parse(s.startTime) - start) / span) * 100;
-            const width = ((Date.parse(s.endTime) - Date.parse(s.startTime)) / span) * 100;
-            return (
-              <div
-                key={i}
-                className="lh-report-timeline-mark"
-                style={{ left: `${Math.min(left, 99.5)}%`, width: `max(4px, ${width}%)` }}
-                title={`Session ${i + 1}: ${formatUtc(s.startTime)}, ${formatDuration(s.activeMs)} active`}
-              />
-            );
-          })}
+      {/* A timeline needs at least two sessions to say anything; one is just the table row. */}
+      {list.length > 1 ? (
+        <div
+          className="lh-report-timeline"
+          role="img"
+          aria-label={`${list.length} writing sessions from ${formatUtc(list[0]!.startTime)} to ${formatUtc(new Date(end).toISOString())}`}
+        >
+          <div className="lh-report-timeline-track">
+            {list.map((s, i) => {
+              const left = ((Date.parse(s.startTime) - start) / span) * 100;
+              const width = ((Date.parse(s.endTime) - Date.parse(s.startTime)) / span) * 100;
+              return (
+                <div
+                  key={i}
+                  className="lh-report-timeline-mark"
+                  style={{ left: `min(${left}%, 100% - 4px)`, width: `max(4px, ${width}%)` }}
+                  title={`Session ${i + 1}: ${formatUtc(s.startTime)}, ${formatDuration(s.activeMs)} active`}
+                />
+              );
+            })}
+          </div>
+          <div className="lh-report-timeline-axis" aria-hidden="true">
+            <span>{formatUtc(list[0]!.startTime)}</span>
+            <span>{formatUtc(new Date(end).toISOString())}</span>
+          </div>
         </div>
-        <div className="lh-report-timeline-axis" aria-hidden="true">
-          <span>{formatUtc(list[0]!.startTime)}</span>
-          {list.length > 1 ? <span>{formatUtc(new Date(end).toISOString())}</span> : null}
-        </div>
-      </div>
+      ) : null}
       <details
         className="lh-report-details"
         open={open}
