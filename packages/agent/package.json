@@ -8,6 +8,14 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "test": "vitest run --passWithNoTests"
+    "test": "vitest run --passWithNoTests",
+    "test:live": "LONGHAND_LIVE_CLAUDE=1 vitest run src/live.test.ts"
+  },
+  "dependencies": {
+    "@longhand/schema": "workspace:*",
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "prosemirror-model": "^1.25.13",
+    "tsx": "^4.23.15",
+    "zod": "^4.6.7"
   }
 }
