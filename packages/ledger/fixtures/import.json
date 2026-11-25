@@ -1,0 +1,1245 @@
+{
+  "name": "import",
+  "description": "An imported draft edited afterwards: imported text stays imported; a word mixing imported and typed characters counts as imported.",
+  "covers": [
+    "imported",
+    "mixed-word"
+  ],
+  "commits": [
+    {
+      "commitId": "c-0001",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 1,
+      "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "aa81c9c1c1bc41a5a2d48865fbd2f87dc87d5459e4f8674cf5e1fad0fd1bdeaa",
+      "clientTime": "2026-11-02T09:00:00.000Z",
+      "serverTime": "2026-11-02T09:00:00.250Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "ProjectCreated",
+      "payload": {
+        "title": "Imported novel"
+      }
+    },
+    {
+      "commitId": "c-0002",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 2,
+      "prevHash": "aa81c9c1c1bc41a5a2d48865fbd2f87dc87d5459e4f8674cf5e1fad0fd1bdeaa",
+      "hash": "8979b12db93776a7adb3cbe588dc08c495152f8cdf0bfae5821ab4415c0fee8f",
+      "clientTime": "2026-11-02T09:00:00.400Z",
+      "serverTime": "2026-11-02T09:00:00.650Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "DocumentImported",
+      "payload": {
+        "documentId": "doc-old",
+        "kind": "manuscript",
+        "title": "Chapter one (old draft)",
+        "parentId": null,
+        "index": 0,
+        "content": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Marta kept the shop open late on Thursdays."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "The bell over the door had been broken for years."
+                }
+              ]
+            }
+          ]
+        },
+        "sourceFormat": "markdown",
+        "sourceName": "chapter-one.md",
+        "sourceHash": "4207f7561224d154965e179f8fde8dec40147d539efe5f969a19f25ae3c10e27"
+      }
+    },
+    {
+      "commitId": "c-0003",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 3,
+      "prevHash": "8979b12db93776a7adb3cbe588dc08c495152f8cdf0bfae5821ab4415c0fee8f",
+      "hash": "7a506c103bd47d8c10913be6ea0217144572073f77935b6596486ae04a8bfdbe",
+      "clientTime": "2026-11-02T09:00:00.800Z",
+      "serverTime": "2026-11-02T09:00:01.050Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-old",
+        "baseVersion": 0,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 95,
+            "to": 95,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 96,
+            "to": 96,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "N"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 97,
+            "to": 97,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 98,
+            "to": 98,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "b"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 99,
+            "to": 99,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 100,
+            "to": 100,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 101,
+            "to": 101,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "y"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 102,
+            "to": 102,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 103,
+            "to": 103,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "f"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 104,
+            "to": 104,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 105,
+            "to": 105,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "x"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 106,
+            "to": 106,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 107,
+            "to": 107,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 108,
+            "to": 108,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 109,
+            "to": 109,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 110,
+            "to": 110,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 111,
+            "to": 111,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 17,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 90,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 299,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 497,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 702,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 790,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 988,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1162,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1276,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1404,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1598,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1734,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1879,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2060,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2211,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2320,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2507,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 17,
+        "durationMs": 2507
+      }
+    },
+    {
+      "commitId": "c-0004",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 4,
+      "prevHash": "7a506c103bd47d8c10913be6ea0217144572073f77935b6596486ae04a8bfdbe",
+      "hash": "f4a4037856067643f01f4bf094cb32ae8451a05b7fe7b8ef6f78c17db2ca455c",
+      "clientTime": "2026-11-02T09:00:05.307Z",
+      "serverTime": "2026-11-02T09:00:05.557Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-old",
+        "baseVersion": 17,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 42,
+            "to": 43
+          }
+        ],
+        "runs": [
+          {
+            "steps": 1,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "delete",
+            "len": 1
+          }
+        ],
+        "characters": 0,
+        "durationMs": 0
+      }
+    },
+    {
+      "commitId": "c-0005",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 5,
+      "prevHash": "f4a4037856067643f01f4bf094cb32ae8451a05b7fe7b8ef6f78c17db2ca455c",
+      "hash": "be05379698aad9205ae31f3ce873a4c8897b40181dcdfebfc8d975fcce3b54e5",
+      "clientTime": "2026-11-02T09:00:07.307Z",
+      "serverTime": "2026-11-02T09:00:07.557Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-old",
+        "baseVersion": 18,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 42,
+            "to": 42,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 1,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 1,
+        "durationMs": 0
+      }
+    },
+    {
+      "commitId": "c-0006",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 6,
+      "prevHash": "be05379698aad9205ae31f3ce873a4c8897b40181dcdfebfc8d975fcce3b54e5",
+      "hash": "6104ae50b93b47e955f8d937482ab31f7ce3768c39e76ec125bf5ce2938ef962",
+      "clientTime": "2026-11-02T09:00:09.307Z",
+      "serverTime": "2026-11-02T09:00:09.557Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-old",
+        "baseVersion": 19,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 43,
+            "to": 43,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 44,
+            "to": 44,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 45,
+            "to": 45,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 46,
+            "to": 46,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 47,
+            "to": 47,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 48,
+            "to": 48,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "F"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 49,
+            "to": 49,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 50,
+            "to": 50,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 51,
+            "to": 51,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 52,
+            "to": 52,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 53,
+            "to": 53,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "y"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 54,
+            "to": 54,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 12,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 109,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 233,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 320,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 418,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 589,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 720,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 930,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1031,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1183,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1354,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1434,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 12,
+        "durationMs": 1434
+      }
+    }
+  ],
+  "expected": {
+    "headSeq": 6,
+    "headHash": "6104ae50b93b47e955f8d937482ab31f7ce3768c39e76ec125bf5ce2938ef962",
+    "state": {
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "headSeq": 6,
+      "headHash": "6104ae50b93b47e955f8d937482ab31f7ce3768c39e76ec125bf5ce2938ef962",
+      "settings": {
+        "genre": "",
+        "audience": "",
+        "goals": "",
+        "styleNotes": "",
+        "dailyWordGoal": null,
+        "citationStyle": "apa",
+        "title": "Imported novel"
+      },
+      "createdSeq": 1,
+      "binder": {
+        "manuscript": [
+          {
+            "kind": "document",
+            "id": "doc-old"
+          }
+        ],
+        "notes": []
+      },
+      "folders": {},
+      "documents": {
+        "doc-old": {
+          "id": "doc-old",
+          "kind": "manuscript",
+          "area": "manuscript",
+          "title": "Chapter one (old draft)",
+          "parentId": null,
+          "synopsis": "",
+          "content": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Marta kept the shop open late on Thursdays and Fridays."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "The bell over the door had been broken for years. Nobody fixed it."
+                  }
+                ]
+              }
+            ]
+          },
+          "version": 31,
+          "provenance": [
+            {
+              "from": 1,
+              "to": 42,
+              "class": "imported",
+              "originSeq": 2
+            },
+            {
+              "from": 42,
+              "to": 43,
+              "class": "typed",
+              "originSeq": 5
+            },
+            {
+              "from": 43,
+              "to": 55,
+              "class": "typed",
+              "originSeq": 6
+            },
+            {
+              "from": 55,
+              "to": 56,
+              "class": "imported",
+              "originSeq": 2
+            },
+            {
+              "from": 58,
+              "to": 107,
+              "class": "imported",
+              "originSeq": 2
+            },
+            {
+              "from": 107,
+              "to": 124,
+              "class": "typed",
+              "originSeq": 3
+            }
+          ],
+          "archived": false,
+          "imported": {
+            "seq": 2,
+            "sourceFormat": "markdown",
+            "sourceName": "chapter-one.md",
+            "sourceHash": "4207f7561224d154965e179f8fde8dec40147d539efe5f969a19f25ae3c10e27"
+          },
+          "createdSeq": 2,
+          "contentSeq": 6,
+          "updatedSeq": 6
+        }
+      },
+      "annotations": {
+        "feedbackRequests": {},
+        "agentSessions": {},
+        "comments": {},
+        "questions": {},
+        "suggestions": {},
+        "proposals": {},
+        "citationFlags": {},
+        "surfacedSources": {},
+        "sourceSuggestions": {},
+        "discussions": {}
+      },
+      "sources": {},
+      "clippings": {},
+      "pastes": {},
+      "writingSessions": [
+        {
+          "index": 0,
+          "startSeq": 3,
+          "endSeq": 6,
+          "startTime": "2026-11-02T09:00:00.800Z",
+          "endTime": "2026-11-02T09:00:10.741Z",
+          "activeMs": 3941,
+          "commits": 4,
+          "charactersInserted": 30,
+          "documentIds": [
+            "doc-old"
+          ]
+        }
+      ]
+    },
+    "documents": {
+      "doc-old": {
+        "text": "Marta kept the shop open late on Thursdays and Fridays.\nThe bell over the door had been broken for years. Nobody fixed it.",
+        "words": [
+          {
+            "from": 1,
+            "to": 6,
+            "text": "Marta",
+            "class": "imported",
+            "blockId": "p1",
+            "originSeqs": [
+              2
+            ]
+          },
+          {
+            "from": 7,
+            "to": 11,
+            "text": "kept",
+            "class": "imported",
+            "blockId": "p1",
+            "originSeqs": [
+              2
+            ]
+          },
+          {
+            "from": 12,
+            "to": 15,
+            "text": "the",
+            "class": "imported",
+            "blockId": "p1",
+            "originSeqs": [
+              2
+            ]
+          },
+          {
+            "from": 16,
+            "to": 20,
+            "text": "shop",
+            "class": "imported",
+            "blockId": "p1",
+            "originSeqs": [
+              2
+            ]
+          },
+          {
+            "from": 21,
+            "to": 25,
+            "text": "open",
+            "class": "imported",
+            "blockId": "p1",
+            "originSeqs": [
+              2
+            ]
+          },
+          {
+            "from": 26,
+            "to": 30,
+            "text": "late",
+            "class": "imported",
+            "blockId": "p1",
+            "originSeqs": [
+              2
+            ]
+          },
+          {
+            "from": 31,
+            "to": 33,
+            "text": "on",
+            "class": "imported",
+            "blockId": "p1",
+            "originSeqs": [
+              2
+            ]
+          },
+          {
+            "from": 34,
+            "to": 43,
+            "text": "Thursdays",
+            "class": "imported",
+            "blockId": "p1",
+            "originSeqs": [
+              2,
+              5
+            ]
+          },
+          {
+            "from": 44,
+            "to": 47,
+            "text": "and",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              6
+            ]
+          },
+          {
+            "from": 48,
+            "to": 55,
+            "text": "Fridays",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              6
+            ]
+          },
+          {
+            "from": 58,
+            "to": 61,
+            "text": "The",
+            "class": "imported",
+            "blockId": "p2",
+            "originSeqs": [
+              2
+            ]
+          },
+          {
+            "from": 62,
+            "to": 66,
+            "text": "bell",
+            "class": "imported",
+            "blockId": "p2",
+            "originSeqs": [
+              2
+            ]
+          },
+          {
+            "from": 67,
+            "to": 71,
+            "text": "over",
+            "class": "imported",
+            "blockId": "p2",
+            "originSeqs": [
+              2
+            ]
+          },
+          {
+            "from": 72,
+            "to": 75,
+            "text": "the",
+            "class": "imported",
+            "blockId": "p2",
+            "originSeqs": [
+              2
+            ]
+          },
+          {
+            "from": 76,
+            "to": 80,
+            "text": "door",
+            "class": "imported",
+            "blockId": "p2",
+            "originSeqs": [
+              2
+            ]
+          },
+          {
+            "from": 81,
+            "to": 84,
+            "text": "had",
+            "class": "imported",
+            "blockId": "p2",
+            "originSeqs": [
+              2
+            ]
+          },
+          {
+            "from": 85,
+            "to": 89,
+            "text": "been",
+            "class": "imported",
+            "blockId": "p2",
+            "originSeqs": [
+              2
+            ]
+          },
+          {
+            "from": 90,
+            "to": 96,
+            "text": "broken",
+            "class": "imported",
+            "blockId": "p2",
+            "originSeqs": [
+              2
+            ]
+          },
+          {
+            "from": 97,
+            "to": 100,
+            "text": "for",
+            "class": "imported",
+            "blockId": "p2",
+            "originSeqs": [
+              2
+            ]
+          },
+          {
+            "from": 101,
+            "to": 106,
+            "text": "years",
+            "class": "imported",
+            "blockId": "p2",
+            "originSeqs": [
+              2
+            ]
+          },
+          {
+            "from": 108,
+            "to": 114,
+            "text": "Nobody",
+            "class": "typed",
+            "blockId": "p2",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 115,
+            "to": 120,
+            "text": "fixed",
+            "class": "typed",
+            "blockId": "p2",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 121,
+            "to": 123,
+            "text": "it",
+            "class": "typed",
+            "blockId": "p2",
+            "originSeqs": [
+              3
+            ]
+          }
+        ],
+        "wordsByClass": {
+          "total": 23,
+          "byClass": {
+            "typed": 5,
+            "typed-from-suggestion": 0,
+            "pasted-external": 0,
+            "pasted-internal": 0,
+            "imported": 18,
+            "quoted": 0
+          }
+        },
+        "charactersByClass": {
+          "total": 121,
+          "byClass": {
+            "typed": 30,
+            "typed-from-suggestion": 0,
+            "pasted-external": 0,
+            "pasted-internal": 0,
+            "imported": 91,
+            "quoted": 0
+          }
+        }
+      }
+    },
+    "projectWords": {
+      "total": 23,
+      "byClass": {
+        "typed": 5,
+        "typed-from-suggestion": 0,
+        "pasted-external": 0,
+        "pasted-internal": 0,
+        "imported": 18,
+        "quoted": 0
+      }
+    },
+    "projectCharacters": {
+      "total": 121,
+      "byClass": {
+        "typed": 30,
+        "typed-from-suggestion": 0,
+        "pasted-external": 0,
+        "pasted-internal": 0,
+        "imported": 91,
+        "quoted": 0
+      }
+    },
+    "issues": []
+  },
+  "witnesses": [
+    {
+      "projectId": "proj-1",
+      "seq": 1,
+      "hash": "aa81c9c1c1bc41a5a2d48865fbd2f87dc87d5459e4f8674cf5e1fad0fd1bdeaa",
+      "serverTime": "2026-11-02T09:00:00.250Z",
+      "signature": "5RmqshUBqaDGbl+YfgvF1KsMGmEvY3zcjfiKU5U9c58fubQTzBUOqfQJk/x1MMAPZHzWitdWmRX7I4d7YltWBA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 2,
+      "hash": "8979b12db93776a7adb3cbe588dc08c495152f8cdf0bfae5821ab4415c0fee8f",
+      "serverTime": "2026-11-02T09:00:00.650Z",
+      "signature": "nCU+ns9b6HBFm9L6FAr5mzaFuzGZZoJajhKwDBHNRC8N6nuedgA1QVJfXGAqgczcHPmLGYZ+JTYlFxcE58HJWQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 3,
+      "hash": "7a506c103bd47d8c10913be6ea0217144572073f77935b6596486ae04a8bfdbe",
+      "serverTime": "2026-11-02T09:00:01.050Z",
+      "signature": "Kn7szoariFBDnXGfCKXYTuOt9CSv7EcxsFYXDtaC1CB5sZYUdcivalHcLV0TC3DHLt6ubWpdCFnlFPgQ55U37w==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 4,
+      "hash": "f4a4037856067643f01f4bf094cb32ae8451a05b7fe7b8ef6f78c17db2ca455c",
+      "serverTime": "2026-11-02T09:00:05.557Z",
+      "signature": "7yrUOfToKxHag0cr/jVX0maHFURNDmSMozrU02AdDFu2ylxZ6cTQ50EgtaVOh8wJQJLybN25kXfYd2w5g61TiQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 5,
+      "hash": "be05379698aad9205ae31f3ce873a4c8897b40181dcdfebfc8d975fcce3b54e5",
+      "serverTime": "2026-11-02T09:00:07.557Z",
+      "signature": "EDvWJ1f1kzXrduYWFYJFOqHNKOaPmwNGcCeopKRjIPskNqXMkheRliPOf3GhMhLSMwMDJbWnOiDFdcwf2ZDkIg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 6,
+      "hash": "6104ae50b93b47e955f8d937482ab31f7ce3768c39e76ec125bf5ce2938ef962",
+      "serverTime": "2026-11-02T09:00:09.557Z",
+      "signature": "J82SuwuVnvkvZgUF7pSg/7lC98wxU7QihWAQzePh29pAn074mxwss/lnpY7N6hK7HTwe3w/UaQigKCFk1FPjRA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    }
+  ],
+  "publicKeyPem": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEoInrdRkLs5lWE+qtD8cpCVp0gkEn\n0tllAdSMj9iVyF0MaAHny/cdaByyk3aWbk6dqMaXuaekIuWmvEJCsgbJBg==\n-----END PUBLIC KEY-----\n",
+  "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+}

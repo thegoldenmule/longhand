@@ -1,0 +1,2430 @@
+{
+  "name": "external-paste",
+  "description": "External pastes: inline, multi-paragraph, over a typed selection, and typing inside a pasted span.",
+  "covers": [
+    "pasted-external",
+    "paste-replace",
+    "multi-paragraph-paste",
+    "mixed-word"
+  ],
+  "commits": [
+    {
+      "commitId": "c-0001",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 1,
+      "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "3d5c03967da2595eaaffc7e01fd03574f8653075a67ed22b74cdb4311bf9b90d",
+      "clientTime": "2026-11-02T09:00:00.000Z",
+      "serverTime": "2026-11-02T09:00:00.250Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "ProjectCreated",
+      "payload": {
+        "title": "Essay draft"
+      }
+    },
+    {
+      "commitId": "c-0002",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 2,
+      "prevHash": "3d5c03967da2595eaaffc7e01fd03574f8653075a67ed22b74cdb4311bf9b90d",
+      "hash": "17fd48959fd3009dcb8c15a39b49a7ed988e6d9c332b193b1fa70ce0b0782da1",
+      "clientTime": "2026-11-02T09:00:00.400Z",
+      "serverTime": "2026-11-02T09:00:00.650Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "DocumentCreated",
+      "payload": {
+        "documentId": "doc-essay",
+        "kind": "manuscript",
+        "title": "On walking",
+        "parentId": null,
+        "index": 0
+      }
+    },
+    {
+      "commitId": "c-0003",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 3,
+      "prevHash": "17fd48959fd3009dcb8c15a39b49a7ed988e6d9c332b193b1fa70ce0b0782da1",
+      "hash": "05e49d8703884689eb13076918b2b2e5fa7f21e791c60d927d2ef5c6a988cf68",
+      "clientTime": "2026-11-02T09:00:00.800Z",
+      "serverTime": "2026-11-02T09:00:01.050Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-essay",
+        "baseVersion": 0,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 1,
+            "to": 1,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "W"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 2,
+            "to": 2,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 3,
+            "to": 3,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 4,
+            "to": 4,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "k"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 5,
+            "to": 5,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 6,
+            "to": 6,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 7,
+            "to": 7,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "g"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 8,
+            "to": 8,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 9,
+            "to": 9,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 10,
+            "to": 10,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 11,
+            "to": 11,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 12,
+            "to": 12,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 13,
+            "to": 13,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 14,
+            "to": 14,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "w"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 15,
+            "to": 15,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 16,
+            "to": 16,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "I"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 17,
+            "to": 17,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 18,
+            "to": 18,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 19,
+            "to": 19,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 20,
+            "to": 20,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 21,
+            "to": 21,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 22,
+            "to": 22,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "k"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 23,
+            "to": 23,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 24,
+            "to": 24,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 24,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 129,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 285,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 431,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 577,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 738,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 877,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1028,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1107,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1315,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1445,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1522,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1722,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1843,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1974,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2143,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2340,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2418,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2551,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2633,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2819,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3004,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3085,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3181,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 24,
+        "durationMs": 3181
+      }
+    },
+    {
+      "commitId": "c-0005",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 4,
+      "prevHash": "05e49d8703884689eb13076918b2b2e5fa7f21e791c60d927d2ef5c6a988cf68",
+      "hash": "1c5420957b782f966a33afd7d95fd0763c58a30d810f05dde3e593d761eb7d75",
+      "clientTime": "2026-11-02T09:00:05.981Z",
+      "serverTime": "2026-11-02T09:00:06.231Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "PasteOccurred",
+      "payload": {
+        "pasteId": "paste-0004",
+        "documentId": "doc-essay",
+        "origin": "external",
+        "via": "clipboard",
+        "copyId": null,
+        "characters": 39,
+        "words": 6,
+        "textHash": "3289b1c748278891e2c74e3ebc1945e97fe4b124764b700b53ef35616aaa5b3d",
+        "mimeTypes": [
+          "text/plain",
+          "text/html"
+        ]
+      }
+    },
+    {
+      "commitId": "c-0006",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 5,
+      "prevHash": "1c5420957b782f966a33afd7d95fd0763c58a30d810f05dde3e593d761eb7d75",
+      "hash": "38dc7e71e62d23b52c4c48fafffc841e26a0b0f8e66375676860d32cdbd09d0b",
+      "clientTime": "2026-11-02T09:00:06.381Z",
+      "serverTime": "2026-11-02T09:00:06.631Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-essay",
+        "baseVersion": 24,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 25,
+            "to": 25,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Solvitur ambulando, as the saying goes."
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 1,
+            "method": "pasted-external",
+            "pasteId": "paste-0004"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "paste",
+            "len": 39
+          }
+        ],
+        "characters": 39,
+        "durationMs": 0
+      }
+    },
+    {
+      "commitId": "c-0007",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 6,
+      "prevHash": "38dc7e71e62d23b52c4c48fafffc841e26a0b0f8e66375676860d32cdbd09d0b",
+      "hash": "3606a18d238aa4eb94c5699d4368df9e0a4e837956550be3befef1e68f8ee5aa",
+      "clientTime": "2026-11-02T09:00:08.381Z",
+      "serverTime": "2026-11-02T09:00:08.631Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-essay",
+        "baseVersion": 25,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 64,
+            "to": 64,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 65,
+            "to": 65,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "I"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 66,
+            "to": 66,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 67,
+            "to": 67,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 68,
+            "to": 68,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 69,
+            "to": 69,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "v"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 70,
+            "to": 70,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 71,
+            "to": 71,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 72,
+            "to": 72,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 73,
+            "to": 73,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 74,
+            "to": 74,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "v"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 75,
+            "to": 75,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 76,
+            "to": 76,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 77,
+            "to": 77,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 78,
+            "to": 78,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 79,
+            "to": 79,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 80,
+            "to": 80,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 81,
+            "to": 81,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "v"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 82,
+            "to": 82,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 83,
+            "to": 83,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 84,
+            "to": 84,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 85,
+            "to": 85,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 86,
+            "to": 86,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 87,
+            "to": 87,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "y"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 88,
+            "to": 88,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 89,
+            "to": 89,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 90,
+            "to": 90,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 91,
+            "to": 91,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 92,
+            "to": 92,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "g"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 93,
+            "to": 93,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 94,
+            "to": 94,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 95,
+            "to": 95,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 96,
+            "to": 96,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 97,
+            "to": 97,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 98,
+            "to": 98,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 99,
+            "to": 99,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 100,
+            "to": 100,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "g"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 101,
+            "to": 101,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 102,
+            "to": 102,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 103,
+            "to": 103,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 104,
+            "to": 104,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "w"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 105,
+            "to": 105,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 106,
+            "to": 106,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 43,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 130,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 324,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 511,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 690,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 855,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 966,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1102,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1216,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1369,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1442,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1582,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1757,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1943,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2028,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2158,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2349,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2467,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2620,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2730,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2893,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3048,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3180,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3362,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3505,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3605,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3675,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3869,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4046,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4205,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4387,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4552,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4727,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4827,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4938,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5121,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5279,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5487,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5667,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5832,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6025,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6153,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6303,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 43,
+        "durationMs": 6303
+      }
+    },
+    {
+      "commitId": "c-0008",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 7,
+      "prevHash": "3606a18d238aa4eb94c5699d4368df9e0a4e837956550be3befef1e68f8ee5aa",
+      "hash": "6814561e2c70a5696e28d2c540c0e8a3ff7eb890613b786e3f7c5c07c5c42fc4",
+      "clientTime": "2026-11-02T09:00:16.684Z",
+      "serverTime": "2026-11-02T09:00:16.934Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-essay",
+        "baseVersion": 68,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 107,
+            "to": 107,
+            "slice": {
+              "content": [
+                {
+                  "type": "paragraph"
+                },
+                {
+                  "type": "paragraph"
+                }
+              ],
+              "openStart": 1,
+              "openEnd": 1
+            },
+            "structure": true
+          }
+        ],
+        "runs": [
+          {
+            "steps": 1,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "break",
+            "len": 0
+          }
+        ],
+        "characters": 0,
+        "durationMs": 0
+      }
+    },
+    {
+      "commitId": "c-0010",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 8,
+      "prevHash": "6814561e2c70a5696e28d2c540c0e8a3ff7eb890613b786e3f7c5c07c5c42fc4",
+      "hash": "7756c3ad195c7ecca196533c283f0fb40c45f89b43f9597acbb37b45b25df001",
+      "clientTime": "2026-11-02T09:00:18.684Z",
+      "serverTime": "2026-11-02T09:00:18.934Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "PasteOccurred",
+      "payload": {
+        "pasteId": "paste-0009",
+        "documentId": "doc-essay",
+        "origin": "external",
+        "via": "clipboard",
+        "copyId": null,
+        "characters": 65,
+        "words": 10,
+        "textHash": "e98d48809f1b8bee31b69681fa558243a25939829fb04f6d7f4950b05ff4b2de",
+        "mimeTypes": [
+          "text/plain",
+          "text/html"
+        ]
+      }
+    },
+    {
+      "commitId": "c-0011",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 9,
+      "prevHash": "7756c3ad195c7ecca196533c283f0fb40c45f89b43f9597acbb37b45b25df001",
+      "hash": "bb366f78f7b3c7130725f4c4396bf3a53a730df47e4f4f943df13b7ed5b6e4ab",
+      "clientTime": "2026-11-02T09:00:19.084Z",
+      "serverTime": "2026-11-02T09:00:19.334Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-essay",
+        "baseVersion": 69,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 109,
+            "to": 109,
+            "slice": {
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "First pasted paragraph from my notes app."
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Second pasted paragraph."
+                    }
+                  ]
+                }
+              ],
+              "openStart": 1,
+              "openEnd": 1
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 1,
+            "method": "pasted-external",
+            "pasteId": "paste-0009"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "paste",
+            "len": 66
+          }
+        ],
+        "characters": 66,
+        "durationMs": 0
+      }
+    },
+    {
+      "commitId": "c-0013",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 10,
+      "prevHash": "bb366f78f7b3c7130725f4c4396bf3a53a730df47e4f4f943df13b7ed5b6e4ab",
+      "hash": "7609d96f4ca183db247bfdbe951ced5686f6ec82038b306f8584f333ea3ae1d9",
+      "clientTime": "2026-11-02T09:00:21.084Z",
+      "serverTime": "2026-11-02T09:00:21.334Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "PasteOccurred",
+      "payload": {
+        "pasteId": "paste-0012",
+        "documentId": "doc-essay",
+        "origin": "external",
+        "via": "clipboard",
+        "copyId": null,
+        "characters": 14,
+        "words": 3,
+        "textHash": "a8463494cc9b4ffe49fbef00303c7139403a7229bc9cbc985dddf143d4d2ca0f",
+        "mimeTypes": [
+          "text/plain",
+          "text/html"
+        ]
+      }
+    },
+    {
+      "commitId": "c-0014",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 11,
+      "prevHash": "7609d96f4ca183db247bfdbe951ced5686f6ec82038b306f8584f333ea3ae1d9",
+      "hash": "d4620722881da8517c7d1e1270bb3c5278fe3ac7b71e99b58b8fd4f815d446cf",
+      "clientTime": "2026-11-02T09:00:21.484Z",
+      "serverTime": "2026-11-02T09:00:21.734Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-essay",
+        "baseVersion": 70,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 85,
+            "to": 93,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a single thing"
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 1,
+            "method": "pasted-external",
+            "pasteId": "paste-0012"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "paste",
+            "len": 14
+          }
+        ],
+        "characters": 14,
+        "durationMs": 0
+      }
+    },
+    {
+      "commitId": "c-0015",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 12,
+      "prevHash": "d4620722881da8517c7d1e1270bb3c5278fe3ac7b71e99b58b8fd4f815d446cf",
+      "hash": "389149c1c7724e085b219be76dd14205386cec9eb97b7c5e99ef2f2dd6067422",
+      "clientTime": "2026-11-02T09:00:23.484Z",
+      "serverTime": "2026-11-02T09:00:23.734Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-essay",
+        "baseVersion": 71,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 38,
+            "to": 38,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "X"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 39,
+            "to": 39,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "X"
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 2,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 111,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 2,
+        "durationMs": 111
+      }
+    },
+    {
+      "commitId": "c-0016",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 13,
+      "prevHash": "389149c1c7724e085b219be76dd14205386cec9eb97b7c5e99ef2f2dd6067422",
+      "hash": "10ea5e10519db282b3bfbf7c788f7b7806f6a395cc4b16635b67174b52b3b520",
+      "clientTime": "2026-11-02T09:00:25.595Z",
+      "serverTime": "2026-11-02T09:00:25.845Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-essay",
+        "baseVersion": 73,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 39,
+            "to": 40
+          },
+          {
+            "stepType": "replace",
+            "from": 38,
+            "to": 39
+          }
+        ],
+        "runs": [
+          {
+            "steps": 2,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "delete",
+            "len": 1
+          },
+          {
+            "t": 117,
+            "kind": "delete",
+            "len": 1
+          }
+        ],
+        "characters": 0,
+        "durationMs": 117
+      }
+    }
+  ],
+  "expected": {
+    "headSeq": 13,
+    "headHash": "10ea5e10519db282b3bfbf7c788f7b7806f6a395cc4b16635b67174b52b3b520",
+    "state": {
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "headSeq": 13,
+      "headHash": "10ea5e10519db282b3bfbf7c788f7b7806f6a395cc4b16635b67174b52b3b520",
+      "settings": {
+        "genre": "",
+        "audience": "",
+        "goals": "",
+        "styleNotes": "",
+        "dailyWordGoal": null,
+        "citationStyle": "apa",
+        "title": "Essay draft"
+      },
+      "createdSeq": 1,
+      "binder": {
+        "manuscript": [
+          {
+            "kind": "document",
+            "id": "doc-essay"
+          }
+        ],
+        "notes": []
+      },
+      "folders": {},
+      "documents": {
+        "doc-essay": {
+          "id": "doc-essay",
+          "kind": "manuscript",
+          "area": "manuscript",
+          "title": "On walking",
+          "parentId": null,
+          "synopsis": "",
+          "content": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Walking is how I think. Solvitur ambulando, as the saying goes. I have never solved a single thing sitting down."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "First pasted paragraph from my notes app."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Second pasted paragraph."
+                  }
+                ]
+              }
+            ]
+          },
+          "version": 75,
+          "provenance": [
+            {
+              "from": 1,
+              "to": 25,
+              "class": "typed",
+              "originSeq": 3
+            },
+            {
+              "from": 25,
+              "to": 64,
+              "class": "pasted-external",
+              "originSeq": 5
+            },
+            {
+              "from": 64,
+              "to": 85,
+              "class": "typed",
+              "originSeq": 6
+            },
+            {
+              "from": 85,
+              "to": 99,
+              "class": "pasted-external",
+              "originSeq": 11
+            },
+            {
+              "from": 99,
+              "to": 113,
+              "class": "typed",
+              "originSeq": 6
+            },
+            {
+              "from": 115,
+              "to": 156,
+              "class": "pasted-external",
+              "originSeq": 9
+            },
+            {
+              "from": 158,
+              "to": 182,
+              "class": "pasted-external",
+              "originSeq": 9
+            }
+          ],
+          "archived": false,
+          "imported": null,
+          "createdSeq": 2,
+          "contentSeq": 13,
+          "updatedSeq": 13
+        }
+      },
+      "annotations": {
+        "feedbackRequests": {},
+        "agentSessions": {},
+        "comments": {},
+        "questions": {},
+        "suggestions": {},
+        "proposals": {},
+        "citationFlags": {},
+        "surfacedSources": {},
+        "sourceSuggestions": {},
+        "discussions": {}
+      },
+      "sources": {},
+      "clippings": {},
+      "pastes": {
+        "paste-0004": {
+          "id": "paste-0004",
+          "seq": 4,
+          "documentId": "doc-essay",
+          "origin": "external",
+          "via": "clipboard",
+          "characters": 39,
+          "words": 6,
+          "insertedSeq": 5,
+          "verifiedInternal": false
+        },
+        "paste-0009": {
+          "id": "paste-0009",
+          "seq": 8,
+          "documentId": "doc-essay",
+          "origin": "external",
+          "via": "clipboard",
+          "characters": 65,
+          "words": 10,
+          "insertedSeq": 9,
+          "verifiedInternal": false
+        },
+        "paste-0012": {
+          "id": "paste-0012",
+          "seq": 10,
+          "documentId": "doc-essay",
+          "origin": "external",
+          "via": "clipboard",
+          "characters": 14,
+          "words": 3,
+          "insertedSeq": 11,
+          "verifiedInternal": false
+        }
+      },
+      "writingSessions": [
+        {
+          "index": 0,
+          "startSeq": 3,
+          "endSeq": 13,
+          "startTime": "2026-11-02T09:00:00.800Z",
+          "endTime": "2026-11-02T09:00:25.712Z",
+          "activeMs": 9712,
+          "commits": 8,
+          "charactersInserted": 187,
+          "documentIds": [
+            "doc-essay"
+          ]
+        }
+      ]
+    },
+    "documents": {
+      "doc-essay": {
+        "text": "Walking is how I think. Solvitur ambulando, as the saying goes. I have never solved a single thing sitting down.\nFirst pasted paragraph from my notes app.\nSecond pasted paragraph.",
+        "words": [
+          {
+            "from": 1,
+            "to": 8,
+            "text": "Walking",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 9,
+            "to": 11,
+            "text": "is",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 12,
+            "to": 15,
+            "text": "how",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 16,
+            "to": 17,
+            "text": "I",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 18,
+            "to": 23,
+            "text": "think",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 25,
+            "to": 33,
+            "text": "Solvitur",
+            "class": "pasted-external",
+            "blockId": "p1",
+            "originSeqs": [
+              5
+            ]
+          },
+          {
+            "from": 34,
+            "to": 43,
+            "text": "ambulando",
+            "class": "pasted-external",
+            "blockId": "p1",
+            "originSeqs": [
+              5
+            ]
+          },
+          {
+            "from": 45,
+            "to": 47,
+            "text": "as",
+            "class": "pasted-external",
+            "blockId": "p1",
+            "originSeqs": [
+              5
+            ]
+          },
+          {
+            "from": 48,
+            "to": 51,
+            "text": "the",
+            "class": "pasted-external",
+            "blockId": "p1",
+            "originSeqs": [
+              5
+            ]
+          },
+          {
+            "from": 52,
+            "to": 58,
+            "text": "saying",
+            "class": "pasted-external",
+            "blockId": "p1",
+            "originSeqs": [
+              5
+            ]
+          },
+          {
+            "from": 59,
+            "to": 63,
+            "text": "goes",
+            "class": "pasted-external",
+            "blockId": "p1",
+            "originSeqs": [
+              5
+            ]
+          },
+          {
+            "from": 65,
+            "to": 66,
+            "text": "I",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              6
+            ]
+          },
+          {
+            "from": 67,
+            "to": 71,
+            "text": "have",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              6
+            ]
+          },
+          {
+            "from": 72,
+            "to": 77,
+            "text": "never",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              6
+            ]
+          },
+          {
+            "from": 78,
+            "to": 84,
+            "text": "solved",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              6
+            ]
+          },
+          {
+            "from": 85,
+            "to": 86,
+            "text": "a",
+            "class": "pasted-external",
+            "blockId": "p1",
+            "originSeqs": [
+              11
+            ]
+          },
+          {
+            "from": 87,
+            "to": 93,
+            "text": "single",
+            "class": "pasted-external",
+            "blockId": "p1",
+            "originSeqs": [
+              11
+            ]
+          },
+          {
+            "from": 94,
+            "to": 99,
+            "text": "thing",
+            "class": "pasted-external",
+            "blockId": "p1",
+            "originSeqs": [
+              11
+            ]
+          },
+          {
+            "from": 100,
+            "to": 107,
+            "text": "sitting",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              6
+            ]
+          },
+          {
+            "from": 108,
+            "to": 112,
+            "text": "down",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              6
+            ]
+          },
+          {
+            "from": 115,
+            "to": 120,
+            "text": "First",
+            "class": "pasted-external",
+            "blockId": "p2",
+            "originSeqs": [
+              9
+            ]
+          },
+          {
+            "from": 121,
+            "to": 127,
+            "text": "pasted",
+            "class": "pasted-external",
+            "blockId": "p2",
+            "originSeqs": [
+              9
+            ]
+          },
+          {
+            "from": 128,
+            "to": 137,
+            "text": "paragraph",
+            "class": "pasted-external",
+            "blockId": "p2",
+            "originSeqs": [
+              9
+            ]
+          },
+          {
+            "from": 138,
+            "to": 142,
+            "text": "from",
+            "class": "pasted-external",
+            "blockId": "p2",
+            "originSeqs": [
+              9
+            ]
+          },
+          {
+            "from": 143,
+            "to": 145,
+            "text": "my",
+            "class": "pasted-external",
+            "blockId": "p2",
+            "originSeqs": [
+              9
+            ]
+          },
+          {
+            "from": 146,
+            "to": 151,
+            "text": "notes",
+            "class": "pasted-external",
+            "blockId": "p2",
+            "originSeqs": [
+              9
+            ]
+          },
+          {
+            "from": 152,
+            "to": 155,
+            "text": "app",
+            "class": "pasted-external",
+            "blockId": "p2",
+            "originSeqs": [
+              9
+            ]
+          },
+          {
+            "from": 158,
+            "to": 164,
+            "text": "Second",
+            "class": "pasted-external",
+            "blockId": "p3",
+            "originSeqs": [
+              9
+            ]
+          },
+          {
+            "from": 165,
+            "to": 171,
+            "text": "pasted",
+            "class": "pasted-external",
+            "blockId": "p3",
+            "originSeqs": [
+              9
+            ]
+          },
+          {
+            "from": 172,
+            "to": 181,
+            "text": "paragraph",
+            "class": "pasted-external",
+            "blockId": "p3",
+            "originSeqs": [
+              9
+            ]
+          }
+        ],
+        "wordsByClass": {
+          "total": 30,
+          "byClass": {
+            "typed": 11,
+            "typed-from-suggestion": 0,
+            "pasted-external": 19,
+            "pasted-internal": 0,
+            "imported": 0,
+            "quoted": 0
+          }
+        },
+        "charactersByClass": {
+          "total": 177,
+          "byClass": {
+            "typed": 59,
+            "typed-from-suggestion": 0,
+            "pasted-external": 118,
+            "pasted-internal": 0,
+            "imported": 0,
+            "quoted": 0
+          }
+        }
+      }
+    },
+    "projectWords": {
+      "total": 30,
+      "byClass": {
+        "typed": 11,
+        "typed-from-suggestion": 0,
+        "pasted-external": 19,
+        "pasted-internal": 0,
+        "imported": 0,
+        "quoted": 0
+      }
+    },
+    "projectCharacters": {
+      "total": 177,
+      "byClass": {
+        "typed": 59,
+        "typed-from-suggestion": 0,
+        "pasted-external": 118,
+        "pasted-internal": 0,
+        "imported": 0,
+        "quoted": 0
+      }
+    },
+    "issues": []
+  },
+  "witnesses": [
+    {
+      "projectId": "proj-1",
+      "seq": 1,
+      "hash": "3d5c03967da2595eaaffc7e01fd03574f8653075a67ed22b74cdb4311bf9b90d",
+      "serverTime": "2026-11-02T09:00:00.250Z",
+      "signature": "BKKyDmX5hUurLDx3+w5vzYC6tIdcYnwnIUMlnIRZ6oLYLgz9iEUMyD22Pi9qvOAuaHJPhwuCeSLuAebFN1Lf0g==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 2,
+      "hash": "17fd48959fd3009dcb8c15a39b49a7ed988e6d9c332b193b1fa70ce0b0782da1",
+      "serverTime": "2026-11-02T09:00:00.650Z",
+      "signature": "g0QcAlP58TjKZ+nMXzssjZtkTTHNppcKBDqtmF7gNhg4M6OOE4pi4iDbs9GJCSI2Y2pCvvaWL3KZU69W5M3jCA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 3,
+      "hash": "05e49d8703884689eb13076918b2b2e5fa7f21e791c60d927d2ef5c6a988cf68",
+      "serverTime": "2026-11-02T09:00:01.050Z",
+      "signature": "aHfMisSzZWNLAG+mDbeF38BnPzlKzG1JdQDxGY8rXr3f19cLiUAF5KdKCr0k0IIZRnQfa35tq4soyfsTGlaEmQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 4,
+      "hash": "1c5420957b782f966a33afd7d95fd0763c58a30d810f05dde3e593d761eb7d75",
+      "serverTime": "2026-11-02T09:00:06.231Z",
+      "signature": "UK3SOvV5yW8oGzN5jfTobeiqWGSDKTuCgjvAsfc1QTfNaAsxnw15oBdDYaF2mo03mX8DEaqhilzvSTZCrtMIjw==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 5,
+      "hash": "38dc7e71e62d23b52c4c48fafffc841e26a0b0f8e66375676860d32cdbd09d0b",
+      "serverTime": "2026-11-02T09:00:06.631Z",
+      "signature": "3gJs5rQf781FFWIfKn+szIuLJW/B1zN8gdq2Ac+l2qqV2yUhMlO7un7qTgCZDgrDsCKc0n7qEgOX/z6ptisivw==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 6,
+      "hash": "3606a18d238aa4eb94c5699d4368df9e0a4e837956550be3befef1e68f8ee5aa",
+      "serverTime": "2026-11-02T09:00:08.631Z",
+      "signature": "FOrWEDiI/6nRwvML1BPIpoMfNY5goPc3bJsPiUuuZqkPb01Dmps5LxaMbJ24rC0Iy2XS5uBA5Nu7T/AKk+6j6Q==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 7,
+      "hash": "6814561e2c70a5696e28d2c540c0e8a3ff7eb890613b786e3f7c5c07c5c42fc4",
+      "serverTime": "2026-11-02T09:00:16.934Z",
+      "signature": "ecTv7uwAuw6P5XRxr+Gh4wMqZThpoKoz4qPuv41nRjSxoH3RSSzUnF0Xg98RbmLMk/f/Hkd7y6X8huzPirAwJQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 8,
+      "hash": "7756c3ad195c7ecca196533c283f0fb40c45f89b43f9597acbb37b45b25df001",
+      "serverTime": "2026-11-02T09:00:18.934Z",
+      "signature": "qfb/srbLD4Lxt0cR3pRQvZDmeSOoK72eyTRkNfhwLwQYV1C7/SoLK4hRxou5SDwQvytOE9/HvuApMmBGICku8Q==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 9,
+      "hash": "bb366f78f7b3c7130725f4c4396bf3a53a730df47e4f4f943df13b7ed5b6e4ab",
+      "serverTime": "2026-11-02T09:00:19.334Z",
+      "signature": "QokTU4IjZUVuUd/n5oygtdjREtVoH83TxrJVWFc4CpUbFaN7KeLBHVefU0IA9lwDNXvRGQLTiTDZtPQLENo32Q==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 10,
+      "hash": "7609d96f4ca183db247bfdbe951ced5686f6ec82038b306f8584f333ea3ae1d9",
+      "serverTime": "2026-11-02T09:00:21.334Z",
+      "signature": "NrpMXM71EAicknpWvujP4UoNNFM85v55LQ4JDve0vNZQQXQF7Y5P0YLZ8TEfLIE6XKl5S4JNASMupjBaoR7clg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 11,
+      "hash": "d4620722881da8517c7d1e1270bb3c5278fe3ac7b71e99b58b8fd4f815d446cf",
+      "serverTime": "2026-11-02T09:00:21.734Z",
+      "signature": "c8mrwnKCuCVi07hueqluIdYDUfBgGEh/nI09zDj4Eo6dmTzBE5ESjbkOGxBynSV00lo9VziAMs0wGsDzLtWnZw==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 12,
+      "hash": "389149c1c7724e085b219be76dd14205386cec9eb97b7c5e99ef2f2dd6067422",
+      "serverTime": "2026-11-02T09:00:23.734Z",
+      "signature": "eigaofDjlwzs340SopOf0T77taIfG0rD6UUvER0rABTu1BArUqukd1827UWGho2nWDrudBVEd00Bpne64BnoMA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 13,
+      "hash": "10ea5e10519db282b3bfbf7c788f7b7806f6a395cc4b16635b67174b52b3b520",
+      "serverTime": "2026-11-02T09:00:25.845Z",
+      "signature": "VDBJ/0FdsVgknrXNzZrfvpYga1EDzxQyxvkzwvFqAmMz23QiYcp4VIu/L3xYCaJ3V2n8Sch1JuScqbb1RdezSg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    }
+  ],
+  "publicKeyPem": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEoInrdRkLs5lWE+qtD8cpCVp0gkEn\n0tllAdSMj9iVyF0MaAHny/cdaByyk3aWbk6dqMaXuaekIuWmvEJCsgbJBg==\n-----END PUBLIC KEY-----\n",
+  "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+}

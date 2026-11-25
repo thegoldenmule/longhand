@@ -1,0 +1,1922 @@
+{
+  "name": "ime",
+  "description": "Typing mixed with IME composition (Japanese): composed text is typed.",
+  "covers": [
+    "ime",
+    "typed"
+  ],
+  "commits": [
+    {
+      "commitId": "c-0001",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 1,
+      "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "0e0e3640f654a8b1233f99374988d9dd276da0ffba0b08ea485ba91a4d877580",
+      "clientTime": "2026-11-03T12:00:00.000Z",
+      "serverTime": "2026-11-03T12:00:00.250Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "ProjectCreated",
+      "payload": {
+        "title": "日記"
+      }
+    },
+    {
+      "commitId": "c-0002",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 2,
+      "prevHash": "0e0e3640f654a8b1233f99374988d9dd276da0ffba0b08ea485ba91a4d877580",
+      "hash": "fee79bb2f9b2033917f809c61326e1b252cb4288eb85bb534a0f8992f34fc609",
+      "clientTime": "2026-11-03T12:00:00.400Z",
+      "serverTime": "2026-11-03T12:00:00.650Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "DocumentCreated",
+      "payload": {
+        "documentId": "doc-ime",
+        "kind": "manuscript",
+        "title": "Kyoto notes",
+        "parentId": null,
+        "index": 0
+      }
+    },
+    {
+      "commitId": "c-0003",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 3,
+      "prevHash": "fee79bb2f9b2033917f809c61326e1b252cb4288eb85bb534a0f8992f34fc609",
+      "hash": "2239159b4462c354e7a4d0f24a1803cc21b14f6dee9ea1c2e391c967d4db7356",
+      "clientTime": "2026-11-03T12:00:00.800Z",
+      "serverTime": "2026-11-03T12:00:01.050Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-ime",
+        "baseVersion": 0,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 1,
+            "to": 1,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "A"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 2,
+            "to": 2,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 3,
+            "to": 3,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 4,
+            "to": 4,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 5,
+            "to": 5,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "v"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 6,
+            "to": 6,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 7,
+            "to": 7,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 8,
+            "to": 8,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 9,
+            "to": 9,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 10,
+            "to": 10,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 11,
+            "to": 11,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 12,
+            "to": 12,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "K"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 13,
+            "to": 13,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "y"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 14,
+            "to": 14,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 15,
+            "to": 15,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 16,
+            "to": 16,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 17,
+            "to": 17,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 18,
+            "to": 18,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 19,
+            "to": 19,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "T"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 20,
+            "to": 20,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 21,
+            "to": 21,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 22,
+            "to": 22,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 23,
+            "to": 23,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 24,
+            "to": 24,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 25,
+            "to": 25,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "g"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 26,
+            "to": 26,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 27,
+            "to": 27,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 28,
+            "to": 28,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 29,
+            "to": 29,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 30,
+            "to": 30,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 31,
+            "to": 31,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 32,
+            "to": 32,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 32,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 179,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 346,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 555,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 643,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 838,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 919,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1056,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1140,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1297,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1491,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1573,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1691,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1793,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1865,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2061,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2140,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2236,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2360,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2494,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2608,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2731,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2831,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3035,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3125,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3208,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3400,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3564,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3771,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3879,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4008,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4180,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 32,
+        "durationMs": 4180
+      }
+    },
+    {
+      "commitId": "c-0004",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 4,
+      "prevHash": "2239159b4462c354e7a4d0f24a1803cc21b14f6dee9ea1c2e391c967d4db7356",
+      "hash": "acf53d3135c07016cb8b417a51257eae728104074a3ed3dea4adf824b73e819d",
+      "clientTime": "2026-11-03T12:00:06.980Z",
+      "serverTime": "2026-11-03T12:00:07.230Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-ime",
+        "baseVersion": 32,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 33,
+            "to": 33,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "き"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 33,
+            "to": 34,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "きょ"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 33,
+            "to": 35,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "きょう"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 33,
+            "to": 36,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "きょうと"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 33,
+            "to": 37,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "京都"
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 5,
+            "method": "ime"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "compose",
+            "len": 1
+          },
+          {
+            "t": 172,
+            "kind": "compose",
+            "len": 2
+          },
+          {
+            "t": 395,
+            "kind": "compose",
+            "len": 3
+          },
+          {
+            "t": 575,
+            "kind": "compose",
+            "len": 4
+          },
+          {
+            "t": 746,
+            "kind": "compose",
+            "len": 2
+          }
+        ],
+        "characters": 12,
+        "durationMs": 746
+      }
+    },
+    {
+      "commitId": "c-0005",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 5,
+      "prevHash": "acf53d3135c07016cb8b417a51257eae728104074a3ed3dea4adf824b73e819d",
+      "hash": "5d37b61e325cf0168401c08fa3e4dcb41e929d30b3d2ee99f044cf932eef5db9",
+      "clientTime": "2026-11-03T12:00:09.726Z",
+      "serverTime": "2026-11-03T12:00:09.976Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-ime",
+        "baseVersion": 37,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 35,
+            "to": 35,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 36,
+            "to": 36,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 37,
+            "to": 37,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 38,
+            "to": 38,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 39,
+            "to": 39,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 40,
+            "to": 40,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 41,
+            "to": 41,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 42,
+            "to": 42,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 43,
+            "to": 43,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 44,
+            "to": 44,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 45,
+            "to": 45,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 46,
+            "to": 46,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "g"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 47,
+            "to": 47,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 48,
+            "to": 48,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 49,
+            "to": 49,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 50,
+            "to": 50,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 51,
+            "to": 51,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 52,
+            "to": 52,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 53,
+            "to": 53,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 19,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 154,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 348,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 551,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 734,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 844,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 938,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1022,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1095,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1227,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1385,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1484,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1559,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1691,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1856,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2012,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2157,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2312,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2469,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 19,
+        "durationMs": 2469
+      }
+    },
+    {
+      "commitId": "c-0006",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 6,
+      "prevHash": "5d37b61e325cf0168401c08fa3e4dcb41e929d30b3d2ee99f044cf932eef5db9",
+      "hash": "ecbcc2102758e2307454c349cb7d76b50ac4f2e9e7f11496bcff1505b9d5a5ec",
+      "clientTime": "2026-11-03T12:00:14.195Z",
+      "serverTime": "2026-11-03T12:00:14.445Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-ime",
+        "baseVersion": 56,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 54,
+            "to": 54,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "あ"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 54,
+            "to": 55,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "あめ"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 54,
+            "to": 56,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "雨"
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 3,
+            "method": "ime"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "compose",
+            "len": 1
+          },
+          {
+            "t": 201,
+            "kind": "compose",
+            "len": 2
+          },
+          {
+            "t": 454,
+            "kind": "compose",
+            "len": 1
+          }
+        ],
+        "characters": 4,
+        "durationMs": 454
+      }
+    },
+    {
+      "commitId": "c-0007",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 7,
+      "prevHash": "ecbcc2102758e2307454c349cb7d76b50ac4f2e9e7f11496bcff1505b9d5a5ec",
+      "hash": "2e8de0f569073ffa0a3057b43c6a306c109488581b38d15868196229660fb97c",
+      "clientTime": "2026-11-03T12:00:16.649Z",
+      "serverTime": "2026-11-03T12:00:16.899Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-ime",
+        "baseVersion": 59,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 55,
+            "to": 55,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 56,
+            "to": 56,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 57,
+            "to": 57,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 58,
+            "to": 58,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 59,
+            "to": 59,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 60,
+            "to": 60,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 61,
+            "to": 61,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "f"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 62,
+            "to": 62,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 63,
+            "to": 63,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 64,
+            "to": 64,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 65,
+            "to": 65,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 66,
+            "to": 66,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 67,
+            "to": 67,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 68,
+            "to": 68,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 69,
+            "to": 69,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 15,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 186,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 386,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 591,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 795,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 952,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1058,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1262,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1437,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1521,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1647,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1823,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1955,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2052,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2168,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 15,
+        "durationMs": 2168
+      }
+    }
+  ],
+  "expected": {
+    "headSeq": 7,
+    "headHash": "2e8de0f569073ffa0a3057b43c6a306c109488581b38d15868196229660fb97c",
+    "state": {
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "headSeq": 7,
+      "headHash": "2e8de0f569073ffa0a3057b43c6a306c109488581b38d15868196229660fb97c",
+      "settings": {
+        "genre": "",
+        "audience": "",
+        "goals": "",
+        "styleNotes": "",
+        "dailyWordGoal": null,
+        "citationStyle": "apa",
+        "title": "日記"
+      },
+      "createdSeq": 1,
+      "binder": {
+        "manuscript": [
+          {
+            "kind": "document",
+            "id": "doc-ime"
+          }
+        ],
+        "notes": []
+      },
+      "folders": {},
+      "documents": {
+        "doc-ime": {
+          "id": "doc-ime",
+          "kind": "manuscript",
+          "area": "manuscript",
+          "title": "Kyoto notes",
+          "parentId": null,
+          "synopsis": "",
+          "content": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Arrived in Kyoto. The sign said 京都 and nothing else. 雨 all afternoon."
+                  }
+                ]
+              }
+            ]
+          },
+          "version": 74,
+          "provenance": [
+            {
+              "from": 1,
+              "to": 33,
+              "class": "typed",
+              "originSeq": 3
+            },
+            {
+              "from": 33,
+              "to": 35,
+              "class": "typed",
+              "originSeq": 4
+            },
+            {
+              "from": 35,
+              "to": 54,
+              "class": "typed",
+              "originSeq": 5
+            },
+            {
+              "from": 54,
+              "to": 55,
+              "class": "typed",
+              "originSeq": 6
+            },
+            {
+              "from": 55,
+              "to": 70,
+              "class": "typed",
+              "originSeq": 7
+            }
+          ],
+          "archived": false,
+          "imported": null,
+          "createdSeq": 2,
+          "contentSeq": 7,
+          "updatedSeq": 7
+        }
+      },
+      "annotations": {
+        "feedbackRequests": {},
+        "agentSessions": {},
+        "comments": {},
+        "questions": {},
+        "suggestions": {},
+        "proposals": {},
+        "citationFlags": {},
+        "surfacedSources": {},
+        "sourceSuggestions": {},
+        "discussions": {}
+      },
+      "sources": {},
+      "clippings": {},
+      "pastes": {},
+      "writingSessions": [
+        {
+          "index": 0,
+          "startSeq": 3,
+          "endSeq": 7,
+          "startTime": "2026-11-03T12:00:00.800Z",
+          "endTime": "2026-11-03T12:00:18.817Z",
+          "activeMs": 10017,
+          "commits": 5,
+          "charactersInserted": 82,
+          "documentIds": [
+            "doc-ime"
+          ]
+        }
+      ]
+    },
+    "documents": {
+      "doc-ime": {
+        "text": "Arrived in Kyoto. The sign said 京都 and nothing else. 雨 all afternoon.",
+        "words": [
+          {
+            "from": 1,
+            "to": 8,
+            "text": "Arrived",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 9,
+            "to": 11,
+            "text": "in",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 12,
+            "to": 17,
+            "text": "Kyoto",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 19,
+            "to": 22,
+            "text": "The",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 23,
+            "to": 27,
+            "text": "sign",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 28,
+            "to": 32,
+            "text": "said",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 33,
+            "to": 35,
+            "text": "京都",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 36,
+            "to": 39,
+            "text": "and",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              5
+            ]
+          },
+          {
+            "from": 40,
+            "to": 47,
+            "text": "nothing",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              5
+            ]
+          },
+          {
+            "from": 48,
+            "to": 52,
+            "text": "else",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              5
+            ]
+          },
+          {
+            "from": 54,
+            "to": 55,
+            "text": "雨",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              6
+            ]
+          },
+          {
+            "from": 56,
+            "to": 59,
+            "text": "all",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              7
+            ]
+          },
+          {
+            "from": 60,
+            "to": 69,
+            "text": "afternoon",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              7
+            ]
+          }
+        ],
+        "wordsByClass": {
+          "total": 13,
+          "byClass": {
+            "typed": 13,
+            "typed-from-suggestion": 0,
+            "pasted-external": 0,
+            "pasted-internal": 0,
+            "imported": 0,
+            "quoted": 0
+          }
+        },
+        "charactersByClass": {
+          "total": 69,
+          "byClass": {
+            "typed": 69,
+            "typed-from-suggestion": 0,
+            "pasted-external": 0,
+            "pasted-internal": 0,
+            "imported": 0,
+            "quoted": 0
+          }
+        }
+      }
+    },
+    "projectWords": {
+      "total": 13,
+      "byClass": {
+        "typed": 13,
+        "typed-from-suggestion": 0,
+        "pasted-external": 0,
+        "pasted-internal": 0,
+        "imported": 0,
+        "quoted": 0
+      }
+    },
+    "projectCharacters": {
+      "total": 69,
+      "byClass": {
+        "typed": 69,
+        "typed-from-suggestion": 0,
+        "pasted-external": 0,
+        "pasted-internal": 0,
+        "imported": 0,
+        "quoted": 0
+      }
+    },
+    "issues": []
+  },
+  "witnesses": [
+    {
+      "projectId": "proj-1",
+      "seq": 1,
+      "hash": "0e0e3640f654a8b1233f99374988d9dd276da0ffba0b08ea485ba91a4d877580",
+      "serverTime": "2026-11-03T12:00:00.250Z",
+      "signature": "qzMyrY6nTGCYtxFBqKD9AIS5pWWXu5eESBMC0QHIj9/1aNsyPZWrIpxtYglDerThDpXjgKeW8Uw0HHrB/9kEow==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 2,
+      "hash": "fee79bb2f9b2033917f809c61326e1b252cb4288eb85bb534a0f8992f34fc609",
+      "serverTime": "2026-11-03T12:00:00.650Z",
+      "signature": "FOLPGTT7nV2sF3ttvzeHeBk/hPFbqDOQ0xopbuYFvwsxYaGBPF1jmckpqXwbUKYHvxllikG+aYn6a/p8E1gbOA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 3,
+      "hash": "2239159b4462c354e7a4d0f24a1803cc21b14f6dee9ea1c2e391c967d4db7356",
+      "serverTime": "2026-11-03T12:00:01.050Z",
+      "signature": "0Taccx+RQWgtLyrbpnGDvSw1yASJ4Ad6mMt6HHXLwcTgShjE99f9QDK7PYK+DXsbFqVN+YrwwdLa7SYhMqG54w==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 4,
+      "hash": "acf53d3135c07016cb8b417a51257eae728104074a3ed3dea4adf824b73e819d",
+      "serverTime": "2026-11-03T12:00:07.230Z",
+      "signature": "a3AW0vEbS204DaCMaNqhr4kfa0oS6BpmAQaZOlP/BGVkAT6BOgaGroaxrbAZk8hNdTiNrByfcRKrI7ZMDBi50w==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 5,
+      "hash": "5d37b61e325cf0168401c08fa3e4dcb41e929d30b3d2ee99f044cf932eef5db9",
+      "serverTime": "2026-11-03T12:00:09.976Z",
+      "signature": "p74+Y6SsZwaInDvt6X0lmWfPTB6GG04Bbb6eBd2d1l1XvtSi28dwK/tow7Ce84D6z+R3oJEIfy+E5sgbwLnK+w==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 6,
+      "hash": "ecbcc2102758e2307454c349cb7d76b50ac4f2e9e7f11496bcff1505b9d5a5ec",
+      "serverTime": "2026-11-03T12:00:14.445Z",
+      "signature": "Jl9UdS+vg1JgQUYRSrWwY3QWBPGUTR9D3dk3SeTFdhMd+kT2yi4eq+Hk5Cs5b3h/RcK+hEtRyte3Uuk2GLFbCQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 7,
+      "hash": "2e8de0f569073ffa0a3057b43c6a306c109488581b38d15868196229660fb97c",
+      "serverTime": "2026-11-03T12:00:16.899Z",
+      "signature": "4Vhv4BNRnHHOe8lE0NbpYRLwdWQRw6sFrN5UDjtiMckz42AKnkc7R6fj93xdheRh9owZph5CiyL5q2v6uRLvrg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    }
+  ],
+  "publicKeyPem": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEoInrdRkLs5lWE+qtD8cpCVp0gkEn\n0tllAdSMj9iVyF0MaAHny/cdaByyk3aWbk6dqMaXuaekIuWmvEJCsgbJBg==\n-----END PUBLIC KEY-----\n",
+  "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+}

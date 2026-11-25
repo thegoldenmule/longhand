@@ -1,0 +1,6 @@
+{
+  "note": "TEST ONLY: signs the golden fixtures. Never use outside tests.",
+  "publicKeyPem": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEoInrdRkLs5lWE+qtD8cpCVp0gkEn\n0tllAdSMj9iVyF0MaAHny/cdaByyk3aWbk6dqMaXuaekIuWmvEJCsgbJBg==\n-----END PUBLIC KEY-----\n",
+  "privateKeyPkcs8Pem": "-----BEGIN PRIVATE KEY-----\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgA4PWbY5IIhF/D45p\ndv5xj2iwU+7/uqDB05nJR161idqhRANCAASgiet1GQuzmVYT6q0PxykJWnSCQSfS\n2WUB1IyP2JXIXQxoAefL9x1oHLKTdpZuTp2oxpe5p6Qi5aa8QkKyBskG\n-----END PRIVATE KEY-----\n",
+  "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+}

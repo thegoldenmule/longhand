@@ -1,0 +1,6922 @@
+{
+  "name": "suggestions",
+  "description": "Word-choice suggestions adopted (retyped exactly), adapted (trace-over that diverged), stale (edited away), dismissed and stale on arrival; an insertion retyped; a rephrase hint adapted; the four-word rule matching a comment.",
+  "covers": [
+    "word-choice",
+    "adopted",
+    "adapted",
+    "stale",
+    "dismissed",
+    "stale-on-arrival",
+    "insertion",
+    "rephrase",
+    "typed-from-suggestion",
+    "four-word-rule",
+    "trace-hint",
+    "suggestion-resolved"
+  ],
+  "commits": [
+    {
+      "commitId": "c-0001",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 1,
+      "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "9562bc06ecbca4140cb7f9ca129b2e2c4c113fff962681a78fb671609ddb7dbb",
+      "clientTime": "2026-11-02T09:00:00.000Z",
+      "serverTime": "2026-11-02T09:00:00.250Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "ProjectCreated",
+      "payload": {
+        "title": "Storm Season"
+      }
+    },
+    {
+      "commitId": "c-0002",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 2,
+      "prevHash": "9562bc06ecbca4140cb7f9ca129b2e2c4c113fff962681a78fb671609ddb7dbb",
+      "hash": "ce26f734bc6ddc6d54c0baac8bdfbef9b0576e720d896a096f47f6a15cfe9c1a",
+      "clientTime": "2026-11-02T09:00:00.400Z",
+      "serverTime": "2026-11-02T09:00:00.650Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "DocumentCreated",
+      "payload": {
+        "documentId": "doc-s",
+        "kind": "manuscript",
+        "title": "Storm",
+        "parentId": null,
+        "index": 0
+      }
+    },
+    {
+      "commitId": "c-0003",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 3,
+      "prevHash": "ce26f734bc6ddc6d54c0baac8bdfbef9b0576e720d896a096f47f6a15cfe9c1a",
+      "hash": "a0283d6f795c693df8bf7caa463d5449b927a714c6c68d8dfa68c347d8364d71",
+      "clientTime": "2026-11-02T09:00:00.800Z",
+      "serverTime": "2026-11-02T09:00:01.050Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-s",
+        "baseVersion": 0,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 1,
+            "to": 1,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "T"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 2,
+            "to": 2,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 3,
+            "to": 3,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 4,
+            "to": 4,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 5,
+            "to": 5,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 6,
+            "to": 6,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 7,
+            "to": 7,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 8,
+            "to": 8,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 9,
+            "to": 9,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 10,
+            "to": 10,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "f"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 11,
+            "to": 11,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 12,
+            "to": 12,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 13,
+            "to": 13,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 14,
+            "to": 14,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 15,
+            "to": 15,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 16,
+            "to": 16,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 17,
+            "to": 17,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 18,
+            "to": 18,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 19,
+            "to": 19,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 20,
+            "to": 20,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 21,
+            "to": 21,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 22,
+            "to": 22,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 23,
+            "to": 23,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 24,
+            "to": 24,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 25,
+            "to": 25,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 26,
+            "to": 26,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 27,
+            "to": 27,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 28,
+            "to": 28,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 29,
+            "to": 29,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "f"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 30,
+            "to": 30,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 31,
+            "to": 31,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 32,
+            "to": 32,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "S"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 33,
+            "to": 33,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 34,
+            "to": 34,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 35,
+            "to": 35,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 36,
+            "to": 36,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "w"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 37,
+            "to": 37,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 38,
+            "to": 38,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 39,
+            "to": 39,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 40,
+            "to": 40,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 41,
+            "to": 41,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 42,
+            "to": 42,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 43,
+            "to": 43,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "b"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 44,
+            "to": 44,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "y"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 45,
+            "to": 45,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 46,
+            "to": 46,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 47,
+            "to": 47,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 48,
+            "to": 48,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 49,
+            "to": 49,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 50,
+            "to": 50,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "w"
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 50,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 150,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 248,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 359,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 539,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 729,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 830,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1004,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1170,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1360,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1486,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1592,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1738,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1819,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2018,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2132,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2262,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2424,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2547,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2691,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2815,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2897,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2977,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3095,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3195,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3311,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3477,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3636,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3766,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3927,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4115,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4297,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4470,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4579,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4747,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4897,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5057,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5246,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5333,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5530,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5694,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5867,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6064,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6216,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6387,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6593,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6765,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6892,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 7092,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 7222,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 50,
+        "durationMs": 7222
+      }
+    },
+    {
+      "commitId": "c-0004",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 4,
+      "prevHash": "a0283d6f795c693df8bf7caa463d5449b927a714c6c68d8dfa68c347d8364d71",
+      "hash": "f8fa3c8def5ba89b369206cace7f480e65ad5a790bc5a27d19e3990554f29ab4",
+      "clientTime": "2026-11-02T09:00:10.022Z",
+      "serverTime": "2026-11-02T09:00:10.272Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-s",
+        "baseVersion": 50,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 51,
+            "to": 51,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 52,
+            "to": 52,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 53,
+            "to": 53,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 54,
+            "to": 54,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 55,
+            "to": 55,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "w"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 56,
+            "to": 56,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 57,
+            "to": 57,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 58,
+            "to": 58,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "N"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 59,
+            "to": 59,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 60,
+            "to": 60,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 61,
+            "to": 61,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 62,
+            "to": 62,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 63,
+            "to": 63,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 64,
+            "to": 64,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "g"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 65,
+            "to": 65,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 66,
+            "to": 66,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "m"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 67,
+            "to": 67,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 68,
+            "to": 68,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "v"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 69,
+            "to": 69,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 70,
+            "to": 70,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 71,
+            "to": 71,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 72,
+            "to": 72,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 73,
+            "to": 73,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "u"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 74,
+            "to": 74,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 75,
+            "to": 75,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 76,
+            "to": 76,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 77,
+            "to": 77,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 78,
+            "to": 78,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 79,
+            "to": 79,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 80,
+            "to": 80,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 81,
+            "to": 81,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "T"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 82,
+            "to": 82,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 83,
+            "to": 83,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 84,
+            "to": 84,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 85,
+            "to": 85,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 86,
+            "to": 86,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 87,
+            "to": 87,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 88,
+            "to": 88,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 89,
+            "to": 89,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 90,
+            "to": 90,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "w"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 91,
+            "to": 91,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 92,
+            "to": 92,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 93,
+            "to": 93,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 94,
+            "to": 94,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 95,
+            "to": 95,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "m"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 96,
+            "to": 96,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "p"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 97,
+            "to": 97,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 98,
+            "to": 98,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "y"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 99,
+            "to": 99,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 100,
+            "to": 100,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 50,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 88,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 202,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 364,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 527,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 645,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 807,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 982,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1123,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1325,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1500,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1665,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1766,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1856,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2044,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2179,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2255,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2428,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2532,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2720,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2910,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2991,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3171,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3366,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3515,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3637,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3747,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3891,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4063,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4233,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4352,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4508,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4641,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4790,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4982,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5115,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5287,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5438,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5527,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5631,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5740,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5859,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6060,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6152,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6338,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6541,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6611,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6740,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6818,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6920,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 50,
+        "durationMs": 6920
+      }
+    },
+    {
+      "commitId": "c-0005",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 5,
+      "prevHash": "f8fa3c8def5ba89b369206cace7f480e65ad5a790bc5a27d19e3990554f29ab4",
+      "hash": "2720b01bcaecc11dd7961cfbaa275b3eeab25e8fe9a3e4f54c54960d7c806e52",
+      "clientTime": "2026-11-02T09:00:18.942Z",
+      "serverTime": "2026-11-02T09:00:19.192Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-s",
+        "baseVersion": 100,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 101,
+            "to": 101,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 102,
+            "to": 102,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 103,
+            "to": 103,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 104,
+            "to": 104,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 105,
+            "to": 105,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 106,
+            "to": 106,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 107,
+            "to": 107,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 108,
+            "to": 108,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 109,
+            "to": 109,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 110,
+            "to": 110,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 111,
+            "to": 111,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "g"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 112,
+            "to": 112,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 113,
+            "to": 113,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 114,
+            "to": 114,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 115,
+            "to": 115,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "w"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 116,
+            "to": 116,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 117,
+            "to": 117,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 118,
+            "to": 118,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 119,
+            "to": 119,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 120,
+            "to": 120,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "b"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 121,
+            "to": 121,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 122,
+            "to": 122,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 123,
+            "to": 123,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "c"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 124,
+            "to": 124,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "k"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 125,
+            "to": 125,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 25,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 110,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 292,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 398,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 608,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 690,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 867,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1026,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1181,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1388,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1526,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1615,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1692,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1885,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2094,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2244,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2344,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2498,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2648,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2763,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2898,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3088,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3264,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3334,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3423,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 25,
+        "durationMs": 3423
+      }
+    },
+    {
+      "commitId": "c-0006",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 6,
+      "prevHash": "2720b01bcaecc11dd7961cfbaa275b3eeab25e8fe9a3e4f54c54960d7c806e52",
+      "hash": "1659c0684844e0cd38cbb1f52f0d720677622843df183e14f1cdfb03d906f942",
+      "clientTime": "2026-11-02T09:00:24.365Z",
+      "serverTime": "2026-11-02T09:00:24.615Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "FeedbackRequested",
+      "payload": {
+        "requestId": "req-s",
+        "scope": {
+          "kind": "document",
+          "documentId": "doc-s"
+        },
+        "lenses": [
+          "word-choice",
+          "tone-voice"
+        ],
+        "intensity": "thorough",
+        "ask": null
+      }
+    },
+    {
+      "commitId": "c-0007",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 7,
+      "prevHash": "1659c0684844e0cd38cbb1f52f0d720677622843df183e14f1cdfb03d906f942",
+      "hash": "5c267731b473ab89f5908b272ca8826832d9bd761a91475b7601a86deb85a3bc",
+      "clientTime": "2026-11-02T09:00:26.265Z",
+      "serverTime": "2026-11-02T09:00:26.315Z",
+      "actor": {
+        "kind": "agent",
+        "id": "opus"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-s",
+      "schemaVersion": 1,
+      "type": "FeedbackSessionStarted",
+      "payload": {
+        "feedbackSessionId": "fs-s",
+        "trigger": {
+          "kind": "feedback",
+          "requestId": "req-s"
+        },
+        "model": "opus"
+      }
+    },
+    {
+      "commitId": "c-0008",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 8,
+      "prevHash": "5c267731b473ab89f5908b272ca8826832d9bd761a91475b7601a86deb85a3bc",
+      "hash": "cde1187097c675f8f3baf356e7810f931785fdb40b483fddf0f653d1fc5cebab",
+      "clientTime": "2026-11-02T09:00:27.765Z",
+      "serverTime": "2026-11-02T09:00:27.815Z",
+      "actor": {
+        "kind": "agent",
+        "id": "opus"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-s",
+      "schemaVersion": 1,
+      "type": "SuggestionProposed",
+      "payload": {
+        "suggestionId": "sug-adopt",
+        "feedbackSessionId": "fs-s",
+        "suggestion": {
+          "kind": "word-choice",
+          "target": {
+            "anchor": {
+              "documentId": "doc-s",
+              "sentenceId": "p1.s1",
+              "quote": "old",
+              "occurrence": 0
+            },
+            "from": 22,
+            "to": 25,
+            "readVersion": 125,
+            "version": 125
+          },
+          "alternatives": [
+            "weathered",
+            "sagging"
+          ],
+          "rationale": "Gives the roof texture."
+        }
+      }
+    },
+    {
+      "commitId": "c-0009",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 9,
+      "prevHash": "cde1187097c675f8f3baf356e7810f931785fdb40b483fddf0f653d1fc5cebab",
+      "hash": "91d39f0781894415d2eb5704ba1c08d4194c262b0d27d8806a181103e76c090d",
+      "clientTime": "2026-11-02T09:00:29.265Z",
+      "serverTime": "2026-11-02T09:00:29.315Z",
+      "actor": {
+        "kind": "agent",
+        "id": "opus"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-s",
+      "schemaVersion": 1,
+      "type": "SuggestionProposed",
+      "payload": {
+        "suggestionId": "sug-adapt",
+        "feedbackSessionId": "fs-s",
+        "suggestion": {
+          "kind": "word-choice",
+          "target": {
+            "anchor": {
+              "documentId": "doc-s",
+              "sentenceId": "p1.s2",
+              "quote": "waited",
+              "occurrence": 0
+            },
+            "from": 36,
+            "to": 42,
+            "readVersion": 125,
+            "version": 125
+          },
+          "alternatives": [
+            "lingered"
+          ],
+          "rationale": "Slows the beat."
+        }
+      }
+    },
+    {
+      "commitId": "c-0010",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 10,
+      "prevHash": "91d39f0781894415d2eb5704ba1c08d4194c262b0d27d8806a181103e76c090d",
+      "hash": "11e66f7705727938219ed95ce0e200121365bc65e8e3d05c4ad8e1d5a5b2aa22",
+      "clientTime": "2026-11-02T09:00:30.765Z",
+      "serverTime": "2026-11-02T09:00:30.815Z",
+      "actor": {
+        "kind": "agent",
+        "id": "opus"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-s",
+      "schemaVersion": 1,
+      "type": "SuggestionProposed",
+      "payload": {
+        "suggestionId": "sug-stale",
+        "feedbackSessionId": "fs-s",
+        "suggestion": {
+          "kind": "word-choice",
+          "target": {
+            "anchor": {
+              "documentId": "doc-s",
+              "sentenceId": "p1.s3",
+              "quote": "moved",
+              "occurrence": 0
+            },
+            "from": 66,
+            "to": 71,
+            "readVersion": 125,
+            "version": 125
+          },
+          "alternatives": [
+            "stirred"
+          ],
+          "rationale": "Quieter verb."
+        }
+      }
+    },
+    {
+      "commitId": "c-0011",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 11,
+      "prevHash": "11e66f7705727938219ed95ce0e200121365bc65e8e3d05c4ad8e1d5a5b2aa22",
+      "hash": "af97bf5b2db96a4e986b1bf9fcffd0ddaa94982b373a1781b94abb9bd6c7d94c",
+      "clientTime": "2026-11-02T09:00:32.265Z",
+      "serverTime": "2026-11-02T09:00:32.315Z",
+      "actor": {
+        "kind": "agent",
+        "id": "opus"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-s",
+      "schemaVersion": 1,
+      "type": "SuggestionProposed",
+      "payload": {
+        "suggestionId": "sug-dismiss",
+        "feedbackSessionId": "fs-s",
+        "suggestion": {
+          "kind": "word-choice",
+          "target": {
+            "anchor": {
+              "documentId": "doc-s",
+              "sentenceId": "p1.s1",
+              "quote": "roof",
+              "occurrence": 0
+            },
+            "from": 26,
+            "to": 30,
+            "readVersion": 125,
+            "version": 125
+          },
+          "alternatives": [
+            "eaves"
+          ],
+          "rationale": "More specific."
+        }
+      }
+    },
+    {
+      "commitId": "c-0012",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 12,
+      "prevHash": "af97bf5b2db96a4e986b1bf9fcffd0ddaa94982b373a1781b94abb9bd6c7d94c",
+      "hash": "c102a9656eef3eac5daeb5a8d5b4f59ef82065f8182e075e9d104deefff8a0b3",
+      "clientTime": "2026-11-02T09:00:33.765Z",
+      "serverTime": "2026-11-02T09:00:33.815Z",
+      "actor": {
+        "kind": "agent",
+        "id": "opus"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-s",
+      "schemaVersion": 1,
+      "type": "SuggestionProposed",
+      "payload": {
+        "suggestionId": "sug-insert",
+        "feedbackSessionId": "fs-s",
+        "suggestion": {
+          "kind": "insertion",
+          "target": {
+            "documentId": "doc-s",
+            "position": "after",
+            "sentenceId": "p1.s2",
+            "pos": 57,
+            "readVersion": 125,
+            "version": 125
+          },
+          "sentence": "Her tea had gone cold.",
+          "purpose": "Show time passing."
+        }
+      }
+    },
+    {
+      "commitId": "c-0013",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 13,
+      "prevHash": "c102a9656eef3eac5daeb5a8d5b4f59ef82065f8182e075e9d104deefff8a0b3",
+      "hash": "ef316049b3799121f5805138d30d5c1ccca260b8bac6405dab0c0814024c6cb6",
+      "clientTime": "2026-11-02T09:00:35.265Z",
+      "serverTime": "2026-11-02T09:00:35.315Z",
+      "actor": {
+        "kind": "agent",
+        "id": "opus"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-s",
+      "schemaVersion": 1,
+      "type": "SuggestionProposed",
+      "payload": {
+        "suggestionId": "sug-rephrase",
+        "feedbackSessionId": "fs-s",
+        "suggestion": {
+          "kind": "rephrase",
+          "target": {
+            "anchor": {
+              "documentId": "doc-s",
+              "sentenceId": "p1.s4",
+              "quote": "the hedges were black",
+              "occurrence": 0
+            },
+            "from": 104,
+            "to": 125,
+            "readVersion": 125,
+            "version": 125
+          },
+          "guidance": "Name what makes the hedges black: shadow, rain or night."
+        }
+      }
+    },
+    {
+      "commitId": "c-0014",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 14,
+      "prevHash": "ef316049b3799121f5805138d30d5c1ccca260b8bac6405dab0c0814024c6cb6",
+      "hash": "4c09b7e47388190fd3ca453c9a58a8966c54f7a2fcf897c208ff6571776cfe03",
+      "clientTime": "2026-11-02T09:00:36.765Z",
+      "serverTime": "2026-11-02T09:00:36.815Z",
+      "actor": {
+        "kind": "agent",
+        "id": "opus"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-s",
+      "schemaVersion": 1,
+      "type": "CommentAdded",
+      "payload": {
+        "commentId": "com-s",
+        "feedbackSessionId": "fs-s",
+        "target": {
+          "anchor": {
+            "documentId": "doc-s",
+            "sentenceId": "p1.s4",
+            "quote": "The lane was empty",
+            "occurrence": 0
+          },
+          "from": 81,
+          "to": 99,
+          "readVersion": 125,
+          "version": 125,
+          "kind": "anchor"
+        },
+        "category": "tone-voice",
+        "severity": "minor",
+        "body": "Consider ending on a sound: the gutters overflowing into the lane."
+      }
+    },
+    {
+      "commitId": "c-0015",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 15,
+      "prevHash": "4c09b7e47388190fd3ca453c9a58a8966c54f7a2fcf897c208ff6571776cfe03",
+      "hash": "8dbccbfbeac34cd390752d0a49083f2136c8cb2b1c29ad9f7c851156457fcd4b",
+      "clientTime": "2026-11-02T09:00:38.265Z",
+      "serverTime": "2026-11-02T09:00:38.315Z",
+      "actor": {
+        "kind": "agent",
+        "id": "opus"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-s",
+      "schemaVersion": 1,
+      "type": "ReviewFinished",
+      "payload": {
+        "feedbackSessionId": "fs-s",
+        "summary": "Atmospheric; a few verbs could work harder.",
+        "strengths": [
+          "Mood"
+        ],
+        "topPriorities": [
+          "Sharpen verbs"
+        ]
+      }
+    },
+    {
+      "commitId": "c-0016",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 16,
+      "prevHash": "8dbccbfbeac34cd390752d0a49083f2136c8cb2b1c29ad9f7c851156457fcd4b",
+      "hash": "49b169e677a3a087d3d7d7fb4058645903baf0dd0166f8ef3f41bd906c8adf37",
+      "clientTime": "2026-11-02T09:00:38.265Z",
+      "serverTime": "2026-11-02T09:00:38.515Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-s",
+        "baseVersion": 125,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 126,
+            "to": 126,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 127,
+            "to": 127,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "S"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 128,
+            "to": 128,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 129,
+            "to": 129,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "m"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 130,
+            "to": 130,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 131,
+            "to": 131,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "w"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 132,
+            "to": 132,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 133,
+            "to": 133,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 134,
+            "to": 134,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 135,
+            "to": 135,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 136,
+            "to": 136,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 137,
+            "to": 137,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 138,
+            "to": 138,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 139,
+            "to": 139,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 140,
+            "to": 140,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 141,
+            "to": 141,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "g"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 142,
+            "to": 142,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 143,
+            "to": 143,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "b"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 144,
+            "to": 144,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 145,
+            "to": 145,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 146,
+            "to": 146,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "k"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 147,
+            "to": 147,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 148,
+            "to": 148,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 149,
+            "to": 149,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 24,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 152,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 305,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 394,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 489,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 638,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 806,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 990,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1127,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1261,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1409,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1512,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1658,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1735,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1881,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2081,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2215,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2384,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2494,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2598,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2740,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2817,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2987,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3090,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 24,
+        "durationMs": 3090
+      }
+    },
+    {
+      "commitId": "c-0017",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 17,
+      "prevHash": "49b169e677a3a087d3d7d7fb4058645903baf0dd0166f8ef3f41bd906c8adf37",
+      "hash": "69112c97a63fa0fd9abe5adc892014be9e475fec7ef36f77582b2e085d1389e2",
+      "clientTime": "2026-11-02T09:00:43.355Z",
+      "serverTime": "2026-11-02T09:00:43.605Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "FeedbackRequested",
+      "payload": {
+        "requestId": "req-s2",
+        "scope": {
+          "kind": "document",
+          "documentId": "doc-s"
+        },
+        "lenses": [
+          "word-choice"
+        ],
+        "intensity": "light",
+        "ask": null
+      }
+    },
+    {
+      "commitId": "c-0018",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 18,
+      "prevHash": "69112c97a63fa0fd9abe5adc892014be9e475fec7ef36f77582b2e085d1389e2",
+      "hash": "9fbcc6fd21423aad471e434ca54804cf336df83b091ee1f38df0532744d9fd58",
+      "clientTime": "2026-11-02T09:00:45.255Z",
+      "serverTime": "2026-11-02T09:00:45.305Z",
+      "actor": {
+        "kind": "agent",
+        "id": "sonnet"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-s2",
+      "schemaVersion": 1,
+      "type": "FeedbackSessionStarted",
+      "payload": {
+        "feedbackSessionId": "fs-s2",
+        "trigger": {
+          "kind": "feedback",
+          "requestId": "req-s2"
+        },
+        "model": "sonnet"
+      }
+    },
+    {
+      "commitId": "c-0019",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 19,
+      "prevHash": "9fbcc6fd21423aad471e434ca54804cf336df83b091ee1f38df0532744d9fd58",
+      "hash": "ad17a9c59bca0272ecf5f9ed47382cd95eafa24c9bc73df9dad402dde6e84d59",
+      "clientTime": "2026-11-02T09:00:45.255Z",
+      "serverTime": "2026-11-02T09:00:45.505Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-s",
+        "baseVersion": 149,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 94,
+            "to": 99,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 95,
+            "to": 95,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 96,
+            "to": 96,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 97,
+            "to": 97,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 98,
+            "to": 98,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 99,
+            "to": 99,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 100,
+            "to": 100,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 101,
+            "to": 101,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 8,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 197,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 345,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 511,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 583,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 726,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 919,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1083,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 8,
+        "durationMs": 1083
+      }
+    },
+    {
+      "commitId": "c-0020",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 20,
+      "prevHash": "ad17a9c59bca0272ecf5f9ed47382cd95eafa24c9bc73df9dad402dde6e84d59",
+      "hash": "52ba30691f70995726e8308365490a1608cb1163c5b829fcef32999739a0cc51",
+      "clientTime": "2026-11-02T09:00:49.838Z",
+      "serverTime": "2026-11-02T09:00:49.888Z",
+      "actor": {
+        "kind": "agent",
+        "id": "opus"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-s2",
+      "schemaVersion": 1,
+      "type": "SuggestionProposed",
+      "payload": {
+        "suggestionId": "sug-arrival",
+        "feedbackSessionId": "fs-s2",
+        "suggestion": {
+          "kind": "word-choice",
+          "target": {
+            "anchor": {
+              "documentId": "doc-s",
+              "sentenceId": "p1.s4",
+              "quote": "empty",
+              "occurrence": 0
+            },
+            "from": 94,
+            "to": 95,
+            "readVersion": 149,
+            "version": 157
+          },
+          "alternatives": [
+            "bare"
+          ],
+          "rationale": "Plainer."
+        }
+      }
+    },
+    {
+      "commitId": "c-0021",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 21,
+      "prevHash": "52ba30691f70995726e8308365490a1608cb1163c5b829fcef32999739a0cc51",
+      "hash": "0e6da2e2ea66a693aedc5889a4cfc3fccf8958840c8dd7d9048537d98e20eba1",
+      "clientTime": "2026-11-02T09:00:51.338Z",
+      "serverTime": "2026-11-02T09:00:51.388Z",
+      "actor": {
+        "kind": "agent",
+        "id": "opus"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-s2",
+      "schemaVersion": 1,
+      "type": "ReviewFinished",
+      "payload": {
+        "feedbackSessionId": "fs-s2",
+        "summary": "One small note.",
+        "strengths": [],
+        "topPriorities": []
+      }
+    },
+    {
+      "commitId": "c-0022",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 22,
+      "prevHash": "0e6da2e2ea66a693aedc5889a4cfc3fccf8958840c8dd7d9048537d98e20eba1",
+      "hash": "ba99a857eaf79a153cda11781ca10972a233751f11961e1ddb849e41d7cc3d3f",
+      "clientTime": "2026-11-02T09:00:51.338Z",
+      "serverTime": "2026-11-02T09:00:51.588Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-s",
+        "baseVersion": 157,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 22,
+            "to": 25,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "w"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 23,
+            "to": 23,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 24,
+            "to": 24,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 25,
+            "to": 25,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 26,
+            "to": 26,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 27,
+            "to": 27,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 28,
+            "to": 28,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 29,
+            "to": 29,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 30,
+            "to": 30,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 9,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 135,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 245,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 391,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 574,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 665,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 752,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 832,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1021,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 9,
+        "durationMs": 1021
+      }
+    },
+    {
+      "commitId": "c-0023",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 23,
+      "prevHash": "ba99a857eaf79a153cda11781ca10972a233751f11961e1ddb849e41d7cc3d3f",
+      "hash": "816275dc8b7e21581b3cb707d103228ce39784f120b2d2021c534116beb2b8c3",
+      "clientTime": "2026-11-02T09:00:51.588Z",
+      "serverTime": "2026-11-02T09:00:51.589Z",
+      "actor": {
+        "kind": "system",
+        "id": "ledger"
+      },
+      "deviceId": "server",
+      "sessionId": "system",
+      "schemaVersion": 1,
+      "type": "SuggestionResolved",
+      "payload": {
+        "targetId": "sug-adopt",
+        "targetKind": "suggestion",
+        "outcome": "adopted",
+        "triggerSeq": 22
+      }
+    },
+    {
+      "commitId": "c-0024",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 24,
+      "prevHash": "816275dc8b7e21581b3cb707d103228ce39784f120b2d2021c534116beb2b8c3",
+      "hash": "6ed89db3220c03ec255d435f81266382a2ae2677ab11a4541476bb7a644ff67e",
+      "clientTime": "2026-11-02T09:00:54.359Z",
+      "serverTime": "2026-11-02T09:00:54.609Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-s",
+        "baseVersion": 166,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 42,
+            "to": 48,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 43,
+            "to": 43,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 44,
+            "to": 44,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 45,
+            "to": 45,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "g"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 46,
+            "to": 46,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 47,
+            "to": 47,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 48,
+            "to": 48,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 7,
+            "method": "typed",
+            "traceSuggestionId": "sug-adapt"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 178,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 347,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 489,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 568,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 650,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 746,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 7,
+        "durationMs": 746
+      }
+    },
+    {
+      "commitId": "c-0025",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 25,
+      "prevHash": "6ed89db3220c03ec255d435f81266382a2ae2677ab11a4541476bb7a644ff67e",
+      "hash": "3a980faf96c17191a34bab2623e5221a1dfdf38f9e3ebb93e5ef524bc13fd4f1",
+      "clientTime": "2026-11-02T09:00:54.609Z",
+      "serverTime": "2026-11-02T09:00:54.610Z",
+      "actor": {
+        "kind": "system",
+        "id": "ledger"
+      },
+      "deviceId": "server",
+      "sessionId": "system",
+      "schemaVersion": 1,
+      "type": "SuggestionResolved",
+      "payload": {
+        "targetId": "sug-adapt",
+        "targetKind": "suggestion",
+        "outcome": "adapted",
+        "triggerSeq": 24
+      }
+    },
+    {
+      "commitId": "c-0026",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 26,
+      "prevHash": "3a980faf96c17191a34bab2623e5221a1dfdf38f9e3ebb93e5ef524bc13fd4f1",
+      "hash": "ee1e5086243317137072cce87196222e2ad453b7b26ac88584f62ab87ce854bc",
+      "clientTime": "2026-11-02T09:00:57.105Z",
+      "serverTime": "2026-11-02T09:00:57.355Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-s",
+        "baseVersion": 173,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 72,
+            "to": 78
+          }
+        ],
+        "runs": [
+          {
+            "steps": 1,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "delete",
+            "len": 6
+          }
+        ],
+        "characters": 0,
+        "durationMs": 0
+      }
+    },
+    {
+      "commitId": "c-0027",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 27,
+      "prevHash": "ee1e5086243317137072cce87196222e2ad453b7b26ac88584f62ab87ce854bc",
+      "hash": "7f77915ac0ad56fea4d2db25f8ac913c9c64ab9faa4c8b7bc3f6949c2376437b",
+      "clientTime": "2026-11-02T09:00:57.355Z",
+      "serverTime": "2026-11-02T09:00:57.356Z",
+      "actor": {
+        "kind": "system",
+        "id": "ledger"
+      },
+      "deviceId": "server",
+      "sessionId": "system",
+      "schemaVersion": 1,
+      "type": "SuggestionResolved",
+      "payload": {
+        "targetId": "sug-stale",
+        "targetKind": "suggestion",
+        "outcome": "stale",
+        "triggerSeq": 26
+      }
+    },
+    {
+      "commitId": "c-0028",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 28,
+      "prevHash": "7f77915ac0ad56fea4d2db25f8ac913c9c64ab9faa4c8b7bc3f6949c2376437b",
+      "hash": "055e77dfe80f3a17afc4ae788bd4c98f19779dcf5f11445933ab19602e6ad636",
+      "clientTime": "2026-11-02T09:00:59.105Z",
+      "serverTime": "2026-11-02T09:00:59.355Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "SuggestionDismissed",
+      "payload": {
+        "targetId": "sug-dismiss",
+        "reason": "not-my-voice",
+        "note": null
+      }
+    },
+    {
+      "commitId": "c-0029",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 29,
+      "prevHash": "055e77dfe80f3a17afc4ae788bd4c98f19779dcf5f11445933ab19602e6ad636",
+      "hash": "9aceb5ae2f0beae0f2020e1eeb19bf2768cf23b596d11449f7fb79500f6f932a",
+      "clientTime": "2026-11-02T09:00:59.505Z",
+      "serverTime": "2026-11-02T09:00:59.755Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-s",
+        "baseVersion": 174,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 64,
+            "to": 64,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 65,
+            "to": 65,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "H"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 66,
+            "to": 66,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 67,
+            "to": 67,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 68,
+            "to": 68,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 69,
+            "to": 69,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 70,
+            "to": 70,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 71,
+            "to": 71,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 72,
+            "to": 72,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 73,
+            "to": 73,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 74,
+            "to": 74,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 75,
+            "to": 75,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 76,
+            "to": 76,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 77,
+            "to": 77,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "g"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 78,
+            "to": 78,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 79,
+            "to": 79,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 80,
+            "to": 80,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 81,
+            "to": 81,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 82,
+            "to": 82,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "c"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 83,
+            "to": 83,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 84,
+            "to": 84,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 85,
+            "to": 85,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 86,
+            "to": 86,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 23,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 184,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 357,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 461,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 655,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 852,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1060,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1251,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1424,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1581,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1752,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1903,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2056,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2201,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2336,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2531,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2647,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2795,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2900,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3013,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3114,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3253,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3370,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 23,
+        "durationMs": 3370
+      }
+    },
+    {
+      "commitId": "c-0030",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 30,
+      "prevHash": "9aceb5ae2f0beae0f2020e1eeb19bf2768cf23b596d11449f7fb79500f6f932a",
+      "hash": "d8c73805e028f2b3de7d1526c31519dcf421b918923c8f2890a197ff465193c2",
+      "clientTime": "2026-11-02T09:00:59.755Z",
+      "serverTime": "2026-11-02T09:00:59.756Z",
+      "actor": {
+        "kind": "system",
+        "id": "ledger"
+      },
+      "deviceId": "server",
+      "sessionId": "system",
+      "schemaVersion": 1,
+      "type": "SuggestionResolved",
+      "payload": {
+        "targetId": "sug-insert",
+        "targetKind": "suggestion",
+        "outcome": "adopted",
+        "triggerSeq": 29
+      }
+    },
+    {
+      "commitId": "c-0031",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 31,
+      "prevHash": "d8c73805e028f2b3de7d1526c31519dcf421b918923c8f2890a197ff465193c2",
+      "hash": "5ffddac502cfdbf1a615744d8e986a323638b69d3415a228cf1fd18129377221",
+      "clientTime": "2026-11-02T09:01:04.875Z",
+      "serverTime": "2026-11-02T09:01:05.125Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-s",
+        "baseVersion": 197,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 147,
+            "to": 152,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 148,
+            "to": 148,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 149,
+            "to": 149,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 150,
+            "to": 150,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "k"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 151,
+            "to": 151,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 152,
+            "to": 152,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "w"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 153,
+            "to": 153,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 154,
+            "to": 154,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 155,
+            "to": 155,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 156,
+            "to": 156,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 157,
+            "to": 157,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 158,
+            "to": 158,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 159,
+            "to": 159,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 160,
+            "to": 160,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 14,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 80,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 241,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 383,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 575,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 731,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 912,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1041,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1224,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1366,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1552,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1649,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1808,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1973,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 14,
+        "durationMs": 1973
+      }
+    },
+    {
+      "commitId": "c-0032",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 32,
+      "prevHash": "5ffddac502cfdbf1a615744d8e986a323638b69d3415a228cf1fd18129377221",
+      "hash": "210d68bb82ad8b8582978d00eb3c68ecccdefc99bc3db35b127b197c1e2b4312",
+      "clientTime": "2026-11-02T09:01:05.125Z",
+      "serverTime": "2026-11-02T09:01:05.126Z",
+      "actor": {
+        "kind": "system",
+        "id": "ledger"
+      },
+      "deviceId": "server",
+      "sessionId": "system",
+      "schemaVersion": 1,
+      "type": "SuggestionResolved",
+      "payload": {
+        "targetId": "sug-rephrase",
+        "targetKind": "suggestion",
+        "outcome": "adapted",
+        "triggerSeq": 31
+      }
+    },
+    {
+      "commitId": "c-0033",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 33,
+      "prevHash": "210d68bb82ad8b8582978d00eb3c68ecccdefc99bc3db35b127b197c1e2b4312",
+      "hash": "995eec727f4a2bca1e0ca5f377ad18f87bde2438e9da2c7929d17e851191941b",
+      "clientTime": "2026-11-02T09:01:08.848Z",
+      "serverTime": "2026-11-02T09:01:09.098Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-s",
+        "baseVersion": 211,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 186,
+            "to": 186,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 187,
+            "to": 187,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "T"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 188,
+            "to": 188,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 189,
+            "to": 189,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 190,
+            "to": 190,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 191,
+            "to": 191,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "g"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 192,
+            "to": 192,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "u"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 193,
+            "to": 193,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 194,
+            "to": 194,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 195,
+            "to": 195,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 196,
+            "to": 196,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 197,
+            "to": 197,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 198,
+            "to": 198,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 199,
+            "to": 199,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "w"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 200,
+            "to": 200,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 201,
+            "to": 201,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 202,
+            "to": 202,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 203,
+            "to": 203,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 204,
+            "to": 204,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 205,
+            "to": 205,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "v"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 206,
+            "to": 206,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 207,
+            "to": 207,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 208,
+            "to": 208,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "f"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 209,
+            "to": 209,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 210,
+            "to": 210,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 211,
+            "to": 211,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "w"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 212,
+            "to": 212,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 213,
+            "to": 213,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 214,
+            "to": 214,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "g"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 215,
+            "to": 215,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 216,
+            "to": 216,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 217,
+            "to": 217,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 218,
+            "to": 218,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 219,
+            "to": 219,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 220,
+            "to": 220,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 221,
+            "to": 221,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 222,
+            "to": 222,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 223,
+            "to": 223,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 224,
+            "to": 224,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 225,
+            "to": 225,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 226,
+            "to": 226,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 227,
+            "to": 227,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 228,
+            "to": 228,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 229,
+            "to": 229,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 44,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 127,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 314,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 500,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 591,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 786,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 876,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1021,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1177,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1288,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1399,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1528,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1613,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1720,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1877,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2073,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2261,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2341,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2533,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2714,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2819,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2910,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3044,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3136,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3218,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3338,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3548,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3683,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3795,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3895,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4065,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4168,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4301,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4458,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4633,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4721,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4854,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5016,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5203,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5289,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5369,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5551,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5755,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5847,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 44,
+        "durationMs": 5847
+      }
+    }
+  ],
+  "expected": {
+    "headSeq": 33,
+    "headHash": "995eec727f4a2bca1e0ca5f377ad18f87bde2438e9da2c7929d17e851191941b",
+    "state": {
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "headSeq": 33,
+      "headHash": "995eec727f4a2bca1e0ca5f377ad18f87bde2438e9da2c7929d17e851191941b",
+      "settings": {
+        "genre": "",
+        "audience": "",
+        "goals": "",
+        "styleNotes": "",
+        "dailyWordGoal": null,
+        "citationStyle": "apa",
+        "title": "Storm Season"
+      },
+      "createdSeq": 1,
+      "binder": {
+        "manuscript": [
+          {
+            "kind": "document",
+            "id": "doc-s"
+          }
+        ],
+        "notes": []
+      },
+      "folders": {},
+      "documents": {
+        "doc-s": {
+          "id": "doc-s",
+          "kind": "manuscript",
+          "area": "manuscript",
+          "title": "Storm",
+          "parentId": null,
+          "synopsis": "",
+          "content": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "The rain fell on the weathered roof. She lingerd by the window. Her tea had gone cold. Nothing outside. The lane was deserted and the hedges were dark with rain. Somewhere a dog barked. The gutters were overflowing into the lane."
+                  }
+                ]
+              }
+            ]
+          },
+          "version": 255,
+          "provenance": [
+            {
+              "from": 1,
+              "to": 22,
+              "class": "typed",
+              "originSeq": 3
+            },
+            {
+              "from": 22,
+              "to": 31,
+              "class": "typed-from-suggestion",
+              "originSeq": 22,
+              "suggestionId": "sug-adopt"
+            },
+            {
+              "from": 31,
+              "to": 42,
+              "class": "typed",
+              "originSeq": 3
+            },
+            {
+              "from": 42,
+              "to": 49,
+              "class": "typed-from-suggestion",
+              "originSeq": 24,
+              "suggestionId": "sug-adapt"
+            },
+            {
+              "from": 49,
+              "to": 58,
+              "class": "typed",
+              "originSeq": 3
+            },
+            {
+              "from": 58,
+              "to": 64,
+              "class": "typed",
+              "originSeq": 4
+            },
+            {
+              "from": 64,
+              "to": 65,
+              "class": "typed",
+              "originSeq": 29
+            },
+            {
+              "from": 65,
+              "to": 87,
+              "class": "typed-from-suggestion",
+              "originSeq": 29,
+              "suggestionId": "sug-insert"
+            },
+            {
+              "from": 87,
+              "to": 118,
+              "class": "typed",
+              "originSeq": 4
+            },
+            {
+              "from": 118,
+              "to": 126,
+              "class": "typed",
+              "originSeq": 19
+            },
+            {
+              "from": 126,
+              "to": 128,
+              "class": "typed",
+              "originSeq": 4
+            },
+            {
+              "from": 128,
+              "to": 147,
+              "class": "typed",
+              "originSeq": 5
+            },
+            {
+              "from": 147,
+              "to": 161,
+              "class": "typed",
+              "originSeq": 31
+            },
+            {
+              "from": 161,
+              "to": 162,
+              "class": "typed",
+              "originSeq": 5
+            },
+            {
+              "from": 162,
+              "to": 186,
+              "class": "typed",
+              "originSeq": 16
+            },
+            {
+              "from": 186,
+              "to": 204,
+              "class": "typed",
+              "originSeq": 33
+            },
+            {
+              "from": 204,
+              "to": 229,
+              "class": "typed-from-suggestion",
+              "originSeq": 33,
+              "suggestionId": "com-s"
+            },
+            {
+              "from": 229,
+              "to": 230,
+              "class": "typed",
+              "originSeq": 33
+            }
+          ],
+          "archived": false,
+          "imported": null,
+          "createdSeq": 2,
+          "contentSeq": 33,
+          "updatedSeq": 33
+        }
+      },
+      "annotations": {
+        "feedbackRequests": {
+          "req-s": {
+            "id": "req-s",
+            "seq": 6,
+            "createdAt": "2026-11-02T09:00:24.615Z",
+            "scope": {
+              "kind": "document",
+              "documentId": "doc-s"
+            },
+            "lenses": [
+              "word-choice",
+              "tone-voice"
+            ],
+            "intensity": "thorough",
+            "ask": null,
+            "status": "finished",
+            "feedbackSessionId": "fs-s"
+          },
+          "req-s2": {
+            "id": "req-s2",
+            "seq": 17,
+            "createdAt": "2026-11-02T09:00:43.605Z",
+            "scope": {
+              "kind": "document",
+              "documentId": "doc-s"
+            },
+            "lenses": [
+              "word-choice"
+            ],
+            "intensity": "light",
+            "ask": null,
+            "status": "finished",
+            "feedbackSessionId": "fs-s2"
+          }
+        },
+        "agentSessions": {
+          "fs-s": {
+            "id": "fs-s",
+            "kind": "review",
+            "requestId": "req-s",
+            "threadId": null,
+            "model": "opus",
+            "startedSeq": 7,
+            "startedAt": "2026-11-02T09:00:26.315Z",
+            "endedSeq": 15,
+            "status": "finished",
+            "failureReason": null,
+            "review": {
+              "summary": "Atmospheric; a few verbs could work harder.",
+              "strengths": [
+                "Mood"
+              ],
+              "topPriorities": [
+                "Sharpen verbs"
+              ]
+            },
+            "counts": {
+              "items": 7,
+              "suggestions": 6,
+              "insertions": 1,
+              "proposals": 0,
+              "questions": 0,
+              "searches": 0
+            },
+            "annotationIds": [
+              "sug-adopt",
+              "sug-adapt",
+              "sug-stale",
+              "sug-dismiss",
+              "sug-insert",
+              "sug-rephrase",
+              "com-s"
+            ]
+          },
+          "fs-s2": {
+            "id": "fs-s2",
+            "kind": "review",
+            "requestId": "req-s2",
+            "threadId": null,
+            "model": "sonnet",
+            "startedSeq": 18,
+            "startedAt": "2026-11-02T09:00:45.305Z",
+            "endedSeq": 21,
+            "status": "finished",
+            "failureReason": null,
+            "review": {
+              "summary": "One small note.",
+              "strengths": [],
+              "topPriorities": []
+            },
+            "counts": {
+              "items": 1,
+              "suggestions": 1,
+              "insertions": 0,
+              "proposals": 0,
+              "questions": 0,
+              "searches": 0
+            },
+            "annotationIds": [
+              "sug-arrival"
+            ]
+          }
+        },
+        "comments": {
+          "com-s": {
+            "id": "com-s",
+            "feedbackSessionId": "fs-s",
+            "seq": 14,
+            "createdAt": "2026-11-02T09:00:36.815Z",
+            "target": {
+              "anchor": {
+                "documentId": "doc-s",
+                "sentenceId": "p1.s4",
+                "quote": "The lane was empty",
+                "occurrence": 0
+              },
+              "from": 81,
+              "to": 99,
+              "readVersion": 125,
+              "version": 125,
+              "kind": "anchor"
+            },
+            "range": {
+              "documentId": "doc-s",
+              "from": 105,
+              "to": 119
+            },
+            "category": "tone-voice",
+            "severity": "minor",
+            "body": "Consider ending on a sound: the gutters overflowing into the lane.",
+            "status": "open",
+            "dismissal": null
+          }
+        },
+        "questions": {},
+        "suggestions": {
+          "sug-adopt": {
+            "id": "sug-adopt",
+            "feedbackSessionId": "fs-s",
+            "seq": 8,
+            "createdAt": "2026-11-02T09:00:27.815Z",
+            "dismissal": null,
+            "anchor": {
+              "documentId": "doc-s",
+              "sentenceId": "p1.s1",
+              "quote": "old",
+              "occurrence": 0
+            },
+            "status": "adopted",
+            "resolvedSeq": 22,
+            "range": {
+              "documentId": "doc-s",
+              "from": 22,
+              "to": 31
+            },
+            "kind": "word-choice",
+            "alternatives": [
+              "weathered",
+              "sagging"
+            ],
+            "rationale": "Gives the roof texture.",
+            "adoptedAlternative": 0
+          },
+          "sug-adapt": {
+            "id": "sug-adapt",
+            "feedbackSessionId": "fs-s",
+            "seq": 9,
+            "createdAt": "2026-11-02T09:00:29.315Z",
+            "dismissal": null,
+            "anchor": {
+              "documentId": "doc-s",
+              "sentenceId": "p1.s2",
+              "quote": "waited",
+              "occurrence": 0
+            },
+            "status": "adapted",
+            "resolvedSeq": 24,
+            "range": {
+              "documentId": "doc-s",
+              "from": 42,
+              "to": 49
+            },
+            "kind": "word-choice",
+            "alternatives": [
+              "lingered"
+            ],
+            "rationale": "Slows the beat.",
+            "adoptedAlternative": null
+          },
+          "sug-stale": {
+            "id": "sug-stale",
+            "feedbackSessionId": "fs-s",
+            "seq": 10,
+            "createdAt": "2026-11-02T09:00:30.815Z",
+            "dismissal": null,
+            "anchor": {
+              "documentId": "doc-s",
+              "sentenceId": "p1.s3",
+              "quote": "moved",
+              "occurrence": 0
+            },
+            "status": "stale",
+            "resolvedSeq": 26,
+            "range": null,
+            "kind": "word-choice",
+            "alternatives": [
+              "stirred"
+            ],
+            "rationale": "Quieter verb.",
+            "adoptedAlternative": null
+          },
+          "sug-dismiss": {
+            "id": "sug-dismiss",
+            "feedbackSessionId": "fs-s",
+            "seq": 11,
+            "createdAt": "2026-11-02T09:00:32.315Z",
+            "dismissal": {
+              "seq": 28,
+              "reason": "not-my-voice",
+              "note": null
+            },
+            "anchor": {
+              "documentId": "doc-s",
+              "sentenceId": "p1.s1",
+              "quote": "roof",
+              "occurrence": 0
+            },
+            "status": "dismissed",
+            "resolvedSeq": 28,
+            "range": {
+              "documentId": "doc-s",
+              "from": 32,
+              "to": 36
+            },
+            "kind": "word-choice",
+            "alternatives": [
+              "eaves"
+            ],
+            "rationale": "More specific.",
+            "adoptedAlternative": null
+          },
+          "sug-insert": {
+            "id": "sug-insert",
+            "feedbackSessionId": "fs-s",
+            "seq": 12,
+            "createdAt": "2026-11-02T09:00:33.815Z",
+            "dismissal": null,
+            "kind": "insertion",
+            "documentId": "doc-s",
+            "position": "after",
+            "sentenceId": "p1.s2",
+            "sentence": "Her tea had gone cold.",
+            "purpose": "Show time passing.",
+            "status": "adopted",
+            "resolvedSeq": 29,
+            "range": {
+              "documentId": "doc-s",
+              "from": 64,
+              "to": 87
+            }
+          },
+          "sug-rephrase": {
+            "id": "sug-rephrase",
+            "feedbackSessionId": "fs-s",
+            "seq": 13,
+            "createdAt": "2026-11-02T09:00:35.315Z",
+            "dismissal": null,
+            "anchor": {
+              "documentId": "doc-s",
+              "sentenceId": "p1.s4",
+              "quote": "the hedges were black",
+              "occurrence": 0
+            },
+            "status": "adapted",
+            "resolvedSeq": 31,
+            "range": {
+              "documentId": "doc-s",
+              "from": 131,
+              "to": 161
+            },
+            "kind": "rephrase",
+            "guidance": "Name what makes the hedges black: shadow, rain or night."
+          },
+          "sug-arrival": {
+            "id": "sug-arrival",
+            "feedbackSessionId": "fs-s2",
+            "seq": 20,
+            "createdAt": "2026-11-02T09:00:49.888Z",
+            "dismissal": null,
+            "anchor": {
+              "documentId": "doc-s",
+              "sentenceId": "p1.s4",
+              "quote": "empty",
+              "occurrence": 0
+            },
+            "status": "stale",
+            "resolvedSeq": 20,
+            "range": {
+              "documentId": "doc-s",
+              "from": 118,
+              "to": 119
+            },
+            "kind": "word-choice",
+            "alternatives": [
+              "bare"
+            ],
+            "rationale": "Plainer.",
+            "adoptedAlternative": null
+          }
+        },
+        "proposals": {},
+        "citationFlags": {},
+        "surfacedSources": {},
+        "sourceSuggestions": {},
+        "discussions": {}
+      },
+      "sources": {},
+      "clippings": {},
+      "pastes": {},
+      "writingSessions": [
+        {
+          "index": 0,
+          "startSeq": 3,
+          "endSeq": 33,
+          "startTime": "2026-11-02T09:00:00.800Z",
+          "endTime": "2026-11-02T09:01:14.695Z",
+          "activeMs": 34695,
+          "commits": 11,
+          "charactersInserted": 254,
+          "documentIds": [
+            "doc-s"
+          ]
+        }
+      ]
+    },
+    "documents": {
+      "doc-s": {
+        "text": "The rain fell on the weathered roof. She lingerd by the window. Her tea had gone cold. Nothing outside. The lane was deserted and the hedges were dark with rain. Somewhere a dog barked. The gutters were overflowing into the lane.",
+        "words": [
+          {
+            "from": 1,
+            "to": 4,
+            "text": "The",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 5,
+            "to": 9,
+            "text": "rain",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 10,
+            "to": 14,
+            "text": "fell",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 15,
+            "to": 17,
+            "text": "on",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 18,
+            "to": 21,
+            "text": "the",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 22,
+            "to": 31,
+            "text": "weathered",
+            "class": "typed-from-suggestion",
+            "blockId": "p1",
+            "originSeqs": [
+              22
+            ],
+            "suggestionIds": [
+              "sug-adopt"
+            ]
+          },
+          {
+            "from": 32,
+            "to": 36,
+            "text": "roof",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 38,
+            "to": 41,
+            "text": "She",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 42,
+            "to": 49,
+            "text": "lingerd",
+            "class": "typed-from-suggestion",
+            "blockId": "p1",
+            "originSeqs": [
+              24
+            ],
+            "suggestionIds": [
+              "sug-adapt"
+            ]
+          },
+          {
+            "from": 50,
+            "to": 52,
+            "text": "by",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 53,
+            "to": 56,
+            "text": "the",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 57,
+            "to": 63,
+            "text": "window",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3,
+              4
+            ]
+          },
+          {
+            "from": 65,
+            "to": 68,
+            "text": "Her",
+            "class": "typed-from-suggestion",
+            "blockId": "p1",
+            "originSeqs": [
+              29
+            ],
+            "suggestionIds": [
+              "sug-insert"
+            ]
+          },
+          {
+            "from": 69,
+            "to": 72,
+            "text": "tea",
+            "class": "typed-from-suggestion",
+            "blockId": "p1",
+            "originSeqs": [
+              29
+            ],
+            "suggestionIds": [
+              "sug-insert"
+            ]
+          },
+          {
+            "from": 73,
+            "to": 76,
+            "text": "had",
+            "class": "typed-from-suggestion",
+            "blockId": "p1",
+            "originSeqs": [
+              29
+            ],
+            "suggestionIds": [
+              "sug-insert"
+            ]
+          },
+          {
+            "from": 77,
+            "to": 81,
+            "text": "gone",
+            "class": "typed-from-suggestion",
+            "blockId": "p1",
+            "originSeqs": [
+              29
+            ],
+            "suggestionIds": [
+              "sug-insert"
+            ]
+          },
+          {
+            "from": 82,
+            "to": 86,
+            "text": "cold",
+            "class": "typed-from-suggestion",
+            "blockId": "p1",
+            "originSeqs": [
+              29
+            ],
+            "suggestionIds": [
+              "sug-insert"
+            ]
+          },
+          {
+            "from": 88,
+            "to": 95,
+            "text": "Nothing",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 96,
+            "to": 103,
+            "text": "outside",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 105,
+            "to": 108,
+            "text": "The",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 109,
+            "to": 113,
+            "text": "lane",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 114,
+            "to": 117,
+            "text": "was",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 118,
+            "to": 126,
+            "text": "deserted",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              19
+            ]
+          },
+          {
+            "from": 127,
+            "to": 130,
+            "text": "and",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4,
+              5
+            ]
+          },
+          {
+            "from": 131,
+            "to": 134,
+            "text": "the",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              5
+            ]
+          },
+          {
+            "from": 135,
+            "to": 141,
+            "text": "hedges",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              5
+            ]
+          },
+          {
+            "from": 142,
+            "to": 146,
+            "text": "were",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              5
+            ]
+          },
+          {
+            "from": 147,
+            "to": 151,
+            "text": "dark",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              31
+            ]
+          },
+          {
+            "from": 152,
+            "to": 156,
+            "text": "with",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              31
+            ]
+          },
+          {
+            "from": 157,
+            "to": 161,
+            "text": "rain",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              31
+            ]
+          },
+          {
+            "from": 163,
+            "to": 172,
+            "text": "Somewhere",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              16
+            ]
+          },
+          {
+            "from": 173,
+            "to": 174,
+            "text": "a",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              16
+            ]
+          },
+          {
+            "from": 175,
+            "to": 178,
+            "text": "dog",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              16
+            ]
+          },
+          {
+            "from": 179,
+            "to": 185,
+            "text": "barked",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              16
+            ]
+          },
+          {
+            "from": 187,
+            "to": 190,
+            "text": "The",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              33
+            ]
+          },
+          {
+            "from": 191,
+            "to": 198,
+            "text": "gutters",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              33
+            ]
+          },
+          {
+            "from": 199,
+            "to": 203,
+            "text": "were",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              33
+            ]
+          },
+          {
+            "from": 204,
+            "to": 215,
+            "text": "overflowing",
+            "class": "typed-from-suggestion",
+            "blockId": "p1",
+            "originSeqs": [
+              33
+            ],
+            "suggestionIds": [
+              "com-s"
+            ]
+          },
+          {
+            "from": 216,
+            "to": 220,
+            "text": "into",
+            "class": "typed-from-suggestion",
+            "blockId": "p1",
+            "originSeqs": [
+              33
+            ],
+            "suggestionIds": [
+              "com-s"
+            ]
+          },
+          {
+            "from": 221,
+            "to": 224,
+            "text": "the",
+            "class": "typed-from-suggestion",
+            "blockId": "p1",
+            "originSeqs": [
+              33
+            ],
+            "suggestionIds": [
+              "com-s"
+            ]
+          },
+          {
+            "from": 225,
+            "to": 229,
+            "text": "lane",
+            "class": "typed-from-suggestion",
+            "blockId": "p1",
+            "originSeqs": [
+              33
+            ],
+            "suggestionIds": [
+              "com-s"
+            ]
+          }
+        ],
+        "wordsByClass": {
+          "total": 41,
+          "byClass": {
+            "typed": 30,
+            "typed-from-suggestion": 11,
+            "pasted-external": 0,
+            "pasted-internal": 0,
+            "imported": 0,
+            "quoted": 0
+          }
+        },
+        "charactersByClass": {
+          "total": 229,
+          "byClass": {
+            "typed": 166,
+            "typed-from-suggestion": 63,
+            "pasted-external": 0,
+            "pasted-internal": 0,
+            "imported": 0,
+            "quoted": 0
+          }
+        }
+      }
+    },
+    "projectWords": {
+      "total": 41,
+      "byClass": {
+        "typed": 30,
+        "typed-from-suggestion": 11,
+        "pasted-external": 0,
+        "pasted-internal": 0,
+        "imported": 0,
+        "quoted": 0
+      }
+    },
+    "projectCharacters": {
+      "total": 229,
+      "byClass": {
+        "typed": 166,
+        "typed-from-suggestion": 63,
+        "pasted-external": 0,
+        "pasted-internal": 0,
+        "imported": 0,
+        "quoted": 0
+      }
+    },
+    "issues": []
+  },
+  "witnesses": [
+    {
+      "projectId": "proj-1",
+      "seq": 1,
+      "hash": "9562bc06ecbca4140cb7f9ca129b2e2c4c113fff962681a78fb671609ddb7dbb",
+      "serverTime": "2026-11-02T09:00:00.250Z",
+      "signature": "q8FwE5PKbu1bU1KdeD2opibTteYXQLU3ATyzeom7XUAX7CxD2wqauE4SxtjQ5IXfG1c93AZ8C+IT1GD1I26cyw==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 2,
+      "hash": "ce26f734bc6ddc6d54c0baac8bdfbef9b0576e720d896a096f47f6a15cfe9c1a",
+      "serverTime": "2026-11-02T09:00:00.650Z",
+      "signature": "5etr9sDblbmoV+tDC+SuJNe13iuYNxILe91bw6kedY5SZVplZ6Hbkufmvfh2vtyRFgnRtSiLK+PntjRQU4pw9w==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 3,
+      "hash": "a0283d6f795c693df8bf7caa463d5449b927a714c6c68d8dfa68c347d8364d71",
+      "serverTime": "2026-11-02T09:00:01.050Z",
+      "signature": "eJw+Q4EAHU4c13Sxofzikxhuj8i2WNWpXVh7T1hkGfMc6sbgNqbq9Y+PFouJQqjolglTCx0+zeas6oB/J90pfw==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 4,
+      "hash": "f8fa3c8def5ba89b369206cace7f480e65ad5a790bc5a27d19e3990554f29ab4",
+      "serverTime": "2026-11-02T09:00:10.272Z",
+      "signature": "IbbfOCd3JgArpB8JuNIY5MhxaTjOiSt5J1Pz5NhgSOaaH55Yex0f1PKvZjVGvlvwFCteMoLIPX0CHSaTrduA2Q==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 5,
+      "hash": "2720b01bcaecc11dd7961cfbaa275b3eeab25e8fe9a3e4f54c54960d7c806e52",
+      "serverTime": "2026-11-02T09:00:19.192Z",
+      "signature": "VcjVnTRBPWgoDSbzGw2ceyqu5wRi1i/3IYe3zhMjHfrhV4HXZO5wW3lReFTZFRmTz4fQD/7SaNmeJvtWZE9k+A==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 6,
+      "hash": "1659c0684844e0cd38cbb1f52f0d720677622843df183e14f1cdfb03d906f942",
+      "serverTime": "2026-11-02T09:00:24.615Z",
+      "signature": "DUBzSYe6REL9nXuCTPhKd+c8lzPFiLACB8H0J9TbdwdTK6SPVdwYOkVidwGa+dfvogPb1I5PSVIbQUeEJFwdZA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 7,
+      "hash": "5c267731b473ab89f5908b272ca8826832d9bd761a91475b7601a86deb85a3bc",
+      "serverTime": "2026-11-02T09:00:26.315Z",
+      "signature": "ln2oi2m+OCPLJQ9CNSJofbNjOmE6b9VhvRUAl5b5NGuR0eVNr2OHlu1HEB/Qj63mj8TeC1CwM4YXvptv1SMuAg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 8,
+      "hash": "cde1187097c675f8f3baf356e7810f931785fdb40b483fddf0f653d1fc5cebab",
+      "serverTime": "2026-11-02T09:00:27.815Z",
+      "signature": "/zFKFiEKLTEyT8TEWW2qqHoIb3xS8FKbdJDD4sBAPYq2Wlv5AkvQHW35gdDWUPEG8/oOhTJ3Ix8eWGlyoSqqnQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 9,
+      "hash": "91d39f0781894415d2eb5704ba1c08d4194c262b0d27d8806a181103e76c090d",
+      "serverTime": "2026-11-02T09:00:29.315Z",
+      "signature": "ZXwtKz7I1e7AhVlCuZEwN/FZYFaXDYnkVlJRbQEI/UhGHPIPETaRBJvP2qyF07xttovi6XVvSxLTTlTcLKSHeQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 10,
+      "hash": "11e66f7705727938219ed95ce0e200121365bc65e8e3d05c4ad8e1d5a5b2aa22",
+      "serverTime": "2026-11-02T09:00:30.815Z",
+      "signature": "aSV7tB4D/4yZXLrpbnd1ow63pIwMrqeF2IDva3taRL8i12E0NVWo+rrzxtqYspGm4rZ6Jww/ZvjScSZjRkq73Q==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 11,
+      "hash": "af97bf5b2db96a4e986b1bf9fcffd0ddaa94982b373a1781b94abb9bd6c7d94c",
+      "serverTime": "2026-11-02T09:00:32.315Z",
+      "signature": "xndQb4GNQMqegu86kELSVMWqnDFZAsjKeera/Tr7g/uqkv6w33R8z1ZcLbqf6WkUs96LXu/h2H0OlMRNn3yHRg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 12,
+      "hash": "c102a9656eef3eac5daeb5a8d5b4f59ef82065f8182e075e9d104deefff8a0b3",
+      "serverTime": "2026-11-02T09:00:33.815Z",
+      "signature": "msshjVhxsxSNZ3xaGuLRY3sQdR6vAXCWEN/AslD+EyYsaB5gW+dxS4P9bziQuVjbJVdRntrLRoYeZn0RpJktig==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 13,
+      "hash": "ef316049b3799121f5805138d30d5c1ccca260b8bac6405dab0c0814024c6cb6",
+      "serverTime": "2026-11-02T09:00:35.315Z",
+      "signature": "zk1yMUYx72XG+1TIDR1AJwX53mysRHCJD8vcsk2zN1X+J7OU6TSeV8394Efrccm40pqCugPHfOAXGCxWOjwDTg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 14,
+      "hash": "4c09b7e47388190fd3ca453c9a58a8966c54f7a2fcf897c208ff6571776cfe03",
+      "serverTime": "2026-11-02T09:00:36.815Z",
+      "signature": "FF5+N7tHFe56aKmbFoU1eQT5nrlxRyuYz2ne2qsa0ZFkPs0eQAjiBvX1Xu0NP0w+LBlV4dJOMASaDXAOr8lIKg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 15,
+      "hash": "8dbccbfbeac34cd390752d0a49083f2136c8cb2b1c29ad9f7c851156457fcd4b",
+      "serverTime": "2026-11-02T09:00:38.315Z",
+      "signature": "ThxIrDfisq+VsflIUxrhfmBINCaid/uA/O+RJqjyyYeE9W9QhorSzZSNjpgWhAYbTneOhmjlyW8+P+0neCoIOw==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 16,
+      "hash": "49b169e677a3a087d3d7d7fb4058645903baf0dd0166f8ef3f41bd906c8adf37",
+      "serverTime": "2026-11-02T09:00:38.515Z",
+      "signature": "jnQaJ8DgKyF/S3Rqy24EhP9EvkbbOQMHLSIWLOqojGkZz4QjpmXA6IZ0Ai5zv6AJjRTK6if46WudVXiyk8j7dQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 17,
+      "hash": "69112c97a63fa0fd9abe5adc892014be9e475fec7ef36f77582b2e085d1389e2",
+      "serverTime": "2026-11-02T09:00:43.605Z",
+      "signature": "96Eg43jbJZnmHTrmGg6GM7ZDiIs2WLhunu7FI9FlO0EzQTuYzbngkFveprvq5pFGAqWaMJbbh6nefoh11RFdZQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 18,
+      "hash": "9fbcc6fd21423aad471e434ca54804cf336df83b091ee1f38df0532744d9fd58",
+      "serverTime": "2026-11-02T09:00:45.305Z",
+      "signature": "m8TZlrgENNlrSl83ZWwxqPiJHdijokBTgr/l0eX0qrxtJ23uR6qO7msEbdLOzHm0x37bA7OLdfGIJ/hPXvv96w==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 19,
+      "hash": "ad17a9c59bca0272ecf5f9ed47382cd95eafa24c9bc73df9dad402dde6e84d59",
+      "serverTime": "2026-11-02T09:00:45.505Z",
+      "signature": "bT1K44hY2Gzc3kBeptzlD4wBXOmwmEjjpzTkLMC1Qd32t4UoTmCxzLQnMUchm3m7eKc3tjCTYTbYy4/MLFx6rw==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 20,
+      "hash": "52ba30691f70995726e8308365490a1608cb1163c5b829fcef32999739a0cc51",
+      "serverTime": "2026-11-02T09:00:49.888Z",
+      "signature": "HiF5CkNbXLoTs1SikFCEw8ua87PJIpvGWtFEq0QbNO1Ep+1MOk810U/bGKjgG5qfpFjPhadx1k2yyfsJM0o9Zw==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 21,
+      "hash": "0e6da2e2ea66a693aedc5889a4cfc3fccf8958840c8dd7d9048537d98e20eba1",
+      "serverTime": "2026-11-02T09:00:51.388Z",
+      "signature": "Cdc4xGd20i5hNfx71Cy11XTnoEViqOZzMEv/F6B0WmGIcrV59v6fpg0CcgcKsrCnXS86fLVY0XJdSyOchDyLKg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 22,
+      "hash": "ba99a857eaf79a153cda11781ca10972a233751f11961e1ddb849e41d7cc3d3f",
+      "serverTime": "2026-11-02T09:00:51.588Z",
+      "signature": "e7VXapZMNQyXuE0o5iAY46zimsrTrdFbZoldqWtmDpJ/yklPZFyuNXVgG/PSv5kjmfC0/3MoRswhsP8yd3GqOQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 23,
+      "hash": "816275dc8b7e21581b3cb707d103228ce39784f120b2d2021c534116beb2b8c3",
+      "serverTime": "2026-11-02T09:00:51.589Z",
+      "signature": "4ofnLAM0EwX29354Spy141dtsypPxfOUw30q6Jyo7wh8VCPILpi7MU3OicCHBsxgwq8NXHAXWORpGkigBn6fRw==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 24,
+      "hash": "6ed89db3220c03ec255d435f81266382a2ae2677ab11a4541476bb7a644ff67e",
+      "serverTime": "2026-11-02T09:00:54.609Z",
+      "signature": "YzOoAV1YJAKL9pNEEvRTq4jJyS1PgESNQnNSWXDjxXfQkGJzWQo1i+533p3Eb2BrB58gHhUIA1sBJE22+GBfZw==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 25,
+      "hash": "3a980faf96c17191a34bab2623e5221a1dfdf38f9e3ebb93e5ef524bc13fd4f1",
+      "serverTime": "2026-11-02T09:00:54.610Z",
+      "signature": "rCnmc57KLiqpvrWT8HpW7edBqLxpOuwuIY4FeKZ/0MdlVVT/CL/qmNV5ndmZgVxlT6yugkVdO0qqERDVuO/olg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 26,
+      "hash": "ee1e5086243317137072cce87196222e2ad453b7b26ac88584f62ab87ce854bc",
+      "serverTime": "2026-11-02T09:00:57.355Z",
+      "signature": "kWnYEmew8XkmLG5oQurDm1zwQx7j/OjRNWU2QWruA8353KXF0HNr73lwH61hLUFdeoa+/SHfVEKj4UoSvvVJsA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 27,
+      "hash": "7f77915ac0ad56fea4d2db25f8ac913c9c64ab9faa4c8b7bc3f6949c2376437b",
+      "serverTime": "2026-11-02T09:00:57.356Z",
+      "signature": "l3Djnb6H+9QZ/Azf2YGDhk5NEcj00yAT/CwqOdJph4qtZZFeuaTym53bKd8ViZjV4ks2hue/T826rCbzK40CiA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 28,
+      "hash": "055e77dfe80f3a17afc4ae788bd4c98f19779dcf5f11445933ab19602e6ad636",
+      "serverTime": "2026-11-02T09:00:59.355Z",
+      "signature": "1CGI8FpnWn9fepZzlBHRY7S7PwiIqo/WjoTdED+yclwd0PWFuc29D5ym/habaJGE4Yold0ECzkolNtBapaJpkg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 29,
+      "hash": "9aceb5ae2f0beae0f2020e1eeb19bf2768cf23b596d11449f7fb79500f6f932a",
+      "serverTime": "2026-11-02T09:00:59.755Z",
+      "signature": "/SlpMxXn4tqrOsLUiODji1p6MUxdghZUg1b1BHdQl62uifACybCVc0YnVr0/aeVE76mOZM3fmguX+VOVJqNZ1A==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 30,
+      "hash": "d8c73805e028f2b3de7d1526c31519dcf421b918923c8f2890a197ff465193c2",
+      "serverTime": "2026-11-02T09:00:59.756Z",
+      "signature": "cF7AYw66MORjPoUiA/50BLPEycnREfdCeacIaJ7pqNO/P/E4Rux7nqgn5esECw0jQgE27FiwrTAmLeEVzUCeRQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 31,
+      "hash": "5ffddac502cfdbf1a615744d8e986a323638b69d3415a228cf1fd18129377221",
+      "serverTime": "2026-11-02T09:01:05.125Z",
+      "signature": "xQO/T+WqhYS3WMuhW9HBgt9LnWkh/oqkfol9gjwjGBYq7IxMqf2joX9be5LKZqd5qj2QC6rXxABtuMpxIvvEEw==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 32,
+      "hash": "210d68bb82ad8b8582978d00eb3c68ecccdefc99bc3db35b127b197c1e2b4312",
+      "serverTime": "2026-11-02T09:01:05.126Z",
+      "signature": "luOtNv16UZPcGj3Bmn9PJ5/IG2KzrTeD7ziw2H+WUX+eZzJ8dVMiEa40xLiSH8XZnHFjhY69rEj+vT67ag4Wrg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 33,
+      "hash": "995eec727f4a2bca1e0ca5f377ad18f87bde2438e9da2c7929d17e851191941b",
+      "serverTime": "2026-11-02T09:01:09.098Z",
+      "signature": "LEwAfAaASZ/EM8ofGTIu1o4119l5TKtt68BL0z9OPs9Kspm2hQCHI0Wkbf5M/VWWJIKyPX9ZYmt3UdMFLiatJg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    }
+  ],
+  "publicKeyPem": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEoInrdRkLs5lWE+qtD8cpCVp0gkEn\n0tllAdSMj9iVyF0MaAHny/cdaByyk3aWbk6dqMaXuaekIuWmvEJCsgbJBg==\n-----END PUBLIC KEY-----\n",
+  "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+}
