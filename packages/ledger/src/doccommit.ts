@@ -308,6 +308,7 @@ export function finishDocCommit(dc: DocCommit, opts: FinishOptions): void {
         t.region = null;
         t.watch = false;
         if (t.range && t.range.from === t.range.to && sug.kind !== 'insertion') t.range = null;
+        if (t.range && t.range.from < t.range.to) t.isPoint = false;
         const next = { ...sug, status: o.status, resolvedSeq: seq } as SuggestionState;
         if (next.kind === 'word-choice' && o.status === 'adopted') next.adoptedAlternative = o.alternative;
         tx.ann('suggestions')[t.id] = next;

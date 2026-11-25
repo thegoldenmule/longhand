@@ -1,0 +1,6366 @@
+{
+  "name": "feedback-session",
+  "description": "A feedback request, a review session with anchored and span comments, anchored and unanchored questions and finish_review; a dismissal; a second session that fails.",
+  "covers": [
+    "feedback-request",
+    "agent-session",
+    "comments",
+    "questions",
+    "finish-review",
+    "dismiss",
+    "session-failed",
+    "selection-scope"
+  ],
+  "commits": [
+    {
+      "commitId": "c-0001",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 1,
+      "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "82a9129eaa530be303b43d20777ff3b4f49d443e3c7e1ef1450f504df5ed6a84",
+      "clientTime": "2026-11-02T09:00:00.000Z",
+      "serverTime": "2026-11-02T09:00:00.250Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "ProjectCreated",
+      "payload": {
+        "title": "The Lighthouse Keeper"
+      }
+    },
+    {
+      "commitId": "c-0002",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 2,
+      "prevHash": "82a9129eaa530be303b43d20777ff3b4f49d443e3c7e1ef1450f504df5ed6a84",
+      "hash": "6ccaa2563c8351395555a764e170b3ef267917fd7390000f37fae08cbbf27b5c",
+      "clientTime": "2026-11-02T09:00:00.400Z",
+      "serverTime": "2026-11-02T09:00:00.650Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "DocumentCreated",
+      "payload": {
+        "documentId": "doc-ch1",
+        "kind": "manuscript",
+        "title": "Chapter 1",
+        "parentId": null,
+        "index": 0
+      }
+    },
+    {
+      "commitId": "c-0003",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 3,
+      "prevHash": "6ccaa2563c8351395555a764e170b3ef267917fd7390000f37fae08cbbf27b5c",
+      "hash": "fd63cd41072282e4844ef6b5590ec871425080d40da67b688342ce21ed6a2e3a",
+      "clientTime": "2026-11-02T09:00:00.800Z",
+      "serverTime": "2026-11-02T09:00:01.050Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-ch1",
+        "baseVersion": 0,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 1,
+            "to": 1,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "T"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 2,
+            "to": 2,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 3,
+            "to": 3,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 4,
+            "to": 4,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 5,
+            "to": 5,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 6,
+            "to": 6,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 7,
+            "to": 7,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "g"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 8,
+            "to": 8,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 9,
+            "to": 9,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 10,
+            "to": 10,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 11,
+            "to": 11,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 12,
+            "to": 12,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "u"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 13,
+            "to": 13,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 14,
+            "to": 14,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 15,
+            "to": 15,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 16,
+            "to": 16,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 17,
+            "to": 17,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 18,
+            "to": 18,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 19,
+            "to": 19,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 20,
+            "to": 20,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "b"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 21,
+            "to": 21,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 22,
+            "to": 22,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 23,
+            "to": 23,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 24,
+            "to": 24,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 25,
+            "to": 25,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 26,
+            "to": 26,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 27,
+            "to": 27,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 28,
+            "to": 28,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "k"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 29,
+            "to": 29,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 30,
+            "to": 30,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "f"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 31,
+            "to": 31,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 32,
+            "to": 32,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 33,
+            "to": 33,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 34,
+            "to": 34,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 35,
+            "to": 35,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 36,
+            "to": 36,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 37,
+            "to": 37,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 38,
+            "to": 38,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 39,
+            "to": 39,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 40,
+            "to": 40,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "w"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 41,
+            "to": 41,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 42,
+            "to": 42,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 43,
+            "to": 43,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 44,
+            "to": 44,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 45,
+            "to": 45,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 46,
+            "to": 46,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 47,
+            "to": 47,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 48,
+            "to": 48,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 49,
+            "to": 49,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "E"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 50,
+            "to": 50,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 50,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 105,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 257,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 461,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 586,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 742,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 860,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 948,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1111,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1266,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1414,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1600,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1705,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1872,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1988,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2080,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2153,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2239,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2401,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2515,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2649,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2732,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2880,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2956,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3115,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3265,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3378,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3490,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3644,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3812,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3947,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4030,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4210,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4399,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4488,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4574,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4705,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4884,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5014,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5205,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5308,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5474,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5670,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5861,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5939,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6126,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6282,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6458,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6658,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6825,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 50,
+        "durationMs": 6825
+      }
+    },
+    {
+      "commitId": "c-0004",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 4,
+      "prevHash": "fd63cd41072282e4844ef6b5590ec871425080d40da67b688342ce21ed6a2e3a",
+      "hash": "6d32fd236b84bdc5cfc94528fead086ee6903eb7a36ed3dc4c8d2b4d0c5606c3",
+      "clientTime": "2026-11-02T09:00:09.625Z",
+      "serverTime": "2026-11-02T09:00:09.875Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-ch1",
+        "baseVersion": 50,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 51,
+            "to": 51,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 52,
+            "to": 52,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 53,
+            "to": 53,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 54,
+            "to": 54,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 55,
+            "to": 55,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "c"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 56,
+            "to": 56,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 57,
+            "to": 57,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 58,
+            "to": 58,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "m"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 59,
+            "to": 59,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "b"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 60,
+            "to": 60,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 61,
+            "to": 61,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 62,
+            "to": 62,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 63,
+            "to": 63,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 64,
+            "to": 64,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 65,
+            "to": 65,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 66,
+            "to": 66,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 67,
+            "to": 67,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 68,
+            "to": 68,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 69,
+            "to": 69,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 70,
+            "to": 70,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 71,
+            "to": 71,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 72,
+            "to": 72,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 73,
+            "to": 73,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 74,
+            "to": 74,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 75,
+            "to": 75,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 76,
+            "to": 76,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "y"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 77,
+            "to": 77,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "w"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 78,
+            "to": 78,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 79,
+            "to": 79,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "y"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 80,
+            "to": 80,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": ","
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 81,
+            "to": 81,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 82,
+            "to": 82,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "c"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 83,
+            "to": 83,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 84,
+            "to": 84,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "u"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 85,
+            "to": 85,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 86,
+            "to": 86,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 87,
+            "to": 87,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 88,
+            "to": 88,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 89,
+            "to": 89,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "g"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 90,
+            "to": 90,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 91,
+            "to": 91,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 92,
+            "to": 92,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 93,
+            "to": 93,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "c"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 94,
+            "to": 94,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 95,
+            "to": 95,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 96,
+            "to": 96,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 97,
+            "to": 97,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 98,
+            "to": 98,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 99,
+            "to": 99,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 100,
+            "to": 100,
+            "slice": {
+              "content": [
+                {
+                  "type": "paragraph"
+                },
+                {
+                  "type": "paragraph"
+                }
+              ],
+              "openStart": 1,
+              "openEnd": 1
+            },
+            "structure": true
+          }
+        ],
+        "runs": [
+          {
+            "steps": 50,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 186,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 326,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 420,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 554,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 631,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 707,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 784,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 967,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1106,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1300,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1507,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1591,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1675,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1763,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1966,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2080,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2174,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2360,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2450,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2650,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2856,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2942,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3063,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3262,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3453,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3558,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3655,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3797,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3969,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4097,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4245,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4419,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4530,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4655,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4785,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4863,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5062,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5145,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5271,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5435,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5575,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5651,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5755,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5881,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6080,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6207,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6372,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6462,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6782,
+            "kind": "break",
+            "len": 0
+          }
+        ],
+        "characters": 49,
+        "durationMs": 6782
+      }
+    },
+    {
+      "commitId": "c-0005",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 5,
+      "prevHash": "6d32fd236b84bdc5cfc94528fead086ee6903eb7a36ed3dc4c8d2b4d0c5606c3",
+      "hash": "f3fa78284ccf25d4688aeb77b6553d4d63e4fdeb5b53b2dc61aa38d0fc6d4f86",
+      "clientTime": "2026-11-02T09:00:18.407Z",
+      "serverTime": "2026-11-02T09:00:18.657Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-ch1",
+        "baseVersion": 100,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 102,
+            "to": 102,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "A"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 103,
+            "to": 103,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 104,
+            "to": 104,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 105,
+            "to": 105,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 106,
+            "to": 106,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 107,
+            "to": 107,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 108,
+            "to": 108,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 109,
+            "to": 109,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 110,
+            "to": 110,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 111,
+            "to": 111,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "p"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 112,
+            "to": 112,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 113,
+            "to": 113,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 114,
+            "to": 114,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 115,
+            "to": 115,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 116,
+            "to": 116,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 117,
+            "to": 117,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "f"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 118,
+            "to": 118,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 119,
+            "to": 119,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "u"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 120,
+            "to": 120,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 121,
+            "to": 121,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 122,
+            "to": 122,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 123,
+            "to": 123,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 124,
+            "to": 124,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 125,
+            "to": 125,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 126,
+            "to": 126,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 127,
+            "to": 127,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 128,
+            "to": 128,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 129,
+            "to": 129,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "m"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 130,
+            "to": 130,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "p"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 131,
+            "to": 131,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": ","
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 132,
+            "to": 132,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 133,
+            "to": 133,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "c"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 134,
+            "to": 134,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 135,
+            "to": 135,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 136,
+            "to": 136,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "c"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 137,
+            "to": 137,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "k"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 138,
+            "to": 138,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 139,
+            "to": 139,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 140,
+            "to": 140,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 141,
+            "to": 141,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 142,
+            "to": 142,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 143,
+            "to": 143,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 144,
+            "to": 144,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 145,
+            "to": 145,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "f"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 146,
+            "to": 146,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "u"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 147,
+            "to": 147,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 148,
+            "to": 148,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 149,
+            "to": 149,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 150,
+            "to": 150,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 151,
+            "to": 151,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 50,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 84,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 277,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 397,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 578,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 753,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 922,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1026,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1154,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1339,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1473,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1672,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1839,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1940,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2091,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2220,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2430,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2522,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2645,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2814,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2913,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3051,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3223,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3432,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3621,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3711,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3892,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4096,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4282,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4364,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4555,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4689,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4850,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4948,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5092,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5283,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5489,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5693,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5809,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5902,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6050,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6201,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6287,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6443,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6528,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6627,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6794,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6995,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 7091,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 7194,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 50,
+        "durationMs": 7194
+      }
+    },
+    {
+      "commitId": "c-0006",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 6,
+      "prevHash": "f3fa78284ccf25d4688aeb77b6553d4d63e4fdeb5b53b2dc61aa38d0fc6d4f86",
+      "hash": "2ea1ed63e0c45d36759a1922770e28bb7d16e25abeec0295f54ef29d5e988791",
+      "clientTime": "2026-11-02T09:00:27.601Z",
+      "serverTime": "2026-11-02T09:00:27.851Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-ch1",
+        "baseVersion": 150,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 152,
+            "to": 152,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "w"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 153,
+            "to": 153,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 154,
+            "to": 154,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 155,
+            "to": 155,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 156,
+            "to": 156,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 157,
+            "to": 157,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 158,
+            "to": 158,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 159,
+            "to": 159,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 160,
+            "to": 160,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 161,
+            "to": 161,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 162,
+            "to": 162,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 163,
+            "to": 163,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "S"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 164,
+            "to": 164,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 165,
+            "to": 165,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 166,
+            "to": 166,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 167,
+            "to": 167,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 168,
+            "to": 168,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 169,
+            "to": 169,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 170,
+            "to": 170,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 171,
+            "to": 171,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 172,
+            "to": 172,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 173,
+            "to": 173,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "w"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 174,
+            "to": 174,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 175,
+            "to": 175,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 176,
+            "to": 176,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "b"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 177,
+            "to": 177,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 178,
+            "to": 178,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 179,
+            "to": 179,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 180,
+            "to": 180,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 181,
+            "to": 181,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 182,
+            "to": 182,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 183,
+            "to": 183,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 184,
+            "to": 184,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 185,
+            "to": 185,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 186,
+            "to": 186,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 187,
+            "to": 187,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 188,
+            "to": 188,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 189,
+            "to": 189,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 190,
+            "to": 190,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "w"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 191,
+            "to": 191,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 192,
+            "to": 192,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 193,
+            "to": 193,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 194,
+            "to": 194,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 195,
+            "to": 195,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 196,
+            "to": 196,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 197,
+            "to": 197,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "f"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 198,
+            "to": 198,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 199,
+            "to": 199,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 200,
+            "to": 200,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 201,
+            "to": 201,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 50,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 91,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 201,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 385,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 515,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 697,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 865,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1031,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1214,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1381,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1505,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1588,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1685,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1873,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1953,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2040,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2214,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2402,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2480,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2668,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2855,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3008,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3170,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3330,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3470,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3587,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3757,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3872,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4064,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4199,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4302,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4498,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4589,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4732,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4869,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5067,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5231,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5417,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5592,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5767,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5895,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6050,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6140,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6288,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6427,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6544,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6752,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6834,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6991,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 7173,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 50,
+        "durationMs": 7173
+      }
+    },
+    {
+      "commitId": "c-0007",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 7,
+      "prevHash": "2ea1ed63e0c45d36759a1922770e28bb7d16e25abeec0295f54ef29d5e988791",
+      "hash": "bb88f74eb9454efad717f9287c1ecc44da92779ada0f9b51bf2e88d4b487ff6f",
+      "clientTime": "2026-11-02T09:00:36.774Z",
+      "serverTime": "2026-11-02T09:00:37.024Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-ch1",
+        "baseVersion": 200,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 202,
+            "to": 202,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 203,
+            "to": 203,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 204,
+            "to": 204,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 205,
+            "to": 205,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 206,
+            "to": 206,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 207,
+            "to": 207,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "g"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 208,
+            "to": 208,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 209,
+            "to": 209,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 210,
+            "to": 210,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 211,
+            "to": 211,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 212,
+            "to": 212,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 213,
+            "to": 213,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 214,
+            "to": 214,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "c"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 215,
+            "to": 215,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 216,
+            "to": 216,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "m"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 217,
+            "to": 217,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 218,
+            "to": 218,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 219,
+            "to": 219,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "b"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 220,
+            "to": 220,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 221,
+            "to": 221,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "c"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 222,
+            "to": 222,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "k"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 223,
+            "to": 223,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 22,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 177,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 275,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 422,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 499,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 611,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 762,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 838,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 951,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1098,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1296,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1460,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1570,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1762,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1844,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1921,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2030,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2146,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2335,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2483,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2683,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2853,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 22,
+        "durationMs": 2853
+      }
+    },
+    {
+      "commitId": "c-0008",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 8,
+      "prevHash": "bb88f74eb9454efad717f9287c1ecc44da92779ada0f9b51bf2e88d4b487ff6f",
+      "hash": "8c15b2cd1b1201bcfbfa11ccdd01eff5c66132413bf10a7e5fe66b9c6c2b22fb",
+      "clientTime": "2026-11-02T09:00:41.627Z",
+      "serverTime": "2026-11-02T09:00:41.877Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "FeedbackRequested",
+      "payload": {
+        "requestId": "req-1",
+        "scope": {
+          "kind": "document",
+          "documentId": "doc-ch1"
+        },
+        "lenses": [
+          "pacing",
+          "clarity",
+          "character-dialogue"
+        ],
+        "intensity": "standard",
+        "ask": "Is the opening too slow?"
+      }
+    },
+    {
+      "commitId": "c-0009",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 9,
+      "prevHash": "8c15b2cd1b1201bcfbfa11ccdd01eff5c66132413bf10a7e5fe66b9c6c2b22fb",
+      "hash": "7ce2155e6892dceed7820e5087b6d84979f071c577ec6d118b2de5f4cdc9d57d",
+      "clientTime": "2026-11-02T09:00:43.527Z",
+      "serverTime": "2026-11-02T09:00:43.577Z",
+      "actor": {
+        "kind": "agent",
+        "id": "opus"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-1",
+      "schemaVersion": 1,
+      "type": "FeedbackSessionStarted",
+      "payload": {
+        "feedbackSessionId": "fs-1",
+        "trigger": {
+          "kind": "feedback",
+          "requestId": "req-1"
+        },
+        "model": "opus"
+      }
+    },
+    {
+      "commitId": "c-0010",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 10,
+      "prevHash": "7ce2155e6892dceed7820e5087b6d84979f071c577ec6d118b2de5f4cdc9d57d",
+      "hash": "f0c2feceb2671c98b130e7fd69fdeaf0012709aba8e7c4d39a9f3afe37b9140e",
+      "clientTime": "2026-11-02T09:00:45.027Z",
+      "serverTime": "2026-11-02T09:00:45.077Z",
+      "actor": {
+        "kind": "agent",
+        "id": "opus"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-1",
+      "schemaVersion": 1,
+      "type": "CommentAdded",
+      "payload": {
+        "commentId": "com-1",
+        "feedbackSessionId": "fs-1",
+        "target": {
+          "anchor": {
+            "documentId": "doc-ch1",
+            "sentenceId": "p1.s2",
+            "quote": "counting each one",
+            "occurrence": 0
+          },
+          "from": 82,
+          "to": 99,
+          "readVersion": 222,
+          "version": 222,
+          "kind": "anchor"
+        },
+        "category": "character-dialogue",
+        "severity": "minor",
+        "body": "Counting is a good habit for her; it shows nerves without saying so."
+      }
+    },
+    {
+      "commitId": "c-0011",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 11,
+      "prevHash": "f0c2feceb2671c98b130e7fd69fdeaf0012709aba8e7c4d39a9f3afe37b9140e",
+      "hash": "6c5e94af70139016a359dd8333eb5975eac9439ed899049cea10ce3abd954693",
+      "clientTime": "2026-11-02T09:00:46.527Z",
+      "serverTime": "2026-11-02T09:00:46.577Z",
+      "actor": {
+        "kind": "agent",
+        "id": "opus"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-1",
+      "schemaVersion": 1,
+      "type": "CommentAdded",
+      "payload": {
+        "commentId": "com-2",
+        "feedbackSessionId": "fs-1",
+        "target": {
+          "span": {
+            "documentId": "doc-ch1",
+            "unit": "paragraph",
+            "ids": [
+              "p2"
+            ]
+          },
+          "from": 101,
+          "to": 225,
+          "readVersion": 222,
+          "version": 222,
+          "kind": "span"
+        },
+        "category": "pacing",
+        "severity": "moderate",
+        "body": "This paragraph carries the turn; consider letting it breathe with one more beat before she sits."
+      }
+    },
+    {
+      "commitId": "c-0012",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 12,
+      "prevHash": "6c5e94af70139016a359dd8333eb5975eac9439ed899049cea10ce3abd954693",
+      "hash": "24f26c45741c360146eca3bf895d905eedc56bc4b76957ef35fdd3e767e50c18",
+      "clientTime": "2026-11-02T09:00:48.027Z",
+      "serverTime": "2026-11-02T09:00:48.077Z",
+      "actor": {
+        "kind": "agent",
+        "id": "opus"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-1",
+      "schemaVersion": 1,
+      "type": "QuestionAsked",
+      "payload": {
+        "questionId": "q-1",
+        "feedbackSessionId": "fs-1",
+        "target": {
+          "anchor": {
+            "documentId": "doc-ch1",
+            "sentenceId": "p1.s1",
+            "quote": "three winters",
+            "occurrence": 0
+          },
+          "from": 34,
+          "to": 47,
+          "readVersion": 222,
+          "version": 222,
+          "kind": "anchor"
+        },
+        "question": "Why has the lighthouse been dark for three winters, and does Elena know?"
+      }
+    },
+    {
+      "commitId": "c-0013",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 13,
+      "prevHash": "24f26c45741c360146eca3bf895d905eedc56bc4b76957ef35fdd3e767e50c18",
+      "hash": "2a55d4ad1bfa814df9202e3fb472633f1adb30a9591e9faaaf1008cc62dfdba4",
+      "clientTime": "2026-11-02T09:00:49.527Z",
+      "serverTime": "2026-11-02T09:00:49.577Z",
+      "actor": {
+        "kind": "agent",
+        "id": "opus"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-1",
+      "schemaVersion": 1,
+      "type": "QuestionAsked",
+      "payload": {
+        "questionId": "q-2",
+        "feedbackSessionId": "fs-1",
+        "target": null,
+        "question": "Who is the story for: readers who know the coast, or newcomers?"
+      }
+    },
+    {
+      "commitId": "c-0014",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 14,
+      "prevHash": "2a55d4ad1bfa814df9202e3fb472633f1adb30a9591e9faaaf1008cc62dfdba4",
+      "hash": "87db42c50556fc68da59d1c3a32c774bed7c04eab04bb66a69d752d0e57e0591",
+      "clientTime": "2026-11-02T09:00:51.027Z",
+      "serverTime": "2026-11-02T09:00:51.077Z",
+      "actor": {
+        "kind": "agent",
+        "id": "opus"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-1",
+      "schemaVersion": 1,
+      "type": "ReviewFinished",
+      "payload": {
+        "feedbackSessionId": "fs-1",
+        "summary": "A quiet, confident opening. The pace suits the mood; the question is what Elena wants.",
+        "strengths": [
+          "Concrete sensory detail",
+          "Restraint"
+        ],
+        "topPriorities": [
+          "Clarify what Elena wants from the lamp",
+          "Plant the reason the light failed"
+        ]
+      }
+    },
+    {
+      "commitId": "c-0015",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 15,
+      "prevHash": "87db42c50556fc68da59d1c3a32c774bed7c04eab04bb66a69d752d0e57e0591",
+      "hash": "0c24c7a529cae9effe2936464f09b3409e7671d383a6c00cb3d7c866bf03ab54",
+      "clientTime": "2026-11-02T09:01:51.027Z",
+      "serverTime": "2026-11-02T09:01:51.277Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "SuggestionDismissed",
+      "payload": {
+        "targetId": "com-1",
+        "reason": "later",
+        "note": "Will revisit after chapter 2."
+      }
+    },
+    {
+      "commitId": "c-0016",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 16,
+      "prevHash": "0c24c7a529cae9effe2936464f09b3409e7671d383a6c00cb3d7c866bf03ab54",
+      "hash": "97270b6c2da005d3340394d717da365412a4d789892d0ae53ef5b1b87ded477f",
+      "clientTime": "2026-11-02T09:01:51.427Z",
+      "serverTime": "2026-11-02T09:01:51.677Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-ch1",
+        "baseVersion": 222,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 100,
+            "to": 100,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 101,
+            "to": 101,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "S"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 102,
+            "to": 102,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 103,
+            "to": 103,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 104,
+            "to": 104,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 105,
+            "to": 105,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "w"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 106,
+            "to": 106,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 107,
+            "to": 107,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 108,
+            "to": 108,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 109,
+            "to": 109,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 110,
+            "to": 110,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 111,
+            "to": 111,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 112,
+            "to": 112,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 113,
+            "to": 113,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 114,
+            "to": 114,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 115,
+            "to": 115,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "k"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 116,
+            "to": 116,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 117,
+            "to": 117,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 118,
+            "to": 118,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "w"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 119,
+            "to": 119,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 120,
+            "to": 120,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "w"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 121,
+            "to": 121,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 122,
+            "to": 122,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 123,
+            "to": 123,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 124,
+            "to": 124,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 125,
+            "to": 125,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 126,
+            "to": 126,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 127,
+            "to": 127,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 128,
+            "to": 128,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 129,
+            "to": 129,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 130,
+            "to": 130,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 131,
+            "to": 131,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 132,
+            "to": 132,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 133,
+            "to": 133,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 134,
+            "to": 134,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 135,
+            "to": 135,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "f"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 136,
+            "to": 136,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 137,
+            "to": 137,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 138,
+            "to": 138,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 139,
+            "to": 139,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 40,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 194,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 383,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 551,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 753,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 960,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1158,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1312,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1439,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1537,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1620,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1704,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1781,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1975,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2062,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2210,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2376,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2465,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2579,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2747,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2912,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3122,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3263,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3465,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3589,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3709,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3834,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3926,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4065,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4176,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4266,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4406,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4562,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4772,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4858,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5016,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5224,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5371,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5457,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5636,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 40,
+        "durationMs": 5636
+      }
+    },
+    {
+      "commitId": "c-0017",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 17,
+      "prevHash": "97270b6c2da005d3340394d717da365412a4d789892d0ae53ef5b1b87ded477f",
+      "hash": "6132a671b790ef948b8749b139759177294de2fe58197646ba945fba8fecdaf8",
+      "clientTime": "2026-11-02T09:01:59.063Z",
+      "serverTime": "2026-11-02T09:01:59.313Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "FeedbackRequested",
+      "payload": {
+        "requestId": "req-2",
+        "scope": {
+          "kind": "selection",
+          "documentId": "doc-ch1",
+          "from": 1,
+          "to": 20,
+          "version": 262
+        },
+        "lenses": [
+          "word-choice"
+        ],
+        "intensity": "light",
+        "ask": null
+      }
+    },
+    {
+      "commitId": "c-0018",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 18,
+      "prevHash": "6132a671b790ef948b8749b139759177294de2fe58197646ba945fba8fecdaf8",
+      "hash": "d224e308465400307019dbcd319f84082a8a3c062934bb78593585193938c02b",
+      "clientTime": "2026-11-02T09:02:00.963Z",
+      "serverTime": "2026-11-02T09:02:01.013Z",
+      "actor": {
+        "kind": "agent",
+        "id": "sonnet"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-2",
+      "schemaVersion": 1,
+      "type": "FeedbackSessionStarted",
+      "payload": {
+        "feedbackSessionId": "fs-2",
+        "trigger": {
+          "kind": "feedback",
+          "requestId": "req-2"
+        },
+        "model": "sonnet"
+      }
+    },
+    {
+      "commitId": "c-0019",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 19,
+      "prevHash": "d224e308465400307019dbcd319f84082a8a3c062934bb78593585193938c02b",
+      "hash": "df86257a6219d0268fbcaf592b73cd5ccd401c1ee1eb120a2d83dc74916e768f",
+      "clientTime": "2026-11-02T09:02:01.013Z",
+      "serverTime": "2026-11-02T09:02:01.014Z",
+      "actor": {
+        "kind": "system",
+        "id": "ledger"
+      },
+      "deviceId": "server",
+      "sessionId": "system",
+      "schemaVersion": 1,
+      "type": "FeedbackSessionFailed",
+      "payload": {
+        "feedbackSessionId": "fs-2",
+        "requestId": "req-2",
+        "threadId": null,
+        "reason": "model timeout"
+      }
+    }
+  ],
+  "expected": {
+    "headSeq": 19,
+    "headHash": "df86257a6219d0268fbcaf592b73cd5ccd401c1ee1eb120a2d83dc74916e768f",
+    "state": {
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "headSeq": 19,
+      "headHash": "df86257a6219d0268fbcaf592b73cd5ccd401c1ee1eb120a2d83dc74916e768f",
+      "settings": {
+        "genre": "",
+        "audience": "",
+        "goals": "",
+        "styleNotes": "",
+        "dailyWordGoal": null,
+        "citationStyle": "apa",
+        "title": "The Lighthouse Keeper"
+      },
+      "createdSeq": 1,
+      "binder": {
+        "manuscript": [
+          {
+            "kind": "document",
+            "id": "doc-ch1"
+          }
+        ],
+        "notes": []
+      },
+      "folders": {},
+      "documents": {
+        "doc-ch1": {
+          "id": "doc-ch1",
+          "kind": "manuscript",
+          "area": "manuscript",
+          "title": "Chapter 1",
+          "parentId": null,
+          "synopsis": "",
+          "content": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "The lighthouse had been dark for three winters. Elena climbed the stairs anyway, counting each one. She wanted to know who had let it fail."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "At the top she found the lamp, cracked and furred with salt. She sat down beside it and waited for the light to come back."
+                  }
+                ]
+              }
+            ]
+          },
+          "version": 262,
+          "provenance": [
+            {
+              "from": 1,
+              "to": 51,
+              "class": "typed",
+              "originSeq": 3
+            },
+            {
+              "from": 51,
+              "to": 100,
+              "class": "typed",
+              "originSeq": 4
+            },
+            {
+              "from": 100,
+              "to": 140,
+              "class": "typed",
+              "originSeq": 16
+            },
+            {
+              "from": 142,
+              "to": 192,
+              "class": "typed",
+              "originSeq": 5
+            },
+            {
+              "from": 192,
+              "to": 242,
+              "class": "typed",
+              "originSeq": 6
+            },
+            {
+              "from": 242,
+              "to": 264,
+              "class": "typed",
+              "originSeq": 7
+            }
+          ],
+          "archived": false,
+          "imported": null,
+          "createdSeq": 2,
+          "contentSeq": 16,
+          "updatedSeq": 16
+        }
+      },
+      "annotations": {
+        "feedbackRequests": {
+          "req-1": {
+            "id": "req-1",
+            "seq": 8,
+            "createdAt": "2026-11-02T09:00:41.877Z",
+            "scope": {
+              "kind": "document",
+              "documentId": "doc-ch1"
+            },
+            "lenses": [
+              "pacing",
+              "clarity",
+              "character-dialogue"
+            ],
+            "intensity": "standard",
+            "ask": "Is the opening too slow?",
+            "status": "finished",
+            "feedbackSessionId": "fs-1"
+          },
+          "req-2": {
+            "id": "req-2",
+            "seq": 17,
+            "createdAt": "2026-11-02T09:01:59.313Z",
+            "scope": {
+              "kind": "selection",
+              "documentId": "doc-ch1",
+              "from": 1,
+              "to": 20,
+              "version": 262
+            },
+            "lenses": [
+              "word-choice"
+            ],
+            "intensity": "light",
+            "ask": null,
+            "status": "failed",
+            "feedbackSessionId": "fs-2"
+          }
+        },
+        "agentSessions": {
+          "fs-1": {
+            "id": "fs-1",
+            "kind": "review",
+            "requestId": "req-1",
+            "threadId": null,
+            "model": "opus",
+            "startedSeq": 9,
+            "startedAt": "2026-11-02T09:00:43.577Z",
+            "endedSeq": 14,
+            "status": "finished",
+            "failureReason": null,
+            "review": {
+              "summary": "A quiet, confident opening. The pace suits the mood; the question is what Elena wants.",
+              "strengths": [
+                "Concrete sensory detail",
+                "Restraint"
+              ],
+              "topPriorities": [
+                "Clarify what Elena wants from the lamp",
+                "Plant the reason the light failed"
+              ]
+            },
+            "counts": {
+              "items": 4,
+              "suggestions": 0,
+              "insertions": 0,
+              "proposals": 0,
+              "questions": 2,
+              "searches": 0
+            },
+            "annotationIds": [
+              "com-1",
+              "com-2",
+              "q-1",
+              "q-2"
+            ]
+          },
+          "fs-2": {
+            "id": "fs-2",
+            "kind": "review",
+            "requestId": "req-2",
+            "threadId": null,
+            "model": "sonnet",
+            "startedSeq": 18,
+            "startedAt": "2026-11-02T09:02:01.013Z",
+            "endedSeq": 19,
+            "status": "failed",
+            "failureReason": "model timeout",
+            "review": null,
+            "counts": {
+              "items": 0,
+              "suggestions": 0,
+              "insertions": 0,
+              "proposals": 0,
+              "questions": 0,
+              "searches": 0
+            },
+            "annotationIds": []
+          }
+        },
+        "comments": {
+          "com-1": {
+            "id": "com-1",
+            "feedbackSessionId": "fs-1",
+            "seq": 10,
+            "createdAt": "2026-11-02T09:00:45.077Z",
+            "target": {
+              "anchor": {
+                "documentId": "doc-ch1",
+                "sentenceId": "p1.s2",
+                "quote": "counting each one",
+                "occurrence": 0
+              },
+              "from": 82,
+              "to": 99,
+              "readVersion": 222,
+              "version": 222,
+              "kind": "anchor"
+            },
+            "range": {
+              "documentId": "doc-ch1",
+              "from": 82,
+              "to": 99
+            },
+            "category": "character-dialogue",
+            "severity": "minor",
+            "body": "Counting is a good habit for her; it shows nerves without saying so.",
+            "status": "dismissed",
+            "dismissal": {
+              "seq": 15,
+              "reason": "later",
+              "note": "Will revisit after chapter 2."
+            }
+          },
+          "com-2": {
+            "id": "com-2",
+            "feedbackSessionId": "fs-1",
+            "seq": 11,
+            "createdAt": "2026-11-02T09:00:46.577Z",
+            "target": {
+              "span": {
+                "documentId": "doc-ch1",
+                "unit": "paragraph",
+                "ids": [
+                  "p2"
+                ]
+              },
+              "from": 101,
+              "to": 225,
+              "readVersion": 222,
+              "version": 222,
+              "kind": "span"
+            },
+            "range": {
+              "documentId": "doc-ch1",
+              "from": 141,
+              "to": 265
+            },
+            "category": "pacing",
+            "severity": "moderate",
+            "body": "This paragraph carries the turn; consider letting it breathe with one more beat before she sits.",
+            "status": "open",
+            "dismissal": null
+          }
+        },
+        "questions": {
+          "q-1": {
+            "id": "q-1",
+            "feedbackSessionId": "fs-1",
+            "seq": 12,
+            "createdAt": "2026-11-02T09:00:48.077Z",
+            "target": {
+              "anchor": {
+                "documentId": "doc-ch1",
+                "sentenceId": "p1.s1",
+                "quote": "three winters",
+                "occurrence": 0
+              },
+              "from": 34,
+              "to": 47,
+              "readVersion": 222,
+              "version": 222,
+              "kind": "anchor"
+            },
+            "range": {
+              "documentId": "doc-ch1",
+              "from": 34,
+              "to": 47
+            },
+            "question": "Why has the lighthouse been dark for three winters, and does Elena know?",
+            "status": "open",
+            "dismissal": null
+          },
+          "q-2": {
+            "id": "q-2",
+            "feedbackSessionId": "fs-1",
+            "seq": 13,
+            "createdAt": "2026-11-02T09:00:49.577Z",
+            "target": null,
+            "range": null,
+            "question": "Who is the story for: readers who know the coast, or newcomers?",
+            "status": "open",
+            "dismissal": null
+          }
+        },
+        "suggestions": {},
+        "proposals": {},
+        "citationFlags": {},
+        "surfacedSources": {},
+        "sourceSuggestions": {},
+        "discussions": {}
+      },
+      "sources": {},
+      "clippings": {},
+      "pastes": {},
+      "writingSessions": [
+        {
+          "index": 0,
+          "startSeq": 3,
+          "endSeq": 16,
+          "startTime": "2026-11-02T09:00:00.800Z",
+          "endTime": "2026-11-02T09:01:57.063Z",
+          "activeMs": 36463,
+          "commits": 6,
+          "charactersInserted": 261,
+          "documentIds": [
+            "doc-ch1"
+          ]
+        }
+      ]
+    },
+    "documents": {
+      "doc-ch1": {
+        "text": "The lighthouse had been dark for three winters. Elena climbed the stairs anyway, counting each one. She wanted to know who had let it fail.\nAt the top she found the lamp, cracked and furred with salt. She sat down beside it and waited for the light to come back.",
+        "words": [
+          {
+            "from": 1,
+            "to": 4,
+            "text": "The",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 5,
+            "to": 15,
+            "text": "lighthouse",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 16,
+            "to": 19,
+            "text": "had",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 20,
+            "to": 24,
+            "text": "been",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 25,
+            "to": 29,
+            "text": "dark",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 30,
+            "to": 33,
+            "text": "for",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 34,
+            "to": 39,
+            "text": "three",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 40,
+            "to": 47,
+            "text": "winters",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 49,
+            "to": 54,
+            "text": "Elena",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3,
+              4
+            ]
+          },
+          {
+            "from": 55,
+            "to": 62,
+            "text": "climbed",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 63,
+            "to": 66,
+            "text": "the",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 67,
+            "to": 73,
+            "text": "stairs",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 74,
+            "to": 80,
+            "text": "anyway",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 82,
+            "to": 90,
+            "text": "counting",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 91,
+            "to": 95,
+            "text": "each",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 96,
+            "to": 99,
+            "text": "one",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 101,
+            "to": 104,
+            "text": "She",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              16
+            ]
+          },
+          {
+            "from": 105,
+            "to": 111,
+            "text": "wanted",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              16
+            ]
+          },
+          {
+            "from": 112,
+            "to": 114,
+            "text": "to",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              16
+            ]
+          },
+          {
+            "from": 115,
+            "to": 119,
+            "text": "know",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              16
+            ]
+          },
+          {
+            "from": 120,
+            "to": 123,
+            "text": "who",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              16
+            ]
+          },
+          {
+            "from": 124,
+            "to": 127,
+            "text": "had",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              16
+            ]
+          },
+          {
+            "from": 128,
+            "to": 131,
+            "text": "let",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              16
+            ]
+          },
+          {
+            "from": 132,
+            "to": 134,
+            "text": "it",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              16
+            ]
+          },
+          {
+            "from": 135,
+            "to": 139,
+            "text": "fail",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              16
+            ]
+          },
+          {
+            "from": 142,
+            "to": 144,
+            "text": "At",
+            "class": "typed",
+            "blockId": "p2",
+            "originSeqs": [
+              5
+            ]
+          },
+          {
+            "from": 145,
+            "to": 148,
+            "text": "the",
+            "class": "typed",
+            "blockId": "p2",
+            "originSeqs": [
+              5
+            ]
+          },
+          {
+            "from": 149,
+            "to": 152,
+            "text": "top",
+            "class": "typed",
+            "blockId": "p2",
+            "originSeqs": [
+              5
+            ]
+          },
+          {
+            "from": 153,
+            "to": 156,
+            "text": "she",
+            "class": "typed",
+            "blockId": "p2",
+            "originSeqs": [
+              5
+            ]
+          },
+          {
+            "from": 157,
+            "to": 162,
+            "text": "found",
+            "class": "typed",
+            "blockId": "p2",
+            "originSeqs": [
+              5
+            ]
+          },
+          {
+            "from": 163,
+            "to": 166,
+            "text": "the",
+            "class": "typed",
+            "blockId": "p2",
+            "originSeqs": [
+              5
+            ]
+          },
+          {
+            "from": 167,
+            "to": 171,
+            "text": "lamp",
+            "class": "typed",
+            "blockId": "p2",
+            "originSeqs": [
+              5
+            ]
+          },
+          {
+            "from": 173,
+            "to": 180,
+            "text": "cracked",
+            "class": "typed",
+            "blockId": "p2",
+            "originSeqs": [
+              5
+            ]
+          },
+          {
+            "from": 181,
+            "to": 184,
+            "text": "and",
+            "class": "typed",
+            "blockId": "p2",
+            "originSeqs": [
+              5
+            ]
+          },
+          {
+            "from": 185,
+            "to": 191,
+            "text": "furred",
+            "class": "typed",
+            "blockId": "p2",
+            "originSeqs": [
+              5
+            ]
+          },
+          {
+            "from": 192,
+            "to": 196,
+            "text": "with",
+            "class": "typed",
+            "blockId": "p2",
+            "originSeqs": [
+              6
+            ]
+          },
+          {
+            "from": 197,
+            "to": 201,
+            "text": "salt",
+            "class": "typed",
+            "blockId": "p2",
+            "originSeqs": [
+              6
+            ]
+          },
+          {
+            "from": 203,
+            "to": 206,
+            "text": "She",
+            "class": "typed",
+            "blockId": "p2",
+            "originSeqs": [
+              6
+            ]
+          },
+          {
+            "from": 207,
+            "to": 210,
+            "text": "sat",
+            "class": "typed",
+            "blockId": "p2",
+            "originSeqs": [
+              6
+            ]
+          },
+          {
+            "from": 211,
+            "to": 215,
+            "text": "down",
+            "class": "typed",
+            "blockId": "p2",
+            "originSeqs": [
+              6
+            ]
+          },
+          {
+            "from": 216,
+            "to": 222,
+            "text": "beside",
+            "class": "typed",
+            "blockId": "p2",
+            "originSeqs": [
+              6
+            ]
+          },
+          {
+            "from": 223,
+            "to": 225,
+            "text": "it",
+            "class": "typed",
+            "blockId": "p2",
+            "originSeqs": [
+              6
+            ]
+          },
+          {
+            "from": 226,
+            "to": 229,
+            "text": "and",
+            "class": "typed",
+            "blockId": "p2",
+            "originSeqs": [
+              6
+            ]
+          },
+          {
+            "from": 230,
+            "to": 236,
+            "text": "waited",
+            "class": "typed",
+            "blockId": "p2",
+            "originSeqs": [
+              6
+            ]
+          },
+          {
+            "from": 237,
+            "to": 240,
+            "text": "for",
+            "class": "typed",
+            "blockId": "p2",
+            "originSeqs": [
+              6
+            ]
+          },
+          {
+            "from": 241,
+            "to": 244,
+            "text": "the",
+            "class": "typed",
+            "blockId": "p2",
+            "originSeqs": [
+              6,
+              7
+            ]
+          },
+          {
+            "from": 245,
+            "to": 250,
+            "text": "light",
+            "class": "typed",
+            "blockId": "p2",
+            "originSeqs": [
+              7
+            ]
+          },
+          {
+            "from": 251,
+            "to": 253,
+            "text": "to",
+            "class": "typed",
+            "blockId": "p2",
+            "originSeqs": [
+              7
+            ]
+          },
+          {
+            "from": 254,
+            "to": 258,
+            "text": "come",
+            "class": "typed",
+            "blockId": "p2",
+            "originSeqs": [
+              7
+            ]
+          },
+          {
+            "from": 259,
+            "to": 263,
+            "text": "back",
+            "class": "typed",
+            "blockId": "p2",
+            "originSeqs": [
+              7
+            ]
+          }
+        ],
+        "wordsByClass": {
+          "total": 50,
+          "byClass": {
+            "typed": 50,
+            "typed-from-suggestion": 0,
+            "pasted-external": 0,
+            "pasted-internal": 0,
+            "imported": 0,
+            "quoted": 0
+          }
+        },
+        "charactersByClass": {
+          "total": 261,
+          "byClass": {
+            "typed": 261,
+            "typed-from-suggestion": 0,
+            "pasted-external": 0,
+            "pasted-internal": 0,
+            "imported": 0,
+            "quoted": 0
+          }
+        }
+      }
+    },
+    "projectWords": {
+      "total": 50,
+      "byClass": {
+        "typed": 50,
+        "typed-from-suggestion": 0,
+        "pasted-external": 0,
+        "pasted-internal": 0,
+        "imported": 0,
+        "quoted": 0
+      }
+    },
+    "projectCharacters": {
+      "total": 261,
+      "byClass": {
+        "typed": 261,
+        "typed-from-suggestion": 0,
+        "pasted-external": 0,
+        "pasted-internal": 0,
+        "imported": 0,
+        "quoted": 0
+      }
+    },
+    "issues": []
+  },
+  "witnesses": [
+    {
+      "projectId": "proj-1",
+      "seq": 1,
+      "hash": "82a9129eaa530be303b43d20777ff3b4f49d443e3c7e1ef1450f504df5ed6a84",
+      "serverTime": "2026-11-02T09:00:00.250Z",
+      "signature": "TmKMTMKB19njVMJmSFYMlVNy3L65iOKV6TcTcrmOOybSey9Pia6WuV/NdJdEwcQYkzelHW5jbXdFLAqHvY9VEg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 2,
+      "hash": "6ccaa2563c8351395555a764e170b3ef267917fd7390000f37fae08cbbf27b5c",
+      "serverTime": "2026-11-02T09:00:00.650Z",
+      "signature": "eDEz9o1fo/SaSdqc0AhtZOPI8aHzbh+YigEju286E6qda+8oS+8ozkE+o3odpFVNT5HED836+1QL9toH3Kp4yg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 3,
+      "hash": "fd63cd41072282e4844ef6b5590ec871425080d40da67b688342ce21ed6a2e3a",
+      "serverTime": "2026-11-02T09:00:01.050Z",
+      "signature": "qJYa3LMifB4VxlPr1qiAAWAD4tUwNd7JkU/vqspzHgOX0q1QPGWnKasA2WPuqR5PDdmJIrHzbAICx+KluD8dlA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 4,
+      "hash": "6d32fd236b84bdc5cfc94528fead086ee6903eb7a36ed3dc4c8d2b4d0c5606c3",
+      "serverTime": "2026-11-02T09:00:09.875Z",
+      "signature": "eDpVBddBRQ0/mwSXKET6fu87z47VFR2CjeGiUAkEep3269UfdOtpzqfsGxwZNVw0ouHndsEMSpUqvn1927K2mQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 5,
+      "hash": "f3fa78284ccf25d4688aeb77b6553d4d63e4fdeb5b53b2dc61aa38d0fc6d4f86",
+      "serverTime": "2026-11-02T09:00:18.657Z",
+      "signature": "lHsOa3AIk47CKn37/3uuNWbLnybrKUaE7ntne522FksfpV/xa7G9V3yXSUApPWlr8zNWGd3/blU5oOq5gcm7cg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 6,
+      "hash": "2ea1ed63e0c45d36759a1922770e28bb7d16e25abeec0295f54ef29d5e988791",
+      "serverTime": "2026-11-02T09:00:27.851Z",
+      "signature": "DVFo37MFg4oq+qwmeV/Ak6LcbsUwuO6wUeB+Y5kXXXHTqjAS3EEGu56SDPSPh5avTcoi3cS/3KUZhiIh3lv8gA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 7,
+      "hash": "bb88f74eb9454efad717f9287c1ecc44da92779ada0f9b51bf2e88d4b487ff6f",
+      "serverTime": "2026-11-02T09:00:37.024Z",
+      "signature": "k2afdr+9ZQYuDwv+rB5SDJ+zIdeqrTgEk4T4065KF3ut+4nlnVbapE9NDhBWuS58LorXfCCT+PYMMqEbtfKhFg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 8,
+      "hash": "8c15b2cd1b1201bcfbfa11ccdd01eff5c66132413bf10a7e5fe66b9c6c2b22fb",
+      "serverTime": "2026-11-02T09:00:41.877Z",
+      "signature": "bVGTBitvELAnFiRz8fTusw5Ubrt84q/DkMf1r2MMggiA5PrXignr4fJdcHHzzcV1ut2ff5K0aW3LyhHbCXjD2g==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 9,
+      "hash": "7ce2155e6892dceed7820e5087b6d84979f071c577ec6d118b2de5f4cdc9d57d",
+      "serverTime": "2026-11-02T09:00:43.577Z",
+      "signature": "GonoSZ9pqjpnXpwY7HoQ2qj7OK0TK118EjOFMEnfPrg7ghoDtg9HldFlCHd7xdDlis3gUyTfMBYN+IM4VFrQ0g==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 10,
+      "hash": "f0c2feceb2671c98b130e7fd69fdeaf0012709aba8e7c4d39a9f3afe37b9140e",
+      "serverTime": "2026-11-02T09:00:45.077Z",
+      "signature": "Va7EbmNTN64iSP1JLvD86hJYnJU2VWkD6IQIfkcVwwoJXx4OUrlHi36Olb26ljp1zLOCJ+OJnHBS1j9J2/HMnw==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 11,
+      "hash": "6c5e94af70139016a359dd8333eb5975eac9439ed899049cea10ce3abd954693",
+      "serverTime": "2026-11-02T09:00:46.577Z",
+      "signature": "Ni0NlmwHdIzAkOatdQxFzUNtLcnKb05Z9wbxnewe5qjuqi69mba2I/7zn/ycOuqiCA11DOSQGWfcClPaO73Y/Q==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 12,
+      "hash": "24f26c45741c360146eca3bf895d905eedc56bc4b76957ef35fdd3e767e50c18",
+      "serverTime": "2026-11-02T09:00:48.077Z",
+      "signature": "8woGjw1/Y/NClmyNZTdVEvj6uSuDtW+xq5Iv+rCbwfO98b5HcHLcg+u0LbL0zY2CNG7ic0JKDeOGFrj/uR+FUQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 13,
+      "hash": "2a55d4ad1bfa814df9202e3fb472633f1adb30a9591e9faaaf1008cc62dfdba4",
+      "serverTime": "2026-11-02T09:00:49.577Z",
+      "signature": "zxAh2fiKL23WJelzjtQPITg67+vsYne3AOnrHjf4BIL1eVywaBd7IBE9Bjr5nWgnyjc7Q1R954oDoaPUvgRkgQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 14,
+      "hash": "87db42c50556fc68da59d1c3a32c774bed7c04eab04bb66a69d752d0e57e0591",
+      "serverTime": "2026-11-02T09:00:51.077Z",
+      "signature": "01LYSCWlQka1QnUKj5zPdE16qeanKvBeiteYDnLPbk5QtN/yWcK8fP5P5y4QSBa/ddLodLYLgAgT8YSvUNo9VQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 15,
+      "hash": "0c24c7a529cae9effe2936464f09b3409e7671d383a6c00cb3d7c866bf03ab54",
+      "serverTime": "2026-11-02T09:01:51.277Z",
+      "signature": "9clod7ub0KeUIzUGse9Rl38WXHt6ISjoyvrButU+MYXGuUO2aQx79gUZKsGsGjxZmFlH9ZMuGN8so/WbHxjmBg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 16,
+      "hash": "97270b6c2da005d3340394d717da365412a4d789892d0ae53ef5b1b87ded477f",
+      "serverTime": "2026-11-02T09:01:51.677Z",
+      "signature": "2oW7cvHYxsPZKFBlpwEl1JZ+HmOWmIHwarGuIsBomZCnn0duUhVHF8/c6BzgXfOkgBj9bJMo4gxuAeGxtlDXSg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 17,
+      "hash": "6132a671b790ef948b8749b139759177294de2fe58197646ba945fba8fecdaf8",
+      "serverTime": "2026-11-02T09:01:59.313Z",
+      "signature": "TccF5522oRCVV3VOsweV6A4HZaw6a1wAeMxpgZcVb/lciSotgHR/CCPNnSHPoehSAWpNsotjb+qPC1cErL56VQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 18,
+      "hash": "d224e308465400307019dbcd319f84082a8a3c062934bb78593585193938c02b",
+      "serverTime": "2026-11-02T09:02:01.013Z",
+      "signature": "XQWJK4BpAp6q+xH1fjJOLrq0F0jBaO+C2NgIk8bnUHho9r+Skw0pPByPRNFGHzB+wJloOufR0qWizkFYZaQzaA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 19,
+      "hash": "df86257a6219d0268fbcaf592b73cd5ccd401c1ee1eb120a2d83dc74916e768f",
+      "serverTime": "2026-11-02T09:02:01.014Z",
+      "signature": "yrN9+MBVbwdljpfbRNxuawuryBV+iN0HmggWnU8X4HmP+/FHRsATEOA0Rsv2jTWE78x7kMh8qCXv88YfKeCvGg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    }
+  ],
+  "publicKeyPem": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEoInrdRkLs5lWE+qtD8cpCVp0gkEn\n0tllAdSMj9iVyF0MaAHny/cdaByyk3aWbk6dqMaXuaekIuWmvEJCsgbJBg==\n-----END PUBLIC KEY-----\n",
+  "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+}

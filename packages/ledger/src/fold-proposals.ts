@@ -135,7 +135,7 @@ function acceptMove(dc: DocCommit, t: Tracker, unit: 'sentence' | 'paragraph' | 
     if (!relocated.has(o.id) || !o.ref) continue;
     o.ref = { from: shift(o.ref.from), to: shift(o.ref.to) };
   }
-  let a = ins;
+  const a = ins;
   let b = ins + slice.size;
   let gap = delMap.map(src.from, -1);
   if (gap >= ins) gap += slice.size;
@@ -148,7 +148,6 @@ function acceptMove(dc: DocCommit, t: Tracker, unit: 'sentence' | 'paragraph' | 
     if (l !== null && m0 !== null && !isWhitespace(l) && !isWhitespace(m0)) {
       mapGap(a);
       insertSpace(dc, a);
-      a += 1;
       b += 1;
     }
     const m1 = charBefore(dc.node, b);

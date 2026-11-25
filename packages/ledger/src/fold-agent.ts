@@ -15,7 +15,6 @@
  *   **stale on arrival**.
  */
 import {
-  canonicalize,
   capViolation,
   EMPTY_SESSION_COUNTS,
   countCall,

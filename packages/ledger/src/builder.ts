@@ -490,7 +490,7 @@ export class LedgerBuilder {
           let prev = 0;
           for (const s of stages) {
             tr.replaceWith(pos, pos + prev, schema.text(s));
-            keys.push({ kind: 'compose', len: s.length - prev, dt: this.rand(120, 260) });
+            keys.push({ kind: 'compose', len: s.length, dt: this.rand(120, 260) });
             prev = s.length;
           }
         },

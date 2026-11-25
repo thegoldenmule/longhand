@@ -1,0 +1,3131 @@
+{
+  "name": "binder",
+  "description": "Folders nested three deep, documents and notes, reorder and move, rename, synopsis, archive and restore, project settings.",
+  "covers": [
+    "binder",
+    "folders",
+    "notes",
+    "reorder",
+    "archive",
+    "synopsis",
+    "settings"
+  ],
+  "commits": [
+    {
+      "commitId": "c-0001",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 1,
+      "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "798ac4e006e23756c927d96dddd7a6aa8b2a3c91f6f1e6031169aaf985012791",
+      "clientTime": "2026-11-02T09:00:00.000Z",
+      "serverTime": "2026-11-02T09:00:00.250Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "ProjectCreated",
+      "payload": {
+        "title": "Binder"
+      }
+    },
+    {
+      "commitId": "c-0002",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 2,
+      "prevHash": "798ac4e006e23756c927d96dddd7a6aa8b2a3c91f6f1e6031169aaf985012791",
+      "hash": "1940b5c014b3ee80b58766466a47ab5ad38ca061246493282a62f0fda1170c47",
+      "clientTime": "2026-11-02T09:00:00.400Z",
+      "serverTime": "2026-11-02T09:00:00.650Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "FolderCreated",
+      "payload": {
+        "folderId": "f-part1",
+        "area": "manuscript",
+        "title": "Part One",
+        "parentId": null,
+        "index": 0
+      }
+    },
+    {
+      "commitId": "c-0003",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 3,
+      "prevHash": "1940b5c014b3ee80b58766466a47ab5ad38ca061246493282a62f0fda1170c47",
+      "hash": "b3ff1272d2156355f0a9069609dff0dcef66bd0284e0d4a3e9bcdcd258cad256",
+      "clientTime": "2026-11-02T09:00:00.800Z",
+      "serverTime": "2026-11-02T09:00:01.050Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "FolderCreated",
+      "payload": {
+        "folderId": "f-ch1",
+        "area": "manuscript",
+        "title": "Chapter 1",
+        "parentId": "f-part1",
+        "index": 0
+      }
+    },
+    {
+      "commitId": "c-0004",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 4,
+      "prevHash": "b3ff1272d2156355f0a9069609dff0dcef66bd0284e0d4a3e9bcdcd258cad256",
+      "hash": "19ceb740d1467c6f217271f551e6782047b867196ebd7bbd45a4cce33aa510f4",
+      "clientTime": "2026-11-02T09:00:01.200Z",
+      "serverTime": "2026-11-02T09:00:01.450Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "FolderCreated",
+      "payload": {
+        "folderId": "f-ch2",
+        "area": "manuscript",
+        "title": "Chapter 2",
+        "parentId": "f-part1",
+        "index": 1
+      }
+    },
+    {
+      "commitId": "c-0005",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 5,
+      "prevHash": "19ceb740d1467c6f217271f551e6782047b867196ebd7bbd45a4cce33aa510f4",
+      "hash": "efbe12d6a409a9ce90c172132b8a15d9554839106d8c069a6fd7de7a4f2e2ae3",
+      "clientTime": "2026-11-02T09:00:01.600Z",
+      "serverTime": "2026-11-02T09:00:01.850Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "DocumentCreated",
+      "payload": {
+        "documentId": "doc-s1",
+        "kind": "manuscript",
+        "title": "Scene 1",
+        "parentId": "f-ch1",
+        "index": 0
+      }
+    },
+    {
+      "commitId": "c-0006",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 6,
+      "prevHash": "efbe12d6a409a9ce90c172132b8a15d9554839106d8c069a6fd7de7a4f2e2ae3",
+      "hash": "438c54070a17d70cc6315aa7040f1d50fa123d21d8f38847d46b7fa607baed42",
+      "clientTime": "2026-11-02T09:00:02.000Z",
+      "serverTime": "2026-11-02T09:00:02.250Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "DocumentCreated",
+      "payload": {
+        "documentId": "doc-s2",
+        "kind": "manuscript",
+        "title": "Scene 2",
+        "parentId": "f-ch1",
+        "index": 1
+      }
+    },
+    {
+      "commitId": "c-0007",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 7,
+      "prevHash": "438c54070a17d70cc6315aa7040f1d50fa123d21d8f38847d46b7fa607baed42",
+      "hash": "3db5a4f4595c30e55866f423db29476d745c91568c8238eef5852db4340776af",
+      "clientTime": "2026-11-02T09:00:02.400Z",
+      "serverTime": "2026-11-02T09:00:02.650Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "DocumentCreated",
+      "payload": {
+        "documentId": "doc-s3",
+        "kind": "manuscript",
+        "title": "Scene 3",
+        "parentId": "f-ch2",
+        "index": 0
+      }
+    },
+    {
+      "commitId": "c-0008",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 8,
+      "prevHash": "3db5a4f4595c30e55866f423db29476d745c91568c8238eef5852db4340776af",
+      "hash": "89b2a0c549893673514ecf68c6e9e9885de1b97b789d432ce815cc37feb42340",
+      "clientTime": "2026-11-02T09:00:02.800Z",
+      "serverTime": "2026-11-02T09:00:03.050Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "FolderCreated",
+      "payload": {
+        "folderId": "f-part2",
+        "area": "manuscript",
+        "title": "Part Two",
+        "parentId": null,
+        "index": 1
+      }
+    },
+    {
+      "commitId": "c-0009",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 9,
+      "prevHash": "89b2a0c549893673514ecf68c6e9e9885de1b97b789d432ce815cc37feb42340",
+      "hash": "4e44c7b8ed2e515785e84ee8e183ecad8172155c60dd662bd27f07a11dd49ca6",
+      "clientTime": "2026-11-02T09:00:03.200Z",
+      "serverTime": "2026-11-02T09:00:03.450Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "FolderCreated",
+      "payload": {
+        "folderId": "f-chars",
+        "area": "notes",
+        "title": "Characters",
+        "parentId": null,
+        "index": 0
+      }
+    },
+    {
+      "commitId": "c-0010",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 10,
+      "prevHash": "4e44c7b8ed2e515785e84ee8e183ecad8172155c60dd662bd27f07a11dd49ca6",
+      "hash": "7db7a055a351d8734ab11f35af13e996c7888567708ed10e4d9fabfeebdbc819",
+      "clientTime": "2026-11-02T09:00:03.600Z",
+      "serverTime": "2026-11-02T09:00:03.850Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "DocumentCreated",
+      "payload": {
+        "documentId": "note-elena",
+        "kind": "note",
+        "title": "Elena",
+        "parentId": "f-chars",
+        "index": 0
+      }
+    },
+    {
+      "commitId": "c-0011",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 11,
+      "prevHash": "7db7a055a351d8734ab11f35af13e996c7888567708ed10e4d9fabfeebdbc819",
+      "hash": "1ef1bb19fd99cd34e5a1faca864819676e3e2075fb36f51dee885b201bf54a6e",
+      "clientTime": "2026-11-02T09:00:04.000Z",
+      "serverTime": "2026-11-02T09:00:04.250Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "DocumentCreated",
+      "payload": {
+        "documentId": "note-outline",
+        "kind": "note",
+        "title": "Outline",
+        "parentId": null,
+        "index": 0
+      }
+    },
+    {
+      "commitId": "c-0012",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 12,
+      "prevHash": "1ef1bb19fd99cd34e5a1faca864819676e3e2075fb36f51dee885b201bf54a6e",
+      "hash": "bcb0f43e891e98c283d45a1ad05717babfc35d76da83c902c8e0f6f9a100efb1",
+      "clientTime": "2026-11-02T09:00:04.400Z",
+      "serverTime": "2026-11-02T09:00:04.650Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "note-elena",
+        "baseVersion": 0,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 1,
+            "to": 1,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "F"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 2,
+            "to": 2,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 3,
+            "to": 3,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 4,
+            "to": 4,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 5,
+            "to": 5,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "y"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 6,
+            "to": 6,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "-"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 7,
+            "to": 7,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 8,
+            "to": 8,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 9,
+            "to": 9,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 10,
+            "to": 10,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 11,
+            "to": 11,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 12,
+            "to": 12,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "K"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 13,
+            "to": 13,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 14,
+            "to": 14,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 15,
+            "to": 15,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "p"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 16,
+            "to": 16,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 17,
+            "to": 17,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 18,
+            "to": 18,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 19,
+            "to": 19,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 20,
+            "to": 20,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 21,
+            "to": 21,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 22,
+            "to": 22,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 23,
+            "to": 23,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 24,
+            "to": 24,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 25,
+            "to": 25,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "A"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 26,
+            "to": 26,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "f"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 27,
+            "to": 27,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 28,
+            "to": 28,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 29,
+            "to": 29,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 30,
+            "to": 30,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 31,
+            "to": 31,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 32,
+            "to": 32,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 33,
+            "to": 33,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "f"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 34,
+            "to": 34,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 35,
+            "to": 35,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 36,
+            "to": 36,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 37,
+            "to": 37,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 38,
+            "to": 38,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "g"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 39,
+            "to": 39,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 40,
+            "to": 40,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 41,
+            "to": 41,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 42,
+            "to": 42,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 43,
+            "to": 43,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "b"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 44,
+            "to": 44,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "u"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 45,
+            "to": 45,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 46,
+            "to": 46,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 47,
+            "to": 47,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "c"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 48,
+            "to": 48,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 49,
+            "to": 49,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 50,
+            "to": 50,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "m"
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 50,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 137,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 278,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 429,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 504,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 636,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 831,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 961,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1121,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1200,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1308,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1450,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1532,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1625,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1743,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1844,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1933,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2015,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2095,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2284,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2362,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2537,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2670,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2781,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2910,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3089,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3271,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3481,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3587,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3673,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3746,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3871,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4076,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4160,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4260,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4426,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4520,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4682,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4874,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5045,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5123,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5307,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5504,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5664,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5831,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5983,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6085,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6254,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6442,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6631,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 50,
+        "durationMs": 6631
+      }
+    },
+    {
+      "commitId": "c-0013",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 13,
+      "prevHash": "bcb0f43e891e98c283d45a1ad05717babfc35d76da83c902c8e0f6f9a100efb1",
+      "hash": "79dc247a0f976bc9f845cb87a1f33968763aa42ac852a8680ee0de7839df81ef",
+      "clientTime": "2026-11-02T09:00:13.031Z",
+      "serverTime": "2026-11-02T09:00:13.281Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "note-elena",
+        "baseVersion": 50,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 51,
+            "to": 51,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "b"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 52,
+            "to": 52,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 53,
+            "to": 53,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 54,
+            "to": 54,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 55,
+            "to": 55,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 56,
+            "to": 56,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "y"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 57,
+            "to": 57,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "w"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 58,
+            "to": 58,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 59,
+            "to": 59,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "y"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 60,
+            "to": 60,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 10,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 169,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 374,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 469,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 548,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 739,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 823,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 920,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1048,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1184,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 10,
+        "durationMs": 1184
+      }
+    },
+    {
+      "commitId": "c-0014",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 14,
+      "prevHash": "79dc247a0f976bc9f845cb87a1f33968763aa42ac852a8680ee0de7839df81ef",
+      "hash": "f21b5685bce742dda53066894a6aa06f0edb2914a16619dae8c25dda5c3c37c8",
+      "clientTime": "2026-11-02T09:00:16.215Z",
+      "serverTime": "2026-11-02T09:00:16.465Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-s1",
+        "baseVersion": 0,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 1,
+            "to": 1,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "S"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 2,
+            "to": 2,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 3,
+            "to": 3,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 4,
+            "to": 4,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 5,
+            "to": 5,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 6,
+            "to": 6,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 7,
+            "to": 7,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 8,
+            "to": 8,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 9,
+            "to": 9,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "v"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 10,
+            "to": 10,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 11,
+            "to": 11,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 12,
+            "to": 12,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 13,
+            "to": 13,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 14,
+            "to": 14,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 15,
+            "to": 15,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 16,
+            "to": 16,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 17,
+            "to": 17,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 18,
+            "to": 18,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 19,
+            "to": 19,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 20,
+            "to": 20,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 21,
+            "to": 21,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 22,
+            "to": 22,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 23,
+            "to": 23,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 24,
+            "to": 24,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 25,
+            "to": 25,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "f"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 26,
+            "to": 26,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 27,
+            "to": 27,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 28,
+            "to": 28,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 29,
+            "to": 29,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "y"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 30,
+            "to": 30,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 30,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 95,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 272,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 375,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 571,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 692,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 789,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 921,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1110,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1205,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1342,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1443,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1641,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1739,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1949,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2154,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2296,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2486,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2624,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2744,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2851,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3034,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3203,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3316,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3495,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3698,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3839,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3985,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4058,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4144,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 30,
+        "durationMs": 4144
+      }
+    },
+    {
+      "commitId": "c-0015",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 15,
+      "prevHash": "f21b5685bce742dda53066894a6aa06f0edb2914a16619dae8c25dda5c3c37c8",
+      "hash": "cb4ac4e47cc086f91090d11473f6d6a0296a913f1e3ab9abe0d34c2a8c562724",
+      "clientTime": "2026-11-02T09:00:22.359Z",
+      "serverTime": "2026-11-02T09:00:22.609Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "SynopsisEdited",
+      "payload": {
+        "documentId": "doc-s1",
+        "synopsis": "Elena arrives on the island."
+      }
+    },
+    {
+      "commitId": "c-0016",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 16,
+      "prevHash": "cb4ac4e47cc086f91090d11473f6d6a0296a913f1e3ab9abe0d34c2a8c562724",
+      "hash": "35bc810b3df9cdb5f3f5c56f4f90395c0dceddf70157e0e6b1274b3e2430b650",
+      "clientTime": "2026-11-02T09:00:22.759Z",
+      "serverTime": "2026-11-02T09:00:23.009Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "DocumentRenamed",
+      "payload": {
+        "documentId": "doc-s2",
+        "title": "Scene 2: The keeper"
+      }
+    },
+    {
+      "commitId": "c-0017",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 17,
+      "prevHash": "35bc810b3df9cdb5f3f5c56f4f90395c0dceddf70157e0e6b1274b3e2430b650",
+      "hash": "3dd0ef6b15423016e7e860d51d4c9b1c345207c9b8e847f40d12e3f25ffb3146",
+      "clientTime": "2026-11-02T09:00:23.159Z",
+      "serverTime": "2026-11-02T09:00:23.409Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "DocumentMoved",
+      "payload": {
+        "documentId": "doc-s2",
+        "parentId": "f-ch1",
+        "index": 0
+      }
+    },
+    {
+      "commitId": "c-0018",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 18,
+      "prevHash": "3dd0ef6b15423016e7e860d51d4c9b1c345207c9b8e847f40d12e3f25ffb3146",
+      "hash": "dc2b6dff49866a3314503d8488f85c46ed452d7b44a80a0432190cd14bee9ac3",
+      "clientTime": "2026-11-02T09:00:23.559Z",
+      "serverTime": "2026-11-02T09:00:23.809Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "DocumentMoved",
+      "payload": {
+        "documentId": "doc-s3",
+        "parentId": "f-ch1",
+        "index": 1
+      }
+    },
+    {
+      "commitId": "c-0019",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 19,
+      "prevHash": "dc2b6dff49866a3314503d8488f85c46ed452d7b44a80a0432190cd14bee9ac3",
+      "hash": "6c1940308d7e85e1ab3c4859914794a3595288bd9ad675b48c43a6af3cdb1fb4",
+      "clientTime": "2026-11-02T09:00:23.959Z",
+      "serverTime": "2026-11-02T09:00:24.209Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "FolderMoved",
+      "payload": {
+        "folderId": "f-ch2",
+        "parentId": "f-part2",
+        "index": 0
+      }
+    },
+    {
+      "commitId": "c-0020",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 20,
+      "prevHash": "6c1940308d7e85e1ab3c4859914794a3595288bd9ad675b48c43a6af3cdb1fb4",
+      "hash": "64d71afc623e592f84b12ac21df2cb82c7f1549a3198d022ab661f5edf4a35ea",
+      "clientTime": "2026-11-02T09:00:24.359Z",
+      "serverTime": "2026-11-02T09:00:24.609Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "FolderRenamed",
+      "payload": {
+        "folderId": "f-ch2",
+        "title": "Chapter 2 (draft)"
+      }
+    },
+    {
+      "commitId": "c-0021",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 21,
+      "prevHash": "64d71afc623e592f84b12ac21df2cb82c7f1549a3198d022ab661f5edf4a35ea",
+      "hash": "a45280142f1de658d3601dd6079fba89ffc3b23192afbf2d80e6ab008d2c945c",
+      "clientTime": "2026-11-02T09:00:24.759Z",
+      "serverTime": "2026-11-02T09:00:25.009Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "FolderArchived",
+      "payload": {
+        "folderId": "f-part2",
+        "archived": true
+      }
+    },
+    {
+      "commitId": "c-0022",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 22,
+      "prevHash": "a45280142f1de658d3601dd6079fba89ffc3b23192afbf2d80e6ab008d2c945c",
+      "hash": "8a56689ff0363559ed4c346e0ddfab4a43ef712b393e9aabeff3b5a857398e2f",
+      "clientTime": "2026-11-02T09:00:25.159Z",
+      "serverTime": "2026-11-02T09:00:25.409Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "FolderArchived",
+      "payload": {
+        "folderId": "f-part2",
+        "archived": false
+      }
+    },
+    {
+      "commitId": "c-0023",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 23,
+      "prevHash": "8a56689ff0363559ed4c346e0ddfab4a43ef712b393e9aabeff3b5a857398e2f",
+      "hash": "198a4646ae9473153acadec2574ebc4ef5f140ba7d366fac6ef6fad5cbb42cdd",
+      "clientTime": "2026-11-02T09:00:25.559Z",
+      "serverTime": "2026-11-02T09:00:25.809Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "DocumentArchived",
+      "payload": {
+        "documentId": "doc-s1",
+        "archived": true
+      }
+    },
+    {
+      "commitId": "c-0024",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 24,
+      "prevHash": "198a4646ae9473153acadec2574ebc4ef5f140ba7d366fac6ef6fad5cbb42cdd",
+      "hash": "847b24fb98e7f413e020668a1b50c3130d80e20b2ba791f6d989c3cfd18982ac",
+      "clientTime": "2026-11-02T09:00:25.959Z",
+      "serverTime": "2026-11-02T09:00:26.209Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "DocumentArchived",
+      "payload": {
+        "documentId": "doc-s1",
+        "archived": false
+      }
+    },
+    {
+      "commitId": "c-0025",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 25,
+      "prevHash": "847b24fb98e7f413e020668a1b50c3130d80e20b2ba791f6d989c3cfd18982ac",
+      "hash": "8af833cb09cc8d29fdafbb96789e4700668cfb4ac03bfe383f26b6465af055b2",
+      "clientTime": "2026-11-02T09:00:26.359Z",
+      "serverTime": "2026-11-02T09:00:26.609Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "DocumentArchived",
+      "payload": {
+        "documentId": "doc-s3",
+        "archived": true
+      }
+    },
+    {
+      "commitId": "c-0026",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 26,
+      "prevHash": "8af833cb09cc8d29fdafbb96789e4700668cfb4ac03bfe383f26b6465af055b2",
+      "hash": "d7d216abd4ee88b36d865f0cb20f1308ad6ddaf6a3308b146e1da9abaaf373e0",
+      "clientTime": "2026-11-02T09:00:26.759Z",
+      "serverTime": "2026-11-02T09:00:27.009Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "FolderMoved",
+      "payload": {
+        "folderId": "f-part2",
+        "parentId": null,
+        "index": 0
+      }
+    },
+    {
+      "commitId": "c-0027",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 27,
+      "prevHash": "d7d216abd4ee88b36d865f0cb20f1308ad6ddaf6a3308b146e1da9abaaf373e0",
+      "hash": "96bbc7c5a639ae162895f2b9bc6594706faeb37677c76b3b5100c322f02fa8c0",
+      "clientTime": "2026-11-02T09:00:27.159Z",
+      "serverTime": "2026-11-02T09:00:27.409Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "ProjectSettingsChanged",
+      "payload": {
+        "patch": {
+          "genre": "literary fiction",
+          "audience": "adult readers",
+          "dailyWordGoal": 750
+        }
+      }
+    }
+  ],
+  "expected": {
+    "headSeq": 27,
+    "headHash": "96bbc7c5a639ae162895f2b9bc6594706faeb37677c76b3b5100c322f02fa8c0",
+    "state": {
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "headSeq": 27,
+      "headHash": "96bbc7c5a639ae162895f2b9bc6594706faeb37677c76b3b5100c322f02fa8c0",
+      "settings": {
+        "genre": "literary fiction",
+        "audience": "adult readers",
+        "goals": "",
+        "styleNotes": "",
+        "dailyWordGoal": 750,
+        "citationStyle": "apa",
+        "title": "Binder"
+      },
+      "createdSeq": 1,
+      "binder": {
+        "manuscript": [
+          {
+            "kind": "folder",
+            "id": "f-part2"
+          },
+          {
+            "kind": "folder",
+            "id": "f-part1"
+          }
+        ],
+        "notes": [
+          {
+            "kind": "document",
+            "id": "note-outline"
+          },
+          {
+            "kind": "folder",
+            "id": "f-chars"
+          }
+        ]
+      },
+      "folders": {
+        "f-part1": {
+          "id": "f-part1",
+          "area": "manuscript",
+          "title": "Part One",
+          "parentId": null,
+          "children": [
+            {
+              "kind": "folder",
+              "id": "f-ch1"
+            }
+          ],
+          "archived": false,
+          "createdSeq": 2,
+          "updatedSeq": 19
+        },
+        "f-ch1": {
+          "id": "f-ch1",
+          "area": "manuscript",
+          "title": "Chapter 1",
+          "parentId": "f-part1",
+          "children": [
+            {
+              "kind": "document",
+              "id": "doc-s2"
+            },
+            {
+              "kind": "document",
+              "id": "doc-s3"
+            },
+            {
+              "kind": "document",
+              "id": "doc-s1"
+            }
+          ],
+          "archived": false,
+          "createdSeq": 3,
+          "updatedSeq": 18
+        },
+        "f-ch2": {
+          "id": "f-ch2",
+          "area": "manuscript",
+          "title": "Chapter 2 (draft)",
+          "parentId": "f-part2",
+          "children": [],
+          "archived": false,
+          "createdSeq": 4,
+          "updatedSeq": 20
+        },
+        "f-part2": {
+          "id": "f-part2",
+          "area": "manuscript",
+          "title": "Part Two",
+          "parentId": null,
+          "children": [
+            {
+              "kind": "folder",
+              "id": "f-ch2"
+            }
+          ],
+          "archived": false,
+          "createdSeq": 8,
+          "updatedSeq": 26
+        },
+        "f-chars": {
+          "id": "f-chars",
+          "area": "notes",
+          "title": "Characters",
+          "parentId": null,
+          "children": [
+            {
+              "kind": "document",
+              "id": "note-elena"
+            }
+          ],
+          "archived": false,
+          "createdSeq": 9,
+          "updatedSeq": 10
+        }
+      },
+      "documents": {
+        "doc-s1": {
+          "id": "doc-s1",
+          "kind": "manuscript",
+          "area": "manuscript",
+          "title": "Scene 1",
+          "parentId": "f-ch1",
+          "synopsis": "Elena arrives on the island.",
+          "content": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "She arrived on the last ferry."
+                  }
+                ]
+              }
+            ]
+          },
+          "version": 30,
+          "provenance": [
+            {
+              "from": 1,
+              "to": 31,
+              "class": "typed",
+              "originSeq": 14
+            }
+          ],
+          "archived": false,
+          "imported": null,
+          "createdSeq": 5,
+          "contentSeq": 14,
+          "updatedSeq": 24
+        },
+        "doc-s2": {
+          "id": "doc-s2",
+          "kind": "manuscript",
+          "area": "manuscript",
+          "title": "Scene 2: The keeper",
+          "parentId": "f-ch1",
+          "synopsis": "",
+          "content": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph"
+              }
+            ]
+          },
+          "version": 0,
+          "provenance": [],
+          "archived": false,
+          "imported": null,
+          "createdSeq": 6,
+          "contentSeq": 6,
+          "updatedSeq": 17
+        },
+        "doc-s3": {
+          "id": "doc-s3",
+          "kind": "manuscript",
+          "area": "manuscript",
+          "title": "Scene 3",
+          "parentId": "f-ch1",
+          "synopsis": "",
+          "content": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph"
+              }
+            ]
+          },
+          "version": 0,
+          "provenance": [],
+          "archived": true,
+          "imported": null,
+          "createdSeq": 7,
+          "contentSeq": 7,
+          "updatedSeq": 25
+        },
+        "note-elena": {
+          "id": "note-elena",
+          "kind": "note",
+          "area": "notes",
+          "title": "Elena",
+          "parentId": "f-chars",
+          "synopsis": "",
+          "content": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Forty-one. Keeps lists. Afraid of heights but climbs anyway."
+                  }
+                ]
+              }
+            ]
+          },
+          "version": 60,
+          "provenance": [
+            {
+              "from": 1,
+              "to": 51,
+              "class": "typed",
+              "originSeq": 12
+            },
+            {
+              "from": 51,
+              "to": 61,
+              "class": "typed",
+              "originSeq": 13
+            }
+          ],
+          "archived": false,
+          "imported": null,
+          "createdSeq": 10,
+          "contentSeq": 13,
+          "updatedSeq": 13
+        },
+        "note-outline": {
+          "id": "note-outline",
+          "kind": "note",
+          "area": "notes",
+          "title": "Outline",
+          "parentId": null,
+          "synopsis": "",
+          "content": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph"
+              }
+            ]
+          },
+          "version": 0,
+          "provenance": [],
+          "archived": false,
+          "imported": null,
+          "createdSeq": 11,
+          "contentSeq": 11,
+          "updatedSeq": 11
+        }
+      },
+      "annotations": {
+        "feedbackRequests": {},
+        "agentSessions": {},
+        "comments": {},
+        "questions": {},
+        "suggestions": {},
+        "proposals": {},
+        "citationFlags": {},
+        "surfacedSources": {},
+        "sourceSuggestions": {},
+        "discussions": {}
+      },
+      "sources": {},
+      "clippings": {},
+      "pastes": {},
+      "writingSessions": [
+        {
+          "index": 0,
+          "startSeq": 12,
+          "endSeq": 14,
+          "startTime": "2026-11-02T09:00:04.400Z",
+          "endTime": "2026-11-02T09:00:20.359Z",
+          "activeMs": 11959,
+          "commits": 3,
+          "charactersInserted": 90,
+          "documentIds": [
+            "note-elena",
+            "doc-s1"
+          ]
+        }
+      ]
+    },
+    "documents": {
+      "doc-s1": {
+        "text": "She arrived on the last ferry.",
+        "words": [
+          {
+            "from": 1,
+            "to": 4,
+            "text": "She",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              14
+            ]
+          },
+          {
+            "from": 5,
+            "to": 12,
+            "text": "arrived",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              14
+            ]
+          },
+          {
+            "from": 13,
+            "to": 15,
+            "text": "on",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              14
+            ]
+          },
+          {
+            "from": 16,
+            "to": 19,
+            "text": "the",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              14
+            ]
+          },
+          {
+            "from": 20,
+            "to": 24,
+            "text": "last",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              14
+            ]
+          },
+          {
+            "from": 25,
+            "to": 30,
+            "text": "ferry",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              14
+            ]
+          }
+        ],
+        "wordsByClass": {
+          "total": 6,
+          "byClass": {
+            "typed": 6,
+            "typed-from-suggestion": 0,
+            "pasted-external": 0,
+            "pasted-internal": 0,
+            "imported": 0,
+            "quoted": 0
+          }
+        },
+        "charactersByClass": {
+          "total": 30,
+          "byClass": {
+            "typed": 30,
+            "typed-from-suggestion": 0,
+            "pasted-external": 0,
+            "pasted-internal": 0,
+            "imported": 0,
+            "quoted": 0
+          }
+        }
+      },
+      "doc-s2": {
+        "text": "",
+        "words": [],
+        "wordsByClass": {
+          "total": 0,
+          "byClass": {
+            "typed": 0,
+            "typed-from-suggestion": 0,
+            "pasted-external": 0,
+            "pasted-internal": 0,
+            "imported": 0,
+            "quoted": 0
+          }
+        },
+        "charactersByClass": {
+          "total": 0,
+          "byClass": {
+            "typed": 0,
+            "typed-from-suggestion": 0,
+            "pasted-external": 0,
+            "pasted-internal": 0,
+            "imported": 0,
+            "quoted": 0
+          }
+        }
+      },
+      "doc-s3": {
+        "text": "",
+        "words": [],
+        "wordsByClass": {
+          "total": 0,
+          "byClass": {
+            "typed": 0,
+            "typed-from-suggestion": 0,
+            "pasted-external": 0,
+            "pasted-internal": 0,
+            "imported": 0,
+            "quoted": 0
+          }
+        },
+        "charactersByClass": {
+          "total": 0,
+          "byClass": {
+            "typed": 0,
+            "typed-from-suggestion": 0,
+            "pasted-external": 0,
+            "pasted-internal": 0,
+            "imported": 0,
+            "quoted": 0
+          }
+        }
+      },
+      "note-elena": {
+        "text": "Forty-one. Keeps lists. Afraid of heights but climbs anyway.",
+        "words": [
+          {
+            "from": 1,
+            "to": 10,
+            "text": "Forty-one",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              12
+            ]
+          },
+          {
+            "from": 12,
+            "to": 17,
+            "text": "Keeps",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              12
+            ]
+          },
+          {
+            "from": 18,
+            "to": 23,
+            "text": "lists",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              12
+            ]
+          },
+          {
+            "from": 25,
+            "to": 31,
+            "text": "Afraid",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              12
+            ]
+          },
+          {
+            "from": 32,
+            "to": 34,
+            "text": "of",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              12
+            ]
+          },
+          {
+            "from": 35,
+            "to": 42,
+            "text": "heights",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              12
+            ]
+          },
+          {
+            "from": 43,
+            "to": 46,
+            "text": "but",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              12
+            ]
+          },
+          {
+            "from": 47,
+            "to": 53,
+            "text": "climbs",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              12,
+              13
+            ]
+          },
+          {
+            "from": 54,
+            "to": 60,
+            "text": "anyway",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              13
+            ]
+          }
+        ],
+        "wordsByClass": {
+          "total": 9,
+          "byClass": {
+            "typed": 9,
+            "typed-from-suggestion": 0,
+            "pasted-external": 0,
+            "pasted-internal": 0,
+            "imported": 0,
+            "quoted": 0
+          }
+        },
+        "charactersByClass": {
+          "total": 60,
+          "byClass": {
+            "typed": 60,
+            "typed-from-suggestion": 0,
+            "pasted-external": 0,
+            "pasted-internal": 0,
+            "imported": 0,
+            "quoted": 0
+          }
+        }
+      },
+      "note-outline": {
+        "text": "",
+        "words": [],
+        "wordsByClass": {
+          "total": 0,
+          "byClass": {
+            "typed": 0,
+            "typed-from-suggestion": 0,
+            "pasted-external": 0,
+            "pasted-internal": 0,
+            "imported": 0,
+            "quoted": 0
+          }
+        },
+        "charactersByClass": {
+          "total": 0,
+          "byClass": {
+            "typed": 0,
+            "typed-from-suggestion": 0,
+            "pasted-external": 0,
+            "pasted-internal": 0,
+            "imported": 0,
+            "quoted": 0
+          }
+        }
+      }
+    },
+    "projectWords": {
+      "total": 6,
+      "byClass": {
+        "typed": 6,
+        "typed-from-suggestion": 0,
+        "pasted-external": 0,
+        "pasted-internal": 0,
+        "imported": 0,
+        "quoted": 0
+      }
+    },
+    "projectCharacters": {
+      "total": 30,
+      "byClass": {
+        "typed": 30,
+        "typed-from-suggestion": 0,
+        "pasted-external": 0,
+        "pasted-internal": 0,
+        "imported": 0,
+        "quoted": 0
+      }
+    },
+    "issues": []
+  },
+  "witnesses": [
+    {
+      "projectId": "proj-1",
+      "seq": 1,
+      "hash": "798ac4e006e23756c927d96dddd7a6aa8b2a3c91f6f1e6031169aaf985012791",
+      "serverTime": "2026-11-02T09:00:00.250Z",
+      "signature": "FDCGl6Zk/lNkRk0kn+aICwydars7aCJNqhoxMFJguFqdNsxdIiWIjsyl8fDKbH4AbhnNqyesrn7STob/l/0rMA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 2,
+      "hash": "1940b5c014b3ee80b58766466a47ab5ad38ca061246493282a62f0fda1170c47",
+      "serverTime": "2026-11-02T09:00:00.650Z",
+      "signature": "02hOHTo2gszacFNPZ19bFpF7DhANMNh3A9VyrjcGLKbxo7BhkKiBdsK7ldgauFWhzdVYy0M1RnMzO6XSOUkUzg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 3,
+      "hash": "b3ff1272d2156355f0a9069609dff0dcef66bd0284e0d4a3e9bcdcd258cad256",
+      "serverTime": "2026-11-02T09:00:01.050Z",
+      "signature": "zGkTw6D40Abmw9BFxt+H8P1jhL/Zosoa9EfpUWC0cetExKMCueVbx3I4p8m6CIgsFUoqi5DjgEKREznVYkxyOA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 4,
+      "hash": "19ceb740d1467c6f217271f551e6782047b867196ebd7bbd45a4cce33aa510f4",
+      "serverTime": "2026-11-02T09:00:01.450Z",
+      "signature": "LhLr0U/EGmq2xLOHLdRI1Y23jlD3Jmn6tTcsFQw22ZuiQ64cshxiRVK8lc7kxQfdIrK2aMBFEZjvvAeUkqHwbA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 5,
+      "hash": "efbe12d6a409a9ce90c172132b8a15d9554839106d8c069a6fd7de7a4f2e2ae3",
+      "serverTime": "2026-11-02T09:00:01.850Z",
+      "signature": "PjJd2F0XkPYAmwAaH5e7zRdH77btjqDpYXVODcpTg94qkDYHxxrOo7/z6KFTlOv3Qv1RcgTNVfZ3eKg/fdPjxg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 6,
+      "hash": "438c54070a17d70cc6315aa7040f1d50fa123d21d8f38847d46b7fa607baed42",
+      "serverTime": "2026-11-02T09:00:02.250Z",
+      "signature": "q/NP5Z6DvCh/nZII1DwGQz3zNYj/QQcXANjSTXUv5fUyQl5q+Xp0f/5M5eXSx5lKx78J2dqHCz64jE4JVVZaCw==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 7,
+      "hash": "3db5a4f4595c30e55866f423db29476d745c91568c8238eef5852db4340776af",
+      "serverTime": "2026-11-02T09:00:02.650Z",
+      "signature": "BOtbZCWx7fPU4ucSHTf+xg7OPavXrqNFuswcN6PssQ6wjYYdvagXa2eCBXSWkAvVOV5ugOUcntC591WGrlNPNA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 8,
+      "hash": "89b2a0c549893673514ecf68c6e9e9885de1b97b789d432ce815cc37feb42340",
+      "serverTime": "2026-11-02T09:00:03.050Z",
+      "signature": "7vBYIdXH8TpXmIwlN0BJmoK53oFaES1e79xSxt15detxWsl+OWr4KG3g+sO/EjPD8WIMTW3va/2qVRRSzSNDng==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 9,
+      "hash": "4e44c7b8ed2e515785e84ee8e183ecad8172155c60dd662bd27f07a11dd49ca6",
+      "serverTime": "2026-11-02T09:00:03.450Z",
+      "signature": "NHC1/dY1Wpung2htcA0El8jOmuGxoSuMhBU2oEKVnH/AS5yQiw6n8sKN2avcxRh0bihSfie4IfcVfAzutNiMYA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 10,
+      "hash": "7db7a055a351d8734ab11f35af13e996c7888567708ed10e4d9fabfeebdbc819",
+      "serverTime": "2026-11-02T09:00:03.850Z",
+      "signature": "7jymEEqWse+3wzjEGZ5sJybHxLHhwjNQpewnaD1WKGmxjZhgFH7Uec4l05xtYGZbDB7w5TDYRBBP107I+OrqMg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 11,
+      "hash": "1ef1bb19fd99cd34e5a1faca864819676e3e2075fb36f51dee885b201bf54a6e",
+      "serverTime": "2026-11-02T09:00:04.250Z",
+      "signature": "y/uhEhpQhV+eqN7zxLhpoi5EYOQqQRTu5MIW0YAjRtjevLiApJ6vKdWfTApf8qfo3pt2S+mLeM/0zh6u/vpwEA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 12,
+      "hash": "bcb0f43e891e98c283d45a1ad05717babfc35d76da83c902c8e0f6f9a100efb1",
+      "serverTime": "2026-11-02T09:00:04.650Z",
+      "signature": "hhWs8x1ZtfsgM4KIyFf6H5OSjjpNT3qysFrfyVu/S/0XDfhKdpKdrGikKubrNwgSblcgVVqgQGkDO4kVKhGuww==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 13,
+      "hash": "79dc247a0f976bc9f845cb87a1f33968763aa42ac852a8680ee0de7839df81ef",
+      "serverTime": "2026-11-02T09:00:13.281Z",
+      "signature": "8gylGLE4VdUX8mQspfoHiFQpnwXs7BGXZZLTgqL7QARL75Egbmx2rU2N7zFHaMqZF2ucjPj7mv6wfZZBdzE+tw==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 14,
+      "hash": "f21b5685bce742dda53066894a6aa06f0edb2914a16619dae8c25dda5c3c37c8",
+      "serverTime": "2026-11-02T09:00:16.465Z",
+      "signature": "BmmzfX5OvCW/KWYG42BdpMpMPoqQu3ZS3O6sqqExr2yM81DhcyqAVfrbqh/GzY23iTZrNT6D53/7QKHqHB4b0g==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 15,
+      "hash": "cb4ac4e47cc086f91090d11473f6d6a0296a913f1e3ab9abe0d34c2a8c562724",
+      "serverTime": "2026-11-02T09:00:22.609Z",
+      "signature": "POcJO1/NMmO9HUpIngtESBKGCAC1BtQKdgLwbqRcRimCt3nFbz5+5Y8Niw97blUNpk39LC1QIW2KX0ESu4RDsA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 16,
+      "hash": "35bc810b3df9cdb5f3f5c56f4f90395c0dceddf70157e0e6b1274b3e2430b650",
+      "serverTime": "2026-11-02T09:00:23.009Z",
+      "signature": "xC1sAHMIuPj9anpfNzGluSP0Gt4jBuivaF/Uq0kjbI0MW6hrzaYcDjJzMxjzGCICB+Yl8R8FXaviULzNhwIRew==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 17,
+      "hash": "3dd0ef6b15423016e7e860d51d4c9b1c345207c9b8e847f40d12e3f25ffb3146",
+      "serverTime": "2026-11-02T09:00:23.409Z",
+      "signature": "Cwy9agGVSmcq4a02RrupfXPQBTEuePGDAnLf2ilakR9IoENU7Jw5q4JTSPfzC8vUkzrBtlzH2SGm8Av75uc6iw==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 18,
+      "hash": "dc2b6dff49866a3314503d8488f85c46ed452d7b44a80a0432190cd14bee9ac3",
+      "serverTime": "2026-11-02T09:00:23.809Z",
+      "signature": "oVAficCnN7W3noke3S6oivuFyy2jwx6y8k2wBN5f3DlLVPGteKVJsfFHz1xWRV99vQmnnY16E7eRC+aF4aG6lw==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 19,
+      "hash": "6c1940308d7e85e1ab3c4859914794a3595288bd9ad675b48c43a6af3cdb1fb4",
+      "serverTime": "2026-11-02T09:00:24.209Z",
+      "signature": "cAEiICih0OEh5tOgwhj8+I0CYaTRG2LeacUGI6G7tompQOoA7LYWiRvdn7DVFDjK1HuLvxhVq59L7cOb1FzWNA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 20,
+      "hash": "64d71afc623e592f84b12ac21df2cb82c7f1549a3198d022ab661f5edf4a35ea",
+      "serverTime": "2026-11-02T09:00:24.609Z",
+      "signature": "bNSeAAgBnfnppcHsgYWgGkPe32QeB5Y6iKkoxnkLNigpiZwCFlGRmLmjR421wYg8zzoc2gtcBT2U41PH5/H6YA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 21,
+      "hash": "a45280142f1de658d3601dd6079fba89ffc3b23192afbf2d80e6ab008d2c945c",
+      "serverTime": "2026-11-02T09:00:25.009Z",
+      "signature": "XPFxRweDCJ/bnpCWRJY+83k8lo4rWPpr25YDswd58U0cZ53mFrkYiYscg3OcCgNJLRQ8V8gNqdInjQiUsMrqIg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 22,
+      "hash": "8a56689ff0363559ed4c346e0ddfab4a43ef712b393e9aabeff3b5a857398e2f",
+      "serverTime": "2026-11-02T09:00:25.409Z",
+      "signature": "DKGVaNhCEqVs/YfzFQbDLJvcAbeRVN0CocyKkDS32Gj4K4a9tFXLPOCP9nJSSbkbjDYqj4U7MP20AOmHI60Nvg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 23,
+      "hash": "198a4646ae9473153acadec2574ebc4ef5f140ba7d366fac6ef6fad5cbb42cdd",
+      "serverTime": "2026-11-02T09:00:25.809Z",
+      "signature": "yVScrj9OtOjJRKI5+NZ+5Dg6WrspkEHRUdUbZrtx/5zJcC7+gGeKhs1yx6TAokeo3t91mytguHmYroa8GGxX8w==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 24,
+      "hash": "847b24fb98e7f413e020668a1b50c3130d80e20b2ba791f6d989c3cfd18982ac",
+      "serverTime": "2026-11-02T09:00:26.209Z",
+      "signature": "JBT3z8MwWIF9xXx299zhJfQd6bFjscYHnS0LvMjhgynkFPGQ2HrTrETg1WrCRewxHYh0TIEFRKKHDYu596BgJw==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 25,
+      "hash": "8af833cb09cc8d29fdafbb96789e4700668cfb4ac03bfe383f26b6465af055b2",
+      "serverTime": "2026-11-02T09:00:26.609Z",
+      "signature": "wBJSYlSIaWuf9Vf+XpTfXWK6sawJ3hF4bsItttA2YvefBj3nolT2Q6zLXPrJ+UVhOlX64zihkKpQWq5t8o4AfA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 26,
+      "hash": "d7d216abd4ee88b36d865f0cb20f1308ad6ddaf6a3308b146e1da9abaaf373e0",
+      "serverTime": "2026-11-02T09:00:27.009Z",
+      "signature": "lhdPpK68tffjWu8HDQve6Ed4QfsBzku12R1Mxb2Ho2ZJM7CML3ZndbL9LI01PEbVNZc7FIHSWZo61LebgBMIFg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 27,
+      "hash": "96bbc7c5a639ae162895f2b9bc6594706faeb37677c76b3b5100c322f02fa8c0",
+      "serverTime": "2026-11-02T09:00:27.409Z",
+      "signature": "u8tEyLkgxGR3FUpN3KxnvIx8qbIFJJBqhBxGQCMEKzZUae9x9FYKA+RIrAgJshdoTJEtG1/nqjpo5fmWleUAVg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    }
+  ],
+  "publicKeyPem": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEoInrdRkLs5lWE+qtD8cpCVp0gkEn\n0tllAdSMj9iVyF0MaAHny/cdaByyk3aWbk6dqMaXuaekIuWmvEJCsgbJBg==\n-----END PUBLIC KEY-----\n",
+  "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+}

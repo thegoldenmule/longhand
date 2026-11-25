@@ -1,0 +1,3673 @@
+{
+  "name": "research",
+  "description": "Sources, clippings, citation-needed flags (one becomes cited), AI-surfaced sources with a verified candidate added, a source suggestion, a clipping placed as a quote block, a mismatching clipping run downgraded.",
+  "covers": [
+    "sources",
+    "clippings",
+    "citation",
+    "quoted",
+    "citation-flag",
+    "cited",
+    "surfaced-sources",
+    "source-suggestion",
+    "quote-block"
+  ],
+  "commits": [
+    {
+      "commitId": "c-0001",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 1,
+      "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "4db01946a73f4ec839f500fe1bc1f8a8ad950b57e1af68be4f54d63748235ff7",
+      "clientTime": "2026-11-02T09:00:00.000Z",
+      "serverTime": "2026-11-02T09:00:00.250Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "ProjectCreated",
+      "payload": {
+        "title": "The Wet Valley"
+      }
+    },
+    {
+      "commitId": "c-0002",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 2,
+      "prevHash": "4db01946a73f4ec839f500fe1bc1f8a8ad950b57e1af68be4f54d63748235ff7",
+      "hash": "05448ff75e759815f033e9356f94b6c8d9b5961267f5e631a51fee9ee59548e8",
+      "clientTime": "2026-11-02T09:00:00.400Z",
+      "serverTime": "2026-11-02T09:00:00.650Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "DocumentCreated",
+      "payload": {
+        "documentId": "doc-r",
+        "kind": "manuscript",
+        "title": "Essay",
+        "parentId": null,
+        "index": 0
+      }
+    },
+    {
+      "commitId": "c-0003",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 3,
+      "prevHash": "05448ff75e759815f033e9356f94b6c8d9b5961267f5e631a51fee9ee59548e8",
+      "hash": "aa9c253afb873f1f4e72703cf34b5124a69c050ae154d27f88169772756c52c5",
+      "clientTime": "2026-11-02T09:00:00.800Z",
+      "serverTime": "2026-11-02T09:00:01.050Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-r",
+        "baseVersion": 0,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 1,
+            "to": 1,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "R"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 2,
+            "to": 2,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 3,
+            "to": 3,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 4,
+            "to": 4,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 5,
+            "to": 5,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "f"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 6,
+            "to": 6,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 7,
+            "to": 7,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 8,
+            "to": 8,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 9,
+            "to": 9,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 10,
+            "to": 10,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 11,
+            "to": 11,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 12,
+            "to": 12,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 13,
+            "to": 13,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 14,
+            "to": 14,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 15,
+            "to": 15,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 16,
+            "to": 16,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 17,
+            "to": 17,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "v"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 18,
+            "to": 18,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 19,
+            "to": 19,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 20,
+            "to": 20,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 21,
+            "to": 21,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 22,
+            "to": 22,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "y"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 23,
+            "to": 23,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 24,
+            "to": 24,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 25,
+            "to": 25,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 26,
+            "to": 26,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "u"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 27,
+            "to": 27,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "b"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 28,
+            "to": 28,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 29,
+            "to": 29,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 30,
+            "to": 30,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 31,
+            "to": 31,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 32,
+            "to": 32,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "b"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 33,
+            "to": 33,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 34,
+            "to": 34,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 35,
+            "to": 35,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "w"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 36,
+            "to": 36,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 37,
+            "to": 37,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 38,
+            "to": 38,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 39,
+            "to": 39,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 40,
+            "to": 40,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "1"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 41,
+            "to": 41,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "9"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 42,
+            "to": 42,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "5"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 43,
+            "to": 43,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "0"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 44,
+            "to": 44,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 45,
+            "to": 45,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 46,
+            "to": 46,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 47,
+            "to": 47,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 48,
+            "to": 48,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 49,
+            "to": 49,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "2"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 50,
+            "to": 50,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "0"
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 50,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 99,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 189,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 389,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 598,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 794,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 992,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1200,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1404,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1520,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1675,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1853,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2056,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2163,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2370,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2512,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2706,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2864,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2936,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3076,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3281,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3378,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3522,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3678,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3857,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3993,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4066,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4185,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4266,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4473,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4682,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4861,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4990,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5095,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5264,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5473,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5620,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5744,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5933,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6134,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6237,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6324,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6467,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6549,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6725,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6881,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 7046,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 7116,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 7276,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 7444,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 50,
+        "durationMs": 7444
+      }
+    },
+    {
+      "commitId": "c-0004",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 4,
+      "prevHash": "aa9c253afb873f1f4e72703cf34b5124a69c050ae154d27f88169772756c52c5",
+      "hash": "95037daab2c621754ef2ecd1869b028bb9e1a6f0d7cb3b80eeafe7905dd1a0f3",
+      "clientTime": "2026-11-02T09:00:10.244Z",
+      "serverTime": "2026-11-02T09:00:10.494Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-r",
+        "baseVersion": 50,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 51,
+            "to": 51,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "0"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 52,
+            "to": 52,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "0"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 53,
+            "to": 53,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 54,
+            "to": 54,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 55,
+            "to": 55,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "F"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 56,
+            "to": 56,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 57,
+            "to": 57,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 58,
+            "to": 58,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "m"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 59,
+            "to": 59,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 60,
+            "to": 60,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 61,
+            "to": 61,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 62,
+            "to": 62,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 63,
+            "to": 63,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 64,
+            "to": 64,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 65,
+            "to": 65,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 66,
+            "to": 66,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "p"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 67,
+            "to": 67,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 68,
+            "to": 68,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 69,
+            "to": 69,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 70,
+            "to": 70,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 71,
+            "to": 71,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 72,
+            "to": 72,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 73,
+            "to": 73,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 74,
+            "to": 74,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "w"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 75,
+            "to": 75,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 76,
+            "to": 76,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "y"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 77,
+            "to": 77,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": ","
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 78,
+            "to": 78,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 79,
+            "to": 79,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 80,
+            "to": 80,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 81,
+            "to": 81,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 82,
+            "to": 82,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 83,
+            "to": 83,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 84,
+            "to": 84,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 85,
+            "to": 85,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "m"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 86,
+            "to": 86,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 87,
+            "to": 87,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 88,
+            "to": 88,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 89,
+            "to": 89,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 90,
+            "to": 90,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "v"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 91,
+            "to": 91,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 92,
+            "to": 92,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 93,
+            "to": 93,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 94,
+            "to": 94,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 95,
+            "to": 95,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 96,
+            "to": 96,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 97,
+            "to": 97,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 47,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 106,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 194,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 402,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 597,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 749,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 819,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 943,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1057,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1232,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1308,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1487,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1668,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1860,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1975,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2115,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2265,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2356,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2548,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2688,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2878,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3056,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3168,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3350,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3441,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3594,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3723,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3852,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3940,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4046,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4173,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4321,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4404,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4546,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4682,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4810,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4911,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5047,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5136,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5232,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5320,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5528,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5725,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5907,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6077,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6234,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6349,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 47,
+        "durationMs": 6349
+      }
+    },
+    {
+      "commitId": "c-0005",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 5,
+      "prevHash": "95037daab2c621754ef2ecd1869b028bb9e1a6f0d7cb3b80eeafe7905dd1a0f3",
+      "hash": "285ddaa56be15879f3998f91a6a662726a3ed0bb882d3fb69381c2c066a342d8",
+      "clientTime": "2026-11-02T09:00:18.593Z",
+      "serverTime": "2026-11-02T09:00:18.843Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "SourceAdded",
+      "payload": {
+        "sourceId": "src-okafor",
+        "csl": {
+          "id": "src-okafor",
+          "type": "article-journal",
+          "title": "Rainfall Records of the Upper Valley, 1900–2010",
+          "container-title": "Journal of Regional Climate",
+          "author": [
+            {
+              "family": "Okafor",
+              "given": "Nnamdi"
+            }
+          ],
+          "issued": {
+            "date-parts": [
+              [
+                2014
+              ]
+            ]
+          },
+          "volume": 12,
+          "page": "101-129",
+          "DOI": "10.1000/jrc.2014.012"
+        },
+        "origin": {
+          "kind": "doi",
+          "value": "10.1000/jrc.2014.012"
+        },
+        "fromSurfacedId": null,
+        "candidateIndex": null
+      }
+    },
+    {
+      "commitId": "c-0006",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 6,
+      "prevHash": "285ddaa56be15879f3998f91a6a662726a3ed0bb882d3fb69381c2c066a342d8",
+      "hash": "3ced8b766ae58f0c4797691e0be6a82a65273ab968e0d52d6683919dcf88fa2c",
+      "clientTime": "2026-11-02T09:00:18.993Z",
+      "serverTime": "2026-11-02T09:00:19.243Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "ClippingSaved",
+      "payload": {
+        "clippingId": "clip-1",
+        "sourceId": "src-okafor",
+        "text": "Annual totals rose from 610 mm to 1,240 mm.\nThe change was steady rather than sudden.",
+        "locator": "p. 114",
+        "note": null
+      }
+    },
+    {
+      "commitId": "c-0007",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 7,
+      "prevHash": "3ced8b766ae58f0c4797691e0be6a82a65273ab968e0d52d6683919dcf88fa2c",
+      "hash": "278f83c773533ebaa3b5bc740f7416ace90cbcdef4ce3e626ebe7c032f2baa06",
+      "clientTime": "2026-11-02T09:00:19.393Z",
+      "serverTime": "2026-11-02T09:00:19.643Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "ClippingSaved",
+      "payload": {
+        "clippingId": "clip-2",
+        "sourceId": "src-okafor",
+        "text": "No single year accounts for the trend.",
+        "locator": "p. 117",
+        "note": null
+      }
+    },
+    {
+      "commitId": "c-0008",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 8,
+      "prevHash": "278f83c773533ebaa3b5bc740f7416ace90cbcdef4ce3e626ebe7c032f2baa06",
+      "hash": "9e03ce98671a7268a6df4959fa7fb1488d97a2064a514f4c68a2dc53a853d308",
+      "clientTime": "2026-11-02T09:00:19.793Z",
+      "serverTime": "2026-11-02T09:00:20.043Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "FeedbackRequested",
+      "payload": {
+        "requestId": "req-r",
+        "scope": {
+          "kind": "document",
+          "documentId": "doc-r"
+        },
+        "lenses": [
+          "claims-citations"
+        ],
+        "intensity": "standard",
+        "ask": null
+      }
+    },
+    {
+      "commitId": "c-0009",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 9,
+      "prevHash": "9e03ce98671a7268a6df4959fa7fb1488d97a2064a514f4c68a2dc53a853d308",
+      "hash": "a940228e4be7b695701aa377fcdb49863790e23516700b76fcb568cf4ee00f16",
+      "clientTime": "2026-11-02T09:00:21.693Z",
+      "serverTime": "2026-11-02T09:00:21.743Z",
+      "actor": {
+        "kind": "agent",
+        "id": "opus"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-r",
+      "schemaVersion": 1,
+      "type": "FeedbackSessionStarted",
+      "payload": {
+        "feedbackSessionId": "fs-r",
+        "trigger": {
+          "kind": "feedback",
+          "requestId": "req-r"
+        },
+        "model": "opus"
+      }
+    },
+    {
+      "commitId": "c-0010",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 10,
+      "prevHash": "a940228e4be7b695701aa377fcdb49863790e23516700b76fcb568cf4ee00f16",
+      "hash": "fed6201ba0e23a096764675ad3c1446e762444f02eb8a712ee55f0e1065f62bb",
+      "clientTime": "2026-11-02T09:00:23.193Z",
+      "serverTime": "2026-11-02T09:00:23.243Z",
+      "actor": {
+        "kind": "agent",
+        "id": "opus"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-r",
+      "schemaVersion": 1,
+      "type": "CitationNeededFlagged",
+      "payload": {
+        "flagId": "flag-1",
+        "feedbackSessionId": "fs-r",
+        "target": {
+          "anchor": {
+            "documentId": "doc-r",
+            "sentenceId": "p1.s1",
+            "quote": "Rainfall in the valley doubled between 1950 and 2000",
+            "occurrence": 0
+          },
+          "from": 1,
+          "to": 53,
+          "readVersion": 97,
+          "version": 97
+        },
+        "claim": "Valley rainfall doubled from 1950 to 2000."
+      }
+    },
+    {
+      "commitId": "c-0011",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 11,
+      "prevHash": "fed6201ba0e23a096764675ad3c1446e762444f02eb8a712ee55f0e1065f62bb",
+      "hash": "d363b0cc2c850d6553a5081688554de4a8abb8345478683ec9c96ced560a763e",
+      "clientTime": "2026-11-02T09:00:24.693Z",
+      "serverTime": "2026-11-02T09:00:24.743Z",
+      "actor": {
+        "kind": "agent",
+        "id": "opus"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-r",
+      "schemaVersion": 1,
+      "type": "CitationNeededFlagged",
+      "payload": {
+        "flagId": "flag-2",
+        "feedbackSessionId": "fs-r",
+        "target": {
+          "anchor": {
+            "documentId": "doc-r",
+            "sentenceId": "p1.s2",
+            "quote": "some never did",
+            "occurrence": 0
+          },
+          "from": 83,
+          "to": 97,
+          "readVersion": 97,
+          "version": 97
+        },
+        "claim": "Some farmers never adapted."
+      }
+    },
+    {
+      "commitId": "c-0012",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 12,
+      "prevHash": "d363b0cc2c850d6553a5081688554de4a8abb8345478683ec9c96ced560a763e",
+      "hash": "a8df57e7df7dd600822072ed96d33e0cc6a39a6f08636a4fe31ae6925c884995",
+      "clientTime": "2026-11-02T09:00:26.193Z",
+      "serverTime": "2026-11-02T09:00:26.243Z",
+      "actor": {
+        "kind": "agent",
+        "id": "opus"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-r",
+      "schemaVersion": 1,
+      "type": "SourceSurfaced",
+      "payload": {
+        "surfacedId": "surf-1",
+        "feedbackSessionId": "fs-r",
+        "query": "farmers adaptation flood plain",
+        "target": {
+          "anchor": {
+            "documentId": "doc-r",
+            "sentenceId": "p1.s2",
+            "quote": "some never did",
+            "occurrence": 0
+          },
+          "from": 83,
+          "to": 97,
+          "readVersion": 97,
+          "version": 97
+        },
+        "candidates": [
+          {
+            "csl": {
+              "id": "cand-1",
+              "type": "book",
+              "title": "Farming the Flood Plain",
+              "author": [
+                {
+                  "family": "Lindqvist",
+                  "given": "Maja"
+                }
+              ],
+              "issued": {
+                "date-parts": [
+                  [
+                    2009
+                  ]
+                ]
+              },
+              "publisher": "Northfield Press",
+              "ISBN": "9780000000017"
+            },
+            "provider": "openlibrary",
+            "url": "https://openlibrary.org/isbn/9780000000017"
+          },
+          {
+            "csl": {
+              "id": "cand-2",
+              "type": "webpage",
+              "title": "Flood farming forum thread"
+            },
+            "provider": "web",
+            "url": "https://example.org/thread"
+          }
+        ]
+      }
+    },
+    {
+      "commitId": "c-0013",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 13,
+      "prevHash": "a8df57e7df7dd600822072ed96d33e0cc6a39a6f08636a4fe31ae6925c884995",
+      "hash": "bfe8fc9c9feff88089df5198ed41512e17daba8e6219af4adc789a34d2046e18",
+      "clientTime": "2026-11-02T09:00:27.693Z",
+      "serverTime": "2026-11-02T09:00:27.743Z",
+      "actor": {
+        "kind": "agent",
+        "id": "opus"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-r",
+      "schemaVersion": 1,
+      "type": "SourceSuggested",
+      "payload": {
+        "sourceSuggestionId": "ss-1",
+        "feedbackSessionId": "fs-r",
+        "target": {
+          "anchor": {
+            "documentId": "doc-r",
+            "sentenceId": "p1.s1",
+            "quote": "doubled",
+            "occurrence": 0
+          },
+          "from": 24,
+          "to": 31,
+          "readVersion": 97,
+          "version": 97
+        },
+        "sourceId": "src-okafor",
+        "rationale": "Table 3 gives the annual totals."
+      }
+    },
+    {
+      "commitId": "c-0014",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 14,
+      "prevHash": "bfe8fc9c9feff88089df5198ed41512e17daba8e6219af4adc789a34d2046e18",
+      "hash": "af9f2ca6c940d58075692f9229e1cb9d32cb6a5ba617a6c8ab6de3f68497606c",
+      "clientTime": "2026-11-02T09:00:29.193Z",
+      "serverTime": "2026-11-02T09:00:29.243Z",
+      "actor": {
+        "kind": "agent",
+        "id": "opus"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-r",
+      "schemaVersion": 1,
+      "type": "ReviewFinished",
+      "payload": {
+        "feedbackSessionId": "fs-r",
+        "summary": "Two claims need support.",
+        "strengths": [],
+        "topPriorities": [
+          "Cite the rainfall figure"
+        ]
+      }
+    },
+    {
+      "commitId": "c-0015",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 15,
+      "prevHash": "af9f2ca6c940d58075692f9229e1cb9d32cb6a5ba617a6c8ab6de3f68497606c",
+      "hash": "95a878ff29af102d2ad5e0001c1638325c73adeb5e0f62f43cc579541024670d",
+      "clientTime": "2026-11-02T09:00:29.193Z",
+      "serverTime": "2026-11-02T09:00:29.443Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "SourceAdded",
+      "payload": {
+        "sourceId": "src-lindqvist",
+        "csl": {
+          "id": "src-lindqvist",
+          "type": "book",
+          "title": "Farming the Flood Plain",
+          "author": [
+            {
+              "family": "Lindqvist",
+              "given": "Maja"
+            }
+          ],
+          "issued": {
+            "date-parts": [
+              [
+                2009
+              ]
+            ]
+          },
+          "publisher": "Northfield Press",
+          "ISBN": "9780000000017"
+        },
+        "origin": {
+          "kind": "surfaced",
+          "value": "9780000000017"
+        },
+        "fromSurfacedId": "surf-1",
+        "candidateIndex": 0
+      }
+    },
+    {
+      "commitId": "c-0016",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 16,
+      "prevHash": "95a878ff29af102d2ad5e0001c1638325c73adeb5e0f62f43cc579541024670d",
+      "hash": "057c6a1ee783df1c9eb3f7eb507fa0ac53301a7e0720f187dff660d3aeb50802",
+      "clientTime": "2026-11-02T09:00:29.593Z",
+      "serverTime": "2026-11-02T09:00:29.843Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "SourceUpdated",
+      "payload": {
+        "sourceId": "src-lindqvist",
+        "note": "Library copy, chapter 4."
+      }
+    },
+    {
+      "commitId": "c-0018",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 17,
+      "prevHash": "057c6a1ee783df1c9eb3f7eb507fa0ac53301a7e0720f187dff660d3aeb50802",
+      "hash": "8c750c687547ebf7240efc02f6a86a60ecc65e17507dd101ad1f0cb2e699b4e2",
+      "clientTime": "2026-11-02T09:00:29.993Z",
+      "serverTime": "2026-11-02T09:00:30.243Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "CitationInserted",
+      "payload": {
+        "citationId": "cite-0017",
+        "documentId": "doc-r",
+        "sourceId": "src-okafor",
+        "locator": "p. 114"
+      }
+    },
+    {
+      "commitId": "c-0019",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 18,
+      "prevHash": "8c750c687547ebf7240efc02f6a86a60ecc65e17507dd101ad1f0cb2e699b4e2",
+      "hash": "232d382b4d0a8d36307268a95982303ef59008d6660fea2063857d38fb07e6ba",
+      "clientTime": "2026-11-02T09:00:30.393Z",
+      "serverTime": "2026-11-02T09:00:30.643Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-r",
+        "baseVersion": 97,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 53,
+            "to": 53,
+            "slice": {
+              "content": [
+                {
+                  "type": "citation",
+                  "attrs": {
+                    "sourceId": "src-okafor",
+                    "locator": "p. 114"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 1,
+            "method": "citation",
+            "citationId": "cite-0017"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 0
+          }
+        ],
+        "characters": 0,
+        "durationMs": 0
+      }
+    },
+    {
+      "commitId": "c-0020",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 19,
+      "prevHash": "232d382b4d0a8d36307268a95982303ef59008d6660fea2063857d38fb07e6ba",
+      "hash": "859e2ba64d9207fa34efd3ebb6f6c30b6a305575abd2d01a2d6be376a4ceb6fa",
+      "clientTime": "2026-11-02T09:00:32.393Z",
+      "serverTime": "2026-11-02T09:00:32.643Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-r",
+        "baseVersion": 98,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 100,
+            "to": 100,
+            "slice": {
+              "content": [
+                {
+                  "type": "quote_block",
+                  "attrs": {
+                    "sourceId": "src-okafor",
+                    "clippingId": "clip-1",
+                    "locator": "p. 114"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Annual totals rose from 610 mm to 1,240 mm."
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "The change was steady rather than sudden."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 1,
+            "method": "clipping",
+            "clippingId": "clip-1"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "paste",
+            "len": 85
+          }
+        ],
+        "characters": 85,
+        "durationMs": 0
+      }
+    },
+    {
+      "commitId": "c-0021",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 20,
+      "prevHash": "859e2ba64d9207fa34efd3ebb6f6c30b6a305575abd2d01a2d6be376a4ceb6fa",
+      "hash": "ef70e2b5fe09088376bf7efe0995dd8535a759ded708c2e51c2c99e210b68b99",
+      "clientTime": "2026-11-02T09:00:34.393Z",
+      "serverTime": "2026-11-02T09:00:34.643Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-r",
+        "baseVersion": 99,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 190,
+            "to": 190,
+            "slice": {
+              "content": [
+                {
+                  "type": "quote_block",
+                  "attrs": {
+                    "sourceId": "src-okafor",
+                    "clippingId": "clip-2",
+                    "locator": "p. 117"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "No single year accounts for it."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 1,
+            "method": "clipping",
+            "clippingId": "clip-2"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "paste",
+            "len": 31
+          }
+        ],
+        "characters": 31,
+        "durationMs": 0
+      }
+    },
+    {
+      "commitId": "c-0022",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 21,
+      "prevHash": "ef70e2b5fe09088376bf7efe0995dd8535a759ded708c2e51c2c99e210b68b99",
+      "hash": "5610b7c030668df94078b1c888404fda1ca9cc1d29780fae3866d1a76d4db669",
+      "clientTime": "2026-11-02T09:00:36.393Z",
+      "serverTime": "2026-11-02T09:00:36.643Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "SuggestionDismissed",
+      "payload": {
+        "targetId": "ss-1",
+        "reason": "later",
+        "note": null
+      }
+    },
+    {
+      "commitId": "c-0023",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 22,
+      "prevHash": "5610b7c030668df94078b1c888404fda1ca9cc1d29780fae3866d1a76d4db669",
+      "hash": "20b54bb9b50f5f87cb79255c5bca0e8ab11acabd63c07e81a84cd8f92e2a8b4d",
+      "clientTime": "2026-11-02T09:00:36.793Z",
+      "serverTime": "2026-11-02T09:00:37.043Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "ClippingRemoved",
+      "payload": {
+        "clippingId": "clip-2"
+      }
+    }
+  ],
+  "expected": {
+    "headSeq": 22,
+    "headHash": "20b54bb9b50f5f87cb79255c5bca0e8ab11acabd63c07e81a84cd8f92e2a8b4d",
+    "state": {
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "headSeq": 22,
+      "headHash": "20b54bb9b50f5f87cb79255c5bca0e8ab11acabd63c07e81a84cd8f92e2a8b4d",
+      "settings": {
+        "genre": "",
+        "audience": "",
+        "goals": "",
+        "styleNotes": "",
+        "dailyWordGoal": null,
+        "citationStyle": "apa",
+        "title": "The Wet Valley"
+      },
+      "createdSeq": 1,
+      "binder": {
+        "manuscript": [
+          {
+            "kind": "document",
+            "id": "doc-r"
+          }
+        ],
+        "notes": []
+      },
+      "folders": {},
+      "documents": {
+        "doc-r": {
+          "id": "doc-r",
+          "kind": "manuscript",
+          "area": "manuscript",
+          "title": "Essay",
+          "parentId": null,
+          "synopsis": "",
+          "content": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Rainfall in the valley doubled between 1950 and 2000"
+                  },
+                  {
+                    "type": "citation",
+                    "attrs": {
+                      "sourceId": "src-okafor",
+                      "locator": "p. 114"
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "text": ". Farmers adapted slowly, and some never did."
+                  }
+                ]
+              },
+              {
+                "type": "quote_block",
+                "attrs": {
+                  "sourceId": "src-okafor",
+                  "clippingId": "clip-1",
+                  "locator": "p. 114"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Annual totals rose from 610 mm to 1,240 mm."
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "The change was steady rather than sudden."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "quote_block",
+                "attrs": {
+                  "sourceId": "src-okafor",
+                  "clippingId": "clip-2",
+                  "locator": "p. 117"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "No single year accounts for it."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "version": 100,
+          "provenance": [
+            {
+              "from": 1,
+              "to": 51,
+              "class": "typed",
+              "originSeq": 3
+            },
+            {
+              "from": 51,
+              "to": 53,
+              "class": "typed",
+              "originSeq": 4
+            },
+            {
+              "from": 53,
+              "to": 54,
+              "class": "quoted",
+              "originSeq": 18
+            },
+            {
+              "from": 54,
+              "to": 99,
+              "class": "typed",
+              "originSeq": 4
+            },
+            {
+              "from": 102,
+              "to": 145,
+              "class": "quoted",
+              "originSeq": 19
+            },
+            {
+              "from": 147,
+              "to": 188,
+              "class": "quoted",
+              "originSeq": 19
+            },
+            {
+              "from": 192,
+              "to": 223,
+              "class": "pasted-external",
+              "originSeq": 20
+            }
+          ],
+          "archived": false,
+          "imported": null,
+          "createdSeq": 2,
+          "contentSeq": 20,
+          "updatedSeq": 20
+        }
+      },
+      "annotations": {
+        "feedbackRequests": {
+          "req-r": {
+            "id": "req-r",
+            "seq": 8,
+            "createdAt": "2026-11-02T09:00:20.043Z",
+            "scope": {
+              "kind": "document",
+              "documentId": "doc-r"
+            },
+            "lenses": [
+              "claims-citations"
+            ],
+            "intensity": "standard",
+            "ask": null,
+            "status": "finished",
+            "feedbackSessionId": "fs-r"
+          }
+        },
+        "agentSessions": {
+          "fs-r": {
+            "id": "fs-r",
+            "kind": "review",
+            "requestId": "req-r",
+            "threadId": null,
+            "model": "opus",
+            "startedSeq": 9,
+            "startedAt": "2026-11-02T09:00:21.743Z",
+            "endedSeq": 14,
+            "status": "finished",
+            "failureReason": null,
+            "review": {
+              "summary": "Two claims need support.",
+              "strengths": [],
+              "topPriorities": [
+                "Cite the rainfall figure"
+              ]
+            },
+            "counts": {
+              "items": 4,
+              "suggestions": 0,
+              "insertions": 0,
+              "proposals": 0,
+              "questions": 0,
+              "searches": 1
+            },
+            "annotationIds": [
+              "flag-1",
+              "flag-2",
+              "surf-1",
+              "ss-1"
+            ]
+          }
+        },
+        "comments": {},
+        "questions": {},
+        "suggestions": {},
+        "proposals": {},
+        "citationFlags": {
+          "flag-1": {
+            "id": "flag-1",
+            "feedbackSessionId": "fs-r",
+            "seq": 10,
+            "createdAt": "2026-11-02T09:00:23.243Z",
+            "target": {
+              "kind": "anchor",
+              "anchor": {
+                "documentId": "doc-r",
+                "sentenceId": "p1.s1",
+                "quote": "Rainfall in the valley doubled between 1950 and 2000",
+                "occurrence": 0
+              },
+              "from": 1,
+              "to": 53,
+              "readVersion": 97,
+              "version": 97
+            },
+            "range": {
+              "documentId": "doc-r",
+              "from": 1,
+              "to": 53
+            },
+            "claim": "Valley rainfall doubled from 1950 to 2000.",
+            "status": "cited",
+            "dismissal": null
+          },
+          "flag-2": {
+            "id": "flag-2",
+            "feedbackSessionId": "fs-r",
+            "seq": 11,
+            "createdAt": "2026-11-02T09:00:24.743Z",
+            "target": {
+              "kind": "anchor",
+              "anchor": {
+                "documentId": "doc-r",
+                "sentenceId": "p1.s2",
+                "quote": "some never did",
+                "occurrence": 0
+              },
+              "from": 83,
+              "to": 97,
+              "readVersion": 97,
+              "version": 97
+            },
+            "range": {
+              "documentId": "doc-r",
+              "from": 84,
+              "to": 98
+            },
+            "claim": "Some farmers never adapted.",
+            "status": "open",
+            "dismissal": null
+          }
+        },
+        "surfacedSources": {
+          "surf-1": {
+            "id": "surf-1",
+            "feedbackSessionId": "fs-r",
+            "seq": 12,
+            "createdAt": "2026-11-02T09:00:26.243Z",
+            "query": "farmers adaptation flood plain",
+            "target": {
+              "kind": "anchor",
+              "anchor": {
+                "documentId": "doc-r",
+                "sentenceId": "p1.s2",
+                "quote": "some never did",
+                "occurrence": 0
+              },
+              "from": 83,
+              "to": 97,
+              "readVersion": 97,
+              "version": 97
+            },
+            "range": {
+              "documentId": "doc-r",
+              "from": 84,
+              "to": 98
+            },
+            "candidates": [
+              {
+                "csl": {
+                  "id": "cand-1",
+                  "type": "book",
+                  "title": "Farming the Flood Plain",
+                  "author": [
+                    {
+                      "family": "Lindqvist",
+                      "given": "Maja"
+                    }
+                  ],
+                  "issued": {
+                    "date-parts": [
+                      [
+                        2009
+                      ]
+                    ]
+                  },
+                  "publisher": "Northfield Press",
+                  "ISBN": "9780000000017"
+                },
+                "provider": "openlibrary",
+                "url": "https://openlibrary.org/isbn/9780000000017"
+              },
+              {
+                "csl": {
+                  "id": "cand-2",
+                  "type": "webpage",
+                  "title": "Flood farming forum thread"
+                },
+                "provider": "web",
+                "url": "https://example.org/thread"
+              }
+            ],
+            "accepted": [
+              {
+                "candidateIndex": 0,
+                "sourceId": "src-lindqvist"
+              }
+            ],
+            "status": "open",
+            "dismissal": null
+          }
+        },
+        "sourceSuggestions": {
+          "ss-1": {
+            "id": "ss-1",
+            "feedbackSessionId": "fs-r",
+            "seq": 13,
+            "createdAt": "2026-11-02T09:00:27.743Z",
+            "target": {
+              "kind": "anchor",
+              "anchor": {
+                "documentId": "doc-r",
+                "sentenceId": "p1.s1",
+                "quote": "doubled",
+                "occurrence": 0
+              },
+              "from": 24,
+              "to": 31,
+              "readVersion": 97,
+              "version": 97
+            },
+            "range": {
+              "documentId": "doc-r",
+              "from": 24,
+              "to": 31
+            },
+            "sourceId": "src-okafor",
+            "rationale": "Table 3 gives the annual totals.",
+            "status": "dismissed",
+            "dismissal": {
+              "seq": 21,
+              "reason": "later",
+              "note": null
+            }
+          }
+        },
+        "discussions": {}
+      },
+      "sources": {
+        "src-okafor": {
+          "id": "src-okafor",
+          "csl": {
+            "id": "src-okafor",
+            "type": "article-journal",
+            "title": "Rainfall Records of the Upper Valley, 1900–2010",
+            "container-title": "Journal of Regional Climate",
+            "author": [
+              {
+                "family": "Okafor",
+                "given": "Nnamdi"
+              }
+            ],
+            "issued": {
+              "date-parts": [
+                [
+                  2014
+                ]
+              ]
+            },
+            "volume": 12,
+            "page": "101-129",
+            "DOI": "10.1000/jrc.2014.012"
+          },
+          "origin": {
+            "kind": "doi",
+            "value": "10.1000/jrc.2014.012"
+          },
+          "fromSurfacedId": null,
+          "candidateIndex": null,
+          "note": "",
+          "archived": false,
+          "addedSeq": 5,
+          "updatedSeq": 5
+        },
+        "src-lindqvist": {
+          "id": "src-lindqvist",
+          "csl": {
+            "id": "src-lindqvist",
+            "type": "book",
+            "title": "Farming the Flood Plain",
+            "author": [
+              {
+                "family": "Lindqvist",
+                "given": "Maja"
+              }
+            ],
+            "issued": {
+              "date-parts": [
+                [
+                  2009
+                ]
+              ]
+            },
+            "publisher": "Northfield Press",
+            "ISBN": "9780000000017"
+          },
+          "origin": {
+            "kind": "surfaced",
+            "value": "9780000000017"
+          },
+          "fromSurfacedId": "surf-1",
+          "candidateIndex": 0,
+          "note": "Library copy, chapter 4.",
+          "archived": false,
+          "addedSeq": 15,
+          "updatedSeq": 16
+        }
+      },
+      "clippings": {
+        "clip-1": {
+          "id": "clip-1",
+          "sourceId": "src-okafor",
+          "text": "Annual totals rose from 610 mm to 1,240 mm.\nThe change was steady rather than sudden.",
+          "locator": "p. 114",
+          "note": null,
+          "savedSeq": 6,
+          "removed": false
+        },
+        "clip-2": {
+          "id": "clip-2",
+          "sourceId": "src-okafor",
+          "text": "No single year accounts for the trend.",
+          "locator": "p. 117",
+          "note": null,
+          "savedSeq": 7,
+          "removed": true
+        }
+      },
+      "pastes": {},
+      "writingSessions": [
+        {
+          "index": 0,
+          "startSeq": 3,
+          "endSeq": 20,
+          "startTime": "2026-11-02T09:00:00.800Z",
+          "endTime": "2026-11-02T09:00:34.393Z",
+          "activeMs": 13793,
+          "commits": 5,
+          "charactersInserted": 212,
+          "documentIds": [
+            "doc-r"
+          ]
+        }
+      ]
+    },
+    "documents": {
+      "doc-r": {
+        "text": "Rainfall in the valley doubled between 1950 and 2000. Farmers adapted slowly, and some never did.\nAnnual totals rose from 610 mm to 1,240 mm.\nThe change was steady rather than sudden.\nNo single year accounts for it.",
+        "words": [
+          {
+            "from": 1,
+            "to": 9,
+            "text": "Rainfall",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 10,
+            "to": 12,
+            "text": "in",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 13,
+            "to": 16,
+            "text": "the",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 17,
+            "to": 23,
+            "text": "valley",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 24,
+            "to": 31,
+            "text": "doubled",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 32,
+            "to": 39,
+            "text": "between",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 40,
+            "to": 44,
+            "text": "1950",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 45,
+            "to": 48,
+            "text": "and",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 49,
+            "to": 53,
+            "text": "2000",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3,
+              4
+            ]
+          },
+          {
+            "from": 56,
+            "to": 63,
+            "text": "Farmers",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 64,
+            "to": 71,
+            "text": "adapted",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 72,
+            "to": 78,
+            "text": "slowly",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 80,
+            "to": 83,
+            "text": "and",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 84,
+            "to": 88,
+            "text": "some",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 89,
+            "to": 94,
+            "text": "never",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 95,
+            "to": 98,
+            "text": "did",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 102,
+            "to": 108,
+            "text": "Annual",
+            "class": "quoted",
+            "blockId": "p2",
+            "originSeqs": [
+              19
+            ]
+          },
+          {
+            "from": 109,
+            "to": 115,
+            "text": "totals",
+            "class": "quoted",
+            "blockId": "p2",
+            "originSeqs": [
+              19
+            ]
+          },
+          {
+            "from": 116,
+            "to": 120,
+            "text": "rose",
+            "class": "quoted",
+            "blockId": "p2",
+            "originSeqs": [
+              19
+            ]
+          },
+          {
+            "from": 121,
+            "to": 125,
+            "text": "from",
+            "class": "quoted",
+            "blockId": "p2",
+            "originSeqs": [
+              19
+            ]
+          },
+          {
+            "from": 126,
+            "to": 129,
+            "text": "610",
+            "class": "quoted",
+            "blockId": "p2",
+            "originSeqs": [
+              19
+            ]
+          },
+          {
+            "from": 130,
+            "to": 132,
+            "text": "mm",
+            "class": "quoted",
+            "blockId": "p2",
+            "originSeqs": [
+              19
+            ]
+          },
+          {
+            "from": 133,
+            "to": 135,
+            "text": "to",
+            "class": "quoted",
+            "blockId": "p2",
+            "originSeqs": [
+              19
+            ]
+          },
+          {
+            "from": 136,
+            "to": 141,
+            "text": "1,240",
+            "class": "quoted",
+            "blockId": "p2",
+            "originSeqs": [
+              19
+            ]
+          },
+          {
+            "from": 142,
+            "to": 144,
+            "text": "mm",
+            "class": "quoted",
+            "blockId": "p2",
+            "originSeqs": [
+              19
+            ]
+          },
+          {
+            "from": 147,
+            "to": 150,
+            "text": "The",
+            "class": "quoted",
+            "blockId": "p3",
+            "originSeqs": [
+              19
+            ]
+          },
+          {
+            "from": 151,
+            "to": 157,
+            "text": "change",
+            "class": "quoted",
+            "blockId": "p3",
+            "originSeqs": [
+              19
+            ]
+          },
+          {
+            "from": 158,
+            "to": 161,
+            "text": "was",
+            "class": "quoted",
+            "blockId": "p3",
+            "originSeqs": [
+              19
+            ]
+          },
+          {
+            "from": 162,
+            "to": 168,
+            "text": "steady",
+            "class": "quoted",
+            "blockId": "p3",
+            "originSeqs": [
+              19
+            ]
+          },
+          {
+            "from": 169,
+            "to": 175,
+            "text": "rather",
+            "class": "quoted",
+            "blockId": "p3",
+            "originSeqs": [
+              19
+            ]
+          },
+          {
+            "from": 176,
+            "to": 180,
+            "text": "than",
+            "class": "quoted",
+            "blockId": "p3",
+            "originSeqs": [
+              19
+            ]
+          },
+          {
+            "from": 181,
+            "to": 187,
+            "text": "sudden",
+            "class": "quoted",
+            "blockId": "p3",
+            "originSeqs": [
+              19
+            ]
+          },
+          {
+            "from": 192,
+            "to": 194,
+            "text": "No",
+            "class": "pasted-external",
+            "blockId": "p4",
+            "originSeqs": [
+              20
+            ]
+          },
+          {
+            "from": 195,
+            "to": 201,
+            "text": "single",
+            "class": "pasted-external",
+            "blockId": "p4",
+            "originSeqs": [
+              20
+            ]
+          },
+          {
+            "from": 202,
+            "to": 206,
+            "text": "year",
+            "class": "pasted-external",
+            "blockId": "p4",
+            "originSeqs": [
+              20
+            ]
+          },
+          {
+            "from": 207,
+            "to": 215,
+            "text": "accounts",
+            "class": "pasted-external",
+            "blockId": "p4",
+            "originSeqs": [
+              20
+            ]
+          },
+          {
+            "from": 216,
+            "to": 219,
+            "text": "for",
+            "class": "pasted-external",
+            "blockId": "p4",
+            "originSeqs": [
+              20
+            ]
+          },
+          {
+            "from": 220,
+            "to": 222,
+            "text": "it",
+            "class": "pasted-external",
+            "blockId": "p4",
+            "originSeqs": [
+              20
+            ]
+          }
+        ],
+        "wordsByClass": {
+          "total": 38,
+          "byClass": {
+            "typed": 16,
+            "typed-from-suggestion": 0,
+            "pasted-external": 6,
+            "pasted-internal": 0,
+            "imported": 0,
+            "quoted": 16
+          }
+        },
+        "charactersByClass": {
+          "total": 212,
+          "byClass": {
+            "typed": 97,
+            "typed-from-suggestion": 0,
+            "pasted-external": 31,
+            "pasted-internal": 0,
+            "imported": 0,
+            "quoted": 84
+          }
+        }
+      }
+    },
+    "projectWords": {
+      "total": 38,
+      "byClass": {
+        "typed": 16,
+        "typed-from-suggestion": 0,
+        "pasted-external": 6,
+        "pasted-internal": 0,
+        "imported": 0,
+        "quoted": 16
+      }
+    },
+    "projectCharacters": {
+      "total": 212,
+      "byClass": {
+        "typed": 97,
+        "typed-from-suggestion": 0,
+        "pasted-external": 31,
+        "pasted-internal": 0,
+        "imported": 0,
+        "quoted": 84
+      }
+    },
+    "issues": []
+  },
+  "witnesses": [
+    {
+      "projectId": "proj-1",
+      "seq": 1,
+      "hash": "4db01946a73f4ec839f500fe1bc1f8a8ad950b57e1af68be4f54d63748235ff7",
+      "serverTime": "2026-11-02T09:00:00.250Z",
+      "signature": "eqgQ64VYDGE1Mh6ocA6zBQcZq+wmnGhyN0FwT3R7pvxsEmeHh0P5P1nDQEtEWNrO/BcRjOaFdNDig1MhFuE8Vg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 2,
+      "hash": "05448ff75e759815f033e9356f94b6c8d9b5961267f5e631a51fee9ee59548e8",
+      "serverTime": "2026-11-02T09:00:00.650Z",
+      "signature": "21Jzcx9cHowQulLDn7ZyMKOwXn2QcwABPFIpG9+RezuNhfZ7jE3Wl8eDnkeZzFsxRCj7XU/DaAHgKFVJq44cqQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 3,
+      "hash": "aa9c253afb873f1f4e72703cf34b5124a69c050ae154d27f88169772756c52c5",
+      "serverTime": "2026-11-02T09:00:01.050Z",
+      "signature": "aI1r7I5IjYcNOMHAan+vMjJBHE3EfBqzTuMcboluZ6QnE3Rwz4zBQ09l118RDbn/x8iuG45/gvprfbAohet1UA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 4,
+      "hash": "95037daab2c621754ef2ecd1869b028bb9e1a6f0d7cb3b80eeafe7905dd1a0f3",
+      "serverTime": "2026-11-02T09:00:10.494Z",
+      "signature": "ks44edC28uIMCAW4IkshpkZ0uC0dicNVb/MeyQO0fI+cl2D9to+3RYWHASM5lzghA7kgRwxeZwASy2nkvJQGCw==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 5,
+      "hash": "285ddaa56be15879f3998f91a6a662726a3ed0bb882d3fb69381c2c066a342d8",
+      "serverTime": "2026-11-02T09:00:18.843Z",
+      "signature": "GATfPDwd8QprR+4ZCRvlCY3zQtbtMtEkpHE8x9e1yYePZjyNpjU4feV3iDVcFGuSGRL4VAU84qap0gHytx8/EA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 6,
+      "hash": "3ced8b766ae58f0c4797691e0be6a82a65273ab968e0d52d6683919dcf88fa2c",
+      "serverTime": "2026-11-02T09:00:19.243Z",
+      "signature": "0Tk0oJLR1AzcVrvHOGiS8hTz6zjbzo6dUJXjAJCgvv14GBhtV8FLx5KaFyTF6kBUH3eozOddqsEHKErCgxu4BQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 7,
+      "hash": "278f83c773533ebaa3b5bc740f7416ace90cbcdef4ce3e626ebe7c032f2baa06",
+      "serverTime": "2026-11-02T09:00:19.643Z",
+      "signature": "RBBb6hpb4ZvA1sZF+PEwGX154YMY6WeOPxlneQv82O/kkIyHjGoUTQwLvNFdkn2sz/n/XVd4srgdcQ/GxRgUWw==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 8,
+      "hash": "9e03ce98671a7268a6df4959fa7fb1488d97a2064a514f4c68a2dc53a853d308",
+      "serverTime": "2026-11-02T09:00:20.043Z",
+      "signature": "H3/rhG3zt2kHClGTfmiTAP59aaNt7oybyVcAUXq0luJ10OzQiTaaEJBqsBOBmGAiOSkuW5XVS4sqqscmi/OUQA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 9,
+      "hash": "a940228e4be7b695701aa377fcdb49863790e23516700b76fcb568cf4ee00f16",
+      "serverTime": "2026-11-02T09:00:21.743Z",
+      "signature": "oxf1mKDEpVu+qWECdZoajQmF9nFrVO+pxQOmPeTEmp4u6U+r3xIaaLLfXBNw5bInhzLoVmrzJmsYKGFck1s0OA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 10,
+      "hash": "fed6201ba0e23a096764675ad3c1446e762444f02eb8a712ee55f0e1065f62bb",
+      "serverTime": "2026-11-02T09:00:23.243Z",
+      "signature": "0COeSHVLjCqhyghatMTDFwFHFDpPJ6svLa8JDEaEIvYL9gqzOSBe6IfMIt4ssTbgqS99ILtNB8d2z8Bmv3i91w==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 11,
+      "hash": "d363b0cc2c850d6553a5081688554de4a8abb8345478683ec9c96ced560a763e",
+      "serverTime": "2026-11-02T09:00:24.743Z",
+      "signature": "k9QQUgQ4dut1EsL8z3tG7+rzF7t02fJPHjP1GJTqseoR68xTcVLJs1DNdjVLMt2cK7T3SsfSidgbtNcVIgkogQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 12,
+      "hash": "a8df57e7df7dd600822072ed96d33e0cc6a39a6f08636a4fe31ae6925c884995",
+      "serverTime": "2026-11-02T09:00:26.243Z",
+      "signature": "BLP2dNGsPHRSM48Vrueq2PmjNQh5d66rNvnJstii+vMdoC3tkZ15CC0UNHYJ7yI+BGKU8by5q+YbNjmgtETq/w==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 13,
+      "hash": "bfe8fc9c9feff88089df5198ed41512e17daba8e6219af4adc789a34d2046e18",
+      "serverTime": "2026-11-02T09:00:27.743Z",
+      "signature": "cSZah1+d1E3SWOZDwL4zAXKippjc5X2S93z+sg5MVZ/qtEVP/nRfLo235TalJD+pL1rUuVVRT77cpsN/2O6osg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 14,
+      "hash": "af9f2ca6c940d58075692f9229e1cb9d32cb6a5ba617a6c8ab6de3f68497606c",
+      "serverTime": "2026-11-02T09:00:29.243Z",
+      "signature": "B53HicydHF5a2mIWi7ls7PhwZ+OhvEG+EHUpOe28RkxFTISZOtl8Zkd1ZF8UWygWxFQaB0aEG+Lmp5CwMmhMlQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 15,
+      "hash": "95a878ff29af102d2ad5e0001c1638325c73adeb5e0f62f43cc579541024670d",
+      "serverTime": "2026-11-02T09:00:29.443Z",
+      "signature": "XCQ6ElN35VpPO07f6Rxd4Lxkr0a7NcqJOiU4X6gPwRAs4LLsBd8i7OQIF3Fu31BX3NWdDGCOq7J4x3ZXtxfywA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 16,
+      "hash": "057c6a1ee783df1c9eb3f7eb507fa0ac53301a7e0720f187dff660d3aeb50802",
+      "serverTime": "2026-11-02T09:00:29.843Z",
+      "signature": "P3OYTBkojanE8g2Pc/1ZKyMMQ4R1Hx2Tc7Ybdiss2g4uyz3QJBvcCa7Yr6atio7PrqBgY0tj+UvPkeCDssbszw==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 17,
+      "hash": "8c750c687547ebf7240efc02f6a86a60ecc65e17507dd101ad1f0cb2e699b4e2",
+      "serverTime": "2026-11-02T09:00:30.243Z",
+      "signature": "UXjDqwNRw3+NYZwe9GNhnxAR9eLqbSdTUxNLYm2QXU2O8oCt0jgYeyHeWllsK2p1m8zgWldW9BoAa3/Ri8647A==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 18,
+      "hash": "232d382b4d0a8d36307268a95982303ef59008d6660fea2063857d38fb07e6ba",
+      "serverTime": "2026-11-02T09:00:30.643Z",
+      "signature": "e2IYzYg7S9Yx1C8Cx+6px8zX7DJaKgHtgbIAUO6uIaDG5+9IVhT4EATZNtsHdffYmE89hXOEBnQel64VJrr7NQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 19,
+      "hash": "859e2ba64d9207fa34efd3ebb6f6c30b6a305575abd2d01a2d6be376a4ceb6fa",
+      "serverTime": "2026-11-02T09:00:32.643Z",
+      "signature": "JCvd9bjU3v3B3MMeddIVy0ZIfnYGIBTnboXrhWI51VOv1cdYEJUeAso5lknxiNaGivWdKqO05GrdnA+9FXeAmQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 20,
+      "hash": "ef70e2b5fe09088376bf7efe0995dd8535a759ded708c2e51c2c99e210b68b99",
+      "serverTime": "2026-11-02T09:00:34.643Z",
+      "signature": "9stySUEAZNpYlyhUp31Rx2H0x1Z2dJ+DPAn4OCbTPAIPvbTfvCwg/YfVJ5kup8FZhStdnfk9s4tzM4uKFBmFaQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 21,
+      "hash": "5610b7c030668df94078b1c888404fda1ca9cc1d29780fae3866d1a76d4db669",
+      "serverTime": "2026-11-02T09:00:36.643Z",
+      "signature": "PjyXUgOcP7M+p9czGujQ2Xu9D1v6QEgAlEqUo3Om179mSFWt8DMtC9bk8CPhhahj3aOJ3tJmugULoJ1OzG6ftg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 22,
+      "hash": "20b54bb9b50f5f87cb79255c5bca0e8ab11acabd63c07e81a84cd8f92e2a8b4d",
+      "serverTime": "2026-11-02T09:00:37.043Z",
+      "signature": "mt5k/ubA5s0WKWqvsxB87eUF6gZnEtfreTv5kXrlq9E51K6z/GzM/rDF1/m5wRCzQfna7CBHKwE66QsQ0dRkiA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    }
+  ],
+  "publicKeyPem": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEoInrdRkLs5lWE+qtD8cpCVp0gkEn\n0tllAdSMj9iVyF0MaAHny/cdaByyk3aWbk6dqMaXuaekIuWmvEJCsgbJBg==\n-----END PUBLIC KEY-----\n",
+  "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+}

@@ -161,7 +161,7 @@ export function verifyChain(
     const parsed = CommitSchema.safeParse(raw);
     if (!parsed.success) add('invalid-commit', zodIssues(parsed.error).join('; '));
     if (typeof c?.hash === 'string') {
-      let actual: string | null = null;
+      let actual: string | null;
       try {
         actual = computeCommitHash(raw as Commit);
       } catch {
@@ -170,13 +170,14 @@ export function verifyChain(
       if (actual !== c.hash) add('hash-mismatch', `hash ${c.hash} does not match its content (${actual ?? 'unhashable'})`);
     }
     if (seq !== null) {
+      // prevSeq is the highest seq seen so far.
       if (seen.has(seq)) add('duplicate-seq', `seq ${seq} also appears at #${seen.get(seq)}`);
       else if (seq < prevSeq) add('seq-out-of-order', `seq ${seq} comes after seq ${prevSeq}`);
       else if (seq !== prevSeq + 1) {
         add('seq-gap', `expected seq ${prevSeq + 1}, got ${seq} (${seq - prevSeq - 1} missing)`);
       }
       if (!seen.has(seq)) seen.set(seq, index);
-      prevSeq = seq;
+      prevSeq = Math.max(prevSeq, seq);
     } else {
       prevSeq += 1;
     }

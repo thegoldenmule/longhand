@@ -37,7 +37,7 @@ export interface Scratch {
   typedTouch: Set<string>;
   /** …by any other step. */
   otherTouch: Set<string>;
-  /** Insertion suggestions whose reference sentence was edited. */
+  /** Insertion suggestions whose reference sentence was deleted. */
   refTouched: Set<string>;
   /** Open proposals edited in this commit. */
   proposalTouched: Set<string>;
@@ -115,8 +115,9 @@ export function mapTracker(t: Tracker, step: StepFacts, scratch: Scratch): void 
     if (touched) scratch.proposalTouched.add(t.id);
   }
   if (t.ref && !reloc) {
-    if (touchesRange(changes, t.ref.from, t.ref.to)) scratch.refTouched.add(t.id);
+    // An insertion goes stale only when the sentence it is relative to is deleted.
     t.ref = mapRange(map, t.ref);
+    if (!t.ref) scratch.refTouched.add(t.id);
   }
   if (reloc) {
     t.range = reloc.range;

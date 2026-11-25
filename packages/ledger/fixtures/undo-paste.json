@@ -1,0 +1,2050 @@
+{
+  "name": "undo-paste",
+  "description": "Undo/redo of a paste never launders it as typing; undo of a deletion restores typed text; a history run with text that was never deleted is pasted-external.",
+  "covers": [
+    "history",
+    "tombstones",
+    "downgrade"
+  ],
+  "commits": [
+    {
+      "commitId": "c-0001",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 1,
+      "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "84e63dc4469d188140becb64f90dfbfdee1925bef1a3858e7f806318f3ce53fc",
+      "clientTime": "2026-11-02T09:00:00.000Z",
+      "serverTime": "2026-11-02T09:00:00.250Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "ProjectCreated",
+      "payload": {
+        "title": "Undo"
+      }
+    },
+    {
+      "commitId": "c-0002",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 2,
+      "prevHash": "84e63dc4469d188140becb64f90dfbfdee1925bef1a3858e7f806318f3ce53fc",
+      "hash": "89a1d86c2c1d6cbd378a358ec4885959f76a676a9a4399e4d18cfa07d23ea4e2",
+      "clientTime": "2026-11-02T09:00:00.400Z",
+      "serverTime": "2026-11-02T09:00:00.650Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "DocumentCreated",
+      "payload": {
+        "documentId": "doc-u",
+        "kind": "manuscript",
+        "title": "Draft",
+        "parentId": null,
+        "index": 0
+      }
+    },
+    {
+      "commitId": "c-0003",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 3,
+      "prevHash": "89a1d86c2c1d6cbd378a358ec4885959f76a676a9a4399e4d18cfa07d23ea4e2",
+      "hash": "a80d293658ece25b1f88bc05a0874725874021b47c765cb3b1c187950450c3fd",
+      "clientTime": "2026-11-02T09:00:00.800Z",
+      "serverTime": "2026-11-02T09:00:01.050Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-u",
+        "baseVersion": 0,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 1,
+            "to": 1,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "I"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 2,
+            "to": 2,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 3,
+            "to": 3,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "m"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 4,
+            "to": 4,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 5,
+            "to": 5,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 6,
+            "to": 6,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 7,
+            "to": 7,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 8,
+            "to": 8,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 9,
+            "to": 9,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 10,
+            "to": 10,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 11,
+            "to": 11,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 12,
+            "to": 12,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "w"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 13,
+            "to": 13,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 14,
+            "to": 14,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 15,
+            "to": 15,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 16,
+            "to": 16,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 17,
+            "to": 17,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 18,
+            "to": 18,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 19,
+            "to": 19,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 20,
+            "to": 20,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 21,
+            "to": 21,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 22,
+            "to": 22,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 23,
+            "to": 23,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "m"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 24,
+            "to": 24,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "y"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 25,
+            "to": 25,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 26,
+            "to": 26,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 27,
+            "to": 27,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 28,
+            "to": 28,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "f"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 29,
+            "to": 29,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 30,
+            "to": 30,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 30,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 186,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 263,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 448,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 610,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 714,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 872,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 974,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1071,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1215,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1383,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1567,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1772,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1957,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2139,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2300,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2508,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2642,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2800,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2887,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3066,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3168,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3301,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3410,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3579,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3682,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3875,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3961,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4073,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4197,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 30,
+        "durationMs": 4197
+      }
+    },
+    {
+      "commitId": "c-0005",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 4,
+      "prevHash": "a80d293658ece25b1f88bc05a0874725874021b47c765cb3b1c187950450c3fd",
+      "hash": "f79428eb65cf46584aaafe655befc02dc668e4d515834017fc4c403670a910f3",
+      "clientTime": "2026-11-02T09:00:06.997Z",
+      "serverTime": "2026-11-02T09:00:07.247Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "PasteOccurred",
+      "payload": {
+        "pasteId": "paste-0004",
+        "documentId": "doc-u",
+        "origin": "external",
+        "via": "clipboard",
+        "copyId": null,
+        "characters": 32,
+        "words": 6,
+        "textHash": "0a023d6dfeab461269331da04cb89fe7dfd7e36efa980e31641a8f97ff5744bc",
+        "mimeTypes": [
+          "text/plain",
+          "text/html"
+        ]
+      }
+    },
+    {
+      "commitId": "c-0006",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 5,
+      "prevHash": "f79428eb65cf46584aaafe655befc02dc668e4d515834017fc4c403670a910f3",
+      "hash": "ce9ea3db6a8a397681938038a156d2efa88af5cbf936558b87a752bdcd8f669f",
+      "clientTime": "2026-11-02T09:00:07.397Z",
+      "serverTime": "2026-11-02T09:00:07.647Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-u",
+        "baseVersion": 30,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 31,
+            "to": 31,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "But here is a borrowed sentence."
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 1,
+            "method": "pasted-external",
+            "pasteId": "paste-0004"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "paste",
+            "len": 32
+          }
+        ],
+        "characters": 32,
+        "durationMs": 0
+      }
+    },
+    {
+      "commitId": "c-0007",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 6,
+      "prevHash": "ce9ea3db6a8a397681938038a156d2efa88af5cbf936558b87a752bdcd8f669f",
+      "hash": "81e0009184e430472a0570ba1d1dff000396e670e51d8981857c0181b30dd1e4",
+      "clientTime": "2026-11-02T09:00:09.397Z",
+      "serverTime": "2026-11-02T09:00:09.647Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-u",
+        "baseVersion": 31,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 31,
+            "to": 63
+          }
+        ],
+        "runs": [
+          {
+            "steps": 1,
+            "method": "history"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "undo",
+            "len": 0
+          }
+        ],
+        "characters": 0,
+        "durationMs": 0
+      }
+    },
+    {
+      "commitId": "c-0008",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 7,
+      "prevHash": "81e0009184e430472a0570ba1d1dff000396e670e51d8981857c0181b30dd1e4",
+      "hash": "79981ed9523b7174805d267f9d9833e046db5200c4a0ac67617d86ef2c97f483",
+      "clientTime": "2026-11-02T09:00:11.397Z",
+      "serverTime": "2026-11-02T09:00:11.647Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-u",
+        "baseVersion": 32,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 31,
+            "to": 31,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "But here is a borrowed sentence."
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 1,
+            "method": "history"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "redo",
+            "len": 0
+          }
+        ],
+        "characters": 0,
+        "durationMs": 0
+      }
+    },
+    {
+      "commitId": "c-0009",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 8,
+      "prevHash": "79981ed9523b7174805d267f9d9833e046db5200c4a0ac67617d86ef2c97f483",
+      "hash": "6cfe17be2407c8fc9c7375e753fe3a0da4033d06a9dd52269d4de232ff072311",
+      "clientTime": "2026-11-02T09:00:13.397Z",
+      "serverTime": "2026-11-02T09:00:13.647Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-u",
+        "baseVersion": 33,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 31,
+            "to": 63
+          }
+        ],
+        "runs": [
+          {
+            "steps": 1,
+            "method": "history"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "undo",
+            "len": 0
+          }
+        ],
+        "characters": 0,
+        "durationMs": 0
+      }
+    },
+    {
+      "commitId": "c-0010",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 9,
+      "prevHash": "6cfe17be2407c8fc9c7375e753fe3a0da4033d06a9dd52269d4de232ff072311",
+      "hash": "eddd83f7447ab81c0fc01d0f63a4e177611e480277a3d4c4799662f4378be5b0",
+      "clientTime": "2026-11-02T09:00:15.397Z",
+      "serverTime": "2026-11-02T09:00:15.647Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-u",
+        "baseVersion": 34,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 31,
+            "to": 31,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "S"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 32,
+            "to": 32,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 33,
+            "to": 33,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 34,
+            "to": 34,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "I"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 35,
+            "to": 35,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 36,
+            "to": 36,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "w"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 37,
+            "to": 37,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 38,
+            "to": 38,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 39,
+            "to": 39,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 40,
+            "to": 40,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 41,
+            "to": 41,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 42,
+            "to": 42,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "m"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 43,
+            "to": 43,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "y"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 44,
+            "to": 44,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 45,
+            "to": 45,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 46,
+            "to": 46,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "w"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 47,
+            "to": 47,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 48,
+            "to": 48,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 49,
+            "to": 49,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 50,
+            "to": 50,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 51,
+            "to": 51,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 52,
+            "to": 52,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 53,
+            "to": 53,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 54,
+            "to": 54,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "g"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 55,
+            "to": 55,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 25,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 123,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 276,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 452,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 654,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 730,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 857,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1059,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1218,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1299,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1477,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1624,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1774,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1920,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2083,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2273,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2386,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2585,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2719,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2880,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3016,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3141,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3212,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3326,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3430,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 25,
+        "durationMs": 3430
+      }
+    },
+    {
+      "commitId": "c-0011",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 10,
+      "prevHash": "eddd83f7447ab81c0fc01d0f63a4e177611e480277a3d4c4799662f4378be5b0",
+      "hash": "b9f0d5c841fb71f10fe50dc1e86c88b3a19ed6eafa422cf8af3d1ef7a7a4847b",
+      "clientTime": "2026-11-02T09:00:20.827Z",
+      "serverTime": "2026-11-02T09:00:21.077Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-u",
+        "baseVersion": 59,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 55,
+            "to": 56
+          },
+          {
+            "stepType": "replace",
+            "from": 54,
+            "to": 55
+          },
+          {
+            "stepType": "replace",
+            "from": 53,
+            "to": 54
+          },
+          {
+            "stepType": "replace",
+            "from": 52,
+            "to": 53
+          },
+          {
+            "stepType": "replace",
+            "from": 51,
+            "to": 52
+          },
+          {
+            "stepType": "replace",
+            "from": 50,
+            "to": 51
+          },
+          {
+            "stepType": "replace",
+            "from": 49,
+            "to": 50
+          }
+        ],
+        "runs": [
+          {
+            "steps": 7,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "delete",
+            "len": 1
+          },
+          {
+            "t": 122,
+            "kind": "delete",
+            "len": 1
+          },
+          {
+            "t": 185,
+            "kind": "delete",
+            "len": 1
+          },
+          {
+            "t": 277,
+            "kind": "delete",
+            "len": 1
+          },
+          {
+            "t": 351,
+            "kind": "delete",
+            "len": 1
+          },
+          {
+            "t": 452,
+            "kind": "delete",
+            "len": 1
+          },
+          {
+            "t": 558,
+            "kind": "delete",
+            "len": 1
+          }
+        ],
+        "characters": 0,
+        "durationMs": 558
+      }
+    },
+    {
+      "commitId": "c-0012",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 11,
+      "prevHash": "b9f0d5c841fb71f10fe50dc1e86c88b3a19ed6eafa422cf8af3d1ef7a7a4847b",
+      "hash": "2d57e1d08a5ec8e5061c54785c3d8aeb8c4aef2a3a693036fdd8f3a88aeb1457",
+      "clientTime": "2026-11-02T09:00:23.385Z",
+      "serverTime": "2026-11-02T09:00:23.635Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-u",
+        "baseVersion": 66,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 49,
+            "to": 49,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 50,
+            "to": 50,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 51,
+            "to": 51,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 52,
+            "to": 52,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 53,
+            "to": 53,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 54,
+            "to": 54,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "g"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 55,
+            "to": 55,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 7,
+            "method": "history"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "undo",
+            "len": 0
+          }
+        ],
+        "characters": 0,
+        "durationMs": 0
+      }
+    },
+    {
+      "commitId": "c-0013",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 12,
+      "prevHash": "2d57e1d08a5ec8e5061c54785c3d8aeb8c4aef2a3a693036fdd8f3a88aeb1457",
+      "hash": "cba77815ed968dc1298cc5bc0e8a4f76ce4ec3426882966e55c457ddc71942e7",
+      "clientTime": "2026-11-02T09:00:25.385Z",
+      "serverTime": "2026-11-02T09:00:25.635Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-u",
+        "baseVersion": 73,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 56,
+            "to": 56,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " Words nobody typed."
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 1,
+            "method": "history"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "undo",
+            "len": 0
+          }
+        ],
+        "characters": 0,
+        "durationMs": 0
+      }
+    }
+  ],
+  "expected": {
+    "headSeq": 12,
+    "headHash": "cba77815ed968dc1298cc5bc0e8a4f76ce4ec3426882966e55c457ddc71942e7",
+    "state": {
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "headSeq": 12,
+      "headHash": "cba77815ed968dc1298cc5bc0e8a4f76ce4ec3426882966e55c457ddc71942e7",
+      "settings": {
+        "genre": "",
+        "audience": "",
+        "goals": "",
+        "styleNotes": "",
+        "dailyWordGoal": null,
+        "citationStyle": "apa",
+        "title": "Undo"
+      },
+      "createdSeq": 1,
+      "binder": {
+        "manuscript": [
+          {
+            "kind": "document",
+            "id": "doc-u"
+          }
+        ],
+        "notes": []
+      },
+      "folders": {},
+      "documents": {
+        "doc-u": {
+          "id": "doc-u",
+          "kind": "manuscript",
+          "area": "manuscript",
+          "title": "Draft",
+          "parentId": null,
+          "synopsis": "",
+          "content": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "I meant to write this myself. So I wrote my own ending. Words nobody typed."
+                  }
+                ]
+              }
+            ]
+          },
+          "version": 74,
+          "provenance": [
+            {
+              "from": 1,
+              "to": 31,
+              "class": "typed",
+              "originSeq": 3
+            },
+            {
+              "from": 31,
+              "to": 56,
+              "class": "typed",
+              "originSeq": 9
+            },
+            {
+              "from": 56,
+              "to": 76,
+              "class": "pasted-external",
+              "originSeq": 12
+            }
+          ],
+          "archived": false,
+          "imported": null,
+          "createdSeq": 2,
+          "contentSeq": 12,
+          "updatedSeq": 12
+        }
+      },
+      "annotations": {
+        "feedbackRequests": {},
+        "agentSessions": {},
+        "comments": {},
+        "questions": {},
+        "suggestions": {},
+        "proposals": {},
+        "citationFlags": {},
+        "surfacedSources": {},
+        "sourceSuggestions": {},
+        "discussions": {}
+      },
+      "sources": {},
+      "clippings": {},
+      "pastes": {
+        "paste-0004": {
+          "id": "paste-0004",
+          "seq": 4,
+          "documentId": "doc-u",
+          "origin": "external",
+          "via": "clipboard",
+          "characters": 32,
+          "words": 6,
+          "insertedSeq": 5,
+          "verifiedInternal": false
+        }
+      },
+      "writingSessions": [
+        {
+          "index": 0,
+          "startSeq": 3,
+          "endSeq": 12,
+          "startTime": "2026-11-02T09:00:00.800Z",
+          "endTime": "2026-11-02T09:00:25.385Z",
+          "activeMs": 8185,
+          "commits": 9,
+          "charactersInserted": 146,
+          "documentIds": [
+            "doc-u"
+          ]
+        }
+      ]
+    },
+    "documents": {
+      "doc-u": {
+        "text": "I meant to write this myself. So I wrote my own ending. Words nobody typed.",
+        "words": [
+          {
+            "from": 1,
+            "to": 2,
+            "text": "I",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 3,
+            "to": 8,
+            "text": "meant",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 9,
+            "to": 11,
+            "text": "to",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 12,
+            "to": 17,
+            "text": "write",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 18,
+            "to": 22,
+            "text": "this",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 23,
+            "to": 29,
+            "text": "myself",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 31,
+            "to": 33,
+            "text": "So",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              9
+            ]
+          },
+          {
+            "from": 34,
+            "to": 35,
+            "text": "I",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              9
+            ]
+          },
+          {
+            "from": 36,
+            "to": 41,
+            "text": "wrote",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              9
+            ]
+          },
+          {
+            "from": 42,
+            "to": 44,
+            "text": "my",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              9
+            ]
+          },
+          {
+            "from": 45,
+            "to": 48,
+            "text": "own",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              9
+            ]
+          },
+          {
+            "from": 49,
+            "to": 55,
+            "text": "ending",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              9
+            ]
+          },
+          {
+            "from": 57,
+            "to": 62,
+            "text": "Words",
+            "class": "pasted-external",
+            "blockId": "p1",
+            "originSeqs": [
+              12
+            ]
+          },
+          {
+            "from": 63,
+            "to": 69,
+            "text": "nobody",
+            "class": "pasted-external",
+            "blockId": "p1",
+            "originSeqs": [
+              12
+            ]
+          },
+          {
+            "from": 70,
+            "to": 75,
+            "text": "typed",
+            "class": "pasted-external",
+            "blockId": "p1",
+            "originSeqs": [
+              12
+            ]
+          }
+        ],
+        "wordsByClass": {
+          "total": 15,
+          "byClass": {
+            "typed": 12,
+            "typed-from-suggestion": 0,
+            "pasted-external": 3,
+            "pasted-internal": 0,
+            "imported": 0,
+            "quoted": 0
+          }
+        },
+        "charactersByClass": {
+          "total": 75,
+          "byClass": {
+            "typed": 55,
+            "typed-from-suggestion": 0,
+            "pasted-external": 20,
+            "pasted-internal": 0,
+            "imported": 0,
+            "quoted": 0
+          }
+        }
+      }
+    },
+    "projectWords": {
+      "total": 15,
+      "byClass": {
+        "typed": 12,
+        "typed-from-suggestion": 0,
+        "pasted-external": 3,
+        "pasted-internal": 0,
+        "imported": 0,
+        "quoted": 0
+      }
+    },
+    "projectCharacters": {
+      "total": 75,
+      "byClass": {
+        "typed": 55,
+        "typed-from-suggestion": 0,
+        "pasted-external": 20,
+        "pasted-internal": 0,
+        "imported": 0,
+        "quoted": 0
+      }
+    },
+    "issues": []
+  },
+  "witnesses": [
+    {
+      "projectId": "proj-1",
+      "seq": 1,
+      "hash": "84e63dc4469d188140becb64f90dfbfdee1925bef1a3858e7f806318f3ce53fc",
+      "serverTime": "2026-11-02T09:00:00.250Z",
+      "signature": "1xbX+W64Nrqh1yRkX/V/oqprn83/DguzILaGKXhjEia8m5jhi8rgzFLeNBqEr8PloQT8xPmibptqJmQ8RFJSVg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 2,
+      "hash": "89a1d86c2c1d6cbd378a358ec4885959f76a676a9a4399e4d18cfa07d23ea4e2",
+      "serverTime": "2026-11-02T09:00:00.650Z",
+      "signature": "iT5hmgawLFm9rFthRpKIBcyofJCaHGVpjOuNSCWQY1tmbIS1xDrPOYDyYvTepPTfugSarYVVljqR91zSH8fwEA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 3,
+      "hash": "a80d293658ece25b1f88bc05a0874725874021b47c765cb3b1c187950450c3fd",
+      "serverTime": "2026-11-02T09:00:01.050Z",
+      "signature": "oaXmzIqJPVkCq3hjOADpIeM8D8bPOQ2VmY2/AQ8vVzoR+sOfKrq2HBRWXOmLqqWuQClS11Mqpr3PjsOWD7t2eg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 4,
+      "hash": "f79428eb65cf46584aaafe655befc02dc668e4d515834017fc4c403670a910f3",
+      "serverTime": "2026-11-02T09:00:07.247Z",
+      "signature": "PCbQCB3QzZZ/fzEvHGizoGcReS/w4WRCyD4SQSdqcYtuDrrcJIvjsF+MITytjvGuf/9GytW0tNyyYCU9kQ8BWA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 5,
+      "hash": "ce9ea3db6a8a397681938038a156d2efa88af5cbf936558b87a752bdcd8f669f",
+      "serverTime": "2026-11-02T09:00:07.647Z",
+      "signature": "WQCp3Bp40P32rmXFw6h3WpevnRpxRk7hoJJZd97Dty8TTwTzY6DcqE6tA+jjjGx/W+MBDwJOqDyNWjMpKOgeGQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 6,
+      "hash": "81e0009184e430472a0570ba1d1dff000396e670e51d8981857c0181b30dd1e4",
+      "serverTime": "2026-11-02T09:00:09.647Z",
+      "signature": "7Lh8CjwIKcj7utt/we6zHl//i4ke3SkP6KW+Tu1uJzGx0/c152fVMw09aKPiz5SKZjvZ1h2f7AwSQsV+r9G3yA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 7,
+      "hash": "79981ed9523b7174805d267f9d9833e046db5200c4a0ac67617d86ef2c97f483",
+      "serverTime": "2026-11-02T09:00:11.647Z",
+      "signature": "ZLTjcbpntgwYpCLCpQED1pCZyRFPVfKyxMcowLnCnpPjV5r6vqd8akxJS5v2hSeiYAAk49mjaBOhiOIAnmZaLQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 8,
+      "hash": "6cfe17be2407c8fc9c7375e753fe3a0da4033d06a9dd52269d4de232ff072311",
+      "serverTime": "2026-11-02T09:00:13.647Z",
+      "signature": "3NGsrEEWgayXk6FxfjRt3suZT3HSJoPRy4b6FApGEtw/YWThuLHshgFEZXOYMSdxJplboPoCFyzFfuCgMv4V5w==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 9,
+      "hash": "eddd83f7447ab81c0fc01d0f63a4e177611e480277a3d4c4799662f4378be5b0",
+      "serverTime": "2026-11-02T09:00:15.647Z",
+      "signature": "5CpaLettQ1Qy1qzUH0bka2JsAsT6g3SEzbg3aZ2ZyB6sLfiMed+zRSo3QmbXSEvwTCH+5MHCcXSffq8l1jaQow==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 10,
+      "hash": "b9f0d5c841fb71f10fe50dc1e86c88b3a19ed6eafa422cf8af3d1ef7a7a4847b",
+      "serverTime": "2026-11-02T09:00:21.077Z",
+      "signature": "bY0CjLb7zUkdiev0G2P6XXsa6jcHz2g+qIDLKxMRlS6j04wFCaKSdSPLL2CKeFtKnvPMYIlczPkgCFglW+iU7A==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 11,
+      "hash": "2d57e1d08a5ec8e5061c54785c3d8aeb8c4aef2a3a693036fdd8f3a88aeb1457",
+      "serverTime": "2026-11-02T09:00:23.635Z",
+      "signature": "9sPC10VF7y2F2GyqfJWh9x9F7inhPWMX8ITZilq/lzv3c5JeWX5iAhDWOWEG6wjxHNAJ1CsbQTbJqscvK7ZR6g==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 12,
+      "hash": "cba77815ed968dc1298cc5bc0e8a4f76ce4ec3426882966e55c457ddc71942e7",
+      "serverTime": "2026-11-02T09:00:25.635Z",
+      "signature": "UOBwvgK17DJC1Ah/C1W0qT93p773jD5exPzl0vcSTL11weAL9OHTXVM1Uc/TmnmWPuSKyE9ABnVttm2pSxsMWA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    }
+  ],
+  "publicKeyPem": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEoInrdRkLs5lWE+qtD8cpCVp0gkEn\n0tllAdSMj9iVyF0MaAHny/cdaByyk3aWbk6dqMaXuaekIuWmvEJCsgbJBg==\n-----END PUBLIC KEY-----\n",
+  "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+}
