@@ -4,7 +4,44 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "typecheck": "echo 'apps/web: Next.js app not scaffolded yet'",
-    "test": "echo 'apps/web: no tests yet'"
+    "dev": "node scripts/build-verifier.mjs --if-missing && next dev --port ${WEB_PORT:-3100}",
+    "build": "node scripts/build-verifier.mjs && next build",
+    "start": "next start --port ${WEB_PORT:-3100}",
+    "build:verifier": "node scripts/build-verifier.mjs",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run --passWithNoTests",
+    "e2e": "playwright test"
+  },
+  "dependencies": {
+    "@longhand/annotations": "workspace:*",
+    "@longhand/binder": "workspace:*",
+    "@longhand/client": "workspace:*",
+    "@longhand/editor": "workspace:*",
+    "@longhand/ledger": "workspace:*",
+    "@longhand/provenance-ui": "workspace:*",
+    "@longhand/report": "workspace:*",
+    "@longhand/research": "workspace:*",
+    "@longhand/schema": "workspace:*",
+    "next": "16.4.6",
+    "prosemirror-model": "^1.25.13",
+    "prosemirror-state": "^1.4.4",
+    "prosemirror-view": "^1.43.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@longhand/server": "workspace:*",
+    "@longhand/verifier": "workspace:*",
+    "@playwright/test": "^1.65.1",
+    "@testing-library/react": "^16.3.3",
+    "@types/node": "^24.19.2",
+    "@types/pg": "^8.23.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "fflate": "^0.8.3",
+    "jsdom": "^31.0.1",
+    "pdfjs-dist": "^6.5.438",
+    "pg": "^8.23.1",
+    "tsx": "^4.23.15"
   }
 }

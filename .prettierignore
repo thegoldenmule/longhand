@@ -3,6 +3,9 @@ node_modules
 .dev
 dist
 .next
+.next-e2e
+apps/web/public/verify
+apps/web/next-env.d.ts
 coverage
 playwright-report
 test-results
