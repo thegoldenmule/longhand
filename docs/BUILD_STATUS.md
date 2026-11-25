@@ -17,11 +17,14 @@ The coordinator updates this file after every phase. A resumed session reads it 
 | Lane | State | Merge |
 | --- | --- | --- |
 | binder | merged (91 tests) | see git log |
+| export | merged (60 tests) | see git log |
 
 ## Pending contract changes (apply serially after ledger core merges)
 
 - Folder synopses: `SynopsisEdited` accepts `{documentId} | {folderId}`; `FolderState.synopsis`. (binder)
 - Ledger fold must confirm: folder `updatedSeq` bumps on child create/move; moves into archived folders accepted by fold (builders refuse); duplicate ids rejected per collection. (binder)
+
+- Research lane should ship `formatCitation`/`formatBibliographyEntry` adapters for export's injected formatters (CSL). Move `ProvenanceSummary` into schema or have report import it from export. (export)
 
 ## Notes
 
