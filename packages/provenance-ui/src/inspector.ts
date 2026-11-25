@@ -23,12 +23,7 @@ import type {
   WritingSession,
 } from '@longhand/schema';
 import type { Node as PMNode } from 'prosemirror-model';
-import {
-  CLASS_META,
-  INPUT_METHOD_LABEL,
-  MATCHED_KIND_LABEL,
-  type TintClass,
-} from './classes';
+import { CLASS_META, INPUT_METHOD_LABEL, MATCHED_KIND_LABEL, type TintClass } from './classes';
 import { excerpt } from './format';
 
 /** A paste that put (or copied) this text, with its size. */
@@ -131,7 +126,11 @@ function suggestionText(s: SuggestionState): string {
 }
 
 /** The AI text of a matched annotation, or null. */
-function matchedText(ann: AnnotationsState, kind: MatchedKind, id: string): {
+function matchedText(
+  ann: AnnotationsState,
+  kind: MatchedKind,
+  id: string,
+): {
   text: string | null;
   status: string | null;
 } {
@@ -248,7 +247,10 @@ function noteFor(cls: TintClass, type: string, methods: InputMethod[] | null): s
 function sourceRef(doc: PMNode, pos: number): { sourceId: string; locator: string | null } | null {
   const node = doc.nodeAt(pos);
   if (node?.type.name === 'citation')
-    return { sourceId: node.attrs.sourceId as string, locator: node.attrs.locator as string | null };
+    return {
+      sourceId: node.attrs.sourceId as string,
+      locator: node.attrs.locator as string | null,
+    };
   const $pos = doc.resolve(pos);
   for (let d = $pos.depth; d > 0; d--) {
     const n = $pos.node(d);

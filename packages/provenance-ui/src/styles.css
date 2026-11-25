@@ -11,7 +11,14 @@
  */
 
 :root {
-  --lh-prov-font-ui: var(--lh-font-ui, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif);
+  --lh-prov-font-ui: var(
+    --lh-font-ui,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    sans-serif
+  );
   --lh-prov-font-text: var(
     --lh-font,
     'Iowan Old Style',

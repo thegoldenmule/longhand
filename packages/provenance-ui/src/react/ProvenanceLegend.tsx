@@ -7,12 +7,7 @@ import type { ProjectState } from '@longhand/schema';
 import { useId, useMemo, type ReactElement } from 'react';
 import { CLASS_META, type TintClass } from '../classes';
 import { formatCount, plural } from '../format';
-import {
-  documentLegend,
-  projectLegend,
-  type LegendData,
-  type LegendDocument,
-} from '../legendData';
+import { documentLegend, projectLegend, type LegendData, type LegendDocument } from '../legendData';
 import type { ProvenanceTint } from '../tint';
 import { useProvenanceTint } from './useTint';
 

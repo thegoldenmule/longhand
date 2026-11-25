@@ -9,7 +9,11 @@
  * local document, which may hold unacknowledged steps. Text typed locally since
  * then has no run yet and stays untinted until fresh runs arrive.
  */
-import { createDecorationLayer, type DecorationLayer, type LayerDecoration } from '@longhand/editor';
+import {
+  createDecorationLayer,
+  type DecorationLayer,
+  type LayerDecoration,
+} from '@longhand/editor';
 import type { ProvenanceRun } from '@longhand/schema';
 import { Plugin, PluginKey, type EditorState } from 'prosemirror-state';
 import type { Mapping } from 'prosemirror-transform';
@@ -216,9 +220,7 @@ export function createProvenanceTint(opts: ProvenanceTintOptions = {}): Provenan
   const pushPluginState = (): void => {
     const view = current?.view;
     if (!view || view.isDestroyed) return;
-    view.dispatch(
-      view.state.tr.setMeta(key, { enabled: snap.enabled, highlight: snap.highlight }),
-    );
+    view.dispatch(view.state.tr.setMeta(key, { enabled: snap.enabled, highlight: snap.highlight }));
   };
 
   /** Draws (or clears) the decorations for the current snapshot. */

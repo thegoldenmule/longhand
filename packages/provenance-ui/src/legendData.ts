@@ -81,7 +81,8 @@ export function legendFromCounts(
 ): LegendData {
   const total = counts.total;
   const rows = TINT_CLASSES.map((cls) => {
-    const count = counts.byClass[cls] + (cls === 'pasted-external' ? counts.byClass['pasted-internal'] : 0);
+    const count =
+      counts.byClass[cls] + (cls === 'pasted-external' ? counts.byClass['pasted-internal'] : 0);
     return {
       cls,
       label: CLASS_META[cls].label,

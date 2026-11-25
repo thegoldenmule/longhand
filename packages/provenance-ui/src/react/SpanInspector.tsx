@@ -18,7 +18,13 @@ import {
   type ReactNode,
 } from 'react';
 import { createPortal } from 'react-dom';
-import { formatDuration, formatTime as defaultFormatTime, plural, sameDay, type TimeFormatter } from '../format';
+import {
+  formatDuration,
+  formatTime as defaultFormatTime,
+  plural,
+  sameDay,
+  type TimeFormatter,
+} from '../format';
 import { inspectSpan, type InspectorModel, type InspectorPaste } from '../inspector';
 import type { InspectRect, InspectRequest, ProvenanceTint } from '../tint';
 import { useProvenanceTint } from './useTint';
@@ -122,7 +128,11 @@ export function SpanInspector(props: SpanInspectorProps): ReactElement {
       onKeyDown={onKeyDown}
     >
       <header className="lh-prov-pop__head">
-        {cls && <span className={`lh-prov-sample lh-prov--${cls}`} aria-hidden="true">Aa</span>}
+        {cls && (
+          <span className={`lh-prov-sample lh-prov--${cls}`} aria-hidden="true">
+            Aa
+          </span>
+        )}
         <h2 id={headingId} className="lh-prov-pop__title">
           {model ? model.classLabel : 'Not in the ledger yet'}
         </h2>
@@ -133,8 +143,8 @@ export function SpanInspector(props: SpanInspectorProps): ReactElement {
 
       {!model ? (
         <p className="lh-prov-pop__note">
-          This text was written since the provenance was last computed. Its history appears once
-          it is saved and the ledger has folded it.
+          This text was written since the provenance was last computed. Its history appears once it
+          is saved and the ledger has folded it.
         </p>
       ) : (
         <>
@@ -220,7 +230,8 @@ export function SpanInspector(props: SpanInspectorProps): ReactElement {
                 <ul>
                   {model.moves.map((m) => (
                     <li key={m.seq}>
-                      {m.label} · <time dateTime={m.clientTime}>{fmt(m.clientTime, { seconds: true })}</time>
+                      {m.label} ·{' '}
+                      <time dateTime={m.clientTime}>{fmt(m.clientTime, { seconds: true })}</time>
                       {m.paste && (
                         <span className="lh-prov-pop__muted"> · {pasteText(m.paste)}</span>
                       )}
@@ -257,7 +268,10 @@ export function SpanInspector(props: SpanInspectorProps): ReactElement {
           {model.note && <p className="lh-prov-pop__note">{model.note}</p>}
           <p className="lh-prov-pop__ledger" data-testid="inspector-ledger">
             Ledger seq {model.origin.seq} · witnessed{' '}
-            {fmt(model.origin.serverTime, { seconds: true, date: !sameDay(model.origin.serverTime, model.origin.clientTime) })}{' '}
+            {fmt(model.origin.serverTime, {
+              seconds: true,
+              date: !sameDay(model.origin.serverTime, model.origin.clientTime),
+            })}{' '}
             · device {model.origin.deviceId}
           </p>
         </>

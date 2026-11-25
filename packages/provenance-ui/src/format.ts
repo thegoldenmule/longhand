@@ -24,7 +24,9 @@ export function sameDay(a: string, b: string): boolean {
   const x = new Date(a);
   const y = new Date(b);
   return (
-    x.getFullYear() === y.getFullYear() && x.getMonth() === y.getMonth() && x.getDate() === y.getDate()
+    x.getFullYear() === y.getFullYear() &&
+    x.getMonth() === y.getMonth() &&
+    x.getDate() === y.getDate()
   );
 }
 

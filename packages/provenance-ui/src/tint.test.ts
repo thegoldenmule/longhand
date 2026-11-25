@@ -164,7 +164,11 @@ describe('provenance tint decorations', () => {
     const d = Object.values(doc)[0]!;
     const tint = createProvenanceTint({ enabled: true });
     const view = new EditorView(document.body.appendChild(document.createElement('div')), {
-      state: EditorState.create({ doc: docFromJSON(d.content), schema, plugins: [...tint.plugins] }),
+      state: EditorState.create({
+        doc: docFromJSON(d.content),
+        schema,
+        plugins: [...tint.plugins],
+      }),
       editable: () => false,
     });
     tint.attach(staticTintHost(view));

@@ -44,7 +44,9 @@ describe('inspectSpan: suggestions', () => {
       group: 'suggestions',
       status: 'adopted',
     });
-    expect(m.spanText).toBe(fixture('suggestions').fixture.expected.documents['doc-s']!.text.slice(21, 30));
+    expect(m.spanText).toBe(
+      fixture('suggestions').fixture.expected.documents['doc-s']!.text.slice(21, 30),
+    );
     // Every suggestion open in the document when seq 22 was typed.
     const visible = m.visibleSuggestions.map((s) => s.id);
     expect(visible).toContain('sug-adopt');
@@ -99,7 +101,11 @@ describe('inspectSpan: internal-paste', () => {
 
   it('a drag and drop', () => {
     expect(at('internal-paste', 'doc-b', 84).moves).toEqual([
-      expect.objectContaining({ seq: 28, kind: 'drop', label: 'Dragged and dropped within the document' }),
+      expect.objectContaining({
+        seq: 28,
+        kind: 'drop',
+        label: 'Dragged and dropped within the document',
+      }),
     ]);
   });
 
@@ -186,7 +192,12 @@ describe('<SpanInspector>', () => {
 
   it('shows the paste size for pasted text', () => {
     render(
-      <SpanInspector model={at('internal-paste', 'doc-a', 25)} rect={null} onClose={() => undefined} inline />,
+      <SpanInspector
+        model={at('internal-paste', 'doc-a', 25)}
+        rect={null}
+        onClose={() => undefined}
+        inline
+      />,
     );
     expect(screen.getByTestId('inspector-paste').textContent).toBe(
       'Paste size24 characters, 4 words from outside the project',
@@ -195,7 +206,12 @@ describe('<SpanInspector>', () => {
 
   it('lists the suggestions that were showing', () => {
     render(
-      <SpanInspector model={at('suggestions', 'doc-s', 23)} rect={null} onClose={() => undefined} inline />,
+      <SpanInspector
+        model={at('suggestions', 'doc-s', 23)}
+        rect={null}
+        onClose={() => undefined}
+        inline
+      />,
     );
     const visible = screen.getByTestId('inspector-visible');
     expect(visible.textContent).toMatch(/suggestions were open when it was typed/);
@@ -204,7 +220,14 @@ describe('<SpanInspector>', () => {
 
   it('closes on Escape', () => {
     let closed = 0;
-    render(<SpanInspector model={at('proposals', 'doc-p', 12)} rect={null} onClose={() => closed++} inline />);
+    render(
+      <SpanInspector
+        model={at('proposals', 'doc-p', 12)}
+        rect={null}
+        onClose={() => closed++}
+        inline
+      />,
+    );
     fireEvent.keyDown(screen.getByRole('dialog'), { key: 'Escape' });
     expect(closed).toBe(1);
   });
@@ -227,7 +250,9 @@ describe('<ProvenanceInspector>', () => {
     ed.at(205);
     view.focus();
     act(() => {
-      view.dom.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', altKey: true, bubbles: true }));
+      view.dom.dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'Enter', altKey: true, bubbles: true }),
+      );
     });
     const dialog = screen.getByRole('dialog');
     expect(document.activeElement).toBe(dialog);

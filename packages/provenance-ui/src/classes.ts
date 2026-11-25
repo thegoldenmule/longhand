@@ -49,7 +49,8 @@ export const CLASS_META: Readonly<Record<TintClass, ClassMeta>> = {
   'typed-from-suggestion': {
     label: PROVENANCE_CLASS_INFO['typed-from-suggestion'].label,
     short: 'From a suggestion',
-    description: 'Typed while matching AI text was showing. The writer’s, disclosed as AI-assisted.',
+    description:
+      'Typed while matching AI text was showing. The writer’s, disclosed as AI-assisted.',
     underline: 'dotted',
   },
   'pasted-external': {

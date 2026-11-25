@@ -29,7 +29,11 @@ function loadFixture(name: string): FixtureFile {
 const cache = new Map<string, { fixture: FixtureFile; state: LedgerState }>();
 
 /** A golden fixture and its folded state (cached). */
-export function fixture(name: string): { fixture: FixtureFile; state: LedgerState; commits: Commit[] } {
+export function fixture(name: string): {
+  fixture: FixtureFile;
+  state: LedgerState;
+  commits: Commit[];
+} {
   let hit = cache.get(name);
   if (!hit) {
     const f = loadFixture(name);
