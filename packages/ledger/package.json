@@ -4,10 +4,21 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./fixtures": "./fixtures/index.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "test": "vitest run --passWithNoTests"
+    "test": "vitest run --passWithNoTests",
+    "fixtures": "tsx scripts/build-fixtures.ts"
+  },
+  "dependencies": {
+    "@longhand/schema": "workspace:*",
+    "prosemirror-model": "^1.25.13",
+    "prosemirror-transform": "^1.12.7"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "fast-check": "^4.11.0"
   }
 }
