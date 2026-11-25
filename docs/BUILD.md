@@ -85,3 +85,15 @@ Made while writing `packages/schema` (phase 1). These are cross-cutting rules th
 - **Word attribution** (report, provenance-ui and export share it; implemented in `packages/ledger` as `attributeWords`): a word whose characters span classes takes the *least trusted* class present, in the order `pasted-external` < `imported` < `quoted` < `typed-from-suggestion` < `typed`. Never overclaim.
 - **Merging lane work.** Lanes work in their own git worktree and commit there; the coordinator merges into `main`. Lanes may add dependencies to their own `package.json`; the coordinator regenerates `pnpm-lock.yaml` on merge.
 - **ProposalAccepted and versions.** Accepting a proposal carries no client text, so the ledger accepts `ProposalAccepted` at any `baseVersion` while the proposal is still open and not stale; the fold derives the steps from the proposal's mapped positions. The client never rebases or re-accepts it.
+
+## Contract revisions (phase 2c)
+
+Applied by the contract revision pass; `packages/schema/README.md` ("Contract revisions") has the details. `SCHEMA_VERSION` stays 1.
+
+- **Declared input.** Commands that insert research material on a user gesture tag their transaction with `INPUT_METHOD_META` (`'longhand/input-method'`) and a schema `DeclaredInput`; only `citation` and `clipping` can be declared, with keystroke kinds `cite` and `clip`. The editor reads the old keys `longhand/editor-input` and `longhand/research-input` for one more version only.
+- **Clipping text** has no empty lines and no leading or trailing newline (`ClippingSavedSchema`). The fold keeps collapsing blank lines when it compares a placed quote block.
+- **Synopses** belong to documents or folders (`SynopsisEdited` with `documentId` or `folderId`).
+- **`SourceSearch`** is a schema interface returning `SurfacedCandidate[]`; the provider comes from the search, never inferred.
+- **`ProvenanceRun.matchedKind`** says what `suggestionId` names (any annotation, a discuss thread or a feedback session). Lanes that show or count AI-assisted text read it instead of guessing from the id.
+- **Folded feedback scopes** are in the current version: `FeedbackRequestState.scope` selection `from`/`to`/`version` are mapped by the fold.
+- **`ProvenanceSummary`** (the export appendix input) lives in the schema, so the report lane produces it.
