@@ -131,7 +131,8 @@ export function sourceUpdatedDraft(
  * Normalizes clipping text so that placing it reproduces it exactly: CRLF / CR
  * become `\n` (the paragraph separator), blank lines collapse (an empty paragraph
  * contributes no inline text, so `"a\n\nb"` would place as `"a\nb"` and the fold
- * would downgrade it), and leading / trailing line breaks are dropped.
+ * would downgrade it), and leading / trailing line breaks are dropped. `ClippingSavedSchema`
+ * rejects text with empty lines or leading / trailing newlines, so drafts must go through this.
  */
 export function normalizeClippingText(text: string): string {
   return text

@@ -96,6 +96,10 @@ export const KeystrokeKindSchema = z.enum([
   'redo',
   'format',
   'autocorrect',
+  /** Cite: a citation node inserted by the research command (`citation` run). */
+  'cite',
+  /** Place clipping: a quote block inserted by the research command (`clipping` run). */
+  'clip',
 ]);
 /** Kind of keystroke timeline entry. */
 export type KeystrokeKind = z.infer<typeof KeystrokeKindSchema>;

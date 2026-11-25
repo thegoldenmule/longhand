@@ -520,7 +520,9 @@ export const CitationInsertedSchema = z.object({
  * Saves a clipping (a quote with its location) to a source. Clipping text is
  * external text: placing it in the manuscript (a `TextEdited` run with method
  * `clipping`) yields provenance class `quoted`, never `typed`. Paragraphs are
- * separated by `"\n"`.
+ * separated by a single `"\n"`: the text has no empty lines and no leading or
+ * trailing newline (the fold still collapses blank lines before comparing, as
+ * defense).
  */
 export const ClippingSavedSchema = z.object({
   clippingId: IdSchema,
@@ -529,7 +531,11 @@ export const ClippingSavedSchema = z.object({
     .string()
     .min(1)
     .max(TEXT_LIMITS.clippingMaxChars)
-    .refine((s) => s.trim().length > 0, 'clipping must not be blank'),
+    .refine((s) => s.trim().length > 0, 'clipping must not be blank')
+    .refine(
+      (s) => !s.split('\n').includes(''),
+      'clipping text must not contain empty lines or leading/trailing newlines',
+    ),
   locator: LocatorSchema.nullable(),
   note: z.string().max(TEXT_LIMITS.clippingNoteMaxChars).nullable(),
 });

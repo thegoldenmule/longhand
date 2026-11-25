@@ -1,4 +1,5 @@
 import {
+  INPUT_METHOD_META,
   InputRunSchema,
   TextEditedSchema,
   docFromJSON,
@@ -9,13 +10,7 @@ import {
 import { EditorState, NodeSelection, TextSelection, type Transaction } from 'prosemirror-state';
 import { Step } from 'prosemirror-transform';
 import { describe, expect, it } from 'vitest';
-import {
-  RESEARCH_INPUT_META,
-  clippingNode,
-  getResearchInput,
-  insertCitation,
-  placeClipping,
-} from './commands';
+import { clippingNode, getResearchInput, insertCitation, placeClipping } from './commands';
 import { citationInsertedDraft } from './drafts';
 
 const DOC: PMNodeJSON = {
@@ -76,7 +71,7 @@ describe('insertCitation', () => {
     );
     expect(tr.selection.from).toBe(15);
 
-    const input = tr.getMeta(RESEARCH_INPUT_META);
+    const input = tr.getMeta(INPUT_METHOD_META);
     expect(input).toEqual({
       run: { steps: 1, method: 'citation', citationId: 'cite1' },
       companions: [
@@ -86,7 +81,7 @@ describe('insertCitation', () => {
         },
       ],
       characters: 0,
-      keystroke: { kind: 'paste', len: 0 },
+      keystroke: { kind: 'cite', len: 0 },
     });
     expect(InputRunSchema.safeParse(input.run).success).toBe(true);
     expect(textEditedFor(tr).runs[0]).toEqual(input.run);
@@ -166,7 +161,7 @@ describe('placeClipping', () => {
       run: { steps: 1, method: 'clipping', clippingId: 'clip1' },
       companions: [],
       characters: clipping.text.length - 1,
-      keystroke: { kind: 'paste', len: clipping.text.length - 1 },
+      keystroke: { kind: 'clip', len: clipping.text.length - 1 },
     });
     expect(textEditedFor(tr).characters).toBe(clipping.text.length - 1);
     // The cursor lands after the quote, in the next paragraph.

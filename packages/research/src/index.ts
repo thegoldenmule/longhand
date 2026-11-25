@@ -141,7 +141,6 @@ export {
 
 // ProseMirror commands
 export {
-  RESEARCH_INPUT_META,
   citationTransaction,
   clippingNode,
   clippingTransaction,
@@ -151,7 +150,6 @@ export {
   type InsertCitationOptions,
   type PlaceClippingOptions,
   type PlaceableClipping,
-  type ResearchInput,
 } from './commands';
 
 // React components

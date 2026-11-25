@@ -1,4 +1,4 @@
-import { schema } from '@longhand/schema';
+import { INPUT_METHOD_META, schema, type DeclaredInput } from '@longhand/schema';
 import { EditorState, Plugin, TextSelection } from 'prosemirror-state';
 import { Transform } from 'prosemirror-transform';
 import { afterEach, describe, expect, it } from 'vitest';
@@ -272,28 +272,34 @@ describe('createEditorView: commands for other lanes', () => {
     ]);
   });
 
-  it('accepts transactions declared through the research meta alias', async () => {
-    const { handle, view, transport } = make();
-    document.dispatchEvent(new Event('click'));
-    const tr = view.state.tr.insert(
-      13,
-      schema.nodes.citation!.create({ sourceId: 's9', locator: null }),
-    );
-    tr.setMeta('longhand/research-input', {
-      run: { steps: 1, method: 'citation', citationId: 'cit-r' },
-      companions: [
-        {
-          type: 'CitationInserted',
-          payload: { citationId: 'cit-r', documentId: 'doc1', sourceId: 's9', locator: null },
-        },
-      ],
-      characters: 0,
-      keystroke: { kind: 'paste', len: 0 },
+  for (const key of [INPUT_METHOD_META, 'longhand/research-input', 'longhand/editor-input']) {
+    it(`accepts transactions declared through ${key}`, async () => {
+      const { handle, view, transport } = make();
+      document.dispatchEvent(new Event('click'));
+      const tr = view.state.tr.insert(
+        13,
+        schema.nodes.citation!.create({ sourceId: 's9', locator: null }),
+      );
+      const input: DeclaredInput = {
+        run: { steps: 1, method: 'citation', citationId: 'cit-r' },
+        companions: [
+          {
+            type: 'CitationInserted',
+            payload: { citationId: 'cit-r', documentId: 'doc1', sourceId: 's9', locator: null },
+          },
+        ],
+        characters: 0,
+        keystroke: { kind: 'cite', len: 0 },
+      };
+      tr.setMeta(key, input);
+      view.dispatch(tr);
+      await committed(handle);
+      expect(transport.commits().map((c) => c.type)).toEqual(['CitationInserted', 'TextEdited']);
+      expect(transport.commits('TextEdited')[0]!.payload.timeline.map((k) => k.kind)).toEqual([
+        'cite',
+      ]);
     });
-    view.dispatch(tr);
-    await committed(handle);
-    expect(transport.commits().map((c) => c.type)).toEqual(['CitationInserted', 'TextEdited']);
-  });
+  }
 
   it('places a clipping as a quote block', async () => {
     const { handle, transport, view } = make();
@@ -306,6 +312,7 @@ describe('createEditorView: commands for other lanes', () => {
     const te = transport.commits('TextEdited')[0]!;
     expect(te.payload.runs).toEqual([{ steps: 1, method: 'clipping', clippingId: 'clip1' }]);
     expect(te.payload.characters).toBe(16);
+    expect(te.payload.timeline).toEqual([{ t: 0, kind: 'clip', len: 16 }]);
   });
 
   it('adds traceSuggestionId to typed runs while tracing', async () => {

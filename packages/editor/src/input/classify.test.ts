@@ -1,4 +1,4 @@
-import { sha256Hex } from '@longhand/schema';
+import { sha256Hex, type DeclaredInput } from '@longhand/schema';
 import { describe, expect, it } from 'vitest';
 import { classifyTransaction, type ClassifyContext, type TransactionFacts } from './classify';
 import type { TrackerState } from './tracker';
@@ -301,7 +301,7 @@ describe('classifyTransaction', () => {
     expect(paste.ok && paste.tag?.traceSuggestionId).toBeFalsy();
   });
 
-  describe('declared input (EDITOR_INPUT_META)', () => {
+  describe('declared input (INPUT_METHOD_META)', () => {
     const citation = {
       run: { steps: 1, method: 'citation' as const, citationId: 'cit1' },
       companions: [
@@ -311,7 +311,7 @@ describe('classifyTransaction', () => {
         },
       ],
       characters: 0,
-      keystroke: { kind: 'paste' as const, len: 0 },
+      keystroke: { kind: 'cite' as const, len: 0 },
     };
     const citeFacts = facts(
       {
@@ -330,7 +330,7 @@ describe('classifyTransaction', () => {
         tag: {
           method: 'citation',
           citationId: 'cit1',
-          kind: 'paste',
+          kind: 'cite',
           companions: citation.companions,
         },
       });
@@ -346,7 +346,11 @@ describe('classifyTransaction', () => {
     });
 
     it('refuses declared methods the fold cannot verify', () => {
-      const typed = { ...citation, run: { steps: 1, method: 'typed' as const } };
+      // The meta is untyped at runtime: a forged method is refused.
+      const typed = {
+        ...citation,
+        run: { steps: 1, method: 'typed' },
+      } as unknown as DeclaredInput;
       expect(
         classifyTransaction(facts({ declared: typed }), tracker({ activationAt: NOW - 1 }), ctx).ok,
       ).toBe(false);
@@ -357,7 +361,7 @@ describe('classifyTransaction', () => {
         run: { steps: 1, method: 'clipping' as const, clippingId: 'clip1' },
         companions: [],
         characters: 5,
-        keystroke: { kind: 'paste' as const, len: 5 },
+        keystroke: { kind: 'clip' as const, len: 5 },
       };
       const ok = facts(
         { declared: clip, insertedNodeNames: new Set(['quote_block', 'paragraph', 'text']) },
@@ -365,7 +369,7 @@ describe('classifyTransaction', () => {
       );
       expect(classifyTransaction(ok, tracker({ activationAt: NOW - 1 }), ctx)).toMatchObject({
         ok: true,
-        tag: { method: 'clipping', clippingId: 'clip1', timelineLen: 5 },
+        tag: { method: 'clipping', clippingId: 'clip1', kind: 'clip', timelineLen: 5 },
       });
       const bad = facts(
         { declared: clip, insertedNodeNames: new Set(['heading', 'text']) },

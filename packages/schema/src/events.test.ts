@@ -1,10 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import {
   ACTOR_PERMISSIONS,
+  ClippingSavedSchema,
   EVENTS,
   EVENT_TYPES,
   EVENT_TYPES_BY_ACTOR,
   InputRunSchema,
+  KeystrokeSchema,
   MANUSCRIPT_EVENT_TYPES,
   PasteOccurredSchema,
   SourceAddedSchema,
@@ -223,6 +225,22 @@ describe('other payload rules', () => {
     expect(ok({ folderId: 'f1', synopsis: '' })).toBe(true);
     expect(ok({ documentId: 'd1', folderId: 'f1', synopsis: 'A' })).toBe(false);
     expect(ok({ synopsis: 'A' })).toBe(false);
+  });
+
+  it('clipping text has no empty lines and no leading or trailing newline', () => {
+    const ok = (text: string) =>
+      ClippingSavedSchema.safeParse({ ...EXAMPLE_PAYLOADS.ClippingSaved, text }).success;
+    expect(ok('One line.')).toBe(true);
+    expect(ok('First paragraph.\nSecond paragraph.')).toBe(true);
+    expect(ok('First.\n\nSecond.')).toBe(false);
+    expect(ok('\nLeading.')).toBe(false);
+    expect(ok('Trailing.\n')).toBe(false);
+    expect(ok('   ')).toBe(false);
+  });
+
+  it('keystroke kinds include cite and clip', () => {
+    for (const kind of ['cite', 'clip', 'paste'])
+      expect(KeystrokeSchema.safeParse({ t: 0, kind, len: 0 }).success).toBe(true);
   });
 
   it('word-choice suggestions carry 1-3 alternatives', () => {

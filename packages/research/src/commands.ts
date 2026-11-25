@@ -3,24 +3,25 @@
  * (a `citation` atom) and Place clipping (a `quote_block`).
  *
  * Neither command types text. Each produces exactly one `ReplaceStep` and tags its
- * transaction with {@link RESEARCH_INPUT_META}, which tells the editor's batcher:
+ * transaction with `INPUT_METHOD_META` (`@longhand/schema`) set to a
+ * `DeclaredInput`, which tells the editor's batcher:
  *
  * - the input-method run for these steps (`citation` + `citationId`, or
  *   `clipping` + `clippingId`), exactly as `InputRun` in `@longhand/schema`;
  * - the companion event that must be committed *before* the `TextEdited` carrying
  *   the steps (`CitationInserted` for a citation; a clipping's `ClippingSaved` was
  *   committed when it was saved, so it has none);
- * - the `characters` the steps insert and a suggested keystroke-timeline entry.
+ * - the `characters` the steps insert and the keystroke-timeline entry (`cite` or
+ *   `clip`).
  *
  * See the package README ("Editor integration") for the full contract.
  */
 import {
+  INPUT_METHOD_META,
   LocatorSchema,
   schema as longhandSchema,
   type ClippingState,
-  type EventPayload,
-  type InputRun,
-  type Keystroke,
+  type DeclaredInput,
 } from '@longhand/schema';
 import type { Node as PMNode, Schema } from 'prosemirror-model';
 import {
@@ -33,31 +34,9 @@ import {
 } from 'prosemirror-state';
 import { newId } from './drafts';
 
-/** Transaction meta key carrying {@link ResearchInput}. */
-export const RESEARCH_INPUT_META = 'longhand/research-input';
-
-/** What a research command's transaction tells the editor's batcher. */
-export interface ResearchInput {
-  /** The input-method run for every step of this transaction (`run.steps === tr.steps.length`). */
-  run: InputRun & { method: 'citation' | 'clipping' };
-  /**
-   * Companion events to commit before the `TextEdited` that carries these steps
-   * (lower seq). Wrap each with `makeDraft` / `citationInsertedDraft`.
-   */
-  companions: Array<{ type: 'CitationInserted'; payload: EventPayload<'CitationInserted'> }>;
-  /** Inline text characters inserted (0 for a citation; the clipping text without `\n` separators). */
-  characters: number;
-  /**
-   * Suggested keystroke-timeline entry for the action. The schema has no
-   * dedicated kind for Cite / Place clipping, so these are recorded as `paste`
-   * (not typing), with `len` = `characters`.
-   */
-  keystroke: Pick<Keystroke, 'kind' | 'len'>;
-}
-
-/** Reads the research tag from a transaction, if it has one. */
-export function getResearchInput(tr: Transaction): ResearchInput | null {
-  return (tr.getMeta(RESEARCH_INPUT_META) as ResearchInput | undefined) ?? null;
+/** Reads the declared input (`INPUT_METHOD_META`) from a transaction, if it has one. */
+export function getResearchInput(tr: Transaction): DeclaredInput | null {
+  return (tr.getMeta(INPUT_METHOD_META) as DeclaredInput | undefined) ?? null;
 }
 
 /** Options for {@link insertCitation}. */
@@ -86,7 +65,7 @@ export function citationTransaction(
   sourceId: string,
   locator: string | null | undefined,
   opts: InsertCitationOptions,
-): { tr: Transaction; input: ResearchInput } | null {
+): { tr: Transaction; input: DeclaredInput } | null {
   const type = state.schema.nodes.citation;
   if (!type) return null;
   if (state.selection instanceof NodeSelection && !state.selection.node.isInline) return null;
@@ -99,7 +78,7 @@ export function citationTransaction(
   const tr = state.tr.insert($pos.pos, node);
   tr.setSelection(TextSelection.create(tr.doc, $pos.pos + node.nodeSize));
   const citationId = opts.citationId ?? newId(opts);
-  const input: ResearchInput = {
+  const input: DeclaredInput = {
     run: { steps: tr.steps.length, method: 'citation', citationId },
     companions: [
       {
@@ -108,9 +87,9 @@ export function citationTransaction(
       },
     ],
     characters: 0,
-    keystroke: { kind: 'paste', len: 0 },
+    keystroke: { kind: 'cite', len: 0 },
   };
-  tr.setMeta(RESEARCH_INPUT_META, input);
+  tr.setMeta(INPUT_METHOD_META, input);
   tr.scrollIntoView();
   return { tr, input };
 }
@@ -118,7 +97,7 @@ export function citationTransaction(
 /**
  * Cite: inserts a structured `citation` node (not text) tied to `sourceId` and an
  * optional locator such as `p. 12`. The transaction is tagged with
- * {@link RESEARCH_INPUT_META}.
+ * `INPUT_METHOD_META`.
  */
 export function insertCitation(
   sourceId: string,
@@ -192,7 +171,7 @@ export function clippingTransaction(
   state: EditorState,
   clipping: PlaceableClipping,
   opts: PlaceClippingOptions = {},
-): { tr: Transaction; input: ResearchInput } | null {
+): { tr: Transaction; input: DeclaredInput } | null {
   if (!state.schema.nodes.quote_block) return null;
   const node = clippingNode(clipping, state.schema);
   const at = blockInsertPos(state, node, opts.pos);
@@ -201,13 +180,13 @@ export function clippingTransaction(
   const after = tr.doc.resolve(at + node.nodeSize);
   tr.setSelection(Selection.near(after, 1));
   const characters = clipping.text.replace(/\n/g, '').length;
-  const input: ResearchInput = {
+  const input: DeclaredInput = {
     run: { steps: tr.steps.length, method: 'clipping', clippingId: clipping.id },
     companions: [],
     characters,
-    keystroke: { kind: 'paste', len: characters },
+    keystroke: { kind: 'clip', len: characters },
   };
-  tr.setMeta(RESEARCH_INPUT_META, input);
+  tr.setMeta(INPUT_METHOD_META, input);
   tr.scrollIntoView();
   return { tr, input };
 }
@@ -215,7 +194,7 @@ export function clippingTransaction(
 /**
  * Place clipping: inserts the clipping as a `quote_block` after the current
  * top-level block. Its text is quoted, never typed. The transaction is tagged with
- * {@link RESEARCH_INPUT_META}.
+ * `INPUT_METHOD_META`.
  */
 export function placeClipping(
   clipping: PlaceableClipping,

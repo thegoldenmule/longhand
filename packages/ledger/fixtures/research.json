@@ -1979,7 +1979,7 @@
       "accountId": "acct-1",
       "seq": 8,
       "prevHash": "278f83c773533ebaa3b5bc740f7416ace90cbcdef4ce3e626ebe7c032f2baa06",
-      "hash": "f7def5ce38665d676243534d06af499ef5bdfe7c5aa71e2fcba4cbd32e43b8e0",
+      "hash": "f189ed3ae08b4c0775cb540ab07fca365d5413aa3de4d5b90550c90d69b098e0",
       "clientTime": "2026-11-02T09:00:19.793Z",
       "serverTime": "2026-11-02T09:00:20.043Z",
       "actor": {
@@ -1993,7 +1993,7 @@
       "payload": {
         "clippingId": "clip-3",
         "sourceId": "src-okafor",
-        "text": "Wet years cluster.\n\nDry years do not.",
+        "text": "Wet years cluster.\nDry years do not.",
         "locator": "p. 120",
         "note": null
       }
@@ -2003,8 +2003,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 9,
-      "prevHash": "f7def5ce38665d676243534d06af499ef5bdfe7c5aa71e2fcba4cbd32e43b8e0",
-      "hash": "403f390faaefbc7c2ad3a718fdaba94e8cc68dc63b026b72c0f7f4db308d6967",
+      "prevHash": "f189ed3ae08b4c0775cb540ab07fca365d5413aa3de4d5b90550c90d69b098e0",
+      "hash": "72ed103896e522c799f04518b00d7daba02830d350378d0b29ac552823a6e622",
       "clientTime": "2026-11-02T09:00:20.193Z",
       "serverTime": "2026-11-02T09:00:20.443Z",
       "actor": {
@@ -2033,8 +2033,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 10,
-      "prevHash": "403f390faaefbc7c2ad3a718fdaba94e8cc68dc63b026b72c0f7f4db308d6967",
-      "hash": "7bc62b2b14d32aba379d54e34530acbb1850c8f35bd5dcc6a30d071cc883ab6a",
+      "prevHash": "72ed103896e522c799f04518b00d7daba02830d350378d0b29ac552823a6e622",
+      "hash": "0070cb24e5f951f556dd4ee19191cc316ac128f188742a8f509aac6be8b76f39",
       "clientTime": "2026-11-02T09:00:22.093Z",
       "serverTime": "2026-11-02T09:00:22.143Z",
       "actor": {
@@ -2059,8 +2059,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 11,
-      "prevHash": "7bc62b2b14d32aba379d54e34530acbb1850c8f35bd5dcc6a30d071cc883ab6a",
-      "hash": "2883fbd7c6594905486ff2669a01a51a3abd7d0641b0444917ff3b908bc6fa44",
+      "prevHash": "0070cb24e5f951f556dd4ee19191cc316ac128f188742a8f509aac6be8b76f39",
+      "hash": "288658b30726e0277aca042be222a76618c2779d986cb63740a49db753cf0fb3",
       "clientTime": "2026-11-02T09:00:23.593Z",
       "serverTime": "2026-11-02T09:00:23.643Z",
       "actor": {
@@ -2094,8 +2094,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 12,
-      "prevHash": "2883fbd7c6594905486ff2669a01a51a3abd7d0641b0444917ff3b908bc6fa44",
-      "hash": "afd79e21d8333792b258e0af44cba0296e8268ec3c8bb84276541cdaf1f5edca",
+      "prevHash": "288658b30726e0277aca042be222a76618c2779d986cb63740a49db753cf0fb3",
+      "hash": "b16c06ae06306466b9f80196a8bbdc0ebee1852be5567cbd241a98fe24598a58",
       "clientTime": "2026-11-02T09:00:25.093Z",
       "serverTime": "2026-11-02T09:00:25.143Z",
       "actor": {
@@ -2129,8 +2129,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 13,
-      "prevHash": "afd79e21d8333792b258e0af44cba0296e8268ec3c8bb84276541cdaf1f5edca",
-      "hash": "edd830963daefc7dd03fa5d59aefd7294d8cb0dfc6de0acf9ffa1dd4075449a9",
+      "prevHash": "b16c06ae06306466b9f80196a8bbdc0ebee1852be5567cbd241a98fe24598a58",
+      "hash": "8b8694f67f44e78764a9ccf8bf7263d65ef43f4402ed7b1d7e9e94c866b3a35f",
       "clientTime": "2026-11-02T09:00:26.593Z",
       "serverTime": "2026-11-02T09:00:26.643Z",
       "actor": {
@@ -2199,8 +2199,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 14,
-      "prevHash": "edd830963daefc7dd03fa5d59aefd7294d8cb0dfc6de0acf9ffa1dd4075449a9",
-      "hash": "88946ecfb6715c0d5ed3088373e769464870d217c71690ced724f30320d3a5f2",
+      "prevHash": "8b8694f67f44e78764a9ccf8bf7263d65ef43f4402ed7b1d7e9e94c866b3a35f",
+      "hash": "ef2692cbc476bd82887ecf9b1d4039e57c1ca0579b25bd28e64af302277f1b3e",
       "clientTime": "2026-11-02T09:00:28.093Z",
       "serverTime": "2026-11-02T09:00:28.143Z",
       "actor": {
@@ -2235,8 +2235,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 15,
-      "prevHash": "88946ecfb6715c0d5ed3088373e769464870d217c71690ced724f30320d3a5f2",
-      "hash": "48209ea2ed5282b52c8671ceda3842da52a6964a95e5074a20aec17b839f8aa3",
+      "prevHash": "ef2692cbc476bd82887ecf9b1d4039e57c1ca0579b25bd28e64af302277f1b3e",
+      "hash": "b0d6ff9087b6b467602a5066d16762ecf7a9d47476a6bac097a1ad00714420de",
       "clientTime": "2026-11-02T09:00:29.593Z",
       "serverTime": "2026-11-02T09:00:29.643Z",
       "actor": {
@@ -2261,8 +2261,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 16,
-      "prevHash": "48209ea2ed5282b52c8671ceda3842da52a6964a95e5074a20aec17b839f8aa3",
-      "hash": "dc9e218cd5e0c2019858e96b27fff18fd783d21020239e570038b4126a982a10",
+      "prevHash": "b0d6ff9087b6b467602a5066d16762ecf7a9d47476a6bac097a1ad00714420de",
+      "hash": "cb3a78740eb67d0762fc2056e4abd7a969c3a8c3ef8df07d966b26711eb23759",
       "clientTime": "2026-11-02T09:00:29.593Z",
       "serverTime": "2026-11-02T09:00:29.843Z",
       "actor": {
@@ -2308,8 +2308,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 17,
-      "prevHash": "dc9e218cd5e0c2019858e96b27fff18fd783d21020239e570038b4126a982a10",
-      "hash": "7a36bc298697acb17d6cf2888c774f791a3b2a5037fd7f0d85c0b1ccb7695474",
+      "prevHash": "cb3a78740eb67d0762fc2056e4abd7a969c3a8c3ef8df07d966b26711eb23759",
+      "hash": "ad77078a86092b230c1dbf43ce5c6f08b853eedb0c181ecb9bb6d50936bd21f5",
       "clientTime": "2026-11-02T09:00:29.993Z",
       "serverTime": "2026-11-02T09:00:30.243Z",
       "actor": {
@@ -2330,8 +2330,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 18,
-      "prevHash": "7a36bc298697acb17d6cf2888c774f791a3b2a5037fd7f0d85c0b1ccb7695474",
-      "hash": "42126dadf275f662363b2382da5b99aafbff66f600c9e7ba2ce690cd78dd85b7",
+      "prevHash": "ad77078a86092b230c1dbf43ce5c6f08b853eedb0c181ecb9bb6d50936bd21f5",
+      "hash": "9c3a98f32ce9da1086e48258f67540f6af7bf330955291ca703fcf771bdf2abb",
       "clientTime": "2026-11-02T09:00:30.393Z",
       "serverTime": "2026-11-02T09:00:30.643Z",
       "actor": {
@@ -2354,8 +2354,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 19,
-      "prevHash": "42126dadf275f662363b2382da5b99aafbff66f600c9e7ba2ce690cd78dd85b7",
-      "hash": "ce5ba76471a5ece8dbf8c5ce0e704f3daeacd2b9a75e0ba5e543f1d57c74fe52",
+      "prevHash": "9c3a98f32ce9da1086e48258f67540f6af7bf330955291ca703fcf771bdf2abb",
+      "hash": "8d70a7fae4b727474761a23f50dee02850f8cecb3142212aefdcb87da96be43e",
       "clientTime": "2026-11-02T09:00:30.793Z",
       "serverTime": "2026-11-02T09:00:31.043Z",
       "actor": {
@@ -2397,7 +2397,7 @@
         "timeline": [
           {
             "t": 0,
-            "kind": "insert",
+            "kind": "cite",
             "len": 0
           }
         ],
@@ -2410,8 +2410,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 20,
-      "prevHash": "ce5ba76471a5ece8dbf8c5ce0e704f3daeacd2b9a75e0ba5e543f1d57c74fe52",
-      "hash": "705ca4e4f1c421ae7947d3402e10ab0eac063fb3e81316ee85961f7f9efb9145",
+      "prevHash": "8d70a7fae4b727474761a23f50dee02850f8cecb3142212aefdcb87da96be43e",
+      "hash": "f073c8a4eff4eb86e59d4f2075eee577bfbe83f320dd50f1d2ef8bdaf7d67888",
       "clientTime": "2026-11-02T09:00:32.793Z",
       "serverTime": "2026-11-02T09:00:33.043Z",
       "actor": {
@@ -2474,11 +2474,11 @@
         "timeline": [
           {
             "t": 0,
-            "kind": "paste",
-            "len": 85
+            "kind": "clip",
+            "len": 84
           }
         ],
-        "characters": 85,
+        "characters": 84,
         "durationMs": 0
       }
     },
@@ -2487,8 +2487,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 21,
-      "prevHash": "705ca4e4f1c421ae7947d3402e10ab0eac063fb3e81316ee85961f7f9efb9145",
-      "hash": "2f68e44c6686666130fe55ea0a1c3d4a08b554a8e98e4b72f4da6062feb69f49",
+      "prevHash": "f073c8a4eff4eb86e59d4f2075eee577bfbe83f320dd50f1d2ef8bdaf7d67888",
+      "hash": "8678448396e49c073cfde354fcdb55d9a6c73f6bc41f6da38cce8a14c27fe8e9",
       "clientTime": "2026-11-02T09:00:34.793Z",
       "serverTime": "2026-11-02T09:00:35.043Z",
       "actor": {
@@ -2527,6 +2527,9 @@
                       ]
                     },
                     {
+                      "type": "paragraph"
+                    },
+                    {
                       "type": "paragraph",
                       "content": [
                         {
@@ -2551,11 +2554,11 @@
         "timeline": [
           {
             "t": 0,
-            "kind": "paste",
-            "len": 36
+            "kind": "clip",
+            "len": 35
           }
         ],
-        "characters": 36,
+        "characters": 35,
         "durationMs": 0
       }
     },
@@ -2564,8 +2567,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 22,
-      "prevHash": "2f68e44c6686666130fe55ea0a1c3d4a08b554a8e98e4b72f4da6062feb69f49",
-      "hash": "7a02c8b1300f15f8606d7dd1b086242d2cb993fd80b11a30130389e396410777",
+      "prevHash": "8678448396e49c073cfde354fcdb55d9a6c73f6bc41f6da38cce8a14c27fe8e9",
+      "hash": "cce3bfd72a078fdab7c46f64c7226c3663d6cd0a31acd914dbf9f0593b9f3b16",
       "clientTime": "2026-11-02T09:00:36.793Z",
       "serverTime": "2026-11-02T09:00:37.043Z",
       "actor": {
@@ -2582,8 +2585,8 @@
         "steps": [
           {
             "stepType": "replace",
-            "from": 231,
-            "to": 231,
+            "from": 233,
+            "to": 233,
             "slice": {
               "content": [
                 {
@@ -2619,7 +2622,7 @@
         "timeline": [
           {
             "t": 0,
-            "kind": "paste",
+            "kind": "clip",
             "len": 31
           }
         ],
@@ -2632,8 +2635,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 23,
-      "prevHash": "7a02c8b1300f15f8606d7dd1b086242d2cb993fd80b11a30130389e396410777",
-      "hash": "187895eb723d02baf5e0da47cf7cabfe9dadd4f3f002ecef758cd0cd0eb9c90c",
+      "prevHash": "cce3bfd72a078fdab7c46f64c7226c3663d6cd0a31acd914dbf9f0593b9f3b16",
+      "hash": "0e68a988711abb725efe30f99f7d70131879e821e5644f06c406c1dfb346b3d5",
       "clientTime": "2026-11-02T09:00:38.793Z",
       "serverTime": "2026-11-02T09:00:39.043Z",
       "actor": {
@@ -2655,8 +2658,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 24,
-      "prevHash": "187895eb723d02baf5e0da47cf7cabfe9dadd4f3f002ecef758cd0cd0eb9c90c",
-      "hash": "c46df6bf5549454b9b437ec13ca762090aef50f9e0152ffac6b7b7d16540fb46",
+      "prevHash": "0e68a988711abb725efe30f99f7d70131879e821e5644f06c406c1dfb346b3d5",
+      "hash": "1a3ca5c8bdcfd57d19784f98effc6c752cf9abac212f94df72dd8bc648134b94",
       "clientTime": "2026-11-02T09:00:39.193Z",
       "serverTime": "2026-11-02T09:00:39.443Z",
       "actor": {
@@ -2674,12 +2677,12 @@
   ],
   "expected": {
     "headSeq": 24,
-    "headHash": "c46df6bf5549454b9b437ec13ca762090aef50f9e0152ffac6b7b7d16540fb46",
+    "headHash": "1a3ca5c8bdcfd57d19784f98effc6c752cf9abac212f94df72dd8bc648134b94",
     "state": {
       "projectId": "proj-1",
       "accountId": "acct-1",
       "headSeq": 24,
-      "headHash": "c46df6bf5549454b9b437ec13ca762090aef50f9e0152ffac6b7b7d16540fb46",
+      "headHash": "1a3ca5c8bdcfd57d19784f98effc6c752cf9abac212f94df72dd8bc648134b94",
       "settings": {
         "genre": "",
         "audience": "",
@@ -2777,6 +2780,9 @@
                     ]
                   },
                   {
+                    "type": "paragraph"
+                  },
+                  {
                     "type": "paragraph",
                     "content": [
                       {
@@ -2853,14 +2859,14 @@
               "originSeq": 21
             },
             {
-              "from": 212,
-              "to": 229,
+              "from": 214,
+              "to": 231,
               "class": "quoted",
               "originSeq": 21
             },
             {
-              "from": 233,
-              "to": 264,
+              "from": 235,
+              "to": 266,
               "class": "pasted-external",
               "originSeq": 22
             }
@@ -3184,7 +3190,7 @@
         "clip-3": {
           "id": "clip-3",
           "sourceId": "src-okafor",
-          "text": "Wet years cluster.\n\nDry years do not.",
+          "text": "Wet years cluster.\nDry years do not.",
           "locator": "p. 120",
           "note": null,
           "savedSeq": 8,
@@ -3564,101 +3570,101 @@
             ]
           },
           {
-            "from": 212,
-            "to": 215,
+            "from": 214,
+            "to": 217,
             "text": "Dry",
             "class": "quoted",
-            "blockId": "p5",
+            "blockId": "p6",
             "originSeqs": [
               21
             ]
           },
           {
-            "from": 216,
-            "to": 221,
+            "from": 218,
+            "to": 223,
             "text": "years",
             "class": "quoted",
-            "blockId": "p5",
+            "blockId": "p6",
             "originSeqs": [
               21
             ]
           },
           {
-            "from": 222,
-            "to": 224,
+            "from": 224,
+            "to": 226,
             "text": "do",
             "class": "quoted",
-            "blockId": "p5",
+            "blockId": "p6",
             "originSeqs": [
               21
             ]
           },
           {
-            "from": 225,
-            "to": 228,
+            "from": 227,
+            "to": 230,
             "text": "not",
             "class": "quoted",
-            "blockId": "p5",
+            "blockId": "p6",
             "originSeqs": [
               21
             ]
           },
           {
-            "from": 233,
-            "to": 235,
+            "from": 235,
+            "to": 237,
             "text": "No",
             "class": "pasted-external",
-            "blockId": "p6",
+            "blockId": "p7",
             "originSeqs": [
               22
             ]
           },
           {
-            "from": 236,
-            "to": 242,
+            "from": 238,
+            "to": 244,
             "text": "single",
             "class": "pasted-external",
-            "blockId": "p6",
+            "blockId": "p7",
             "originSeqs": [
               22
             ]
           },
           {
-            "from": 243,
-            "to": 247,
+            "from": 245,
+            "to": 249,
             "text": "year",
             "class": "pasted-external",
-            "blockId": "p6",
+            "blockId": "p7",
             "originSeqs": [
               22
             ]
           },
           {
-            "from": 248,
-            "to": 256,
+            "from": 250,
+            "to": 258,
             "text": "accounts",
             "class": "pasted-external",
-            "blockId": "p6",
+            "blockId": "p7",
             "originSeqs": [
               22
             ]
           },
           {
-            "from": 257,
-            "to": 260,
+            "from": 259,
+            "to": 262,
             "text": "for",
             "class": "pasted-external",
-            "blockId": "p6",
+            "blockId": "p7",
             "originSeqs": [
               22
             ]
           },
           {
-            "from": 261,
-            "to": 263,
+            "from": 263,
+            "to": 265,
             "text": "it",
             "class": "pasted-external",
-            "blockId": "p6",
+            "blockId": "p7",
             "originSeqs": [
               22
             ]
@@ -3772,137 +3778,137 @@
     {
       "projectId": "proj-1",
       "seq": 8,
-      "hash": "f7def5ce38665d676243534d06af499ef5bdfe7c5aa71e2fcba4cbd32e43b8e0",
+      "hash": "f189ed3ae08b4c0775cb540ab07fca365d5413aa3de4d5b90550c90d69b098e0",
       "serverTime": "2026-11-02T09:00:20.043Z",
-      "signature": "IMhUbzgw2Pw4JzjUJvBTAt6lyKSuAedbRfmHO8UO9EykUgi4+MTt1fh8Br2ixuNtsF+6iVVWsWZn0Mdbexshtg==",
+      "signature": "iqs2n+36Dy1OB6hFE2FyyDON4YnkNfzb5ETspuFpShCC38AvR6axGFEUaThizOyjHabQDuBufqeA7dVFKUQh8g==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 9,
-      "hash": "403f390faaefbc7c2ad3a718fdaba94e8cc68dc63b026b72c0f7f4db308d6967",
+      "hash": "72ed103896e522c799f04518b00d7daba02830d350378d0b29ac552823a6e622",
       "serverTime": "2026-11-02T09:00:20.443Z",
-      "signature": "ODUGzmfNG3OFdfWc70bF7VSu6hbEzEeAcOEZoYpHqmAdGU7SBsi2gTaDtOKJRlWPg+fjZmSBUUTDpqMxSm6NzA==",
+      "signature": "GFlkl8NPnlYsAY4KnbpRwp9a9ulLJ2FLVxPzM71eUwOh6hlz6X4JOtNnxeWWPuaVnO2QUMSWhyLqF8uiMNWrNA==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 10,
-      "hash": "7bc62b2b14d32aba379d54e34530acbb1850c8f35bd5dcc6a30d071cc883ab6a",
+      "hash": "0070cb24e5f951f556dd4ee19191cc316ac128f188742a8f509aac6be8b76f39",
       "serverTime": "2026-11-02T09:00:22.143Z",
-      "signature": "wA4lR5KCjbvr25hfLVwFd4iK2PTRu1UhjLAli310M2QvQCAs6wfhzY8hSL4mnEtVIRM5Mh1C7MEuWFVmX5uK3w==",
+      "signature": "52aQbDI76NHdcpuM+bVYRN455mglY8ropGkYaaTTXybE1+P5/JLRF9JnEo9j7lqz71wjcB80Gr1VvuipJCVASQ==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 11,
-      "hash": "2883fbd7c6594905486ff2669a01a51a3abd7d0641b0444917ff3b908bc6fa44",
+      "hash": "288658b30726e0277aca042be222a76618c2779d986cb63740a49db753cf0fb3",
       "serverTime": "2026-11-02T09:00:23.643Z",
-      "signature": "nmXgcXzIRux3sTG9sEaow6rZfIFq01ONF3N4yHooBd/FNo1kcuFLXiqgynWXK9x0BvvC73i+kZEZJNGQ4P9gHQ==",
+      "signature": "vlvXcm+5bDSXicaylOusGRg97aeMGyoBs1VjJxyj25c9IdwSl8RhFIqxYO8C605+WYBWSgziOBFX84yGOyCSOg==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 12,
-      "hash": "afd79e21d8333792b258e0af44cba0296e8268ec3c8bb84276541cdaf1f5edca",
+      "hash": "b16c06ae06306466b9f80196a8bbdc0ebee1852be5567cbd241a98fe24598a58",
       "serverTime": "2026-11-02T09:00:25.143Z",
-      "signature": "N4+Gm4EgoV6EJtgsGQ3QHY+Y4ImiCGMuPMac+vF0jgSdIMVYll8Fl8U24BcqWBSUJTGjG7xuQPrmawlmeabNrg==",
+      "signature": "FjVHKIcLi8VuYO1oEPt1Sru210FId0jiO9aIDgXttcRU4OF+jpGri3dKavRbWoziQ4TolwBF2S1BjtavO2IP+g==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 13,
-      "hash": "edd830963daefc7dd03fa5d59aefd7294d8cb0dfc6de0acf9ffa1dd4075449a9",
+      "hash": "8b8694f67f44e78764a9ccf8bf7263d65ef43f4402ed7b1d7e9e94c866b3a35f",
       "serverTime": "2026-11-02T09:00:26.643Z",
-      "signature": "c4KGZnYO2tz7zp2eM7HmwIX6syAblmsZ881UH5M0OVHlAa7Y4XkaO2cOEkmaftBnNLUZ8Sgahrzqi7Zbdy1fSA==",
+      "signature": "P4SpRBtvJ5y4iTYQUJ7HWZ8aJmjhj2Lv435UCQGItYefRHCymLEloI7A+ugsmd3ZwzgrdgZLk689Z7CsA7sv6A==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 14,
-      "hash": "88946ecfb6715c0d5ed3088373e769464870d217c71690ced724f30320d3a5f2",
+      "hash": "ef2692cbc476bd82887ecf9b1d4039e57c1ca0579b25bd28e64af302277f1b3e",
       "serverTime": "2026-11-02T09:00:28.143Z",
-      "signature": "be12c2SYpUV/xV62Ln9HKW4qTM1auf5SrRk0Bb94ZC6yj+QhCB7+1mbEmUNmRFCN/bgoT7soNi/JqiM7Eh7zAg==",
+      "signature": "Ipo6SQRhYvLABUgWErc6BNiW9MvLYvaEG8/ssVfKCy8UMPTE3Cu6uyJFIxGTL6NXL551LuB/Mxo1MOOLA2zyVQ==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 15,
-      "hash": "48209ea2ed5282b52c8671ceda3842da52a6964a95e5074a20aec17b839f8aa3",
+      "hash": "b0d6ff9087b6b467602a5066d16762ecf7a9d47476a6bac097a1ad00714420de",
       "serverTime": "2026-11-02T09:00:29.643Z",
-      "signature": "jGhCUKcvmMhAmyiOJtvPQFsA3rVnb79V0KuLqPbqU1XnMV496IF33z7FoArfp9iP/xYnnNzxw+TkK5w1579dYw==",
+      "signature": "ybUZv6wsBMuEj3iQLwCCLsQQ1ML6370UCzja7ZuwtxFkOdPrQdHny2OjIpTO+5lQcVxHSDw7zb6Yxe49xu8j3g==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 16,
-      "hash": "dc9e218cd5e0c2019858e96b27fff18fd783d21020239e570038b4126a982a10",
+      "hash": "cb3a78740eb67d0762fc2056e4abd7a969c3a8c3ef8df07d966b26711eb23759",
       "serverTime": "2026-11-02T09:00:29.843Z",
-      "signature": "NjAoL7frJ2LD6J1at4NUg3S8XJN6WCWYf6SqCRxs6jkg2TFLE/pKrA9IKsQkVuG1mNNHvT1ZEUFcsMCpRyVKpA==",
+      "signature": "D+EZf6EMffe2D4SuemHiI1Zke/1WKVfevNZat9+Uo9x+AVA9+KSrdBvC4u8BwLbQ3v5NTthZGtzYfHWLFEiaeA==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 17,
-      "hash": "7a36bc298697acb17d6cf2888c774f791a3b2a5037fd7f0d85c0b1ccb7695474",
+      "hash": "ad77078a86092b230c1dbf43ce5c6f08b853eedb0c181ecb9bb6d50936bd21f5",
       "serverTime": "2026-11-02T09:00:30.243Z",
-      "signature": "0pvlXVSmBXTDbRNiLhThLVHEbvV2GfFXJThdVa/N5ejUxcxauv/U3ZHuxa7a/qP+cpyH0Gti1NwiJp6JM1Aa2Q==",
+      "signature": "LqLqAMnicf63vBUwPP3zb9B04x9Oa3gULWUZnH7blIGdg9K9MAqG0/nhBOV4mwLzfB9+yPIRhoZq9/Z8vribBg==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 18,
-      "hash": "42126dadf275f662363b2382da5b99aafbff66f600c9e7ba2ce690cd78dd85b7",
+      "hash": "9c3a98f32ce9da1086e48258f67540f6af7bf330955291ca703fcf771bdf2abb",
       "serverTime": "2026-11-02T09:00:30.643Z",
-      "signature": "N8VWbCYL7z65C9iqqzUVJQiofwIXMtAtUI81rI3vcP06wcPdt+DkWjDBpiN0MNFhwG6IuK9mQHV5uyE5KfDmtA==",
+      "signature": "11go4V9ynRCS8PCksx8XpT2vywBMhWykFaLeJ8APzXBL8lbc6fhbZxf/d2lQNAKe6o01TaUQkSR12BEyHj1UkA==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 19,
-      "hash": "ce5ba76471a5ece8dbf8c5ce0e704f3daeacd2b9a75e0ba5e543f1d57c74fe52",
+      "hash": "8d70a7fae4b727474761a23f50dee02850f8cecb3142212aefdcb87da96be43e",
       "serverTime": "2026-11-02T09:00:31.043Z",
-      "signature": "+OQTENFqmNoznWZQ9jKOOQj26ToGfzWo3E0Htwc9Rq6+VZbHhl563qXrafxTlQhShxV3HED17Jc30zEvhDTKKQ==",
+      "signature": "zSDcLLaImG8TpA+R+MIodtM/H+EoCvjqcLFaX0wp+WjkExmsGhxXUOB9/vrQNQ4YuQ+hxhY7l8v3iVTJZnEpow==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 20,
-      "hash": "705ca4e4f1c421ae7947d3402e10ab0eac063fb3e81316ee85961f7f9efb9145",
+      "hash": "f073c8a4eff4eb86e59d4f2075eee577bfbe83f320dd50f1d2ef8bdaf7d67888",
       "serverTime": "2026-11-02T09:00:33.043Z",
-      "signature": "ZTv3pNq/OHDukadsscOKqyfvYJTxUQBjeSAKRrGTkBngBOgbJXpORfB2P13T07KUxZ3F+dBEdWeCei8ub45RlQ==",
+      "signature": "f4Q1hPhC61g6MQlSs1XurGZ06pql4F9CiAkqahEROoFqyZvf81WBGjQYAAUfHcFcdMEsL8KV6dGnIbxPC6eBcg==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 21,
-      "hash": "2f68e44c6686666130fe55ea0a1c3d4a08b554a8e98e4b72f4da6062feb69f49",
+      "hash": "8678448396e49c073cfde354fcdb55d9a6c73f6bc41f6da38cce8a14c27fe8e9",
       "serverTime": "2026-11-02T09:00:35.043Z",
-      "signature": "Rlf0dPHafM/HS6vRlYJlh5VLbaLnHHgGUy13TGWWL7E4OzFotd7Q6CVjON4oCDt+7W7LhVI9FYe6ulgZb8a/9w==",
+      "signature": "jkFGcmXsdKx+EuqYPJspXXHcGc3uEMcms+yc+4WAo6jmXc9dhaVJLlwq7YKqT4Am1IoDbhbEyYG1/tMUdasGvw==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 22,
-      "hash": "7a02c8b1300f15f8606d7dd1b086242d2cb993fd80b11a30130389e396410777",
+      "hash": "cce3bfd72a078fdab7c46f64c7226c3663d6cd0a31acd914dbf9f0593b9f3b16",
       "serverTime": "2026-11-02T09:00:37.043Z",
-      "signature": "AZj/wXS8/gIhV3tadhu3WhbBf0xmkVTYis0WeSZCVftGzmeA0jJc0Goh1RhZ2KQrnXKPELQyWDiaBeTm8pwhTw==",
+      "signature": "SNfIM2xhOAi7pt/S9AiMLbgG8K2VEFLIIyTeSUwnEHgPHeR+ZJ6xczp7Bgy2IxM5/Btxh7bLB2/wdFlmfCtpDA==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 23,
-      "hash": "187895eb723d02baf5e0da47cf7cabfe9dadd4f3f002ecef758cd0cd0eb9c90c",
+      "hash": "0e68a988711abb725efe30f99f7d70131879e821e5644f06c406c1dfb346b3d5",
       "serverTime": "2026-11-02T09:00:39.043Z",
-      "signature": "6ru7/CuNk0b0eDA9ynspH5qjSn60xEKAmnXHdEKFsKNXvo+Xtuhi5o9bzCdDJft7uTHuy9SwIR72sPnUHI0K5A==",
+      "signature": "BXNqmmfAkAjPqRse/AbfzLuYPruyaM6Qr4Vj7v+NuZkUN5WfrGGOymv8ABjRVnMKMU2QML1jLFHU5HFq0J7RNg==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 24,
-      "hash": "c46df6bf5549454b9b437ec13ca762090aef50f9e0152ffac6b7b7d16540fb46",
+      "hash": "1a3ca5c8bdcfd57d19784f98effc6c752cf9abac212f94df72dd8bc648134b94",
       "serverTime": "2026-11-02T09:00:39.443Z",
-      "signature": "ArEcYFveqo72FrXcUk7wx9S/UYhEcfjkKwI2o4BANJoh5njxx7hTtuLQ3yXmYrIkrWjRHbkhdqjq+dXU7iMKSA==",
+      "signature": "G76aCEwYyV49gBb7Wp5DWmA/0wX8BjM8zuxxlt9LRDnrmIaz48ckOOONFhQW2PyeNv3R/eho9foUxuWMztMBQg==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     }
   ],

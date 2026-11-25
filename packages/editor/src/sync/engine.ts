@@ -802,6 +802,8 @@ function timelineEntries(
         : [{ at, kind: tag.kind, len: inserted }];
     case 'paste':
     case 'drop':
+    case 'cite':
+    case 'clip':
       return [{ at, kind: tag.kind, len: inserted }];
     case 'delete':
     case 'cut':

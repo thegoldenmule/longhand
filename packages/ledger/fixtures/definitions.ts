@@ -544,7 +544,7 @@ function research(): LedgerBuilder {
     'p. 114',
   );
   b.saveClipping('clip-2', 'src-okafor', 'No single year accounts for the trend.', 'p. 117');
-  b.saveClipping('clip-3', 'src-okafor', 'Wet years cluster.\n\nDry years do not.', 'p. 120');
+  b.saveClipping('clip-3', 'src-okafor', 'Wet years cluster.\nDry years do not.', 'p. 120');
   b.requestFeedback('req-r', {
     scope: { kind: 'document', documentId: 'doc-r' },
     lenses: ['claims-citations'],
@@ -605,8 +605,9 @@ function research(): LedgerBuilder {
   b.cite('doc-r', 'src-okafor', 'p. 114', { at: { after: '2000' } });
   // Place a clipping as a quote block (quoted).
   b.placeClipping('doc-r', 'clip-1');
-  // Blank lines are collapsed on both sides before comparing: still quoted.
-  b.placeClipping('doc-r', 'clip-3', { text: 'Wet years cluster.\nDry years do not.' });
+  // Clipping text has no empty lines (schema), but the fold still collapses an empty
+  // paragraph in the placed quote block before comparing: still quoted.
+  b.placeClipping('doc-r', 'clip-3', { text: 'Wet years cluster.\n\nDry years do not.' });
   // A clipping run whose text does not match the clipping is downgraded.
   b.placeClipping('doc-r', 'clip-2', { text: 'No single year accounts for it.' });
   b.dismiss('ss-1', 'later', null);

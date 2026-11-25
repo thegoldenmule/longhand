@@ -471,6 +471,7 @@ export class LedgerBuilder {
           k.kind === 'insert' ||
           k.kind === 'compose' ||
           k.kind === 'paste' ||
+          k.kind === 'clip' ||
           k.kind === 'drop' ||
           k.kind === 'autocorrect'
         ) {
@@ -862,7 +863,7 @@ export class LedgerBuilder {
       {
         run: { method: 'citation', citationId },
         build: (tr) => tr.insert(at, schema.nodes.citation!.create({ sourceId, locator })),
-        keys: [{ kind: 'insert', len: 0, dt: 0 }],
+        keys: [{ kind: 'cite', len: 0, dt: 0 }],
       },
     ]);
     return citationId;
@@ -888,7 +889,7 @@ export class LedgerBuilder {
       {
         run: { method: 'clipping', clippingId },
         build: (tr) => tr.insert(insertAt, qb),
-        keys: [{ kind: 'paste', len: text.length, dt: 0 }],
+        keys: [{ kind: 'clip', len: text.replace(/\n/g, '').length, dt: 0 }],
       },
     ]);
     return this;

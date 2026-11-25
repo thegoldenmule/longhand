@@ -29,8 +29,11 @@ describe('public API', () => {
       'VerificationBundleSchema',
       'PROVES_TABLE',
       'SESSION_GAP_MS',
+      'INPUT_METHOD_META',
+      'DECLARABLE_INPUT_METHODS',
     ]) {
       expect(api, name).toHaveProperty(name);
     }
+    expect(api.INPUT_METHOD_META).toBe('longhand/input-method');
   });
 });

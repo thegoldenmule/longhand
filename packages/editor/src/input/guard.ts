@@ -15,7 +15,12 @@
  * `flag` (default in production) lets a violating *insertion* through as
  * `pasted-external`, so the writer never loses text and nothing is overclaimed.
  */
-import { inlineTextBetween, KeystrokeKindSchema } from '@longhand/schema';
+import {
+  INPUT_METHOD_META,
+  inlineTextBetween,
+  KeystrokeKindSchema,
+  type DeclaredInput,
+} from '@longhand/schema';
 import {
   EditorState,
   Plugin,
@@ -28,9 +33,7 @@ import { changedRange, insertedNodeNames, isSplitStep, transformTotals } from '.
 import { Emitter, isProduction, newId } from '../util';
 import {
   classifyTransaction,
-  EDITOR_INPUT_META,
-  RESEARCH_INPUT_META_ALIAS,
-  type DeclaredInput,
+  LEGACY_INPUT_META_KEYS,
   type InputGrant,
   type InputTag,
   type TransactionFacts,
@@ -51,10 +54,14 @@ export function isRemoteTransaction(tr: Transaction): boolean {
   return REMOTE.has(tr);
 }
 
-/** The declared input on a transaction ({@link EDITOR_INPUT_META}, or the research alias). */
+/**
+ * The declared input on a transaction: `INPUT_METHOD_META`, or (for one version) a
+ * legacy key in {@link LEGACY_INPUT_META_KEYS}. Shape-checked only; the classifier
+ * refuses methods that cannot be declared.
+ */
 export function readDeclaredInput(tr: Transaction): DeclaredInput | undefined {
-  const v = (tr.getMeta(EDITOR_INPUT_META) ?? tr.getMeta(RESEARCH_INPUT_META_ALIAS)) as
-    DeclaredInput | undefined;
+  let v = tr.getMeta(INPUT_METHOD_META) as DeclaredInput | undefined;
+  for (const key of LEGACY_INPUT_META_KEYS) v ??= tr.getMeta(key) as DeclaredInput | undefined;
   if (!v || typeof v !== 'object' || !v.run || typeof v.run !== 'object') return undefined;
   return {
     run: v.run,

@@ -5,10 +5,12 @@
  */
 import {
   EMPTY_DOC_JSON,
+  INPUT_METHOD_META,
   docFromJSON,
   inlineTextBetween,
   schema,
   type CommitDraft,
+  type DeclaredInput,
   type CommitDraftOf,
   type EventPayloads,
   type PMNodeJSON,
@@ -29,7 +31,7 @@ import { EditorView } from 'prosemirror-view';
 import { editorInputRules, editorKeymaps } from './commands';
 import type { DecorationLayer, LayerDecoration } from './decorations';
 import { encodeMarker, MARKER_MIME, stampMarker, type SliceMarker } from './input/clipboard';
-import { EDITOR_INPUT_META, type DeclaredInput, type InputTag } from './input/classify';
+import type { InputTag } from './input/classify';
 import {
   createInputGuard,
   inputTagOf,
@@ -479,10 +481,10 @@ export function createEditorView(opts: CreateEditorOptions): EditorHandle {
           { type: 'CitationInserted', payload: { citationId, documentId, sourceId, locator } },
         ],
         characters: 0,
-        keystroke: { kind: 'paste', len: 0 },
+        keystroke: { kind: 'cite', len: 0 },
       };
       const before = view.state;
-      view.dispatch(tr.setMeta(EDITOR_INPUT_META, input).scrollIntoView());
+      view.dispatch(tr.setMeta(INPUT_METHOD_META, input).scrollIntoView());
       return view.state !== before ? citationId : null;
     },
     insertClipping({ clippingId, sourceId, locator = null, text }) {
@@ -500,10 +502,10 @@ export function createEditorView(opts: CreateEditorOptions): EditorHandle {
         run: { steps: tr.steps.length, method: 'clipping', clippingId },
         companions: [],
         characters,
-        keystroke: { kind: 'paste', len: characters },
+        keystroke: { kind: 'clip', len: characters },
       };
       const before = view.state;
-      view.dispatch(tr.setMeta(EDITOR_INPUT_META, input).scrollIntoView());
+      view.dispatch(tr.setMeta(INPUT_METHOD_META, input).scrollIntoView());
       return view.state !== before;
     },
     acceptProposal: (proposalId) => sync.acceptProposal(proposalId),

@@ -4,7 +4,7 @@
  * keystroke kind, or refuse it.
  *
  * Rules (first match wins):
- * 0. A declared input ({@link EDITOR_INPUT_META}, e.g. Cite or Place clipping from
+ * 0. A declared input (`INPUT_METHOD_META` from `@longhand/schema`, e.g. Cite or Place clipping from
  *    the research lane) → its `citation`/`clipping` run, if a user gesture is
  *    recent and the steps insert only what that method may insert.
  * 1. Undo/redo (prosemirror-history meta) → `history`, needs recent user input.
@@ -29,10 +29,8 @@
 import {
   countWords,
   sha256Hex,
-  type EventPayloads,
+  type DeclaredInput,
   type InputMethod,
-  type InputRun,
-  type Keystroke,
   type KeystrokeKind,
 } from '@longhand/schema';
 import type { TrackerState } from './tracker';
@@ -68,27 +66,24 @@ export interface InputTag {
 }
 
 /**
- * Transaction meta key any package may use to declare the input method of a
- * command it dispatches on a user gesture: `tr.setMeta(EDITOR_INPUT_META, input)`.
- * Only methods the fold verifies against an earlier event are accepted
- * (`citation`, `clipping`); everything else is classified from real input events.
+ * Deprecated meta key for declared inputs, read as an alias of `INPUT_METHOD_META`
+ * (`@longhand/schema`) for one version. Set `INPUT_METHOD_META` instead.
+ * @deprecated
  */
 export const EDITOR_INPUT_META = 'longhand/editor-input';
 
-/** Alias read for the research lane's commands (`RESEARCH_INPUT_META` in `@longhand/research`). */
+/**
+ * Deprecated research-lane meta key (`longhand/research-input`), read as an alias of
+ * `INPUT_METHOD_META` for one version.
+ * @deprecated
+ */
 export const RESEARCH_INPUT_META_ALIAS = 'longhand/research-input';
 
-/** A declared input (the value of {@link EDITOR_INPUT_META}). */
-export interface DeclaredInput {
-  /** The run covering every step of the transaction (`run.steps === tr.steps.length`). */
-  run: InputRun;
-  /** Companion events committed before the `TextEdited` (only `CitationInserted`). */
-  companions: Array<{ type: 'CitationInserted'; payload: EventPayloads['CitationInserted'] }>;
-  /** Inline characters inserted (informational; the batcher counts from the steps). */
-  characters: number;
-  /** Keystroke-timeline entry for the action. */
-  keystroke: Pick<Keystroke, 'kind' | 'len'>;
-}
+/** Meta keys read as aliases of `INPUT_METHOD_META`, for one version. */
+export const LEGACY_INPUT_META_KEYS: readonly string[] = [
+  EDITOR_INPUT_META,
+  RESEARCH_INPUT_META_ALIAS,
+];
 
 /** A privileged grant from Longhand's own commands and input rules. */
 export interface InputGrant {
@@ -113,7 +108,7 @@ export interface TransactionFacts {
   /** Timeline kind hinted by the dispatcher (cannot change the method). */
   hintKind?: KeystrokeKind | undefined;
   grant?: InputGrant | undefined;
-  /** A declared input from {@link EDITOR_INPUT_META} (or its research alias). */
+  /** A declared input from `INPUT_METHOD_META` (or a legacy alias key). */
   declared?: DeclaredInput | undefined;
   /** Number of steps. */
   steps: number;

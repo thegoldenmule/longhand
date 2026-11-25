@@ -23,7 +23,7 @@ pnpm --filter @longhand/research build-styles      # re-embed vendor/csl/* after
 | CSL helpers  | `parseName`, `parseNames`, `formatName`, `parseDate`, `formatDate`, `yearOf`, `cleanText`, `sourceLabel`                                                                                                                                                                                                                                                                                                                           |
 | Bibliography | `STYLES`, `StyleId` (`apa`, `modern-language-association`, `chicago-author-date`), `resolveStyle` (also takes `mla`, `chicago`), `formatCitation(items, sourceId, locator, style)`, `formatCitations(items, cites, style)`, `formatBibliography(items, style, ids?)` (text, HTML, per-entry and layout hints), `parseLocator`, `referencedSourceIds(docJSON)` (citations, footnote citations and quote blocks)                     |
 | Drafts       | `DraftContext`, `makeDraft`, `sourceAddedDraft`, `surfacedSourceAddedDraft`, `sourceUpdatedDraft`, `clippingSavedDraft`, `clippingRemovedDraft`, `citationInsertedDraft`, `researchCardDismissedDraft` (`SuggestionDismissed` for AI research cards), `normalizeClippingText`, `ResearchDraft`                                                                                                                                     |
-| Commands     | `insertCitation(sourceId, locator, { documentId, citationId?, newId? })`, `placeClipping(clipping, { pos? })`, the non-dispatching `citationTransaction` / `clippingTransaction`, `clippingNode`, `RESEARCH_INPUT_META`, `getResearchInput(tr)`, `ResearchInput`                                                                                                                                                                   |
+| Commands     | `insertCitation(sourceId, locator, { documentId, citationId?, newId? })`, `placeClipping(clipping, { pos? })`, the non-dispatching `citationTransaction` / `clippingTransaction`, `clippingNode`, `getResearchInput(tr)` (reads `INPUT_METHOD_META` from `@longhand/schema` as a `DeclaredInput`)                                                                                                                                  |
 | Components   | `<SourcesPanel>`, `<ClippingsList>`, `<CitationPicker>`, `<Bibliography>`, `<SourceForm>`, `AiSurfacedBadge`, `AI_SURFACED_LABEL`, `SourceSummary`                                                                                                                                                                                                                                                                                 |
 | CSS          | `@longhand/research/research.css` (classes `lh-research-*`, themed by `--lh-research-*` variables, light and dark)                                                                                                                                                                                                                                                                                                                 |
 
@@ -43,20 +43,20 @@ pnpm --filter @longhand/research build-styles      # re-embed vendor/csl/* after
 
 ## Editor integration
 
-The schema doesn't define how the editor tags transactions. These commands use their own meta key. The editor lane's batcher must honour it as follows.
+The commands tag their transactions with the schema's shared meta key, `INPUT_METHOD_META` (`'longhand/input-method'`), whose value is a schema `DeclaredInput`. The editor's input guard and batcher honour it as follows.
 
-1. **Tag.** `insertCitation` and `placeClipping` each dispatch one transaction with exactly one `ReplaceStep`, and set `tr.getMeta(RESEARCH_INPUT_META)` (`'longhand/research-input'`) to a `ResearchInput`:
+1. **Tag.** `insertCitation` and `placeClipping` each dispatch one transaction with exactly one `ReplaceStep`, and set `tr.setMeta(INPUT_METHOD_META, input)` with a `DeclaredInput`:
    ```ts
    {
      run: { steps: 1, method: 'citation', citationId } | { steps: 1, method: 'clipping', clippingId },
      companions: [{ type: 'CitationInserted', payload: { citationId, documentId, sourceId, locator } }], // [] for clippings
      characters: number,            // 0 for a citation; clipping text length without the \n separators
-     keystroke: { kind: 'paste', len: characters },
+     keystroke: { kind: 'cite' | 'clip', len: characters },
    }
    ```
 2. **Runs.** Append `run` to the batch's `TextEdited.runs` as its own run. Don't merge it with neighbouring typed runs, and don't let the typed-input capture classify these steps. `run.steps` always equals `tr.steps.length`.
 3. **Companions first.** Commit each companion before the `TextEdited` that carries the steps, so it gets a lower seq. Wrap it with `citationInsertedDraft(ctx, companion.payload)` or `makeDraft`. It doesn't change text, so the editor doesn't need to flush pending steps first. A clipping's `ClippingSaved` was committed when the clipping was saved, so a clipping has no companion.
-4. **Timeline and counts.** Add `characters` to `TextEdited.characters`. Record one timeline entry `{ t, kind: keystroke.kind, len: keystroke.len }`. The schema has no dedicated keystroke kind for these actions, so they are recorded as `paste`, which isn't typing.
+4. **Timeline and counts.** Add `characters` to `TextEdited.characters`. Record one timeline entry `{ t, kind: keystroke.kind, len: keystroke.len }`, with the schema's keystroke kinds `cite` and `clip` (not typing).
 5. **Undo.** Undoing or redoing these steps is ordinary `history` input. The fold handles it.
 
 Placement rules:
@@ -97,11 +97,12 @@ The components are controlled by `ProjectState` slices and make no network reque
 
 ## Contract changes requested (coordinator)
 
-1. **A shared transaction meta key for input methods** in `packages/schema`, for example `INPUT_METHOD_META` with an `InputRun`-shaped value plus companion payloads. That would give the editor, research and annotations lanes one convention. Until then, research uses `RESEARCH_INPUT_META = 'longhand/research-input'` as described above.
-2. **Keystroke kinds `cite` and `clip`**, or guidance on which existing kind to use. Research currently suggests `paste`.
-3. **Blank lines in clippings.** `inlineTextBetween` skips empty paragraphs, so a clipping whose text contains `\n\n` or starts or ends with `\n` can never place as `quoted`. Research's `clippingSavedDraft` collapses blank lines, but another client could still save one. Proposal: `ClippingSavedSchema.text` rejects empty lines, or the fold compares the text with blank lines collapsed.
-4. **`SourceSearch` in the schema.** The agent lane needs the `SourceSearch` interface. Defining it in `packages/schema`, next to the tool catalog, would mean neither lane has to depend on the other.
-5. Optional: a CSL `source` convention, or a `provider` field on library sources, so the origin provider survives `SourceAdded`. Today it survives only in CSL `source`.
+Applied in the contract revision pass (phase 2c): the shared `INPUT_METHOD_META` / `DeclaredInput`, keystroke kinds `cite` and `clip`, and `ClippingSavedSchema` rejecting empty lines and leading or trailing newlines (the fold still collapses blank lines as defense).
+
+Still open:
+
+- **`SourceSearch` in the schema.** The agent lane needs the `SourceSearch` interface. Defining it in `packages/schema`, next to the tool catalog, would mean neither lane has to depend on the other.
+- Optional: a CSL `source` convention, or a `provider` field on library sources, so the origin provider survives `SourceAdded`. Today it survives only in CSL `source`.
 
 ## Known gaps
 

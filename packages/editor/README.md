@@ -78,7 +78,7 @@ All of these live on `EditorHandle` or are exported from the package root.
 
 - **Reading a transaction's input method.** `inputTagOf(tr)` returns the guard's `InputTag` (`method`, `kind`, `pasteId`, `citationId`, `clippingId`, `traceSuggestionId`, `paste`). `isRemoteTransaction(tr)` is true for ledger steps applied from elsewhere. Trace-over in the annotations lane can watch `input` events and compare typed text with its ghost text.
 - **Trace-over.** `handle.setTraceSuggestion(id | null)`. While set, `typed`/`ime`/`autocorrect` runs carry `traceSuggestionId`. It is a disclosure hint only; the fold's matcher decides.
-- **Declared input for commands (citation, clipping).** Any package can dispatch a command on a user gesture with `tr.setMeta(EDITOR_INPUT_META, { run, companions, characters, keystroke })` (`DeclaredInput`). The research lane's `'longhand/research-input'` (`RESEARCH_INPUT_META_ALIAS`) is read as an alias. The guard accepts it only if all of these hold:
+- **Declared input for commands (citation, clipping).** Any package can dispatch a command on a user gesture with `tr.setMeta(INPUT_METHOD_META, { run, companions, characters, keystroke })`, where `INPUT_METHOD_META = 'longhand/input-method'` and `DeclaredInput` come from `@longhand/schema` (the editor re-exports both). For one version the guard also reads the old keys `'longhand/editor-input'` (`EDITOR_INPUT_META`, deprecated) and `'longhand/research-input'` (`RESEARCH_INPUT_META_ALIAS`, deprecated), listed in `LEGACY_INPUT_META_KEYS`. The guard accepts it only if all of these hold:
   - a trusted pointer or key event happened within 500 ms;
   - `run.method` is `citation` (inserts only `citation` nodes, needs `citationId`, and every companion is a `CitationInserted` for that id) or `clipping` (inserts only a `quote_block` with paragraphs and text, needs `clippingId`, no companions);
   - `run.steps === tr.steps.length`;
@@ -87,7 +87,7 @@ All of these live on `EditorHandle` or are exported from the package root.
   The batcher then:
   - queues each companion before the `TextEdited` that carries the steps;
   - appends `run` as its own run (runs merge only when method and ids are equal);
-  - records the `keystroke` entry.
+  - records the `keystroke` entry (kind `cite` for a citation, `clip` for a clipping; `handle.insertCitation` and `handle.insertClipping` use them).
 
   `characters` is informational. The batch total is computed from the steps with the same rule (text plus hard breaks). `handle.insertCitation({ sourceId, locator })` and `handle.insertClipping({ clippingId, sourceId, locator, text })` are built-in versions of the same commands.
 

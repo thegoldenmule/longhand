@@ -41,14 +41,16 @@ export {
 export {
   classifyTransaction,
   EDITOR_INPUT_META,
+  LEGACY_INPUT_META_KEYS,
   RESEARCH_INPUT_META_ALIAS,
   type Classification,
-  type DeclaredInput,
   type InputGrant,
   type InputTag,
   type PasteInfo,
   type TransactionFacts,
 } from './input/classify';
+/** Re-exported from `@longhand/schema` (import them from there). */
+export { INPUT_METHOD_META, type DeclaredInput } from '@longhand/schema';
 export { InputTracker, type TrackerState } from './input/tracker';
 export {
   MARKER_ATTR,

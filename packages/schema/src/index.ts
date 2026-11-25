@@ -14,6 +14,7 @@
  * - domain     — lenses, intensity, input methods, settings, CSL-JSON
  * - bounds     — tool argument bounds and per-session caps
  * - events     — every ledger event, actor permissions, manuscript event types
+ * - input      — the shared declared-input transaction meta (`INPUT_METHOD_META`)
  * - ledger     — commit envelope, hash chain, witnesses
  * - tools      — agent tool catalog (zod + JSON Schema), cap helpers
  * - provenance — authorship classes and provenance runs
@@ -28,6 +29,7 @@ export * from './anchors';
 export * from './domain';
 export * from './bounds';
 export * from './events';
+export * from './input';
 export * from './ledger';
 export * from './tools';
 export * from './provenance';
