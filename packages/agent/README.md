@@ -16,7 +16,7 @@ pnpm --filter @longhand/agent exec tsx scripts/record-stream-fixture.ts   # re-r
 ```
 runFeedbackSession / runDiscussSession                  (your process)
   ├─ buildReviewContext / buildDiscussContext  → system prompt + user prompt + SessionSnapshot
-  ├─ sink.append(FeedbackSessionStarted)
+  ├─ sink.append(FeedbackSessionStarted)   (with systemPromptVersion)
   ├─ SessionRelay on 127.0.0.1:<random>  (same events contract as the ledger, plus /search)
   ├─ temp dir (0700): tool-server.json (snapshot + relay token), mcp.json
   └─ adapter.run
@@ -195,6 +195,7 @@ claude -p --output-format stream-json --verbose --tools "" --strict-mcp-config
 - **Selections on a moved-on document.**
   - `FeedbackRequested.scope` positions are at `scope.version`.
   - If the document has moved on, pass `selection` already mapped to the current version. Otherwise the range is clamped and a warning is returned.
+  - The fold already maps it: `state.annotations.feedbackRequests[requestId].scope` has `from`/`to`/`version` in the document's current version (documented in the schema since phase 2c), so pass its `from`/`to` as `selection`. The runner does not read it from `ProjectState` itself yet.
 - **Empty searches** count toward the session's search cap in the executor but emit no event, so the fold's `counts.searches` can be lower than the executor's. That is harmless, because the executor is stricter.
 - **The actor id is the model alias** (`sonnet`, `opus`), as the schema specifies. The resolved model id (e.g. `claude-sonnet-5-5`) is only visible in the `init` progress event.
 - **Annotations target manuscript text in scope only.** Notes are context and can't be annotated. Rejections use the code `out-of-scope`.
@@ -208,5 +209,7 @@ Applied in the contract revision pass (phase 2c):
 
 - `ToolErrorCode` includes `out-of-scope`, `search-unavailable`, `sink-rejected` and `internal-error`; the agent's superset `AgentToolErrorCode` is gone.
 - `SourceSearch` lives in the schema and returns `SurfacedCandidate[]` (`{csl, provider, url}`), so the agent no longer infers the provider. The relay's `/search` answers `{ok: true, candidates}`.
+- `FeedbackSessionStarted.systemPromptVersion` (optional); the runner sets it to `SYSTEM_PROMPT_VERSION`, and the fold keeps it on `AgentSessionState.systemPromptVersion`.
+- The schema documents that the folded `FeedbackRequestState.scope` selection is mapped to the current version.
 
 `docs/BUILD.md` "AI runtime" already blesses `--setting-sources project` and the prompt on stdin. No requests are open.

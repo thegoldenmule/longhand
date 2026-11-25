@@ -151,6 +151,7 @@ export function makeState(overrides: { ch1?: BlockSpec[] } = {}): ProjectState {
           requestId: 'r0',
           threadId: null,
           model: 'opus',
+          systemPromptVersion: 'v1',
           startedSeq: 20,
           startedAt: '2026-11-20T10:00:00.000Z',
           endedSeq: 30,

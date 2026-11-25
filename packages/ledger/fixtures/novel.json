@@ -6779,6 +6779,7 @@
             "requestId": "req-n",
             "threadId": null,
             "model": "opus",
+            "systemPromptVersion": null,
             "startedSeq": 21,
             "startedAt": "2026-11-05T20:46:05.043Z",
             "endedSeq": 24,

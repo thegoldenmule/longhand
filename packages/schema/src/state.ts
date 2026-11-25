@@ -251,6 +251,12 @@ export interface FeedbackRequestState {
   id: string;
   seq: number;
   createdAt: string;
+  /**
+   * The requested scope. For a selection, `from`/`to` are mapped to the document's
+   * current version and `version` is that current version (not the version in the
+   * `FeedbackRequested` payload). A selection whose text is deleted collapses to a
+   * point (`from === to`); it never becomes null.
+   */
   scope: FeedbackScope;
   lenses: Lens[];
   intensity: Intensity;
@@ -269,6 +275,8 @@ export interface AgentSessionState {
   /** For discuss sessions. */
   threadId: string | null;
   model: string;
+  /** `FeedbackSessionStarted.systemPromptVersion`, or null when the session did not report one. */
+  systemPromptVersion: string | null;
   startedSeq: number;
   startedAt: string;
   endedSeq: number | null;

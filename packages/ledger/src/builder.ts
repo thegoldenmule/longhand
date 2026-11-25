@@ -920,10 +920,20 @@ export class LedgerBuilder {
   }
 
   /** The service starts a review session for a request. */
-  startReview(sessionId: string, requestId: string, model = 'opus'): this {
+  startReview(
+    sessionId: string,
+    requestId: string,
+    model = 'opus',
+    opts: { systemPromptVersion?: string } = {},
+  ): this {
     this.agent(
       'FeedbackSessionStarted',
-      { feedbackSessionId: sessionId, trigger: { kind: 'feedback', requestId }, model },
+      {
+        feedbackSessionId: sessionId,
+        trigger: { kind: 'feedback', requestId },
+        model,
+        ...(opts.systemPromptVersion ? { systemPromptVersion: opts.systemPromptVersion } : {}),
+      },
       sessionId,
       model,
     );
@@ -931,10 +941,20 @@ export class LedgerBuilder {
   }
 
   /** The service starts a discuss session for a thread. */
-  startDiscuss(sessionId: string, threadId: string, model = 'sonnet'): this {
+  startDiscuss(
+    sessionId: string,
+    threadId: string,
+    model = 'sonnet',
+    opts: { systemPromptVersion?: string } = {},
+  ): this {
     this.agent(
       'FeedbackSessionStarted',
-      { feedbackSessionId: sessionId, trigger: { kind: 'discuss', threadId }, model },
+      {
+        feedbackSessionId: sessionId,
+        trigger: { kind: 'discuss', threadId },
+        model,
+        ...(opts.systemPromptVersion ? { systemPromptVersion: opts.systemPromptVersion } : {}),
+      },
       sessionId,
       model,
     );

@@ -1856,7 +1856,7 @@
       "accountId": "acct-1",
       "seq": 10,
       "prevHash": "a7de2fbee3e37d7373a0cb838af4c35445779e428e0e9df29f0e4c9edcce451e",
-      "hash": "563bc4806a04f047122b884dc0931e933f2aacb8ff73c8aea7c6347b3b82955f",
+      "hash": "66b125220f7f2a48e31fa80f4b6a0aadc0dc44382e9614d1c2df682713663550",
       "clientTime": "2026-11-02T09:00:23.350Z",
       "serverTime": "2026-11-02T09:00:23.400Z",
       "actor": {
@@ -1873,7 +1873,8 @@
           "kind": "discuss",
           "threadId": "thr-1"
         },
-        "model": "sonnet"
+        "model": "sonnet",
+        "systemPromptVersion": "v1"
       }
     },
     {
@@ -1881,8 +1882,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 11,
-      "prevHash": "563bc4806a04f047122b884dc0931e933f2aacb8ff73c8aea7c6347b3b82955f",
-      "hash": "47e2d55237de8b78c8adec5d3bc801f5eceda183530c31da3fa841cd803f1182",
+      "prevHash": "66b125220f7f2a48e31fa80f4b6a0aadc0dc44382e9614d1c2df682713663550",
+      "hash": "0fff8ed0a2e6f18d96ac4f4f0f13565e3c0bded07497a5c2d3fae8070abceb3f",
       "clientTime": "2026-11-02T09:00:24.850Z",
       "serverTime": "2026-11-02T09:00:24.900Z",
       "actor": {
@@ -1905,8 +1906,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 12,
-      "prevHash": "47e2d55237de8b78c8adec5d3bc801f5eceda183530c31da3fa841cd803f1182",
-      "hash": "6fe6da54e636a792f0f45cfe0dca90070c3e7742ae4ddc0c429f73c032d5a978",
+      "prevHash": "0fff8ed0a2e6f18d96ac4f4f0f13565e3c0bded07497a5c2d3fae8070abceb3f",
+      "hash": "4446edb820ae2461f32d2dff33ee161a31ff437bcee5d27522b62eb7d8de9c47",
       "clientTime": "2026-11-02T09:00:24.850Z",
       "serverTime": "2026-11-02T09:00:25.100Z",
       "actor": {
@@ -1928,8 +1929,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 13,
-      "prevHash": "6fe6da54e636a792f0f45cfe0dca90070c3e7742ae4ddc0c429f73c032d5a978",
-      "hash": "028234803fdfecff53c9dd113b6038b0bb715f0bdbf6fe4583565c7e45a4f00e",
+      "prevHash": "4446edb820ae2461f32d2dff33ee161a31ff437bcee5d27522b62eb7d8de9c47",
+      "hash": "cc045597052d86e66fbad1b4ffac48a67e8e1ca9ade64d413e612ddc00cc404e",
       "clientTime": "2026-11-02T09:00:26.750Z",
       "serverTime": "2026-11-02T09:00:26.800Z",
       "actor": {
@@ -1954,8 +1955,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 14,
-      "prevHash": "028234803fdfecff53c9dd113b6038b0bb715f0bdbf6fe4583565c7e45a4f00e",
-      "hash": "e9943025e76e5cd5a8150ace538e8886e884f398d6d618261c15e38cba3dd3fe",
+      "prevHash": "cc045597052d86e66fbad1b4ffac48a67e8e1ca9ade64d413e612ddc00cc404e",
+      "hash": "517e68aaf5f1f4026617f425a3f215be9375bd767a3aea1b2e8c3c55f1fb562c",
       "clientTime": "2026-11-02T09:00:26.800Z",
       "serverTime": "2026-11-02T09:00:26.801Z",
       "actor": {
@@ -1978,8 +1979,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 15,
-      "prevHash": "e9943025e76e5cd5a8150ace538e8886e884f398d6d618261c15e38cba3dd3fe",
-      "hash": "c7c01dd196328fe4c6f7c6a8e8dbe36e09bee791c7225ac8f3075f0ec25e7b0a",
+      "prevHash": "517e68aaf5f1f4026617f425a3f215be9375bd767a3aea1b2e8c3c55f1fb562c",
+      "hash": "f30e7c8e526771dd799d2e0e4bc313614ba70b8400a68ee2841f68390337e659",
       "clientTime": "2026-11-02T09:00:26.750Z",
       "serverTime": "2026-11-02T09:00:27.000Z",
       "actor": {
@@ -1999,12 +2000,12 @@
   ],
   "expected": {
     "headSeq": 15,
-    "headHash": "c7c01dd196328fe4c6f7c6a8e8dbe36e09bee791c7225ac8f3075f0ec25e7b0a",
+    "headHash": "f30e7c8e526771dd799d2e0e4bc313614ba70b8400a68ee2841f68390337e659",
     "state": {
       "projectId": "proj-1",
       "accountId": "acct-1",
       "headSeq": 15,
-      "headHash": "c7c01dd196328fe4c6f7c6a8e8dbe36e09bee791c7225ac8f3075f0ec25e7b0a",
+      "headHash": "f30e7c8e526771dd799d2e0e4bc313614ba70b8400a68ee2841f68390337e659",
       "settings": {
         "genre": "",
         "audience": "",
@@ -2095,6 +2096,7 @@
             "requestId": "req-d",
             "threadId": null,
             "model": "opus",
+            "systemPromptVersion": null,
             "startedSeq": 6,
             "startedAt": "2026-11-02T09:00:18.500Z",
             "endedSeq": 8,
@@ -2123,6 +2125,7 @@
             "requestId": null,
             "threadId": "thr-1",
             "model": "sonnet",
+            "systemPromptVersion": "v1",
             "startedSeq": 10,
             "startedAt": "2026-11-02T09:00:23.400Z",
             "endedSeq": 11,
@@ -2145,6 +2148,7 @@
             "requestId": null,
             "threadId": "thr-1",
             "model": "sonnet",
+            "systemPromptVersion": null,
             "startedSeq": 13,
             "startedAt": "2026-11-02T09:00:26.800Z",
             "endedSeq": 14,
@@ -2561,49 +2565,49 @@
     {
       "projectId": "proj-1",
       "seq": 10,
-      "hash": "563bc4806a04f047122b884dc0931e933f2aacb8ff73c8aea7c6347b3b82955f",
+      "hash": "66b125220f7f2a48e31fa80f4b6a0aadc0dc44382e9614d1c2df682713663550",
       "serverTime": "2026-11-02T09:00:23.400Z",
-      "signature": "FCR4gOJL0h7IE2aBDlZBvrW57B8Z/zkZmSDqKhGYvfbRRY2A9yg1o6OJBcIboRZX9nW4WqVRRxNHGsPzeDpB5g==",
+      "signature": "1ZEhrZUg6AIfGVqO33cjWsxHePTah1BP2xXEMpKJhfVhJhBoREHPn1hSPl0GotFirNYMdr8cj4NLw4he86vI2Q==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 11,
-      "hash": "47e2d55237de8b78c8adec5d3bc801f5eceda183530c31da3fa841cd803f1182",
+      "hash": "0fff8ed0a2e6f18d96ac4f4f0f13565e3c0bded07497a5c2d3fae8070abceb3f",
       "serverTime": "2026-11-02T09:00:24.900Z",
-      "signature": "CXiwI61oN8FhU1A8HyHbTkOtTQva7p7BQpsI3dXpZaRFMBWb/vmJO9XbGN4g1XK9/n7GYg8oMzvAlC2kitNsaw==",
+      "signature": "MRZT6GQoj4GuWr084JwslIZFbBRDYEv85/9dsKEHxgfxvoXSi/9P1DznPUht5Dl3PnPNqiBTOJa/YTFMUL8nBQ==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 12,
-      "hash": "6fe6da54e636a792f0f45cfe0dca90070c3e7742ae4ddc0c429f73c032d5a978",
+      "hash": "4446edb820ae2461f32d2dff33ee161a31ff437bcee5d27522b62eb7d8de9c47",
       "serverTime": "2026-11-02T09:00:25.100Z",
-      "signature": "YppLfN/MB2wzWKnaP/SS9OPn8J2v2Yd753kBQLVY0rHPieZRlkG2UaRJ8dKtf7mwWM8BeLLsFrhrEHpo9xFhhw==",
+      "signature": "b6WgJrXre8l1Sdn99C7nqjVJsa1ZYvzeiBoDTB040PkcYu8/LBtbQcJnmkK/8EPLCyEiIOc03ITtVww0bYT5+A==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 13,
-      "hash": "028234803fdfecff53c9dd113b6038b0bb715f0bdbf6fe4583565c7e45a4f00e",
+      "hash": "cc045597052d86e66fbad1b4ffac48a67e8e1ca9ade64d413e612ddc00cc404e",
       "serverTime": "2026-11-02T09:00:26.800Z",
-      "signature": "hgRv08aLBpyfqzvOMpdLownsyx/E96m6MAl57/j7pdczDa0jFw5PTqMexKliTqMKDPWNc+SIkfPWDUrnTfZyaw==",
+      "signature": "gJFB5SGAsdsB4AJNokyWrYn34vAMgaWEZfRbhwd7nw8BngynUoBkX98Lvu8arPVoShWIAvRLTfLRCjGCUdrOTg==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 14,
-      "hash": "e9943025e76e5cd5a8150ace538e8886e884f398d6d618261c15e38cba3dd3fe",
+      "hash": "517e68aaf5f1f4026617f425a3f215be9375bd767a3aea1b2e8c3c55f1fb562c",
       "serverTime": "2026-11-02T09:00:26.801Z",
-      "signature": "bY9AYILdnsbDLtXc57wKjp5+r0OCPT6n5/O56eorv/oAPFp62Jl0BlF+ZMlbZkMpP9skfEDyuz8lCpxvV+atAw==",
+      "signature": "Ifyf8tndodniZ19UmR69puBsEgaTnS3x2uqDa9GWAELVxji/hl3rUnQa8v0lbhgAAMUI+C1s9gyDVBRmYOG3cg==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 15,
-      "hash": "c7c01dd196328fe4c6f7c6a8e8dbe36e09bee791c7225ac8f3075f0ec25e7b0a",
+      "hash": "f30e7c8e526771dd799d2e0e4bc313614ba70b8400a68ee2841f68390337e659",
       "serverTime": "2026-11-02T09:00:27.000Z",
-      "signature": "nBTHZ9H3zhWfuKErkiQUltYy1hkDtYHTClMKN5Bs3+Iw4Txqu5jyTA9Ok8MfcUk8TwOQphKTEKCo0yI0hp9htw==",
+      "signature": "BYeSa7hS/MIO0j52pwO+A0lKxbJjs7bedc6gJD0swg6+hUVFnQ9oYYGJkU9idGp5mISNs9jSPTkFxF15XsMTvw==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     }
   ],

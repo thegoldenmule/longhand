@@ -2904,6 +2904,7 @@
             "requestId": "req-r",
             "threadId": null,
             "model": "opus",
+            "systemPromptVersion": null,
             "startedSeq": 10,
             "startedAt": "2026-11-02T09:00:22.143Z",
             "endedSeq": 15,

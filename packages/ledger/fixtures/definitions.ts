@@ -216,7 +216,7 @@ function feedbackSession(): LedgerBuilder {
     intensity: 'standard',
     ask: 'Is the opening too slow?',
   });
-  b.startReview('fs-1', 'req-1');
+  b.startReview('fs-1', 'req-1', 'opus', { systemPromptVersion: 'v1' });
   b.comment(
     'fs-1',
     'com-1',
@@ -510,7 +510,7 @@ function discuss(): LedgerBuilder {
   );
   b.finishReview('fs-d', 'Warm and direct.');
   b.discuss('thr-1', 'sug-d', 'Why not keep ruined? It is how it felt.');
-  b.startDiscuss('fs-d2', 'thr-1');
+  b.startDiscuss('fs-d2', 'thr-1', 'sonnet', { systemPromptVersion: 'v1' });
   b.answerDiscussion(
     'fs-d2',
     'thr-1',
@@ -780,7 +780,7 @@ export const FIXTURE_DEFINITIONS: Readonly<Record<string, FixtureDefinition>> = 
   },
   'feedback-session': {
     description:
-      'A feedback request, a review session with anchored and span comments, anchored and unanchored questions and finish_review; a dismissal; a second session that fails.',
+      'A feedback request, a review session with anchored and span comments, anchored and unanchored questions and finish_review (the session records its system prompt version); a dismissal; a second session that fails.',
     covers: [
       'feedback-request',
       'agent-session',
@@ -791,6 +791,7 @@ export const FIXTURE_DEFINITIONS: Readonly<Record<string, FixtureDefinition>> = 
       'session-failed',
       'selection-scope',
       'selection-scope-mapped',
+      'system-prompt-version',
     ],
     build: feedbackSession,
   },

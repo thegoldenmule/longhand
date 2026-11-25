@@ -359,6 +359,7 @@ export function foldSessionStarted(tx: Tx, c: CommitOf<'FeedbackSessionStarted'>
     requestId,
     threadId,
     model: p.model,
+    systemPromptVersion: p.systemPromptVersion ?? null,
     startedSeq: c.seq,
     startedAt: c.serverTime,
     endedSeq: null,

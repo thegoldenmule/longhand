@@ -156,6 +156,12 @@ export type InputRun = z.infer<typeof InputRunSchema>;
 /**
  * Where a feedback request points: a selection (positions at `version`), a
  * document, or the whole project.
+ *
+ * In the `FeedbackRequested` payload a selection's `from`/`to` are in the document
+ * at `version` (the version the writer selected in). In the folded
+ * `FeedbackRequestState.scope` they are mapped through every later step and
+ * `version` is the document's current version; a selection whose text is deleted
+ * collapses to a point rather than becoming null.
  */
 export const FeedbackScopeSchema = z.discriminatedUnion('kind', [
   z.object({
@@ -556,6 +562,8 @@ export const FeedbackSessionStartedSchema = z.object({
   ]),
   /** Model alias or id actually used (e.g. `opus`, `sonnet`). */
   model: z.string().min(1).max(100),
+  /** Version of the system prompt the session ran with (e.g. `v1`), when the runner reports it. */
+  systemPromptVersion: z.string().min(1).max(100).optional(),
 });
 
 /** A margin comment. */

@@ -1,6 +1,6 @@
 {
   "name": "feedback-session",
-  "description": "A feedback request, a review session with anchored and span comments, anchored and unanchored questions and finish_review; a dismissal; a second session that fails.",
+  "description": "A feedback request, a review session with anchored and span comments, anchored and unanchored questions and finish_review (the session records its system prompt version); a dismissal; a second session that fails.",
   "covers": [
     "feedback-request",
     "agent-session",
@@ -10,7 +10,8 @@
     "dismiss",
     "session-failed",
     "selection-scope",
-    "selection-scope-mapped"
+    "selection-scope-mapped",
+    "system-prompt-version"
   ],
   "commits": [
     {
@@ -4268,7 +4269,7 @@
       "accountId": "acct-1",
       "seq": 9,
       "prevHash": "8c15b2cd1b1201bcfbfa11ccdd01eff5c66132413bf10a7e5fe66b9c6c2b22fb",
-      "hash": "7ce2155e6892dceed7820e5087b6d84979f071c577ec6d118b2de5f4cdc9d57d",
+      "hash": "57c0d0daf6a0efb350294d850620f64acfe2b2b5fdd9048b16c285c1a575d5e9",
       "clientTime": "2026-11-02T09:00:43.527Z",
       "serverTime": "2026-11-02T09:00:43.577Z",
       "actor": {
@@ -4285,7 +4286,8 @@
           "kind": "feedback",
           "requestId": "req-1"
         },
-        "model": "opus"
+        "model": "opus",
+        "systemPromptVersion": "v1"
       }
     },
     {
@@ -4293,8 +4295,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 10,
-      "prevHash": "7ce2155e6892dceed7820e5087b6d84979f071c577ec6d118b2de5f4cdc9d57d",
-      "hash": "f0c2feceb2671c98b130e7fd69fdeaf0012709aba8e7c4d39a9f3afe37b9140e",
+      "prevHash": "57c0d0daf6a0efb350294d850620f64acfe2b2b5fdd9048b16c285c1a575d5e9",
+      "hash": "fce3b07e419aaa94d86ed6dcc3a568b04edc738f13e89b79a07ba99c0de249b7",
       "clientTime": "2026-11-02T09:00:45.027Z",
       "serverTime": "2026-11-02T09:00:45.077Z",
       "actor": {
@@ -4331,8 +4333,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 11,
-      "prevHash": "f0c2feceb2671c98b130e7fd69fdeaf0012709aba8e7c4d39a9f3afe37b9140e",
-      "hash": "6c5e94af70139016a359dd8333eb5975eac9439ed899049cea10ce3abd954693",
+      "prevHash": "fce3b07e419aaa94d86ed6dcc3a568b04edc738f13e89b79a07ba99c0de249b7",
+      "hash": "1ca09e2628a841021a2eb68563cc86b6b99f7e0edbf379fcd990e1a2975dc35b",
       "clientTime": "2026-11-02T09:00:46.527Z",
       "serverTime": "2026-11-02T09:00:46.577Z",
       "actor": {
@@ -4370,8 +4372,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 12,
-      "prevHash": "6c5e94af70139016a359dd8333eb5975eac9439ed899049cea10ce3abd954693",
-      "hash": "24f26c45741c360146eca3bf895d905eedc56bc4b76957ef35fdd3e767e50c18",
+      "prevHash": "1ca09e2628a841021a2eb68563cc86b6b99f7e0edbf379fcd990e1a2975dc35b",
+      "hash": "b234f58df3e33ae3b7dc260bc0d8e8f950f6fb370b64a9685f6a28ca9e5d9eac",
       "clientTime": "2026-11-02T09:00:48.027Z",
       "serverTime": "2026-11-02T09:00:48.077Z",
       "actor": {
@@ -4406,8 +4408,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 13,
-      "prevHash": "24f26c45741c360146eca3bf895d905eedc56bc4b76957ef35fdd3e767e50c18",
-      "hash": "2a55d4ad1bfa814df9202e3fb472633f1adb30a9591e9faaaf1008cc62dfdba4",
+      "prevHash": "b234f58df3e33ae3b7dc260bc0d8e8f950f6fb370b64a9685f6a28ca9e5d9eac",
+      "hash": "2577ae2004a5057d95dd3992a69f6ffd7f0ef4206c4aec7ba3f18a7bdb90b513",
       "clientTime": "2026-11-02T09:00:49.527Z",
       "serverTime": "2026-11-02T09:00:49.577Z",
       "actor": {
@@ -4430,8 +4432,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 14,
-      "prevHash": "2a55d4ad1bfa814df9202e3fb472633f1adb30a9591e9faaaf1008cc62dfdba4",
-      "hash": "87db42c50556fc68da59d1c3a32c774bed7c04eab04bb66a69d752d0e57e0591",
+      "prevHash": "2577ae2004a5057d95dd3992a69f6ffd7f0ef4206c4aec7ba3f18a7bdb90b513",
+      "hash": "588a6b503101a4a049b2f062ebba6c0aeee86c453e6a12cdb6a7a8a5feb7d740",
       "clientTime": "2026-11-02T09:00:51.027Z",
       "serverTime": "2026-11-02T09:00:51.077Z",
       "actor": {
@@ -4460,8 +4462,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 15,
-      "prevHash": "87db42c50556fc68da59d1c3a32c774bed7c04eab04bb66a69d752d0e57e0591",
-      "hash": "0c24c7a529cae9effe2936464f09b3409e7671d383a6c00cb3d7c866bf03ab54",
+      "prevHash": "588a6b503101a4a049b2f062ebba6c0aeee86c453e6a12cdb6a7a8a5feb7d740",
+      "hash": "6b82af8ee69d25942288799e51786d99cb08867b55a043dc3b53a15395d1f5ec",
       "clientTime": "2026-11-02T09:01:51.027Z",
       "serverTime": "2026-11-02T09:01:51.277Z",
       "actor": {
@@ -4483,8 +4485,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 16,
-      "prevHash": "0c24c7a529cae9effe2936464f09b3409e7671d383a6c00cb3d7c866bf03ab54",
-      "hash": "97270b6c2da005d3340394d717da365412a4d789892d0ae53ef5b1b87ded477f",
+      "prevHash": "6b82af8ee69d25942288799e51786d99cb08867b55a043dc3b53a15395d1f5ec",
+      "hash": "037a6513b37fcc8ab62fa786f8d4d2f2117c70531ba8960ece3a23628599e962",
       "clientTime": "2026-11-02T09:01:51.427Z",
       "serverTime": "2026-11-02T09:01:51.677Z",
       "actor": {
@@ -5237,8 +5239,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 17,
-      "prevHash": "97270b6c2da005d3340394d717da365412a4d789892d0ae53ef5b1b87ded477f",
-      "hash": "6132a671b790ef948b8749b139759177294de2fe58197646ba945fba8fecdaf8",
+      "prevHash": "037a6513b37fcc8ab62fa786f8d4d2f2117c70531ba8960ece3a23628599e962",
+      "hash": "64835ab2cf2724da8a1db01b47960a326672845596ac59a99aaf40ce391957ee",
       "clientTime": "2026-11-02T09:01:59.063Z",
       "serverTime": "2026-11-02T09:01:59.313Z",
       "actor": {
@@ -5270,8 +5272,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 18,
-      "prevHash": "6132a671b790ef948b8749b139759177294de2fe58197646ba945fba8fecdaf8",
-      "hash": "d224e308465400307019dbcd319f84082a8a3c062934bb78593585193938c02b",
+      "prevHash": "64835ab2cf2724da8a1db01b47960a326672845596ac59a99aaf40ce391957ee",
+      "hash": "2c20995687ed7ad3da94c235f4d0318287361582db7222de2d41c3ef9fc015f2",
       "clientTime": "2026-11-02T09:02:00.963Z",
       "serverTime": "2026-11-02T09:02:01.013Z",
       "actor": {
@@ -5296,8 +5298,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 19,
-      "prevHash": "d224e308465400307019dbcd319f84082a8a3c062934bb78593585193938c02b",
-      "hash": "df86257a6219d0268fbcaf592b73cd5ccd401c1ee1eb120a2d83dc74916e768f",
+      "prevHash": "2c20995687ed7ad3da94c235f4d0318287361582db7222de2d41c3ef9fc015f2",
+      "hash": "b2276f467b3f3cb6ae923432da6d40d8d574120106d6f3b47abe77915223a9af",
       "clientTime": "2026-11-02T09:02:01.013Z",
       "serverTime": "2026-11-02T09:02:01.014Z",
       "actor": {
@@ -5320,8 +5322,8 @@
       "projectId": "proj-1",
       "accountId": "acct-1",
       "seq": 20,
-      "prevHash": "df86257a6219d0268fbcaf592b73cd5ccd401c1ee1eb120a2d83dc74916e768f",
-      "hash": "ec8ef3464c2c4d9e86bbd8962a29b9797b2e4f4b21befdc4f0bab00fb63a17d7",
+      "prevHash": "b2276f467b3f3cb6ae923432da6d40d8d574120106d6f3b47abe77915223a9af",
+      "hash": "75b8fbe44647e95e8318f4b9ef3dbe792444cec9f2397d8e2d532b8bc1f1c9fe",
       "clientTime": "2026-11-02T09:02:00.963Z",
       "serverTime": "2026-11-02T09:02:01.213Z",
       "actor": {
@@ -5478,12 +5480,12 @@
   ],
   "expected": {
     "headSeq": 20,
-    "headHash": "ec8ef3464c2c4d9e86bbd8962a29b9797b2e4f4b21befdc4f0bab00fb63a17d7",
+    "headHash": "75b8fbe44647e95e8318f4b9ef3dbe792444cec9f2397d8e2d532b8bc1f1c9fe",
     "state": {
       "projectId": "proj-1",
       "accountId": "acct-1",
       "headSeq": 20,
-      "headHash": "ec8ef3464c2c4d9e86bbd8962a29b9797b2e4f4b21befdc4f0bab00fb63a17d7",
+      "headHash": "75b8fbe44647e95e8318f4b9ef3dbe792444cec9f2397d8e2d532b8bc1f1c9fe",
       "settings": {
         "genre": "",
         "audience": "",
@@ -5634,6 +5636,7 @@
             "requestId": "req-1",
             "threadId": null,
             "model": "opus",
+            "systemPromptVersion": "v1",
             "startedSeq": 9,
             "startedAt": "2026-11-02T09:00:43.577Z",
             "endedSeq": 14,
@@ -5671,6 +5674,7 @@
             "requestId": "req-2",
             "threadId": null,
             "model": "sonnet",
+            "systemPromptVersion": null,
             "startedSeq": 18,
             "startedAt": "2026-11-02T09:02:01.013Z",
             "endedSeq": 19,
@@ -6452,97 +6456,97 @@
     {
       "projectId": "proj-1",
       "seq": 9,
-      "hash": "7ce2155e6892dceed7820e5087b6d84979f071c577ec6d118b2de5f4cdc9d57d",
+      "hash": "57c0d0daf6a0efb350294d850620f64acfe2b2b5fdd9048b16c285c1a575d5e9",
       "serverTime": "2026-11-02T09:00:43.577Z",
-      "signature": "GonoSZ9pqjpnXpwY7HoQ2qj7OK0TK118EjOFMEnfPrg7ghoDtg9HldFlCHd7xdDlis3gUyTfMBYN+IM4VFrQ0g==",
+      "signature": "MhqbpBewNXJ6hWaIZDzzU5XfZuZ0F7Pj5vX1nylXC6dOCMePI9BklLKCr5sV8XyR795vNt4FkJJuLJG4NIaVxQ==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 10,
-      "hash": "f0c2feceb2671c98b130e7fd69fdeaf0012709aba8e7c4d39a9f3afe37b9140e",
+      "hash": "fce3b07e419aaa94d86ed6dcc3a568b04edc738f13e89b79a07ba99c0de249b7",
       "serverTime": "2026-11-02T09:00:45.077Z",
-      "signature": "Va7EbmNTN64iSP1JLvD86hJYnJU2VWkD6IQIfkcVwwoJXx4OUrlHi36Olb26ljp1zLOCJ+OJnHBS1j9J2/HMnw==",
+      "signature": "9juJo6E2NFAsDfOeU0qPHNYJ3lTU70v4lcpda3/rgCSQcZsclZiRxVJgXCJXwSFD1dOSker1DpBZ4VFIIQIWqw==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 11,
-      "hash": "6c5e94af70139016a359dd8333eb5975eac9439ed899049cea10ce3abd954693",
+      "hash": "1ca09e2628a841021a2eb68563cc86b6b99f7e0edbf379fcd990e1a2975dc35b",
       "serverTime": "2026-11-02T09:00:46.577Z",
-      "signature": "Ni0NlmwHdIzAkOatdQxFzUNtLcnKb05Z9wbxnewe5qjuqi69mba2I/7zn/ycOuqiCA11DOSQGWfcClPaO73Y/Q==",
+      "signature": "eGv1mwZToUL/gZyoq1QCEaUNFuADldS5zDrsJrYHZDzJgXO5mjTRHT0wkpt+3+7tbrn9nh6V1cxeWHUsScgN/A==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 12,
-      "hash": "24f26c45741c360146eca3bf895d905eedc56bc4b76957ef35fdd3e767e50c18",
+      "hash": "b234f58df3e33ae3b7dc260bc0d8e8f950f6fb370b64a9685f6a28ca9e5d9eac",
       "serverTime": "2026-11-02T09:00:48.077Z",
-      "signature": "8woGjw1/Y/NClmyNZTdVEvj6uSuDtW+xq5Iv+rCbwfO98b5HcHLcg+u0LbL0zY2CNG7ic0JKDeOGFrj/uR+FUQ==",
+      "signature": "1DwFlK7FS1YWt8LZPX7qKkeFRhJTwwyOOC7s7x0yCO4bG8337/DL7YwWwk22r9UZvnpqIfTyFn++w7ZXncN3PA==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 13,
-      "hash": "2a55d4ad1bfa814df9202e3fb472633f1adb30a9591e9faaaf1008cc62dfdba4",
+      "hash": "2577ae2004a5057d95dd3992a69f6ffd7f0ef4206c4aec7ba3f18a7bdb90b513",
       "serverTime": "2026-11-02T09:00:49.577Z",
-      "signature": "zxAh2fiKL23WJelzjtQPITg67+vsYne3AOnrHjf4BIL1eVywaBd7IBE9Bjr5nWgnyjc7Q1R954oDoaPUvgRkgQ==",
+      "signature": "vwRA7UemNnwPRVCdnBE2L5va6Aglb4LCBPtD1kpRURmpREO+1Ju5H7Tka8kXWBKV7ZBW7zPFTbLXWpgMHgG7Ow==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 14,
-      "hash": "87db42c50556fc68da59d1c3a32c774bed7c04eab04bb66a69d752d0e57e0591",
+      "hash": "588a6b503101a4a049b2f062ebba6c0aeee86c453e6a12cdb6a7a8a5feb7d740",
       "serverTime": "2026-11-02T09:00:51.077Z",
-      "signature": "01LYSCWlQka1QnUKj5zPdE16qeanKvBeiteYDnLPbk5QtN/yWcK8fP5P5y4QSBa/ddLodLYLgAgT8YSvUNo9VQ==",
+      "signature": "i2mE/sBbLxOsL2FBk1Ik8WD397DAfn6EgIh6ZPM4cNP1WpE4aVq9JC0r6xYhvhYzArDkSQb9RsQar+qmj5skcA==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 15,
-      "hash": "0c24c7a529cae9effe2936464f09b3409e7671d383a6c00cb3d7c866bf03ab54",
+      "hash": "6b82af8ee69d25942288799e51786d99cb08867b55a043dc3b53a15395d1f5ec",
       "serverTime": "2026-11-02T09:01:51.277Z",
-      "signature": "9clod7ub0KeUIzUGse9Rl38WXHt6ISjoyvrButU+MYXGuUO2aQx79gUZKsGsGjxZmFlH9ZMuGN8so/WbHxjmBg==",
+      "signature": "nBvR0hdfVHctw9R19MZ2SeAEo+ToBMYOV4DJ0A/bmldpq418TNAph2jr+Dj/NSGg9xF8HN5v1ph1umtySk1Rwg==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 16,
-      "hash": "97270b6c2da005d3340394d717da365412a4d789892d0ae53ef5b1b87ded477f",
+      "hash": "037a6513b37fcc8ab62fa786f8d4d2f2117c70531ba8960ece3a23628599e962",
       "serverTime": "2026-11-02T09:01:51.677Z",
-      "signature": "2oW7cvHYxsPZKFBlpwEl1JZ+HmOWmIHwarGuIsBomZCnn0duUhVHF8/c6BzgXfOkgBj9bJMo4gxuAeGxtlDXSg==",
+      "signature": "arywqfjRspLcft5dApMSZLgJ3k9B2/seJl6F8rTqyyM95i54k1r7JvAhZ64gBxPilUpeblNOmzAGuQuWE6zPsA==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 17,
-      "hash": "6132a671b790ef948b8749b139759177294de2fe58197646ba945fba8fecdaf8",
+      "hash": "64835ab2cf2724da8a1db01b47960a326672845596ac59a99aaf40ce391957ee",
       "serverTime": "2026-11-02T09:01:59.313Z",
-      "signature": "TccF5522oRCVV3VOsweV6A4HZaw6a1wAeMxpgZcVb/lciSotgHR/CCPNnSHPoehSAWpNsotjb+qPC1cErL56VQ==",
+      "signature": "oAig7qsKgQ1MMJE6fHHcybwe4qIeygqy854Mg8Q2YuHlmse5lyPwZXwKYdykVHW32BkUEOqY4FpT6m9ibpK+sQ==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 18,
-      "hash": "d224e308465400307019dbcd319f84082a8a3c062934bb78593585193938c02b",
+      "hash": "2c20995687ed7ad3da94c235f4d0318287361582db7222de2d41c3ef9fc015f2",
       "serverTime": "2026-11-02T09:02:01.013Z",
-      "signature": "XQWJK4BpAp6q+xH1fjJOLrq0F0jBaO+C2NgIk8bnUHho9r+Skw0pPByPRNFGHzB+wJloOufR0qWizkFYZaQzaA==",
+      "signature": "Tr484umRkTA24cAmUpEq7Vr7EvMFGZYapw+ICVkopTM0I+QeNFjiFWNKy6CswiLUH7u/dCTalrMaOD8Co+RBZQ==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 19,
-      "hash": "df86257a6219d0268fbcaf592b73cd5ccd401c1ee1eb120a2d83dc74916e768f",
+      "hash": "b2276f467b3f3cb6ae923432da6d40d8d574120106d6f3b47abe77915223a9af",
       "serverTime": "2026-11-02T09:02:01.014Z",
-      "signature": "yrN9+MBVbwdljpfbRNxuawuryBV+iN0HmggWnU8X4HmP+/FHRsATEOA0Rsv2jTWE78x7kMh8qCXv88YfKeCvGg==",
+      "signature": "hQ1HjkdeUU0gPY9ls9Z4a4Rm+tFjDnmVzrTPGZAscPAIJwp0m9qymZtHGtIDgHxXIhFurPkIws+mWwPZxIhp9Q==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     },
     {
       "projectId": "proj-1",
       "seq": 20,
-      "hash": "ec8ef3464c2c4d9e86bbd8962a29b9797b2e4f4b21befdc4f0bab00fb63a17d7",
+      "hash": "75b8fbe44647e95e8318f4b9ef3dbe792444cec9f2397d8e2d532b8bc1f1c9fe",
       "serverTime": "2026-11-02T09:02:01.213Z",
-      "signature": "cSgBWDYAS3NdzLo/oEgRLv62hTX2GjcdKIjSbx1wHTycPKIfBQgpLk25xglaYmiuEqDsT81ljWOl/cI8QhI8AQ==",
+      "signature": "iBcOM7mLW8+l2DVVm7iZg8CgILj5o0kvDodXj0DXoLd7EABmSFAiQWs1Nxb5cw6JZJKusxppqLfZqSVd3vEitQ==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     }
   ],

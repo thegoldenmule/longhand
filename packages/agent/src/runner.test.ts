@@ -4,6 +4,7 @@ import { CommitDraftSchema, docFromJSON, segmentDoc, toolsForSession } from '@lo
 import {
   InMemoryAnnotationSink,
   MockModelAdapter,
+  SYSTEM_PROMPT_VERSION,
   StaticSourceSearch,
   runDiscussSession,
   runFeedbackSession,
@@ -108,6 +109,7 @@ describe('runFeedbackSession with MockModelAdapter', () => {
       feedbackSessionId: 'fs-run',
       trigger: { kind: 'feedback', requestId: 'req1' },
       model: 'opus',
+      systemPromptVersion: SYSTEM_PROMPT_VERSION,
     });
     expect(outcome.startedSeq).toBe(1);
     expect(outcome.annotations.map((a) => a.seq)).toEqual([2, 3, 4, 5]);

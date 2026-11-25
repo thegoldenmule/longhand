@@ -240,6 +240,7 @@ async function runSession(o: SessionRunOptions, spec: SessionSpec): Promise<Sess
         feedbackSessionId,
         trigger: spec.trigger,
         model: context.model,
+        systemPromptVersion: context.systemPromptVersion,
       }),
     )
     .catch((e: unknown) => ({
