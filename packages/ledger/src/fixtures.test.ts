@@ -46,6 +46,7 @@ describe('golden fixtures', () => {
       'citation',
       'cited',
       'folders',
+      'folder-synopsis',
       'reorder',
       'archive',
       'notes',

@@ -54,6 +54,7 @@ export function makeModel(outline: {
           title: n.title ?? n.id,
           parentId,
           children: [],
+          synopsis: n.synopsis ?? '',
           archived: n.archived ?? false,
           createdSeq: seq,
           updatedSeq: seq,
@@ -97,6 +98,7 @@ export function novel(): BinderModel {
           {
             id: 'ch1',
             title: 'Chapter 1',
+            synopsis: 'Arrival.',
             children: [
               {
                 id: 's1',

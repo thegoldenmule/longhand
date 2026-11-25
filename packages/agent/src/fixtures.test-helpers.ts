@@ -135,6 +135,7 @@ export function makeState(overrides: { ch1?: BlockSpec[] } = {}): ProjectState {
           { kind: 'document', id: 'ch1' },
           { kind: 'document', id: 'ch2' },
         ],
+        synopsis: '',
         archived: false,
         createdSeq: 2,
         updatedSeq: 2,

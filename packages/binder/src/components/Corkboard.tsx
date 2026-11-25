@@ -77,7 +77,7 @@ const LATER = new Set(['ArrowRight', 'ArrowDown']);
 
 /**
  * Index cards for a folder's (or an area root's) non-archived children: title,
- * synopsis and optional word count. Synopses are edited in place. Cards reorder by
+ * synopsis (documents and folders) and optional word count. Synopses are edited in place. Cards reorder by
  * dragging, or from the keyboard with each card's Move button: arrows move the card,
  * Enter or Space drops it, Escape cancels.
  */
@@ -98,9 +98,9 @@ export function Corkboard(props: CorkboardProps) {
 
   const baseId = useId();
   const domId = (part: string) => `${baseId}-${part.replace(/[^A-Za-z0-9_-]/g, '_')}`;
-  const [editing, setEditingState] = useState<{ documentId: string; value: string } | null>(null);
+  const [editing, setEditingState] = useState<{ ref: BinderRef; value: string } | null>(null);
   const editingRef = useRef(editing);
-  const setEditing = (next: { documentId: string; value: string } | null) => {
+  const setEditing = (next: { ref: BinderRef; value: string } | null) => {
     editingRef.current = next;
     setEditingState(next);
   };
@@ -124,14 +124,14 @@ export function Corkboard(props: CorkboardProps) {
   const cards = visibleChildren(view, area, folderId);
   const folderTitle = folderId ? (model.folders[folderId]?.title ?? '') : AREA_LABELS[area];
 
-  const editingId = editing?.documentId ?? null;
+  const editingKey = editing ? refKey(editing.ref) : null;
   useEffect(() => {
-    if (editingId && textarea.current) {
+    if (editingKey && textarea.current) {
       const el = textarea.current;
       el.focus();
       el.setSelectionRange(el.value.length, el.value.length);
     }
-  }, [editingId]);
+  }, [editingKey]);
 
   const emit = (res: DraftResult<BinderDraft>, success?: string): boolean => {
     if (res.ok) {
@@ -148,9 +148,9 @@ export function Corkboard(props: CorkboardProps) {
 
   // ---- synopsis ---------------------------------------------------------------
 
-  const startEdit = (documentId: string) => {
+  const startEdit = (ref: BinderRef) => {
     if (moving) return;
-    setEditing({ documentId, value: model.documents[documentId]?.synopsis ?? '' });
+    setEditing({ ref, value: getNode(model, ref)?.synopsis ?? '' });
   };
 
   const finishEdit = (save: boolean) => {
@@ -159,11 +159,11 @@ export function Corkboard(props: CorkboardProps) {
     setEditing(null);
     if (save) {
       emit(
-        editSynopsis(model, e.documentId, e.value),
-        `Saved the synopsis of ${quoted(titleOf(model, { kind: 'document', id: e.documentId }))}.`,
+        editSynopsis(model, e.ref, e.value),
+        `Saved the synopsis of ${quoted(titleOf(model, e.ref))}.`,
       );
     }
-    focusSoon(`edit:${e.documentId}`);
+    focusSoon(`edit:${refKey(e.ref)}`);
   };
 
   // ---- keyboard move ------------------------------------------------------------
@@ -272,8 +272,7 @@ export function Corkboard(props: CorkboardProps) {
             const key = refKey(ref);
             const titleId = domId(`title-${key}`);
             const isMoving = !!moving && sameRef(moving.ref, ref);
-            const doc = ref.kind === 'document' ? view.documents[ref.id] : undefined;
-            const isEditing = !!doc && editing?.documentId === doc.id;
+            const isEditing = !!editing && sameRef(editing.ref, ref);
             const dropHere = drop?.key === key ? drop.position : null;
             const folderCount =
               ref.kind === 'folder' ? visibleChildren(view, area, ref.id).length : 0;
@@ -333,54 +332,51 @@ export function Corkboard(props: CorkboardProps) {
                       <span aria-hidden="true" className="lh-card-grip" />
                     </button>
                   </header>
-                  {doc &&
-                    (isEditing ? (
-                      <div className="lh-card-edit">
-                        <textarea
-                          ref={textarea}
-                          className="lh-card-textarea"
-                          aria-label={`Synopsis of ${quoted(node.title)}`}
-                          aria-describedby={domId(`hint-${key}`)}
-                          value={editing.value}
-                          maxLength={TEXT_LIMITS.synopsisMaxChars}
-                          rows={4}
-                          onChange={(e) =>
-                            setEditing({ documentId: doc.id, value: e.target.value })
+                  {isEditing ? (
+                    <div className="lh-card-edit">
+                      <textarea
+                        ref={textarea}
+                        className="lh-card-textarea"
+                        aria-label={`Synopsis of ${quoted(node.title)}`}
+                        aria-describedby={domId(`hint-${key}`)}
+                        value={editing.value}
+                        maxLength={TEXT_LIMITS.synopsisMaxChars}
+                        rows={4}
+                        onChange={(e) => setEditing({ ref, value: e.target.value })}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Escape') {
+                            e.preventDefault();
+                            finishEdit(false);
+                          } else if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+                            e.preventDefault();
+                            finishEdit(true);
                           }
-                          onKeyDown={(e) => {
-                            if (e.key === 'Escape') {
-                              e.preventDefault();
-                              finishEdit(false);
-                            } else if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
-                              e.preventDefault();
-                              finishEdit(true);
-                            }
-                          }}
-                          onBlur={() => finishEdit(true)}
-                        />
-                        <p id={domId(`hint-${key}`)} className="lh-card-hint">
-                          Saved when you leave the card. Escape discards.
-                        </p>
-                      </div>
-                    ) : (
-                      <>
-                        <p
-                          className={cx('lh-card-synopsis', !doc.synopsis && 'is-empty')}
-                          onClick={() => startEdit(doc.id)}
-                        >
-                          {doc.synopsis || 'No synopsis yet.'}
-                        </p>
-                        <button
-                          type="button"
-                          ref={register(`edit:${doc.id}`)}
-                          className="lh-card-action"
-                          aria-label={`Edit synopsis of ${quoted(node.title)}`}
-                          onClick={() => startEdit(doc.id)}
-                        >
-                          Edit synopsis
-                        </button>
-                      </>
-                    ))}
+                        }}
+                        onBlur={() => finishEdit(true)}
+                      />
+                      <p id={domId(`hint-${key}`)} className="lh-card-hint">
+                        Saved when you leave the card. Escape discards.
+                      </p>
+                    </div>
+                  ) : (
+                    <>
+                      <p
+                        className={cx('lh-card-synopsis', !node.synopsis && 'is-empty')}
+                        onClick={() => startEdit(ref)}
+                      >
+                        {node.synopsis || 'No synopsis yet.'}
+                      </p>
+                      <button
+                        type="button"
+                        ref={register(`edit:${key}`)}
+                        className="lh-card-action"
+                        aria-label={`Edit synopsis of ${quoted(node.title)}`}
+                        onClick={() => startEdit(ref)}
+                      >
+                        Edit synopsis
+                      </button>
+                    </>
+                  )}
                   {ref.kind === 'folder' && (
                     <p className="lh-card-meta">
                       Folder · {folderCount} {folderCount === 1 ? 'item' : 'items'}

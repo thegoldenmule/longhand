@@ -51,7 +51,12 @@ describe('Corkboard', () => {
           children: [
             { id: 'a', title: 'Alpha', synopsis: 'First things.' },
             { id: 'gone', title: 'Gone', archived: true },
-            { id: 'sub', title: 'Subplot', children: [{ id: 'b' }, { id: 'c' }] },
+            {
+              id: 'sub',
+              title: 'Subplot',
+              synopsis: 'The keeper’s story.',
+              children: [{ id: 'b' }, { id: 'c' }],
+            },
           ],
         },
       ],
@@ -60,6 +65,7 @@ describe('Corkboard', () => {
     expect(screen.getByRole('list', { name: 'Corkboard: Chapter' })).toBeTruthy();
     expect(titles()).toEqual(['Alpha', 'Subplot']);
     expect(screen.getByText('First things.')).toBeTruthy();
+    expect(screen.getByText('The keeper’s story.')).toBeTruthy();
     expect(screen.getByText('Folder · 2 items')).toBeTruthy();
     expect(screen.getAllByText('0 words')).toHaveLength(2);
   });
@@ -85,6 +91,24 @@ describe('Corkboard', () => {
       payload: { documentId: 's2', synopsis: 'She waits at the door.' },
     });
     expect(screen.getByText('She waits at the door.')).toBeTruthy();
+  });
+
+  it('edits a folder card synopsis', async () => {
+    const { spy, user } = setup(novel(), 'part1');
+    expect(screen.getByText('Arrival.')).toBeTruthy();
+    expect(screen.getByText('No synopsis yet.')).toBeTruthy();
+    await user.click(screen.getByRole('button', { name: 'Edit synopsis of ‘Chapter 2’' }));
+    const box = screen.getByRole('textbox', { name: 'Synopsis of ‘Chapter 2’' });
+    await user.type(box, 'The morning after.');
+    await user.keyboard('{Control>}{Enter}{/Control}');
+    expect(spy).toHaveBeenLastCalledWith({
+      type: 'SynopsisEdited',
+      payload: { folderId: 'ch2', synopsis: 'The morning after.' },
+    });
+    expect(screen.getByText('The morning after.')).toBeTruthy();
+    expect(document.activeElement).toBe(
+      screen.getByRole('button', { name: 'Edit synopsis of ‘Chapter 2’' }),
+    );
   });
 
   it('saves with Ctrl+Enter, discards with Escape, and skips unchanged synopses', async () => {

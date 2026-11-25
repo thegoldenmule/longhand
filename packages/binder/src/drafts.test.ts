@@ -215,18 +215,27 @@ describe('archive / restore', () => {
 });
 
 describe('editSynopsis', () => {
-  it('replaces the synopsis', () => {
-    expect(draftOf(editSynopsis(novel(), 's2', 'She waits.'))).toEqual({
+  it('replaces a document synopsis', () => {
+    expect(draftOf(editSynopsis(novel(), D('s2'), 'She waits.'))).toEqual({
       type: 'SynopsisEdited',
       payload: { documentId: 's2', synopsis: 'She waits.' },
     });
-    expect(draftOf(editSynopsis(novel(), 's1', '')).payload.synopsis).toBe('');
+    expect(draftOf(editSynopsis(novel(), D('s1'), '')).payload.synopsis).toBe('');
+  });
+
+  it('replaces a folder synopsis', () => {
+    expect(draftOf(editSynopsis(novel(), F('ch2'), 'Morning after.'))).toEqual({
+      type: 'SynopsisEdited',
+      payload: { folderId: 'ch2', synopsis: 'Morning after.' },
+    });
+    expect(errorOf(editSynopsis(novel(), F('ch1'), 'Arrival.'))).toBe('no-op');
   });
 
   it('refuses unchanged, too long and missing', () => {
-    expect(errorOf(editSynopsis(novel(), 's1', 'A stranger arrives.'))).toBe('no-op');
-    expect(errorOf(editSynopsis(novel(), 's1', 'x'.repeat(2001)))).toBe('invalid-synopsis');
-    expect(errorOf(editSynopsis(novel(), 'part1', 'x'))).toBe('not-found');
+    expect(errorOf(editSynopsis(novel(), D('s1'), 'A stranger arrives.'))).toBe('no-op');
+    expect(errorOf(editSynopsis(novel(), D('s1'), 'x'.repeat(2001)))).toBe('invalid-synopsis');
+    expect(errorOf(editSynopsis(novel(), D('part1'), 'x'))).toBe('not-found');
+    expect(errorOf(editSynopsis(novel(), F('s1'), 'x'))).toBe('not-found');
   });
 });
 

@@ -513,4 +513,20 @@ describe('binder', () => {
     expect(b.project.folders.f).toMatchObject({ archived: true, updatedSeq: b.head.seq });
     expect(b.project.documents.d!.parentId).toBe('f');
   });
+
+  it('folds document and folder synopses separately, even when ids are shared', () => {
+    const b = new LedgerBuilder();
+    b.createFolder('x', 'Folder');
+    b.createDocument('x', 'Document');
+    expect(b.project.folders.x!.synopsis).toBe('');
+    b.human('SynopsisEdited', { folderId: 'x', synopsis: 'Folder card' });
+    expect(b.project.folders.x).toMatchObject({ synopsis: 'Folder card', updatedSeq: b.head.seq });
+    expect(b.project.documents.x!.synopsis).toBe('');
+    b.human('SynopsisEdited', { documentId: 'x', synopsis: 'Document card' });
+    expect(b.project.documents.x!.synopsis).toBe('Document card');
+    expect(b.project.folders.x!.synopsis).toBe('Folder card');
+    expect(() => b.human('SynopsisEdited', { folderId: 'nope', synopsis: 'A' })).toThrow(
+      /unknown-parent/,
+    );
+  });
 });

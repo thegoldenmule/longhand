@@ -51,6 +51,8 @@ export interface FolderState {
   parentId: string | null;
   /** Ordered children. */
   children: BinderRef[];
+  /** Writer-authored corkboard synopsis (`SynopsisEdited` with `folderId`), '' if none. */
+  synopsis: string;
   archived: boolean;
   createdSeq: number;
   updatedSeq: number;

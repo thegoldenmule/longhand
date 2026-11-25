@@ -10,6 +10,7 @@ import {
   SourceAddedSchema,
   SuggestionProposedSchema,
   SuggestionResolvedSchema,
+  SynopsisEditedSchema,
   TextEditedSchema,
   canActorEmit,
   isManuscriptEventType,
@@ -214,6 +215,14 @@ describe('other payload rules', () => {
         triggerSeq: 1,
       }).success,
     ).toBe(true);
+  });
+
+  it('synopses target exactly one document or folder', () => {
+    const ok = (p: unknown) => SynopsisEditedSchema.safeParse(p).success;
+    expect(ok({ documentId: 'd1', synopsis: 'A' })).toBe(true);
+    expect(ok({ folderId: 'f1', synopsis: '' })).toBe(true);
+    expect(ok({ documentId: 'd1', folderId: 'f1', synopsis: 'A' })).toBe(false);
+    expect(ok({ synopsis: 'A' })).toBe(false);
   });
 
   it('word-choice suggestions carry 1-3 alternatives', () => {

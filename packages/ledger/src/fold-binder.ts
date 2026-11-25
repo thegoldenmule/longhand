@@ -156,10 +156,16 @@ export function foldDocumentArchived(tx: Tx, c: CommitOf<'DocumentArchived'>): v
   if (d) tx.setDoc({ ...d, archived: c.payload.archived, updatedSeq: c.seq });
 }
 
-/** Folds `SynopsisEdited`. */
+/** Folds `SynopsisEdited` (a document's or a folder's synopsis). */
 export function foldSynopsisEdited(tx: Tx, c: CommitOf<'SynopsisEdited'>): void {
-  const d = docOrIssue(tx, c.payload.documentId);
-  if (d) tx.setDoc({ ...d, synopsis: c.payload.synopsis, updatedSeq: c.seq });
+  const p = c.payload;
+  if (p.documentId !== undefined) {
+    const d = docOrIssue(tx, p.documentId);
+    if (d) tx.setDoc({ ...d, synopsis: p.synopsis, updatedSeq: c.seq });
+    return;
+  }
+  const f = folderOrIssue(tx, p.folderId);
+  if (f) tx.rec('folders')[f.id] = { ...f, synopsis: p.synopsis, updatedSeq: c.seq };
 }
 
 /** Folds `DocumentMoved`. */
@@ -187,6 +193,7 @@ export function foldFolderCreated(tx: Tx, c: CommitOf<'FolderCreated'>): void {
     title: p.title,
     parentId: p.parentId,
     children: [],
+    synopsis: '',
     archived: false,
     createdSeq: c.seq,
     updatedSeq: c.seq,

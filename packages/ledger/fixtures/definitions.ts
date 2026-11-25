@@ -651,6 +651,13 @@ function binder(): LedgerBuilder {
   b.human('ProjectSettingsChanged', {
     patch: { genre: 'literary fiction', audience: 'adult readers', dailyWordGoal: 750 },
   });
+  // Folder synopses, edited twice; a folder synopsis never touches a document sharing its id.
+  b.human('SynopsisEdited', { folderId: 'f-ch1', synopsis: 'Elena reaches the island.' });
+  b.human('SynopsisEdited', {
+    folderId: 'f-ch1',
+    synopsis: 'Elena reaches the island and meets the keeper.',
+  });
+  b.human('SynopsisEdited', { folderId: 'shared-id', synopsis: 'Scenes not yet placed.' });
   return b;
 }
 
@@ -846,7 +853,7 @@ export const FIXTURE_DEFINITIONS: Readonly<Record<string, FixtureDefinition>> = 
   },
   binder: {
     description:
-      'Folders nested three deep, documents and notes, reorder and move, rename, synopsis, archive and restore, project settings.',
+      'Folders nested three deep, documents and notes, reorder and move, rename, document and folder synopses, archive and restore, project settings.',
     covers: [
       'binder',
       'folders',
@@ -854,6 +861,7 @@ export const FIXTURE_DEFINITIONS: Readonly<Record<string, FixtureDefinition>> = 
       'reorder',
       'archive',
       'synopsis',
+      'folder-synopsis',
       'settings',
       'move-into-archived',
       'shared-id-across-collections',

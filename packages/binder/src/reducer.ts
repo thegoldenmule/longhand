@@ -157,6 +157,7 @@ export function applyBinderDraft<M extends BinderModel>(
         title: p.title,
         parentId: p.parentId,
         children: [],
+        synopsis: '',
         archived: false,
         createdSeq: seq,
         updatedSeq: seq,
@@ -201,18 +202,35 @@ export function applyBinderDraft<M extends BinderModel>(
       return done();
     }
 
-    case 'DocumentRenamed':
-    case 'DocumentArchived':
     case 'SynopsisEdited': {
+      const p = draft.payload;
+      if (p.folderId !== undefined) {
+        const folder = model.folders[p.folderId];
+        if (!folder) return refuse('not-found', 'That folder no longer exists.');
+        m.folders = {
+          ...m.folders,
+          [folder.id]: { ...folder, synopsis: p.synopsis, updatedSeq: seq },
+        };
+      } else {
+        const doc = model.documents[p.documentId];
+        if (!doc) return refuse('not-found', 'That document no longer exists.');
+        m.documents = {
+          ...m.documents,
+          [doc.id]: { ...doc, synopsis: p.synopsis, updatedSeq: seq },
+        };
+      }
+      return done();
+    }
+
+    case 'DocumentRenamed':
+    case 'DocumentArchived': {
       const id = draft.payload.documentId;
       const doc = model.documents[id];
       if (!doc) return refuse('not-found', 'That document no longer exists.');
       const patch: Partial<DocumentState> =
         draft.type === 'DocumentRenamed'
           ? { title: draft.payload.title }
-          : draft.type === 'DocumentArchived'
-            ? { archived: draft.payload.archived }
-            : { synopsis: draft.payload.synopsis };
+          : { archived: draft.payload.archived };
       m.documents = { ...m.documents, [id]: { ...doc, ...patch, updatedSeq: seq } };
       return done();
     }

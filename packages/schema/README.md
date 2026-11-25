@@ -173,7 +173,7 @@ The ledger service resolves an agent event's anchor or span against the version 
 
 - **Canonical runs.** A `ProvenanceRun` is `{from, to, class, originSeq, suggestionId?, moves?}`. Runs cover exactly the _units_: text characters and inline leaves (`citation`, `hard_break`). They never span block boundaries or footnote tokens. They are sorted, and identical adjacent runs are merged. `checkProvenanceRuns(doc, runs)` validates this canonical form.
 - **No `pasted-internal` runs.** `pasted-internal` never appears as a run class, because internal pastes inherit their source's class.
-- **`ProjectState`.** It holds `binder`, `folders`, `documents` (content JSON, `version`, `provenance`, synopsis), `annotations` (comments, questions, suggestions, proposals, flags, surfaced sources, source suggestions, feedback requests, agent sessions, discuss threads), `sources`, `clippings`, `pastes` and `writingSessions`.
+- **`ProjectState`.** It holds `binder`, `folders` (with synopsis), `documents` (content JSON, `version`, `provenance`, synopsis), `annotations` (comments, questions, suggestions, proposals, flags, surfaced sources, source suggestions, feedback requests, agent sessions, discuss threads), `sources`, `clippings`, `pastes` and `writingSessions`.
 - **Ranges and records.** Ranges are in the current version, or `null` once their text is deleted. Records are keyed by id and carry their creating `seq`.
 
 ## Bundle
@@ -183,3 +183,9 @@ The ledger service resolves an agent event's anchor or span against the version 
 - **Report shape.** `AuthorshipReportSchema` fixes the required top-level fields: words and characters by class, active time, sessions, AI activity, suggestions by kind and outcome, proposals by kind and outcome, pastes, imports, unwitnessed intervals, the disclosure text and `provesTable`.
 - **Extensions.** The report is a loose object, and lane extras go under `extensions`.
 - **Proves table.** `PROVES_TABLE` is the spec's proves / does-not-prove table, verbatim.
+
+## Contract revisions (phase 2c)
+
+Applied after the phase 2b lanes merged. None changes a stored payload incompatibly, so `SCHEMA_VERSION` stays 1.
+
+- **Folder synopses.** `SynopsisEdited` is `{documentId, synopsis} | {folderId, synopsis}`; exactly one id is present. `FolderState.synopsis` is `''` until edited.

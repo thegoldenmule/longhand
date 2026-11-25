@@ -327,22 +327,26 @@ export const archiveNode = (model: BinderModel, ref: BinderRef) => setArchived(m
 /** Restores an archived node. */
 export const restoreNode = (model: BinderModel, ref: BinderRef) => setArchived(model, ref, false);
 
-/** Replaces a document's corkboard synopsis. Refuses an unchanged synopsis. */
+/** Replaces the corkboard synopsis of a document or a folder. Refuses an unchanged synopsis. */
 export function editSynopsis(
   model: BinderModel,
-  documentId: string,
+  ref: BinderRef,
   synopsis: string,
 ): DraftResult<BinderDraftOf<'SynopsisEdited'>> {
-  const doc = model.documents[documentId];
-  if (!doc) return notFound({ kind: 'document', id: documentId });
+  const node = getNode(model, ref);
+  if (!node) return notFound(ref);
   if (synopsis.length > TEXT_LIMITS.synopsisMaxChars) {
     return fail(
       'invalid-synopsis',
       `A synopsis can be at most ${TEXT_LIMITS.synopsisMaxChars} characters.`,
     );
   }
-  if (synopsis === doc.synopsis) return fail('no-op', 'The synopsis is unchanged.');
-  return ok({ type: 'SynopsisEdited', payload: { documentId, synopsis } });
+  if (synopsis === node.synopsis) return fail('no-op', 'The synopsis is unchanged.');
+  return ok({
+    type: 'SynopsisEdited',
+    payload:
+      ref.kind === 'folder' ? { folderId: ref.id, synopsis } : { documentId: ref.id, synopsis },
+  });
 }
 
 /**

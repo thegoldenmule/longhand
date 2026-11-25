@@ -1,6 +1,6 @@
 {
   "name": "binder",
-  "description": "Folders nested three deep, documents and notes, reorder and move, rename, synopsis, archive and restore, project settings.",
+  "description": "Folders nested three deep, documents and notes, reorder and move, rename, document and folder synopses, archive and restore, project settings.",
   "covers": [
     "binder",
     "folders",
@@ -8,6 +8,7 @@
     "reorder",
     "archive",
     "synopsis",
+    "folder-synopsis",
     "settings",
     "move-into-archived",
     "shared-id-across-collections"
@@ -2371,16 +2372,82 @@
           "dailyWordGoal": 750
         }
       }
+    },
+    {
+      "commitId": "c-0031",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 31,
+      "prevHash": "91331f0b366565ea766c03b7e4c1932902f3cb471fdc3775e5428ed2c2d884ad",
+      "hash": "82f18e9cda02270864c7da67ef81139b2b0138afaa6f67bbd789486eccd59c4f",
+      "clientTime": "2026-11-02T09:00:28.759Z",
+      "serverTime": "2026-11-02T09:00:29.009Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "SynopsisEdited",
+      "payload": {
+        "folderId": "f-ch1",
+        "synopsis": "Elena reaches the island."
+      }
+    },
+    {
+      "commitId": "c-0032",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 32,
+      "prevHash": "82f18e9cda02270864c7da67ef81139b2b0138afaa6f67bbd789486eccd59c4f",
+      "hash": "e7980989508c83ded7b88561f9b6bd563a0b5c6a620b07d5e8d6dd38fdf0b747",
+      "clientTime": "2026-11-02T09:00:29.159Z",
+      "serverTime": "2026-11-02T09:00:29.409Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "SynopsisEdited",
+      "payload": {
+        "folderId": "f-ch1",
+        "synopsis": "Elena reaches the island and meets the keeper."
+      }
+    },
+    {
+      "commitId": "c-0033",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 33,
+      "prevHash": "e7980989508c83ded7b88561f9b6bd563a0b5c6a620b07d5e8d6dd38fdf0b747",
+      "hash": "e13d190c8599add348c416093c28c784befb3b36e30cd99572fb6c9fea0e01f9",
+      "clientTime": "2026-11-02T09:00:29.559Z",
+      "serverTime": "2026-11-02T09:00:29.809Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "SynopsisEdited",
+      "payload": {
+        "folderId": "shared-id",
+        "synopsis": "Scenes not yet placed."
+      }
     }
   ],
   "expected": {
-    "headSeq": 30,
-    "headHash": "91331f0b366565ea766c03b7e4c1932902f3cb471fdc3775e5428ed2c2d884ad",
+    "headSeq": 33,
+    "headHash": "e13d190c8599add348c416093c28c784befb3b36e30cd99572fb6c9fea0e01f9",
     "state": {
       "projectId": "proj-1",
       "accountId": "acct-1",
-      "headSeq": 30,
-      "headHash": "91331f0b366565ea766c03b7e4c1932902f3cb471fdc3775e5428ed2c2d884ad",
+      "headSeq": 33,
+      "headHash": "e13d190c8599add348c416093c28c784befb3b36e30cd99572fb6c9fea0e01f9",
       "settings": {
         "genre": "literary fiction",
         "audience": "adult readers",
@@ -2429,6 +2496,7 @@
               "id": "shared-id"
             }
           ],
+          "synopsis": "",
           "archived": false,
           "createdSeq": 2,
           "updatedSeq": 28
@@ -2448,9 +2516,10 @@
               "id": "doc-s1"
             }
           ],
+          "synopsis": "Elena reaches the island and meets the keeper.",
           "archived": false,
           "createdSeq": 3,
-          "updatedSeq": 22
+          "updatedSeq": 32
         },
         "f-ch2": {
           "id": "f-ch2",
@@ -2458,6 +2527,7 @@
           "title": "Chapter 2 (draft)",
           "parentId": "f-part2",
           "children": [],
+          "synopsis": "",
           "archived": false,
           "createdSeq": 4,
           "updatedSeq": 20
@@ -2477,6 +2547,7 @@
               "id": "doc-s2"
             }
           ],
+          "synopsis": "",
           "archived": false,
           "createdSeq": 8,
           "updatedSeq": 27
@@ -2492,6 +2563,7 @@
               "id": "note-elena"
             }
           ],
+          "synopsis": "",
           "archived": false,
           "createdSeq": 9,
           "updatedSeq": 10
@@ -2507,9 +2579,10 @@
               "id": "shared-id"
             }
           ],
+          "synopsis": "Scenes not yet placed.",
           "archived": false,
           "createdSeq": 28,
-          "updatedSeq": 29
+          "updatedSeq": 33
         }
       },
       "documents": {
@@ -3290,6 +3363,30 @@
       "hash": "91331f0b366565ea766c03b7e4c1932902f3cb471fdc3775e5428ed2c2d884ad",
       "serverTime": "2026-11-02T09:00:28.609Z",
       "signature": "tjNb9sFlnkxvfskMGpFh2nSC3oSH609arwLD5NPOo9xpWBGEG/WE49uzLeMFi62XF4W6d04YkQjhK25gBOMh2Q==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 31,
+      "hash": "82f18e9cda02270864c7da67ef81139b2b0138afaa6f67bbd789486eccd59c4f",
+      "serverTime": "2026-11-02T09:00:29.009Z",
+      "signature": "07+aLshmZfxyr1jmMxfCQFJtY3SyOexkZrh0McODGPnEMPys5ok8GUu9gLHtiszNHQzGobBUeZT4NGHNtCLroQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 32,
+      "hash": "e7980989508c83ded7b88561f9b6bd563a0b5c6a620b07d5e8d6dd38fdf0b747",
+      "serverTime": "2026-11-02T09:00:29.409Z",
+      "signature": "SHiiWinUefh2jeAqttO/WBoYoIip21Aco5Q7bOWe1MIbYtTEmV9KyAbSHerbEnfwuHSJ9Q9ywqxeo4IaTr2oAQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 33,
+      "hash": "e13d190c8599add348c416093c28c784befb3b36e30cd99572fb6c9fea0e01f9",
+      "serverTime": "2026-11-02T09:00:29.809Z",
+      "signature": "ZoiJ3KxUfWxueTIqx/0AGTKMs/NXIJIutuqmBdu5beA8lUK5VyGiaSK4+P4sg1Xr+5LtSLavw2IVlxkujT4M7w==",
       "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
     }
   ],

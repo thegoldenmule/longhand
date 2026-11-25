@@ -61,7 +61,7 @@ Each builder returns `DraftResult<D> = { ok: true, draft } | { ok: false, error:
 | `renameNode(model, ref, title)`                                  | `DocumentRenamed` / `FolderRenamed`             | `not-found`, `invalid-title`, `no-op`                                                                                   |
 | `moveNode(model, ref, placement)`                                | `DocumentMoved` / `FolderMoved`                 | `not-found`, `cross-area`, `invalid-parent`, `cycle`, `archived`, `invalid-index`, `no-op`                              |
 | `archiveNode` / `restoreNode` / `setArchived(model, ref, bool)`  | `DocumentArchived` / `FolderArchived`           | `not-found`, `no-op`                                                                                                    |
-| `editSynopsis(model, documentId, text)`                          | `SynopsisEdited`                                | `not-found`, `invalid-synopsis`, `no-op`                                                                                |
+| `editSynopsis(model, ref, text)`                                 | `SynopsisEdited` (`documentId` or `folderId`)   | `not-found`, `invalid-synopsis`, `no-op`                                                                                |
 | `changeProjectSettings({ settings }, patch)`                     | `ProjectSettingsChanged` with only changed keys | `invalid-title`, `invalid-settings`, `no-op`                                                                            |
 
 Builders trim titles, clamp indexes and default `index` to the end. They validate the payload against the schema before returning. `id` defaults to `crypto.randomUUID()`.
@@ -115,8 +115,8 @@ What it renders and does:
 
 What it does:
 
-- Shows index cards for the non-archived children: title, synopsis, and for folders an item count.
-- The synopsis is edited in place. It saves on blur or Ctrl/Cmd+Enter, and Escape discards it.
+- Shows index cards for the non-archived children: title, synopsis (documents and folders), and for folders an item count.
+- The synopsis is edited in place, on document and folder cards alike. It saves on blur or Ctrl/Cmd+Enter, and Escape discards it.
 - Cards reorder by dragging (left or right half of a card), or with each card's **Move** button: arrows move the card, Enter or Space drops it, Escape cancels.
 
 **`<ProjectSettingsForm>`** props:
@@ -145,9 +145,9 @@ From the schema and the BUILD.md contract decisions:
 - `index` is counted after the node is removed from its old parent, then clamped to the child count.
 - A folder never moves into itself or a descendant (`cycle`).
 - Archiving only sets the flag. The node keeps its place, so restoring returns it there. A folder's subtree is hidden while it is archived, but the children's own flags are unchanged.
-- A new document gets `content = EMPTY_DOC_JSON`, `version 0`, `provenance []`, `synopsis ''` and `imported null`. Its `createdSeq`, `contentSeq` and `updatedSeq` are the event's seq: 0 ("pending") unless `{ seq }` is passed.
+- A new document gets `content = EMPTY_DOC_JSON`, `version 0`, `provenance []`, `synopsis ''` and `imported null`. A new folder gets `synopsis ''`. Its `createdSeq`, `contentSeq` and `updatedSeq` are the event's seq: 0 ("pending") unless `{ seq }` is passed.
 
-Assumptions that are not pinned by the schema, for the ledger lane to confirm:
+Rules the ledger fold confirms (`packages/ledger/README.md`, "Binder", and the `binder` golden fixture):
 
 1. When a folder's `children` change through a create or move, its `updatedSeq` is bumped.
 2. The fold accepts a move into an archived folder. The reducer accepts it; the builders refuse it.
@@ -172,12 +172,10 @@ All test models are built by hand from the schema types (`src/test/fixtures.ts`)
 - During a drag, folders do not auto-expand on hover and the tree does not auto-scroll.
 - There is no multi-select, typeahead or drag between the tree and the corkboard.
 - On the corkboard, a card cannot be dropped _into_ a folder card; cards only reorder.
-- Folders have no synopsis, because the schema has no event for one (see the contract request below).
 - `DocumentImported` is not built or applied here. Import belongs to whichever lane owns import; the reducer would need the fold's `imported` provenance.
 - Word counts are computed from `content` on render when no `wordCounts` map is passed. That is fine for normal projects; pass live counts from the editor for very large ones.
 - The repo's ESLint config has no `react-hooks` plugin, so hook dependency lists are checked by hand.
 
 ## Contract requests
 
-- **Folder synopses.** Corkboard cards for chapters (folders) cannot carry a synopsis. Proposal: `SynopsisEdited` takes `{documentId} | {folderId}` (or add `FolderSynopsisEdited`), and `FolderState` gains `synopsis: string`.
-- **Confirm the three fold assumptions above** in the ledger lane's binder fold and golden fixtures.
+None open. Applied in the contract revision pass (phase 2c): folder synopses (`SynopsisEdited` takes `{documentId} | {folderId}`, `FolderState.synopsis`), and the ledger confirmed the three fold rules above.

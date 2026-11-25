@@ -84,7 +84,7 @@ A fixture file has `commits`, `witnesses` (signed with the test key in `fixtures
 | `proposals`        | sentence and paragraph moves, cut, split, merge: accepted, rejected and stale; an accept at an older `baseVersion`                                                                                                                  |
 | `discuss`          | Discuss thread answered, followed up, failed                                                                                                                                                                                        |
 | `research`         | sources, clippings, citation-needed flags (one becomes cited), surfaced sources with a verified candidate added, a source suggestion, clippings as quote blocks (one with blank lines collapsed), a mismatching clipping downgraded |
-| `binder`           | nested folders, notes, reorder and moves, rename, synopsis, archive/restore, a move into an archived folder, a folder and a document sharing an id, settings                                                                        |
+| `binder`           | nested folders, notes, reorder and moves, rename, document and folder synopses, archive/restore, a move into an archived folder, a folder and a document sharing an id, settings                                                    |
 | `novel`            | three chapters and a note, three writing sessions over two days and two devices, an internal paste across chapters, a review, an embedded `ChainHeadWitnessed`                                                                      |
 
 Tampered copies (`fixtures/tampered/`) carry `trueHead` and the expected `verifyChain` problems (with and without `expectedHead`) and witness problems: `tampered-edited` (`hash-mismatch`), `tampered-rehashed` (`prev-hash-mismatch` on the next commit), `tampered-reordered`, `tampered-dropped` (`seq-gap` + `prev-hash-mismatch`), `tampered-actor` (an agent commit relabelled human: `invalid-commit` + `prev-hash-mismatch`), `tampered-truncated` (chain alone passes; `head-mismatch` with the true head; `extra-witness` for the dropped commits).
@@ -139,7 +139,7 @@ Steps are derived from the mapped positions (never by re-resolving ids). Move: d
 
 ### Binder
 
-`{parentId, index}`, index counted after removal and clamped. A folder's `updatedSeq` bumps whenever its children list changes (child created, moved in or moved out). Moves into archived folders are accepted. Ids are unique per collection: a folder and a document may share an id. Nodes never change area; folders never move into a descendant.
+`{parentId, index}`, index counted after removal and clamped. A folder's `updatedSeq` bumps whenever its children list changes (child created, moved in or moved out). Moves into archived folders are accepted. Ids are unique per collection: a folder and a document may share an id. Nodes never change area; folders never move into a descendant. `SynopsisEdited` names a document (`documentId`) or a folder (`folderId`) and bumps that node's `updatedSeq`; an unknown folder is `unknown-parent`, an unknown document `unknown-document`.
 
 ### Writing sessions
 

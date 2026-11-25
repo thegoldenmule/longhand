@@ -291,11 +291,17 @@ export const DocumentMovedSchema = z.object({ documentId: IdSchema, ...binderPla
 /** Archives (true) or restores (false) a document. Its content and history are kept. */
 export const DocumentArchivedSchema = z.object({ documentId: IdSchema, archived: z.boolean() });
 
-/** Replaces a document's synopsis (corkboard). Writer text, not manuscript; human-only. */
-export const SynopsisEditedSchema = z.object({
-  documentId: IdSchema,
-  synopsis: z.string().max(TEXT_LIMITS.synopsisMaxChars),
-});
+const synopsisText = z.string().max(TEXT_LIMITS.synopsisMaxChars);
+
+/**
+ * Replaces the corkboard synopsis of a document (`{documentId, synopsis}`) or a
+ * folder (`{folderId, synopsis}`). Exactly one of `documentId` and `folderId` is
+ * present. Writer text, not manuscript; human-only.
+ */
+export const SynopsisEditedSchema = z.union([
+  z.object({ documentId: IdSchema, folderId: z.never().optional(), synopsis: synopsisText }),
+  z.object({ folderId: IdSchema, documentId: z.never().optional(), synopsis: synopsisText }),
+]);
 
 /** Creates a folder in an area. */
 export const FolderCreatedSchema = z.object({

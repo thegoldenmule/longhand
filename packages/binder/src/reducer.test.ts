@@ -206,6 +206,18 @@ describe('applyBinderDraft: rename, archive, synopsis, settings', () => {
     expect(m.documents.s1?.content).toEqual(novel().documents.s1?.content);
   });
 
+  it('edits folder synopses', () => {
+    const m = apply(novel(), {
+      type: 'SynopsisEdited',
+      payload: { folderId: 'ch2', synopsis: 'The morning after.' },
+    });
+    expect(m.folders.ch2).toMatchObject({ synopsis: 'The morning after.', updatedSeq: 50 });
+    expect(m.folders.ch2?.children).toEqual(novel().folders.ch2?.children);
+    expect(
+      refusal(novel(), { type: 'SynopsisEdited', payload: { folderId: 's1', synopsis: '' } }),
+    ).toBe('not-found');
+  });
+
   it('refuses edits to missing nodes', () => {
     expect(
       refusal(novel(), { type: 'DocumentRenamed', payload: { documentId: 'x', title: 'A' } }),
