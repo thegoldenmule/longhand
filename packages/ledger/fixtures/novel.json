@@ -6778,6 +6778,8 @@
             "kind": "review",
             "requestId": "req-n",
             "threadId": null,
+            "chatId": null,
+            "messageId": null,
             "model": "opus",
             "systemPromptVersion": null,
             "startedSeq": 21,
@@ -6877,7 +6879,8 @@
         "citationFlags": {},
         "surfacedSources": {},
         "sourceSuggestions": {},
-        "discussions": {}
+        "discussions": {},
+        "chats": {}
       },
       "sources": {},
       "clippings": {},

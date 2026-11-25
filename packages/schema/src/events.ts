@@ -469,6 +469,41 @@ export const FeedbackRequestedSchema = z.object({
 });
 
 /**
+ * What a chat message is about: where the editor should look (the open document,
+ * a selection in it, or the whole project) and, when the writer is asking about a
+ * margin note (Discuss in the chat), that note's id.
+ */
+export const ChatContextSchema = z.object({
+  scope: FeedbackScopeSchema,
+  aboutId: IdSchema.nullable(),
+});
+
+/**
+ * The writer says something to an editor in the feedback chat (F3). The first
+ * message names a new `chatId`; later messages in the same conversation reuse it.
+ * The ledger service then starts an agent session that replies (`ChatReplied`)
+ * and may leave margin notes. `editor` records who was asked as they were at that
+ * moment; `lenses` and `intensity` are that editor's configuration and bound the
+ * notes. Writer text, never manuscript.
+ */
+export const ChatMessageSentSchema = z.object({
+  chatId: IdSchema,
+  messageId: IdSchema,
+  text: z
+    .string()
+    .min(1)
+    .max(TEXT_LIMITS.chatMessageMaxChars)
+    .refine((s) => s.trim().length > 0, 'message must not be blank'),
+  editor: FeedbackEditorSchema,
+  lenses: z
+    .array(LensSchema)
+    .min(1)
+    .refine((l) => new Set(l).size === l.length, 'duplicate lens'),
+  intensity: IntensitySchema,
+  context: ChatContextSchema,
+});
+
+/**
  * The writer asks the editor a follow-up about an annotation (F4 "Discuss").
  * The first message on a target opens thread `threadId`; follow-ups reuse it.
  */
@@ -559,12 +594,13 @@ export const ClippingRemovedSchema = z.object({ clippingId: IdSchema });
 // Agent events (annotation layer only)
 // ---------------------------------------------------------------------------
 
-/** An agent session starts, for a feedback request or a discuss message. */
+/** An agent session starts, for a feedback request, a discuss message or a chat message. */
 export const FeedbackSessionStartedSchema = z.object({
   feedbackSessionId: IdSchema,
   trigger: z.discriminatedUnion('kind', [
     z.object({ kind: z.literal('feedback'), requestId: IdSchema }),
     z.object({ kind: z.literal('discuss'), threadId: IdSchema }),
+    z.object({ kind: z.literal('chat'), chatId: IdSchema, messageId: IdSchema }),
   ]),
   /** Model alias or id actually used (e.g. `opus`, `sonnet`). */
   model: z.string().min(1).max(100),
@@ -710,6 +746,18 @@ export const ReviewFinishedSchema = z.object({
     .max(BOUNDS.reviewMaxPriorities),
 });
 
+/**
+ * The editor's reply in the feedback chat (`reply`); ends a chat session. Any
+ * margin notes the session left are the session's annotations.
+ */
+export const ChatRepliedSchema = z.object({
+  feedbackSessionId,
+  chatId: IdSchema,
+  /** The writer message it answers. */
+  replyTo: IdSchema,
+  body: z.string().min(1).max(BOUNDS.chatReplyMaxChars),
+});
+
 /** The editor's answer in a discuss thread (`answer_discussion`); ends a discuss session. */
 export const DiscussAnsweredSchema = z.object({
   feedbackSessionId,
@@ -757,6 +805,8 @@ export const FeedbackSessionFailedSchema = z.object({
   feedbackSessionId: IdSchema.nullable(),
   requestId: IdSchema.nullable(),
   threadId: IdSchema.nullable(),
+  /** The chat message the session was serving (optional, additive). */
+  chat: z.object({ chatId: IdSchema, messageId: IdSchema }).optional(),
   reason: z.string().min(1).max(500),
 });
 
@@ -809,6 +859,7 @@ export const EVENTS = {
   SuggestionDismissed: def('human', false, SuggestionDismissedSchema),
   FeedbackRequested: def('human', false, FeedbackRequestedSchema),
   DiscussRequested: def('human', false, DiscussRequestedSchema),
+  ChatMessageSent: def('human', false, ChatMessageSentSchema),
   SourceAdded: def('human', false, SourceAddedSchema),
   SourceUpdated: def('human', false, SourceUpdatedSchema),
   CitationInserted: def('human', false, CitationInsertedSchema),
@@ -828,6 +879,7 @@ export const EVENTS = {
   SourceSuggested: def('agent', false, SourceSuggestedSchema),
   ReviewFinished: def('agent', false, ReviewFinishedSchema),
   DiscussAnswered: def('agent', false, DiscussAnsweredSchema),
+  ChatReplied: def('agent', false, ChatRepliedSchema),
   // System
   SuggestionResolved: def('system', false, SuggestionResolvedSchema),
   ChainHeadWitnessed: def('system', false, ChainHeadWitnessedSchema),

@@ -1,19 +1,21 @@
 /**
- * Session runner: one feedback review or one discuss reply, end to end.
+ * Session runner: one feedback review, one discuss reply or one chat reply, end to end.
  *
  * 1. Build the prompt context and snapshot from the `ProjectState`.
  * 2. Append `FeedbackSessionStarted` (agent) to the sink.
  * 3. Start the loopback relay, write the tool-server config and `--mcp-config`
  *    to a private temp dir, and run the model adapter.
  * 4. Annotations stream to the sink through the relay as the model makes them.
- * 5. The session is finished when `ReviewFinished` / `DiscussAnswered` was
- *    accepted; otherwise append `FeedbackSessionFailed` (system) with the reason.
+ * 5. The session is finished when its closing event (`ReviewFinished`,
+ *    `DiscussAnswered`, `ChatReplied`) was accepted; otherwise append
+ *    `FeedbackSessionFailed` (system) with the reason.
  */
 import { randomUUID } from 'node:crypto';
 import { chmod, mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
+  ChatMessageSentSchema,
   DiscussRequestedSchema,
   FeedbackRequestedSchema,
   toolsForSession,
@@ -22,15 +24,18 @@ import {
 } from '@longhand/schema';
 import type { ModelAdapter, ModelEvent, ModelRunResult } from './adapters/types';
 import {
+  buildChatContext,
   buildDiscussContext,
   buildReviewContext,
+  type ChatContextInput,
+  type ChatRequest,
   type DiscussRequest,
   type FeedbackRequest,
   type ModelChoice,
   type PromptContext,
   type ReviewContextInput,
 } from './context';
-import { agentDraft, sessionFailedDraft, type ToolEventDraft } from './drafts';
+import { agentDraft, isClosingEventType, sessionFailedDraft, type ToolEventDraft } from './drafts';
 import { mcpConfigJson, toolServerLaunch, type ToolServerConfig } from './mcp/config';
 import { MCP_TOOL_PREFIX } from './mcp/server';
 import { SessionRelay } from './relay';
@@ -41,6 +46,7 @@ export const DEFAULT_TIMEOUTS = Object.freeze({
   fullReview: 15 * 60_000,
   selection: 5 * 60_000,
   discuss: 3 * 60_000,
+  chat: 10 * 60_000,
 });
 
 /**
@@ -97,6 +103,17 @@ export interface FeedbackSessionOptions extends SessionRunOptions {
 /** Options for {@link runDiscussSession}. */
 export interface DiscussSessionOptions extends SessionRunOptions {
   request: DiscussRequest;
+}
+
+/** Options for {@link runChatSession}. */
+export interface ChatSessionOptions extends SessionRunOptions {
+  request: ChatRequest;
+  /** Selection mapped to the document's current version (the fold's message scope). */
+  selection?: { from: number; to: number };
+  context?: Pick<
+    ChatContextInput,
+    'maxTargetChars' | 'historyLimit' | 'nearbyCount' | 'maxConversationChars'
+  >;
 }
 
 /** How a session ended. */
@@ -162,12 +179,46 @@ export function runDiscussSession(options: DiscussSessionOptions): Promise<Sessi
   });
 }
 
+/**
+ * Runs a chat reply for a `ChatMessageSent`: the editor answers, leaving margin
+ * notes first when the message calls for them. Never throws for model or sink
+ * failures.
+ */
+export function runChatSession(options: ChatSessionOptions): Promise<SessionOutcome> {
+  const request = ChatMessageSentSchema.parse(options.request);
+  const chat = { chatId: request.chatId, messageId: request.messageId };
+  return runSession(options, {
+    sessionKind: 'chat',
+    trigger: { kind: 'chat', ...chat },
+    failIds: { requestId: null, threadId: null, chat },
+    defaultTimeout: DEFAULT_TIMEOUTS.chat,
+    finishTool: 'reply',
+    build: (feedbackSessionId) =>
+      buildChatContext({
+        state: options.state,
+        request,
+        feedbackSessionId,
+        model: options.model,
+        models: options.models,
+        selection: options.selection,
+        ...options.context,
+      }),
+  });
+}
+
 interface SessionSpec {
-  sessionKind: 'review' | 'discuss';
-  trigger: { kind: 'feedback'; requestId: string } | { kind: 'discuss'; threadId: string };
-  failIds: { requestId: string | null; threadId: string | null };
+  sessionKind: 'review' | 'discuss' | 'chat';
+  trigger:
+    | { kind: 'feedback'; requestId: string }
+    | { kind: 'discuss'; threadId: string }
+    | { kind: 'chat'; chatId: string; messageId: string };
+  failIds: {
+    requestId: string | null;
+    threadId: string | null;
+    chat?: { chatId: string; messageId: string };
+  };
   defaultTimeout: number;
-  finishTool: 'finish_review' | 'answer_discussion';
+  finishTool: 'finish_review' | 'answer_discussion' | 'reply';
   build: (feedbackSessionId: string) => PromptContext;
 }
 
@@ -204,6 +255,8 @@ async function runSession(o: SessionRunOptions, spec: SessionSpec): Promise<Sess
         feedbackSessionId: outcome.startedSeq === null ? null : feedbackSessionId,
         requestId: spec.failIds.requestId,
         threadId: spec.failIds.threadId,
+        // Before the session started, the chat message is named directly.
+        ...(spec.failIds.chat && outcome.startedSeq === null ? { chat: spec.failIds.chat } : {}),
         reason,
       },
     );
@@ -270,7 +323,7 @@ async function runSession(o: SessionRunOptions, spec: SessionSpec): Promise<Sess
     initialCounts: context.snapshot.counts,
     onAccepted: (draft, seq) => {
       progress({ kind: 'annotation', feedbackSessionId, seq, draft });
-      if (draft.type === 'ReviewFinished' || draft.type === 'DiscussAnswered') {
+      if (isClosingEventType(draft.type)) {
         graceTimer = setTimeout(() => runAbort.abort(), o.finishGraceMs ?? 60_000);
         graceTimer.unref();
       }
@@ -328,9 +381,7 @@ async function runSession(o: SessionRunOptions, spec: SessionSpec): Promise<Sess
   );
 
   // 4. Outcome.
-  const finished = relay.accepted.some(
-    (a) => a.draft.type === 'ReviewFinished' || a.draft.type === 'DiscussAnswered',
-  );
+  const finished = relay.accepted.some((a) => isClosingEventType(a.draft.type));
   if (finished) {
     outcome.status = 'finished';
     progress({ kind: 'finished', feedbackSessionId });

@@ -123,6 +123,7 @@ export const TEXT_LIMITS = {
   goalsMaxChars: 2000,
   styleNotesMaxChars: 4000,
   feedbackAskMaxChars: 1000,
+  chatMessageMaxChars: 4000,
   editorNameMaxChars: 60,
   editorRoleMaxChars: 40,
   editorBriefMaxChars: 600,

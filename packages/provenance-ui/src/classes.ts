@@ -90,6 +90,7 @@ export const MATCHED_KIND_LABEL: Readonly<Record<MatchedKind, string>> = {
   'source-suggestion': 'a source suggestion',
   discuss: 'a Discuss answer',
   review: 'a review summary',
+  chat: 'a chat reply',
 };
 
 /** Short, capitalised form for legends ("Comments"). */
@@ -104,6 +105,7 @@ export const MATCHED_KIND_SHORT: Readonly<Record<MatchedKind, string>> = {
   'source-suggestion': 'Source suggestions',
   discuss: 'Discuss answers',
   review: 'Review summaries',
+  chat: 'Chat replies',
 };
 
 /** Input method labels for the inspector. */

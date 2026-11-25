@@ -59,6 +59,8 @@ export interface OutlineEntry {
  * - `document`: one document.
  * - `project`: every manuscript document in the snapshot.
  * - `none`: no annotations (discuss sessions).
+ *
+ * Chat sessions use the scope of the writer's message.
  */
 export type SnapshotScope =
   | { kind: 'selection'; documentId: string; from: number; to: number }
@@ -83,6 +85,8 @@ export interface SessionSnapshot {
   scope: SnapshotScope;
   /** Discuss sessions: the one thread the session may answer. */
   discussion: { threadId: string; targetId: string } | null;
+  /** Chat sessions: the conversation and the writer message the reply answers. */
+  chat: { chatId: string; messageId: string } | null;
   /** Counts already recorded for this session (normally zero). */
   counts: SessionCounts;
 }
@@ -131,6 +135,7 @@ export interface BuildSnapshotInput {
   intensity: Intensity;
   scope: SnapshotScope;
   discussion?: { threadId: string; targetId: string } | null;
+  chat?: { chatId: string; messageId: string } | null;
   counts?: SessionCounts;
 }
 
@@ -167,6 +172,7 @@ export function buildSnapshot(input: BuildSnapshotInput): SessionSnapshot {
     sources,
     scope: input.scope,
     discussion: input.discussion ?? null,
+    chat: input.chat ?? null,
     counts: input.counts ?? {
       items: 0,
       suggestions: 0,

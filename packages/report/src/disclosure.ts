@@ -46,6 +46,7 @@ const ASSISTED_NOUNS: Record<AssistedKind, [string, string]> = {
   'source-suggestion': ['source suggestion', 'source suggestions'],
   discuss: ['Discuss answer', 'Discuss answers'],
   review: ['review summary', 'review summaries'],
+  chat: ['chat reply', 'chat replies'],
 };
 
 function timeSentence(r: DisclosureInput): string {
@@ -57,11 +58,11 @@ function timeSentence(r: DisclosureInput): string {
 }
 
 function assistedPhrase(r: DisclosureInput): string {
-  const kinds = ASSISTED_KINDS.filter((k) => r.extensions.assisted.byKind[k] > 0);
+  const kinds = ASSISTED_KINDS.filter((k) => (r.extensions.assisted.byKind[k] ?? 0) > 0);
   if (kinds.length === 0) return 'retyped from AI suggestions';
   const parts = kinds.map((k) => {
     const [one, many] = ASSISTED_NOUNS[k];
-    return count(r.extensions.assisted.byKind[k], one, many);
+    return count(r.extensions.assisted.byKind[k] ?? 0, one, many);
   });
   if (kinds.length === 1) return `retyped from ${parts[0]!.replace(/^(\S+) /, '$1 AI ')}`;
   return `retyped from AI text (${joinList(parts)})`;
@@ -130,17 +131,20 @@ function wordsSentence(r: DisclosureInput): string {
 function aiSentences(r: DisclosureInput): string[] {
   const out: string[] = [];
   const { ai, suggestions, proposals } = r;
+  const chats = ai.chatMessages ?? 0;
   const anything =
-    ai.feedbackRequests + ai.sessions.length + suggestions.total + proposals.total > 0;
+    ai.feedbackRequests + chats + ai.sessions.length + suggestions.total + proposals.total > 0;
   if (!anything) return ['No AI feedback was requested in Longhand.'];
-  if (ai.feedbackRequests > 0) {
+  if (ai.feedbackRequests + chats > 0) {
     const notes = [
       ai.comments > 0 ? count(ai.comments, 'comment') : null,
       ai.questions > 0 ? count(ai.questions, 'question') : null,
       ai.citationFlags > 0 ? count(ai.citationFlags, 'citation-needed flag') : null,
     ].filter((s): s is string => s !== null);
-    const n = ai.feedbackRequests;
-    const times = n === 1 ? 'once' : n === 2 ? 'twice' : count(n, 'time');
+    const n = ai.feedbackRequests + chats;
+    const where =
+      chats === 0 ? '' : ai.feedbackRequests === 0 ? ' in chat' : ` (${formatInt(chats)} in chat)`;
+    const times = `${n === 1 ? 'once' : n === 2 ? 'twice' : count(n, 'time')}${where}`;
     out.push(
       notes.length > 0
         ? `AI feedback was requested ${times}; the editor left ${joinList(notes)}.`

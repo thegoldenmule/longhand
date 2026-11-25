@@ -116,7 +116,7 @@ export class ToolExecutor {
     return { ...this.countsValue };
   }
 
-  /** True once `finish_review` / `answer_discussion` was accepted. */
+  /** True once the session's finishing tool (`finish_review`, `answer_discussion`, `reply`) was accepted. */
   get finished(): boolean {
     return this.finishedValue;
   }
@@ -201,7 +201,7 @@ export class ToolExecutor {
         );
       }
       this.countsValue = countCall(tool, this.countsValue);
-      const finished = tool === 'finish_review' || tool === 'answer_discussion';
+      const finished = TOOLS[tool].kind === 'control';
       if (finished) this.finishedValue = true;
       return done(
         { ok: true, id: handled.id, content: this.successText(tool, handled.id, finished) },
@@ -218,7 +218,9 @@ export class ToolExecutor {
     if (finished) {
       return tool === 'finish_review'
         ? 'Review recorded. The session is finished: do not call any more tools.'
-        : 'Answer recorded. The session is finished: do not call any more tools.';
+        : tool === 'reply'
+          ? 'Reply recorded. The session is finished: do not call any more tools.'
+          : 'Answer recorded. The session is finished: do not call any more tools.';
     }
     const caps = capsFor(this.opts.snapshot.intensity);
     const c = this.countsValue;
@@ -553,6 +555,17 @@ export class ToolExecutor {
           feedbackSessionId: sid,
           threadId: thread.threadId,
           targetId: thread.targetId,
+          body: i.body.trim(),
+        });
+      }
+      case 'reply': {
+        const i = input as ToolInputs['reply'];
+        const chat = this.opts.snapshot.chat;
+        if (!chat) return fail('unknown-thread', 'This session has no chat to reply in.');
+        return draft('ChatReplied', sid, {
+          feedbackSessionId: sid,
+          chatId: chat.chatId,
+          replyTo: chat.messageId,
           body: i.body.trim(),
         });
       }

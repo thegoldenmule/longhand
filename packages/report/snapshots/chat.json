@@ -1,0 +1,372 @@
+{
+  "project": {
+    "reportVersion": 1,
+    "scope": { "kind": "project" },
+    "throughSeq": 19,
+    "headHash": "b0ece179c7ec5f43f92b9bb46fcf5626912a2f354bddf26631c6c7840b538030",
+    "words": {
+      "total": 24,
+      "byClass": {
+        "typed": 18,
+        "typed-from-suggestion": 6,
+        "pasted-external": 0,
+        "pasted-internal": 0,
+        "imported": 0,
+        "quoted": 0
+      }
+    },
+    "characters": {
+      "total": 136,
+      "byClass": {
+        "typed": 104,
+        "typed-from-suggestion": 32,
+        "pasted-external": 0,
+        "pasted-internal": 0,
+        "imported": 0,
+        "quoted": 0
+      }
+    },
+    "activeWritingMs": 18213,
+    "sessions": {
+      "count": 1,
+      "days": 1,
+      "firstAt": "2026-11-02T09:00:00.800Z",
+      "lastAt": "2026-11-02T09:00:37.113Z",
+      "list": [
+        {
+          "startTime": "2026-11-02T09:00:00.800Z",
+          "endTime": "2026-11-02T09:00:37.113Z",
+          "activeMs": 18213,
+          "charactersInserted": 136,
+          "startSeq": 3,
+          "endSeq": 19,
+          "commits": 4,
+          "documentIds": ["doc-c"]
+        }
+      ]
+    },
+    "ai": {
+      "feedbackRequests": 0,
+      "sessionsFinished": 2,
+      "sessionsFailed": 1,
+      "comments": 1,
+      "questions": 0,
+      "citationFlags": 0,
+      "surfacedSources": 0,
+      "sourceSuggestions": 0,
+      "discussThreads": 0,
+      "sessions": [
+        {
+          "id": "fs-c1",
+          "kind": "chat",
+          "model": "sonnet",
+          "systemPromptVersion": "v4",
+          "status": "finished",
+          "startedAt": "2026-11-02T09:00:19.824Z",
+          "startedSeq": 6,
+          "requestId": null,
+          "threadId": null,
+          "lenses": ["clarity", "word-choice"],
+          "intensity": "standard",
+          "scope": "document",
+          "annotations": 0,
+          "failureReason": null,
+          "chatId": "chat-1"
+        },
+        {
+          "id": "fs-c2",
+          "kind": "chat",
+          "model": "sonnet",
+          "systemPromptVersion": null,
+          "status": "finished",
+          "startedAt": "2026-11-02T09:00:23.224Z",
+          "startedSeq": 9,
+          "requestId": null,
+          "threadId": null,
+          "lenses": ["structure", "word-choice"],
+          "intensity": "light",
+          "scope": "selection",
+          "annotations": 2,
+          "failureReason": null,
+          "chatId": "chat-1"
+        },
+        {
+          "id": "fs-c3",
+          "kind": "chat",
+          "model": "sonnet",
+          "systemPromptVersion": null,
+          "status": "failed",
+          "startedAt": "2026-11-02T09:00:32.459Z",
+          "startedSeq": 15,
+          "requestId": null,
+          "threadId": null,
+          "lenses": ["structure", "word-choice"],
+          "intensity": "light",
+          "scope": "document",
+          "annotations": 0,
+          "failureReason": "model unavailable",
+          "chatId": "chat-1"
+        }
+      ],
+      "chatMessages": 4
+    },
+    "suggestions": {
+      "total": 1,
+      "byKind": { "word-choice": 1, "insertion": 0, "rephrase": 0 },
+      "byOutcome": { "open": 1, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 }
+    },
+    "proposals": {
+      "total": 0,
+      "byKind": {
+        "move": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+        "cut": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+        "split": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+        "merge": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 }
+      }
+    },
+    "pastes": {
+      "external": { "count": 0, "characters": 0, "words": 0 },
+      "internal": { "count": 0, "characters": 0, "words": 0 },
+      "events": []
+    },
+    "imports": { "documents": 0, "words": 0 },
+    "unwitnessed": [],
+    "provesTable": {
+      "proves": [
+        "The text came in through the editor's input channel, at these times and this cadence",
+        "Exactly which AI suggestions were visible, and which were retyped or used",
+        "The history hasn't been changed since the server witnessed it"
+      ],
+      "doesNotProve": [
+        "That the account holder was the one typing",
+        "That nothing was transcribed from another screen or another AI",
+        "That a modified client didn't misreport pastes as typing (the keystroke timeline makes this costly, not impossible)"
+      ]
+    },
+    "extensions": {
+      "unwitnessedThresholdMs": 60000,
+      "projectTitle": "Harbour",
+      "documents": [{ "id": "doc-c", "title": "Chapter 1", "kind": "manuscript", "words": 24 }],
+      "assisted": {
+        "annotations": 1,
+        "byKind": {
+          "word-choice": 0,
+          "rephrase": 0,
+          "insertion": 0,
+          "comment": 0,
+          "question": 0,
+          "proposal": 0,
+          "citation-flag": 0,
+          "surfaced-source": 0,
+          "source-suggestion": 0,
+          "discuss": 0,
+          "review": 0,
+          "chat": 1
+        }
+      },
+      "quoted": { "sources": 0 },
+      "suggestions": {
+        "byKind": {
+          "word-choice": { "open": 1, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 },
+          "insertion": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 },
+          "rephrase": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 }
+        }
+      },
+      "proposals": {
+        "moves": {
+          "sentence": { "proposed": 0, "accepted": 0 },
+          "paragraph": { "proposed": 0, "accepted": 0 },
+          "section": { "proposed": 0, "accepted": 0 }
+        }
+      },
+      "imports": []
+    },
+    "disclosure": "Written in 1 session. 24 words: 75.0% typed directly; 25.0% retyped from 1 AI chat reply. AI feedback was requested 4 times in chat; the editor left 1 comment. AI made 1 wording suggestion: 1 still open."
+  },
+  "documents": {
+    "doc-c": {
+      "reportVersion": 1,
+      "scope": { "kind": "document", "documentId": "doc-c" },
+      "throughSeq": 19,
+      "headHash": "b0ece179c7ec5f43f92b9bb46fcf5626912a2f354bddf26631c6c7840b538030",
+      "words": {
+        "total": 24,
+        "byClass": {
+          "typed": 18,
+          "typed-from-suggestion": 6,
+          "pasted-external": 0,
+          "pasted-internal": 0,
+          "imported": 0,
+          "quoted": 0
+        }
+      },
+      "characters": {
+        "total": 136,
+        "byClass": {
+          "typed": 104,
+          "typed-from-suggestion": 32,
+          "pasted-external": 0,
+          "pasted-internal": 0,
+          "imported": 0,
+          "quoted": 0
+        }
+      },
+      "activeWritingMs": 18213,
+      "sessions": {
+        "count": 1,
+        "days": 1,
+        "firstAt": "2026-11-02T09:00:00.800Z",
+        "lastAt": "2026-11-02T09:00:37.113Z",
+        "list": [
+          {
+            "startTime": "2026-11-02T09:00:00.800Z",
+            "endTime": "2026-11-02T09:00:37.113Z",
+            "activeMs": 18213,
+            "charactersInserted": 136,
+            "startSeq": 3,
+            "endSeq": 19,
+            "commits": 4,
+            "documentIds": ["doc-c"]
+          }
+        ]
+      },
+      "ai": {
+        "feedbackRequests": 0,
+        "sessionsFinished": 2,
+        "sessionsFailed": 1,
+        "comments": 1,
+        "questions": 0,
+        "citationFlags": 0,
+        "surfacedSources": 0,
+        "sourceSuggestions": 0,
+        "discussThreads": 0,
+        "sessions": [
+          {
+            "id": "fs-c1",
+            "kind": "chat",
+            "model": "sonnet",
+            "systemPromptVersion": "v4",
+            "status": "finished",
+            "startedAt": "2026-11-02T09:00:19.824Z",
+            "startedSeq": 6,
+            "requestId": null,
+            "threadId": null,
+            "lenses": ["clarity", "word-choice"],
+            "intensity": "standard",
+            "scope": "document",
+            "annotations": 0,
+            "failureReason": null,
+            "chatId": "chat-1"
+          },
+          {
+            "id": "fs-c2",
+            "kind": "chat",
+            "model": "sonnet",
+            "systemPromptVersion": null,
+            "status": "finished",
+            "startedAt": "2026-11-02T09:00:23.224Z",
+            "startedSeq": 9,
+            "requestId": null,
+            "threadId": null,
+            "lenses": ["structure", "word-choice"],
+            "intensity": "light",
+            "scope": "selection",
+            "annotations": 2,
+            "failureReason": null,
+            "chatId": "chat-1"
+          },
+          {
+            "id": "fs-c3",
+            "kind": "chat",
+            "model": "sonnet",
+            "systemPromptVersion": null,
+            "status": "failed",
+            "startedAt": "2026-11-02T09:00:32.459Z",
+            "startedSeq": 15,
+            "requestId": null,
+            "threadId": null,
+            "lenses": ["structure", "word-choice"],
+            "intensity": "light",
+            "scope": "document",
+            "annotations": 0,
+            "failureReason": "model unavailable",
+            "chatId": "chat-1"
+          }
+        ],
+        "chatMessages": 4
+      },
+      "suggestions": {
+        "total": 1,
+        "byKind": { "word-choice": 1, "insertion": 0, "rephrase": 0 },
+        "byOutcome": { "open": 1, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 }
+      },
+      "proposals": {
+        "total": 0,
+        "byKind": {
+          "move": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+          "cut": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+          "split": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+          "merge": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 }
+        }
+      },
+      "pastes": {
+        "external": { "count": 0, "characters": 0, "words": 0 },
+        "internal": { "count": 0, "characters": 0, "words": 0 },
+        "events": []
+      },
+      "imports": { "documents": 0, "words": 0 },
+      "unwitnessed": [],
+      "provesTable": {
+        "proves": [
+          "The text came in through the editor's input channel, at these times and this cadence",
+          "Exactly which AI suggestions were visible, and which were retyped or used",
+          "The history hasn't been changed since the server witnessed it"
+        ],
+        "doesNotProve": [
+          "That the account holder was the one typing",
+          "That nothing was transcribed from another screen or another AI",
+          "That a modified client didn't misreport pastes as typing (the keystroke timeline makes this costly, not impossible)"
+        ]
+      },
+      "extensions": {
+        "unwitnessedThresholdMs": 60000,
+        "projectTitle": "Harbour",
+        "documents": [{ "id": "doc-c", "title": "Chapter 1", "kind": "manuscript", "words": 24 }],
+        "assisted": {
+          "annotations": 1,
+          "byKind": {
+            "word-choice": 0,
+            "rephrase": 0,
+            "insertion": 0,
+            "comment": 0,
+            "question": 0,
+            "proposal": 0,
+            "citation-flag": 0,
+            "surfaced-source": 0,
+            "source-suggestion": 0,
+            "discuss": 0,
+            "review": 0,
+            "chat": 1
+          }
+        },
+        "quoted": { "sources": 0 },
+        "suggestions": {
+          "byKind": {
+            "word-choice": { "open": 1, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 },
+            "insertion": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 },
+            "rephrase": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 }
+          }
+        },
+        "proposals": {
+          "moves": {
+            "sentence": { "proposed": 0, "accepted": 0 },
+            "paragraph": { "proposed": 0, "accepted": 0 },
+            "section": { "proposed": 0, "accepted": 0 }
+          }
+        },
+        "imports": []
+      },
+      "disclosure": "Written in 1 session. 24 words: 75.0% typed directly; 25.0% retyped from 1 AI chat reply. AI feedback was requested 4 times in chat; the editor left 1 comment. AI made 1 wording suggestion: 1 still open."
+    }
+  }
+}

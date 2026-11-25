@@ -536,6 +536,93 @@ function discuss(): LedgerBuilder {
   return b;
 }
 
+function chat(): LedgerBuilder {
+  const b = new LedgerBuilder({ title: 'Harbour', seed: 24 });
+  b.createDocument('doc-c', 'Chapter 1');
+  b.type(
+    'doc-c',
+    'The rain fell sideways over the harbour. Nobody came to the door. Mara counted the boats twice.',
+  );
+  const theo = {
+    id: 'ed-theo',
+    name: 'Theo',
+    role: 'Line editor',
+    brief: 'Listens to every sentence.',
+  };
+  const margaret = { id: 'ed-margaret', name: 'Margaret', brief: 'Big picture first.' };
+  // A plain question: a reply and no notes.
+  b.sendChat('chat-1', 'm-1', 'Is the title working?', {
+    editor: theo,
+    lenses: ['clarity', 'word-choice'],
+    intensity: 'standard',
+    scope: { kind: 'document', documentId: 'doc-c' },
+  });
+  b.startChat('fs-c1', 'chat-1', 'm-1', 'sonnet', { systemPromptVersion: 'v4' });
+  b.replyInChat(
+    'fs-c1',
+    'chat-1',
+    'm-1',
+    'Harbour works. It names the place the chapter never leaves.\n\nIf you want more pull, let the harbour wait for morning.',
+  );
+  // A review of a selection, by another editor: notes, then the reply.
+  const v = b.version('doc-c');
+  b.sendChat('chat-1', 'm-2', 'Review this opening.', {
+    editor: margaret,
+    lenses: ['structure', 'word-choice'],
+    intensity: 'light',
+    scope: { kind: 'selection', documentId: 'doc-c', from: 1, to: 66, version: v },
+  });
+  b.startChat('fs-c2', 'chat-1', 'm-2');
+  b.comment(
+    'fs-c2',
+    'cmt-c',
+    { kind: 'anchor', documentId: 'doc-c', sentenceId: 'p1.s2', quote: 'Nobody came' },
+    'The empty door is the real event; give it a beat.',
+  );
+  b.suggestWordChoice(
+    'fs-c2',
+    'sug-c',
+    { documentId: 'doc-c', sentenceId: 'p1.s1', quote: 'sideways' },
+    ['slantwise'],
+    'A rarer word slows the eye.',
+  );
+  b.replyInChat(
+    'fs-c2',
+    'chat-1',
+    'm-2',
+    'Two notes on the opening: the door matters more than the rain, and one word could slow the reader down.',
+  );
+  // The writer edits before the selection, so the stored selection is mapped.
+  b.type('doc-c', 'Night. ', { at: 1 });
+  // Asking about a note (Discuss in the chat); the session fails.
+  b.sendChat('chat-1', 'm-3', 'Why does the door matter?', {
+    editor: margaret,
+    lenses: ['structure', 'word-choice'],
+    intensity: 'light',
+    scope: { kind: 'document', documentId: 'doc-c' },
+    aboutId: 'cmt-c',
+  });
+  b.startChat('fs-c3', 'chat-1', 'm-3');
+  b.system('FeedbackSessionFailed', {
+    feedbackSessionId: 'fs-c3',
+    requestId: null,
+    threadId: null,
+    reason: 'model unavailable',
+  });
+  // A new chat whose session never started.
+  b.sendChat('chat-2', 'm-4', 'Anything else?', { editor: theo, lenses: ['clarity'] });
+  b.system('FeedbackSessionFailed', {
+    feedbackSessionId: null,
+    requestId: null,
+    threadId: null,
+    chat: { chatId: 'chat-2', messageId: 'm-4' },
+    reason: 'the ledger service restarted',
+  });
+  // The writer retypes words from a reply: matched as typed-from-suggestion (chat).
+  b.type('doc-c', ' Let the harbour wait for morning.');
+  return b;
+}
+
 function research(): LedgerBuilder {
   const b = new LedgerBuilder({ title: 'The Wet Valley', seed: 21 });
   b.createDocument('doc-r', 'Essay');
@@ -842,6 +929,21 @@ export const FIXTURE_DEFINITIONS: Readonly<Record<string, FixtureDefinition>> = 
       'A Discuss thread on a suggestion: answered, followed up, the follow-up session fails; the suggestion is then dismissed.',
     covers: ['discuss', 'discuss-answered', 'session-failed'],
     build: discuss,
+  },
+  chat: {
+    description:
+      'A feedback chat: a plain question answered with no notes; a selection review by another editor that leaves a comment and a word-choice suggestion, then replies; the selection mapped through a later edit; a question about a note whose session fails; a second chat that fails before starting; words retyped from a reply.',
+    covers: [
+      'chat',
+      'chat-reply',
+      'chat-notes',
+      'chat-selection-scope-mapped',
+      'chat-about-note',
+      'chat-session-failed',
+      'chat-failed-before-start',
+      'chat-matched',
+    ],
+    build: chat,
   },
   research: {
     description:

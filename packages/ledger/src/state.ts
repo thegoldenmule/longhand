@@ -53,6 +53,11 @@ export interface DocInternal {
   readonly maps: MapNode | null;
 }
 
+/** Tracker id of a chat message's selection scope (never collides with annotation ids). */
+export function chatTrackerId(chatId: string, messageId: string): string {
+  return `chat:${chatId}:${messageId}`;
+}
+
 /** A position range. */
 export interface Span {
   from: number;
@@ -62,6 +67,8 @@ export interface Span {
 /** Annotation groups that carry document positions. */
 export type TrackedGroup =
   | 'feedbackRequests'
+  /** A chat message's selection scope; the tracker id is `chatTrackerId(chatId, messageId)`. */
+  | 'chatMessages'
   | 'comments'
   | 'questions'
   | 'suggestions'
@@ -218,6 +225,7 @@ function emptyAnnotations(): AnnotationsState {
     surfacedSources: {},
     sourceSuggestions: {},
     discussions: {},
+    chats: {},
   };
 }
 

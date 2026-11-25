@@ -116,6 +116,20 @@ export const EXAMPLE_PAYLOADS: { [K in EventType]: EventPayloads[K] } = {
     ask: 'Is the opening too slow?',
   },
   DiscussRequested: { threadId: 'thr1', targetId: 'sug1', message: 'Why this word?' },
+  ChatMessageSent: {
+    chatId: 'chat1',
+    messageId: 'msg1',
+    text: 'Is the opening too slow?',
+    editor: {
+      id: 'ed1',
+      name: 'Margaret',
+      role: 'Developmental editor',
+      brief: 'Big picture first.',
+    },
+    lenses: ['structure', 'pacing'],
+    intensity: 'light',
+    context: { scope: { kind: 'document', documentId: 'doc1' }, aboutId: null },
+  },
   SourceAdded: {
     sourceId: 'src1',
     csl,
@@ -230,6 +244,12 @@ export const EXAMPLE_PAYLOADS: { [K in EventType]: EventPayloads[K] } = {
     threadId: 'thr1',
     targetId: 'sug1',
     body: '"Drizzle" keeps the quiet mood.',
+  },
+  ChatReplied: {
+    feedbackSessionId: 'fs3',
+    chatId: 'chat1',
+    replyTo: 'msg1',
+    body: 'A little. The storm arrives late.\n\nI left two notes on the first page.',
   },
   SuggestionResolved: {
     targetId: 'sug1',

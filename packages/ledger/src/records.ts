@@ -30,6 +30,20 @@ export function syncTrackerRecord(tx: Tx, t: Tracker, version: number): void {
       };
       return;
     }
+    case 'chatMessages': {
+      const [, chatId, messageId] = t.id.split(':') as [string, string, string];
+      const chat = tx.s.ann.chats[chatId];
+      const i = chat ? chat.messages.findIndex((m) => m.id === messageId) : -1;
+      const msg = chat?.messages[i];
+      if (!chat || !msg || msg.role !== 'writer' || msg.scope.kind !== 'selection' || !t.range)
+        return;
+      const sc = msg.scope;
+      if (sc.from === t.range.from && sc.to === t.range.to && sc.version === version) return;
+      const messages = [...chat.messages];
+      messages[i] = { ...msg, scope: { ...sc, from: t.range.from, to: t.range.to, version } };
+      tx.ann('chats')[chatId] = { ...chat, messages };
+      return;
+    }
     case 'comments':
     case 'questions':
     case 'citationFlags':

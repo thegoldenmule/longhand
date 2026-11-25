@@ -144,6 +144,7 @@ const MATCHED_GROUP: Readonly<Record<MatchedKind, keyof AnnotationsState>> = {
   'source-suggestion': 'sourceSuggestions',
   discuss: 'discussions',
   review: 'agentSessions',
+  chat: 'chats',
 };
 
 /** The history of the unit at `pos` (see {@link SpanHistory}), or null if there is none. */

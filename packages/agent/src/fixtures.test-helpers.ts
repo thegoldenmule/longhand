@@ -150,6 +150,8 @@ export function makeState(overrides: { ch1?: BlockSpec[] } = {}): ProjectState {
           kind: 'review',
           requestId: 'r0',
           threadId: null,
+          chatId: null,
+          messageId: null,
           model: 'opus',
           systemPromptVersion: 'v1',
           startedSeq: 20,
@@ -229,6 +231,7 @@ export function makeState(overrides: { ch1?: BlockSpec[] } = {}): ProjectState {
           status: 'awaiting-editor',
         },
       },
+      chats: {},
     },
     sources: {
       src1: {

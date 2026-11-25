@@ -252,6 +252,13 @@ export const AnswerDiscussionInput = z.object({
   ),
 });
 
+/** `reply` — the editor's answer in the feedback chat; ends a chat session (required). */
+export const ReplyInput = z.object({
+  body: nonBlank(BOUNDS.chatReplyMaxChars, 'body').describe(
+    `Your reply to the writer, plain text, at most ${BOUNDS.chatReplyMaxChars} characters. Separate paragraphs with a blank line.`,
+  ),
+});
+
 /** `finish_review` — the review summary; ends the session (required). */
 export const FinishReviewInput = z.object({
   summary: nonBlank(BOUNDS.reviewSummaryMaxChars, 'summary').describe('Your overall read.'),
@@ -278,8 +285,11 @@ export interface ToolCounts {
   search: boolean;
 }
 
-/** Kind of agent session. Review sessions answer a `FeedbackRequested`; discuss sessions answer a `DiscussRequested`. */
-export type AgentSessionKind = 'review' | 'discuss';
+/**
+ * Kind of agent session. Review sessions answer a `FeedbackRequested`, discuss
+ * sessions a `DiscussRequested`, chat sessions a `ChatMessageSent`.
+ */
+export type AgentSessionKind = 'review' | 'discuss' | 'chat';
 
 /** One tool in the catalog. */
 export interface ToolDefinition<S extends z.ZodType = z.ZodType> {
@@ -303,8 +313,10 @@ const NONE: ToolCounts = {
   search: false,
 };
 const ITEM: ToolCounts = { ...NONE, item: true };
-const BOTH = ['review', 'discuss'] as const;
-const REVIEW = ['review'] as const;
+/** Read tools: every session kind. */
+const BOTH = ['review', 'discuss', 'chat'] as const;
+/** Annotation and research tools: reviews and chats (a chat may leave notes). */
+const REVIEW = ['review', 'chat'] as const;
 
 function tool<S extends z.ZodType>(d: ToolDefinition<S>): ToolDefinition<S> {
   return d;
@@ -465,6 +477,16 @@ export const TOOLS = {
     counts: NONE,
     sessions: ['discuss'],
   }),
+  reply: tool({
+    name: 'reply',
+    description:
+      'Reply to the writer in the feedback chat. Required: every chat session ends with exactly one call, after any notes.',
+    kind: 'control',
+    input: ReplyInput,
+    emits: 'ChatReplied',
+    counts: NONE,
+    sessions: ['chat'],
+  }),
   finish_review: tool({
     name: 'finish_review',
     description:
@@ -473,7 +495,7 @@ export const TOOLS = {
     input: FinishReviewInput,
     emits: 'ReviewFinished',
     counts: NONE,
-    sessions: REVIEW,
+    sessions: ['review'],
   }),
 } as const;
 
@@ -490,6 +512,7 @@ export type ToolInputs = { [K in ToolName]: z.infer<(typeof TOOLS)[K]['input']> 
 export const SESSION_FINISH_TOOL: Readonly<Record<AgentSessionKind, ToolName>> = {
   review: 'finish_review',
   discuss: 'answer_discussion',
+  chat: 'reply',
 };
 
 /** Tool names offered in a session of the given kind. */

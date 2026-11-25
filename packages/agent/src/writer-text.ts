@@ -49,6 +49,8 @@ export function writerFacingTexts(tool: ToolName, input: ToolInputs[ToolName]): 
       return [one('claim', (input as ToolInputs['flag_citation_needed']).claim)];
     case 'answer_discussion':
       return [one('body', (input as ToolInputs['answer_discussion']).body)];
+    case 'reply':
+      return [one('body', (input as ToolInputs['reply']).body)];
     case 'finish_review': {
       const i = input as ToolInputs['finish_review'];
       return [

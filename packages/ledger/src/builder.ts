@@ -1326,6 +1326,59 @@ export class LedgerBuilder {
     return this;
   }
 
+  /** The writer sends a chat message to an editor (a new chat on its first message). */
+  sendChat(
+    chatId: string,
+    messageId: string,
+    text: string,
+    opts: {
+      editor?: FeedbackEditor;
+      lenses?: Lens[];
+      intensity?: Intensity;
+      scope?: FeedbackScope;
+      aboutId?: string | null;
+    } = {},
+  ): this {
+    this.human('ChatMessageSent', {
+      chatId,
+      messageId,
+      text,
+      editor: opts.editor ?? { id: 'ed-margaret', name: 'Margaret', brief: 'Big picture first.' },
+      lenses: opts.lenses ?? ['structure', 'clarity'],
+      intensity: opts.intensity ?? 'standard',
+      context: { scope: opts.scope ?? { kind: 'project' }, aboutId: opts.aboutId ?? null },
+    });
+    return this;
+  }
+
+  /** The service starts a chat session for a writer message. */
+  startChat(
+    sessionId: string,
+    chatId: string,
+    messageId: string,
+    model = 'sonnet',
+    opts: { systemPromptVersion?: string } = {},
+  ): this {
+    this.agent(
+      'FeedbackSessionStarted',
+      {
+        feedbackSessionId: sessionId,
+        trigger: { kind: 'chat', chatId, messageId },
+        model,
+        ...(opts.systemPromptVersion ? { systemPromptVersion: opts.systemPromptVersion } : {}),
+      },
+      sessionId,
+      model,
+    );
+    return this;
+  }
+
+  /** `reply`: the editor answers in the chat, ending the session. */
+  replyInChat(sessionId: string, chatId: string, replyTo: string, body: string): this {
+    this.agent('ChatReplied', { feedbackSessionId: sessionId, chatId, replyTo, body }, sessionId);
+    return this;
+  }
+
   /** The writer opens or continues a Discuss thread. */
   discuss(threadId: string, targetId: string, message: string): this {
     this.human('DiscussRequested', { threadId, targetId, message });

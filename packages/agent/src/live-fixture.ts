@@ -74,6 +74,7 @@ export function liveParagraphState(): ProjectState {
       surfacedSources: {},
       sourceSuggestions: {},
       discussions: {},
+      chats: {},
     },
     sources: {},
     clippings: {},

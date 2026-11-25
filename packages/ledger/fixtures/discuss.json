@@ -2095,6 +2095,8 @@
             "kind": "review",
             "requestId": "req-d",
             "threadId": null,
+            "chatId": null,
+            "messageId": null,
             "model": "opus",
             "systemPromptVersion": null,
             "startedSeq": 6,
@@ -2124,6 +2126,8 @@
             "kind": "discuss",
             "requestId": null,
             "threadId": "thr-1",
+            "chatId": null,
+            "messageId": null,
             "model": "sonnet",
             "systemPromptVersion": "v1",
             "startedSeq": 10,
@@ -2147,6 +2151,8 @@
             "kind": "discuss",
             "requestId": null,
             "threadId": "thr-1",
+            "chatId": null,
+            "messageId": null,
             "model": "sonnet",
             "systemPromptVersion": null,
             "startedSeq": 13,
@@ -2234,7 +2240,8 @@
             ],
             "status": "failed"
           }
-        }
+        },
+        "chats": {}
       },
       "sources": {},
       "clippings": {},

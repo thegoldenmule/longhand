@@ -64,6 +64,7 @@ Exactly one actor kind may emit each event type. The "Manuscript" column marks t
 | `ProposalRejected`       | human  | no         |
 | `SuggestionDismissed`    | human  | no         |
 | `FeedbackRequested`      | human  | no         |
+| `ChatMessageSent`        | human  | no         |
 | `DiscussRequested`       | human  | no         |
 | `SourceAdded`            | human  | no         |
 | `SourceUpdated`          | human  | no         |
@@ -83,6 +84,7 @@ Exactly one actor kind may emit each event type. The "Manuscript" column marks t
 | `SourceSuggested`        | agent  | no         |
 | `ReviewFinished`         | agent  | no         |
 | `DiscussAnswered`        | agent  | no         |
+| `ChatReplied`            | agent  | no         |
 | `SuggestionResolved`     | system | no         |
 | `ChainHeadWitnessed`     | system | no         |
 | `FeedbackSessionFailed`  | system | no         |
@@ -206,3 +208,13 @@ Additive and optional; `SCHEMA_VERSION` stays 1 and no fixture changed.
 
 - **Editor profiles** (`editors`). A writer keeps an account-wide roster of named editors outside the ledger (the ledger service stores them). `EditorProfile` is `{id, name, brief, lenses, intensity, questions}`: a name of 1–60 chars, a brief of at most 600 chars (who the editor is, what it prioritizes and how it phrases notes), at least one lens without duplicates, an intensity, and 0–5 distinct canned questions of 1–160 chars. Limits are in `TEXT_LIMITS` (`editorNameMaxChars`, `editorBriefMaxChars`, `editorQuestionMaxChars`). `STARTER_EDITORS` is the seeded roster.
 - **`FeedbackRequested.editor`** (optional): `{id, name, brief}` of the editor asked, as it was at that moment. The request's own `lenses` and `intensity` are that editor's configuration, so the record is self-contained. The fold keeps it as `FeedbackRequestState.editor`, which is **absent** (not null) when the request named no editor, so older folded states are byte-identical. A tapped canned question travels in `ask` like any other question.
+
+## Contract revisions (feedback chat)
+
+Additive; `SCHEMA_VERSION` stays 1. Old ledgers fold and verify unchanged; the golden fixtures' commits and hashes are unchanged (their expected states gained `annotations.chats: {}` and the sessions' `chatId`/`messageId: null`), and a new `chat` fixture covers the events.
+
+- **`ChatMessageSent`** (human): `{chatId, messageId, text (1–4000, not blank), editor: FeedbackEditor, lenses, intensity, context: {scope: FeedbackScope, aboutId: id | null}}`. The first message names a new `chatId`; later ones reuse it. `editor`, `lenses` and `intensity` record who was asked and how, as `FeedbackRequested` does. `context.scope` is the open document, a selection (positions at `version`, mapped by the fold like a request's) or the project; `aboutId` names the margin note being asked about (Discuss in the chat).
+- **`ChatReplied`** (agent): `{feedbackSessionId, chatId, replyTo, body (1–3000)}`; the `reply` tool emits it and it ends the session. Notes the session left are its `annotationIds`.
+- **Sessions.** `AgentSessionKind` adds `chat`; `FeedbackSessionStarted.trigger` adds `{kind: 'chat', chatId, messageId}`. Chat sessions get the read, annotation and research tools plus `reply` (`SESSION_FINISH_TOOL.chat`), within the message's intensity caps; never `finish_review`. `FeedbackSessionFailed` gains an optional `chat: {chatId, messageId}` for a session that failed before it started.
+- **State.** `AnnotationsState.chats: Record<chatId, ChatState>` with `messages: (ChatWriterMessage | ChatEditorMessage)[]`. A writer message has `status` (`pending`, `running`, `answered`, `failed`) and its mapped `scope`; an editor message carries the `editor` it answered as. `AgentSessionState` adds `chatId` and `messageId`.
+- **Matcher.** Chat reply bodies are AI-visible text: retyped words are `typed-from-suggestion` with `matchedKind: 'chat'` and `suggestionId` the chat id (as discuss answers use the thread id).

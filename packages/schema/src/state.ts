@@ -273,7 +273,7 @@ export interface FeedbackRequestState {
   feedbackSessionId: string | null;
 }
 
-/** An agent session (a review, or a discuss reply). */
+/** An agent session (a review, a discuss reply or a chat reply). */
 export interface AgentSessionState {
   id: string;
   kind: AgentSessionKind;
@@ -281,6 +281,10 @@ export interface AgentSessionState {
   requestId: string | null;
   /** For discuss sessions. */
   threadId: string | null;
+  /** For chat sessions: the conversation. */
+  chatId: string | null;
+  /** For chat sessions: the writer message it answers. */
+  messageId: string | null;
   model: string;
   /** `FeedbackSessionStarted.systemPromptVersion`, or null when the session did not report one. */
   systemPromptVersion: string | null;
@@ -312,6 +316,58 @@ export interface DiscussThreadState {
   status: 'awaiting-editor' | 'answered' | 'failed';
 }
 
+/** A writer's message in the feedback chat. */
+export interface ChatWriterMessage {
+  role: 'writer';
+  id: string;
+  seq: number;
+  createdAt: string;
+  text: string;
+  /** The editor asked, as recorded in `ChatMessageSent`. */
+  editor: FeedbackEditor;
+  lenses: Lens[];
+  intensity: Intensity;
+  /**
+   * Where the editor looks. A selection's `from`/`to` are mapped to the document's
+   * current version (like `FeedbackRequestState.scope`) and collapse to a point
+   * rather than becoming null.
+   */
+  scope: FeedbackScope;
+  /** The margin note asked about, if any. */
+  aboutId: string | null;
+  status: 'pending' | 'running' | 'answered' | 'failed';
+  /** The agent session serving it, once started. */
+  feedbackSessionId: string | null;
+}
+
+/** The editor's reply in the feedback chat (AI text). */
+export interface ChatEditorMessage {
+  role: 'editor';
+  /** The session's id: one reply per session. */
+  id: string;
+  seq: number;
+  createdAt: string;
+  body: string;
+  /** The writer message it answers. */
+  replyTo: string;
+  feedbackSessionId: string;
+  /** Who replied (the editor the writer message asked). */
+  editor: FeedbackEditor;
+}
+
+/** One message in a feedback chat. */
+export type ChatMessage = ChatWriterMessage | ChatEditorMessage;
+
+/** A feedback chat: one conversation with the writer's editors. */
+export interface ChatState {
+  id: string;
+  createdSeq: number;
+  createdAt: string;
+  /** Seq of the latest message. */
+  updatedSeq: number;
+  messages: ChatMessage[];
+}
+
 /** The annotation layer. AI text lives only here. */
 export interface AnnotationsState {
   feedbackRequests: Record<string, FeedbackRequestState>;
@@ -324,6 +380,8 @@ export interface AnnotationsState {
   surfacedSources: Record<string, SurfacedSourceState>;
   sourceSuggestions: Record<string, SourceSuggestionState>;
   discussions: Record<string, DiscussThreadState>;
+  /** Feedback chats, keyed by chat id. */
+  chats: Record<string, ChatState>;
 }
 
 /** A library source (writer-verified). */

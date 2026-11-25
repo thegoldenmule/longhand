@@ -61,6 +61,12 @@ Written in 1 session. 18 words: 100% typed directly. AI feedback was requested o
 # discuss / doc-d
 Written in 1 session. 18 words: 100% typed directly. AI feedback was requested once. AI made 1 wording suggestion: 1 dismissed.
 
+# chat (project)
+Written in 1 session. 24 words: 75.0% typed directly; 25.0% retyped from 1 AI chat reply. AI feedback was requested 4 times in chat; the editor left 1 comment. AI made 1 wording suggestion: 1 still open.
+
+# chat / doc-c
+Written in 1 session. 24 words: 75.0% typed directly; 25.0% retyped from 1 AI chat reply. AI feedback was requested 4 times in chat; the editor left 1 comment. AI made 1 wording suggestion: 1 still open.
+
 # research (project)
 Written in 1 session. 45 words: 35.5% typed directly; 51.1% quoted from 1 source; 13.4% pasted or unverified. AI feedback was requested once; the editor left 2 citation-needed flags.
 

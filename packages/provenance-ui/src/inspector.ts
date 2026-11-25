@@ -173,6 +173,12 @@ function matchedText(
       const s = ann.agentSessions[id];
       return { text: s?.review?.summary ?? null, status: s?.status ?? null };
     }
+    case 'chat': {
+      // `id` is the chat; show its latest reply.
+      const c = ann.chats[id];
+      const reply = c ? [...c.messages].reverse().find((m) => m.role === 'editor') : undefined;
+      return { text: reply && reply.role === 'editor' ? reply.body : null, status: null };
+    }
   }
 }
 

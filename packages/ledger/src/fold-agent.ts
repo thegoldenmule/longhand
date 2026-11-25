@@ -29,6 +29,10 @@ import {
   TOOLS,
   type AgentSessionState,
   type Anchor,
+  type ChatState,
+  type ChatWriterMessage,
+  type FeedbackScope,
+  type Intensity,
   type CommitOf,
   type Commit,
   type MatchedKind,
@@ -44,9 +48,12 @@ import { blockAt } from './doctext';
 import { mapsBetween, touchedBetween } from './engine';
 import { documentNgrams, ngramsOf } from './matcher';
 import { pvecGet, pvecPush } from './pvec';
-import type { Span, TrackedGroup, Tracker, Tx } from './state';
+import { chatTrackerId, type Span, type TrackedGroup, type Tracker, type Tx } from './state';
 
-const DISMISSABLE: readonly TrackedGroup[] = [
+/** Annotation collections (the tracked groups that hold cards). */
+type CardGroup = Exclude<TrackedGroup, 'feedbackRequests' | 'chatMessages'>;
+
+const DISMISSABLE: readonly CardGroup[] = [
   'suggestions',
   'comments',
   'questions',
@@ -54,10 +61,10 @@ const DISMISSABLE: readonly TrackedGroup[] = [
   'surfacedSources',
   'sourceSuggestions',
 ];
-const ALL_GROUPS: readonly TrackedGroup[] = [...DISMISSABLE, 'proposals'];
+const ALL_GROUPS: readonly CardGroup[] = [...DISMISSABLE, 'proposals'];
 
 /** The annotation group holding `id`, if any. */
-export function groupOf(tx: Tx, id: string): TrackedGroup | null {
+export function groupOf(tx: Tx, id: string): CardGroup | null {
   for (const g of ALL_GROUPS) if (tx.s.ann[g][id]) return g;
   return null;
 }
@@ -100,17 +107,24 @@ function sessionFor(
     tx.issue('session-kind', `${tool} is not available in a ${s.kind} session`);
     return null;
   }
-  if (s.kind === 'review' && s.requestId) {
-    const req = tx.s.ann.feedbackRequests[s.requestId];
-    if (req) {
-      const v = capViolation(tool, s.counts, req.intensity);
-      if (v) {
-        tx.issue('cap-exceeded', v);
-        return null;
-      }
+  const intensity = sessionIntensity(tx, s);
+  if (intensity) {
+    const v = capViolation(tool, s.counts, intensity);
+    if (v) {
+      tx.issue('cap-exceeded', v);
+      return null;
     }
   }
   return s;
+}
+
+/** The intensity whose caps bound a session: its request's, or its chat message's. */
+function sessionIntensity(tx: Tx, s: AgentSessionState): Intensity | null {
+  if (s.kind === 'review' && s.requestId)
+    return tx.s.ann.feedbackRequests[s.requestId]?.intensity ?? null;
+  if (s.kind === 'chat' && s.chatId && s.messageId)
+    return chatMessage(tx, s.chatId, s.messageId)?.msg.intensity ?? null;
+  return null;
 }
 
 function countInSession(
@@ -331,7 +345,26 @@ export function foldSessionStarted(tx: Tx, c: CommitOf<'FeedbackSessionStarted'>
   }
   let requestId: string | null = null;
   let threadId: string | null = null;
-  if (p.trigger.kind === 'feedback') {
+  let chatId: string | null = null;
+  let messageId: string | null = null;
+  if (p.trigger.kind === 'chat') {
+    const found = chatMessage(tx, p.trigger.chatId, p.trigger.messageId);
+    if (!found) {
+      tx.issue('unknown-message', `no chat message ${p.trigger.messageId} in ${p.trigger.chatId}`);
+      return;
+    }
+    if (found.msg.status !== 'pending') {
+      tx.issue('not-open', `chat message ${found.msg.id} is ${found.msg.status}`);
+      return;
+    }
+    setChatMessage(tx, found, {
+      ...found.msg,
+      status: 'running',
+      feedbackSessionId: p.feedbackSessionId,
+    });
+    chatId = found.chat.id;
+    messageId = found.msg.id;
+  } else if (p.trigger.kind === 'feedback') {
     const req = tx.s.ann.feedbackRequests[p.trigger.requestId];
     if (!req) {
       tx.issue('unknown-request', `no feedback request ${p.trigger.requestId}`);
@@ -361,9 +394,11 @@ export function foldSessionStarted(tx: Tx, c: CommitOf<'FeedbackSessionStarted'>
   }
   tx.ann('agentSessions')[p.feedbackSessionId] = {
     id: p.feedbackSessionId,
-    kind: p.trigger.kind === 'feedback' ? 'review' : 'discuss',
+    kind: p.trigger.kind === 'feedback' ? 'review' : p.trigger.kind,
     requestId,
     threadId,
+    chatId,
+    messageId,
     model: p.model,
     systemPromptVersion: p.systemPromptVersion ?? null,
     startedSeq: c.seq,
@@ -859,6 +894,40 @@ export function foldDiscussAnswered(tx: Tx, c: CommitOf<'DiscussAnswered'>): voi
   addAiText(tx, thr.id, 'discuss', [p.body]);
 }
 
+/** Folds `ChatReplied`: the editor's reply ends the chat session. */
+export function foldChatReplied(tx: Tx, c: CommitOf<'ChatReplied'>): void {
+  const p = c.payload;
+  const s = sessionFor(tx, c, p.feedbackSessionId, 'reply');
+  if (!s) return;
+  if (s.chatId !== p.chatId || s.messageId !== p.replyTo) {
+    tx.issue(
+      'unknown-message',
+      `session ${s.id} answers ${s.messageId ?? 'nothing'} in ${s.chatId ?? 'no chat'}, not ${p.replyTo} in ${p.chatId}`,
+    );
+    return;
+  }
+  const found = chatMessage(tx, p.chatId, p.replyTo);
+  if (!found) {
+    tx.issue('unknown-message', `no chat message ${p.replyTo} in ${p.chatId}`);
+    return;
+  }
+  const messages = [...found.chat.messages];
+  messages[found.index] = { ...found.msg, status: 'answered' };
+  messages.push({
+    role: 'editor',
+    id: s.id,
+    seq: c.seq,
+    createdAt: c.serverTime,
+    body: p.body,
+    replyTo: p.replyTo,
+    feedbackSessionId: s.id,
+    editor: found.msg.editor,
+  });
+  tx.ann('chats')[found.chat.id] = { ...found.chat, updatedSeq: c.seq, messages };
+  tx.ann('agentSessions')[s.id] = { ...s, status: 'finished', endedSeq: c.seq };
+  addAiText(tx, found.chat.id, 'chat', [p.body]);
+}
+
 // ---------------------------------------------------------------------------
 // Human responses
 // ---------------------------------------------------------------------------
@@ -927,6 +996,46 @@ export function foldProposalRejected(tx: Tx, c: CommitOf<'ProposalRejected'>): v
   if (t) tx.setTracker({ ...t, range: null, point: null, watch: false });
 }
 
+/**
+ * Checks a requested scope and maps a selection to the document's current version
+ * (tracking it from then on under `trackerId`). Returns null after recording an
+ * issue when the scope cannot be served.
+ */
+function mapRequestScope(
+  tx: Tx,
+  scope: FeedbackScope,
+  trackerId: string,
+  group: 'feedbackRequests' | 'chatMessages',
+): FeedbackScope | null {
+  if (scope.kind !== 'project' && !tx.s.docs[scope.documentId]) {
+    tx.issue('unknown-document', `no document ${scope.documentId}`);
+    return null;
+  }
+  if (scope.kind !== 'selection') return scope;
+  // Selection positions are mapped to the current version, and then through every later step.
+  const d = tx.s.docs[scope.documentId]!;
+  const maps = scope.version <= d.version ? mapsBetween(d.maps, scope.version, d.version) : null;
+  if (!maps || scope.from > scope.to) {
+    tx.issue(
+      'invalid-version',
+      `selection at version ${scope.version} cannot be mapped to ${d.version}`,
+    );
+    return null;
+  }
+  let from = scope.from;
+  let to = scope.to;
+  for (const m of maps) {
+    from = m.map(from, 1);
+    to = Math.max(from, m.map(to, -1));
+  }
+  if (to > d.node.content.size) {
+    tx.issue('invalid-position', `selection ${scope.from}-${scope.to} is outside document ${d.id}`);
+    return null;
+  }
+  tx.addTracker(newTracker(trackerId, d.id, group, { from, to }));
+  return { ...scope, from, to, version: d.version };
+}
+
 /** Folds `FeedbackRequested`. */
 export function foldFeedbackRequested(tx: Tx, c: CommitOf<'FeedbackRequested'>): void {
   const p = c.payload;
@@ -934,38 +1043,8 @@ export function foldFeedbackRequested(tx: Tx, c: CommitOf<'FeedbackRequested'>):
     tx.issue('duplicate-id', `feedback request ${p.requestId} already exists`);
     return;
   }
-  if (p.scope.kind !== 'project' && !tx.s.docs[p.scope.documentId]) {
-    tx.issue('unknown-document', `no document ${p.scope.documentId}`);
-    return;
-  }
-  let scope = p.scope;
-  if (scope.kind === 'selection') {
-    // Selection positions are mapped to the current version, and then through every later step.
-    const d = tx.s.docs[scope.documentId]!;
-    const maps = scope.version <= d.version ? mapsBetween(d.maps, scope.version, d.version) : null;
-    if (!maps || scope.from > scope.to) {
-      tx.issue(
-        'invalid-version',
-        `selection at version ${scope.version} cannot be mapped to ${d.version}`,
-      );
-      return;
-    }
-    let from = scope.from;
-    let to = scope.to;
-    for (const m of maps) {
-      from = m.map(from, 1);
-      to = Math.max(from, m.map(to, -1));
-    }
-    if (to > d.node.content.size) {
-      tx.issue(
-        'invalid-position',
-        `selection ${scope.from}-${scope.to} is outside document ${d.id}`,
-      );
-      return;
-    }
-    scope = { ...scope, from, to, version: d.version };
-    tx.addTracker(newTracker(p.requestId, d.id, 'feedbackRequests', { from, to }));
-  }
+  const scope = mapRequestScope(tx, p.scope, p.requestId, 'feedbackRequests');
+  if (!scope) return;
   tx.ann('feedbackRequests')[p.requestId] = {
     id: p.requestId,
     seq: c.seq,
@@ -978,6 +1057,79 @@ export function foldFeedbackRequested(tx: Tx, c: CommitOf<'FeedbackRequested'>):
     ...(p.editor ? { editor: p.editor } : {}),
     status: 'pending',
     feedbackSessionId: null,
+  };
+}
+
+/** Folds `ChatMessageSent`: opens the chat on its first message, appends to it after. */
+export function foldChatMessageSent(tx: Tx, c: CommitOf<'ChatMessageSent'>): void {
+  const p = c.payload;
+  const chat = tx.s.ann.chats[p.chatId];
+  if (chat?.messages.some((m) => m.id === p.messageId)) {
+    tx.issue('duplicate-id', `chat message ${p.messageId} already exists`);
+    return;
+  }
+  if (p.context.aboutId !== null && groupOf(tx, p.context.aboutId) === null) {
+    tx.issue('unknown-target', `no annotation ${p.context.aboutId}`);
+    return;
+  }
+  const scope = mapRequestScope(
+    tx,
+    p.context.scope,
+    chatTrackerId(p.chatId, p.messageId),
+    'chatMessages',
+  );
+  if (!scope) return;
+  const msg: ChatWriterMessage = {
+    role: 'writer',
+    id: p.messageId,
+    seq: c.seq,
+    createdAt: c.serverTime,
+    text: p.text,
+    editor: p.editor,
+    lenses: p.lenses,
+    intensity: p.intensity,
+    scope,
+    aboutId: p.context.aboutId,
+    status: 'pending',
+    feedbackSessionId: null,
+  };
+  tx.ann('chats')[p.chatId] = chat
+    ? { ...chat, updatedSeq: c.seq, messages: [...chat.messages, msg] }
+    : {
+        id: p.chatId,
+        createdSeq: c.seq,
+        createdAt: c.serverTime,
+        updatedSeq: c.seq,
+        messages: [msg],
+      };
+}
+
+/** A writer message of a chat, with its index, or null. */
+function chatMessage(
+  tx: Tx,
+  chatId: string,
+  messageId: string,
+): { chat: ChatState; index: number; msg: ChatWriterMessage } | null {
+  const chat = tx.s.ann.chats[chatId];
+  if (!chat) return null;
+  const index = chat.messages.findIndex((m) => m.id === messageId && m.role === 'writer');
+  const msg = chat.messages[index];
+  return msg && msg.role === 'writer' ? { chat, index, msg } : null;
+}
+
+/** Replaces one writer message of a chat. */
+function setChatMessage(
+  tx: Tx,
+  found: { chat: ChatState; index: number },
+  msg: ChatWriterMessage,
+  updatedSeq?: number,
+): void {
+  const messages = [...found.chat.messages];
+  messages[found.index] = msg;
+  tx.ann('chats')[found.chat.id] = {
+    ...found.chat,
+    messages,
+    ...(updatedSeq === undefined ? {} : { updatedSeq }),
   };
 }
 
@@ -1047,8 +1199,13 @@ export function foldChainHeadWitnessed(tx: Tx, c: CommitOf<'ChainHeadWitnessed'>
 /** Folds `FeedbackSessionFailed`. */
 export function foldSessionFailed(tx: Tx, c: CommitOf<'FeedbackSessionFailed'>): void {
   const p = c.payload;
-  if (p.feedbackSessionId === null && p.requestId === null && p.threadId === null) {
-    tx.issue('unknown-target', 'FeedbackSessionFailed names no session, request or thread');
+  if (
+    p.feedbackSessionId === null &&
+    p.requestId === null &&
+    p.threadId === null &&
+    p.chat === undefined
+  ) {
+    tx.issue('unknown-target', 'FeedbackSessionFailed names no session, request, thread or chat');
     return;
   }
   if (p.feedbackSessionId !== null) {
@@ -1075,5 +1232,19 @@ export function foldSessionFailed(tx: Tx, c: CommitOf<'FeedbackSessionFailed'>):
     const t = tx.s.ann.discussions[p.threadId];
     if (!t) tx.issue('unknown-thread', `no discuss thread ${p.threadId}`);
     else tx.ann('discussions')[t.id] = { ...t, status: 'failed' };
+  }
+  // A chat message fails with its session (named directly, or through the session).
+  const session = p.feedbackSessionId ? tx.s.ann.agentSessions[p.feedbackSessionId] : undefined;
+  const chat =
+    p.chat ??
+    (session?.kind === 'chat' && session.chatId && session.messageId
+      ? { chatId: session.chatId, messageId: session.messageId }
+      : null);
+  if (chat) {
+    const found = chatMessage(tx, chat.chatId, chat.messageId);
+    if (!found) tx.issue('unknown-message', `no chat message ${chat.messageId} in ${chat.chatId}`);
+    else if (found.msg.status === 'answered')
+      tx.issue('not-open', `chat message ${found.msg.id} was already answered`);
+    else setChatMessage(tx, found, { ...found.msg, status: 'failed' });
   }
 }

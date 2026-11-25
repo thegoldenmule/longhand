@@ -16,6 +16,7 @@ import { randomBytes, timingSafeEqual } from 'node:crypto';
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from 'node:http';
 import type { AddressInfo } from 'node:net';
 import {
+  TOOLS,
   capViolation,
   countCall,
   type AgentSessionKind,
@@ -25,7 +26,7 @@ import {
   type SurfacedCandidate,
   type ToolName,
 } from '@longhand/schema';
-import { draftError, isToolEventType, type ToolEventDraft } from './drafts';
+import { draftError, isClosingEventType, isToolEventType, type ToolEventDraft } from './drafts';
 import { errMsg, sessionEventsPath, type AnnotationSink } from './sink';
 
 /** The tool whose call produces a draft (inverse of `TOOLS[name].emits`). */
@@ -59,6 +60,8 @@ export function toolForDraft(draft: ToolEventDraft): ToolName {
       return 'finish_review';
     case 'DiscussAnswered':
       return 'answer_discussion';
+    case 'ChatReplied':
+      return 'reply';
   }
 }
 
@@ -99,7 +102,7 @@ export class SessionRelay {
     this.counts = { ...(opts.initialCounts ?? emptyCounts()) };
   }
 
-  /** True once `ReviewFinished` / `DiscussAnswered` was accepted. */
+  /** True once `ReviewFinished`, `DiscussAnswered` or `ChatReplied` was accepted. */
   get finished(): boolean {
     return this.finishedValue;
   }
@@ -203,12 +206,11 @@ export class SessionRelay {
     ) {
       return err(403, 'forbidden', 'draft does not belong to this session');
     }
-    const discussOnly = draft.type === 'DiscussAnswered';
-    if ((o.sessionKind === 'discuss') !== discussOnly) {
+    const tool = toolForDraft(draft);
+    if (!(TOOLS[tool].sessions as readonly string[]).includes(o.sessionKind)) {
       return err(403, 'forbidden', `${draft.type} is not allowed in a ${o.sessionKind} session`);
     }
     if (this.finishedValue) return err(409, 'session-closed', 'the session is finished');
-    const tool = toolForDraft(draft);
     const cap = capViolation(tool, this.counts, o.intensity);
     if (cap) return err(422, 'cap-reached', cap);
     const r = await o.sink.append(draft);
@@ -218,9 +220,7 @@ export class SessionRelay {
     if (!r.duplicate) {
       this.counts = countCall(tool, this.counts);
       this.accepted.push({ seq: r.seq, draft });
-      if (draft.type === 'ReviewFinished' || draft.type === 'DiscussAnswered') {
-        this.finishedValue = true;
-      }
+      if (isClosingEventType(draft.type)) this.finishedValue = true;
       o.onAccepted?.(draft, r.seq);
     }
     return {

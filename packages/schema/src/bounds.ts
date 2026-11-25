@@ -29,6 +29,7 @@ export const BOUNDS = {
   reviewMaxStrengths: 5,
   reviewMaxPriorities: 5,
   discussAnswerMaxChars: 1200,
+  chatReplyMaxChars: 3000,
   readNotesMaxIds: 50,
 } as const;
 

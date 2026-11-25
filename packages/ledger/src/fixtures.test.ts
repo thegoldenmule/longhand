@@ -41,6 +41,8 @@ describe('golden fixtures', () => {
       'accepted',
       'rejected',
       'discuss',
+      'chat',
+      'chat-matched',
       'sources',
       'quote-block',
       'citation',

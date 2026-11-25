@@ -24,6 +24,7 @@ import {
   buildSnapshot,
   manuscriptOrder,
   resolveScope,
+  ScopeError,
   type LoadedDocument,
   type SessionSnapshot,
   type SnapshotScope,
@@ -42,18 +43,24 @@ export interface ModelChoice {
   selection: string;
   /** Discuss replies. */
   discuss: string;
+  /** Feedback chat replies (with or without notes). */
+  chat: string;
 }
 
-/** Default models: `opus` for full reviews, `sonnet` for selection passes and discuss replies. */
+/** Default models: `opus` for full reviews, `sonnet` for selection passes, discuss and chat replies. */
 export const DEFAULT_MODELS: Readonly<ModelChoice> = Object.freeze({
   fullReview: 'opus',
   selection: 'sonnet',
   discuss: 'sonnet',
+  chat: 'sonnet',
 });
+
+/** A `ChatMessageSent` payload. */
+export type ChatRequest = EventPayloads['ChatMessageSent'];
 
 /** What the model gets, plus the snapshot its tools validate against. */
 export interface PromptContext {
-  sessionKind: 'review' | 'discuss';
+  sessionKind: 'review' | 'discuss' | 'chat';
   systemPrompt: string;
   systemPromptVersion: string;
   /** The user message: every section below, joined. */
@@ -351,6 +358,180 @@ export function editorForAnnotation(state: ProjectState, id: string): FeedbackEd
 }
 
 // ---------------------------------------------------------------------------
+// Chat
+// ---------------------------------------------------------------------------
+
+/** Inputs for {@link buildChatContext}. */
+export interface ChatContextInput {
+  state: ProjectState;
+  request: ChatRequest;
+  feedbackSessionId: string;
+  model?: string;
+  models?: Partial<ModelChoice>;
+  /** Selection mapped to the document's current version (the fold's `ChatWriterMessage.scope`). */
+  selection?: { from: number; to: number };
+  /** Budget for segmented text in characters (default 300000). */
+  maxTargetChars?: number;
+  /** Past annotations to show (default 40, most recent). */
+  historyLimit?: number;
+  /** Documents before and after the target to summarize (default 2 each side). */
+  nearbyCount?: number;
+  /** Budget for the conversation so far, in characters (default 16000, newest kept). */
+  maxConversationChars?: number;
+}
+
+/**
+ * Builds the prompt context and snapshot for a chat session: one reply to the
+ * writer's latest message, with margin notes when the message calls for them.
+ * The scope is the message's (the open document, a selection or the project); a
+ * scope that cannot be annotated (a note, an archived document) falls back to
+ * the project with a warning rather than failing the conversation.
+ */
+export function buildChatContext(input: ChatContextInput): PromptContext {
+  const { state, request } = input;
+  const model = input.model ?? { ...DEFAULT_MODELS, ...input.models }.chat;
+  let resolved: { scope: SnapshotScope; warnings: string[] };
+  try {
+    resolved = resolveScope(state, request.context.scope, input.selection);
+  } catch (e) {
+    if (!(e instanceof ScopeError)) throw e;
+    resolved = {
+      scope: { kind: 'project' },
+      warnings: [`chat scope unusable (${e.message}); reading the whole project`],
+    };
+  }
+  const { scope, warnings } = resolved;
+  const snapshot = buildSnapshot({
+    state,
+    sessionKind: 'chat',
+    feedbackSessionId: input.feedbackSessionId,
+    model,
+    intensity: request.intensity,
+    scope,
+    chat: { chatId: request.chatId, messageId: request.messageId },
+  });
+  const docs = new DocumentCache(snapshot.documents);
+  const targetIds =
+    scope.kind === 'project'
+      ? manuscriptOrder(state)
+      : scope.kind === 'none'
+        ? []
+        : [scope.documentId];
+  const project = renderProjectSection(state, snapshot, docs);
+  let target = renderTargetSection(
+    scope,
+    targetIds,
+    docs,
+    input.maxTargetChars ?? 300_000,
+    warnings,
+  );
+  if (request.context.aboutId) {
+    target += [
+      '',
+      '',
+      '# The note the writer is asking about',
+      'One of your earlier margin notes. Answer about it.',
+      ...renderAnnotationFocus(state, docs, request.context.aboutId, warnings),
+    ].join('\n');
+  }
+  const nearby =
+    scope.kind === 'project' ? '' : renderNearby(state, targetIds[0] ?? '', input.nearbyCount ?? 2);
+  const history = [
+    renderHistory(
+      state,
+      scope.kind === 'project' ? null : new Set(targetIds),
+      input.historyLimit ?? 40,
+    ),
+    renderConversation(state, request, input.maxConversationChars ?? 16_000),
+  ].join('\n\n');
+  const req = renderChatRequest(request, scope, docs);
+  const sections = { project, target, nearby, history, request: req };
+  return {
+    sessionKind: 'chat',
+    systemPrompt: systemPrompt('chat'),
+    systemPromptVersion: SYSTEM_PROMPT_VERSION,
+    prompt: joinSections(sections),
+    sections,
+    model,
+    snapshot,
+    warnings,
+  };
+}
+
+/** The editor's label in a transcript: `Margaret (Developmental editor)`. */
+function editorLabel(e: FeedbackEditor): string {
+  const role = e.role?.trim();
+  return role ? `${e.name.trim()} (${role})` : e.name.trim();
+}
+
+/** The conversation before this message, newest kept within the budget. */
+function renderConversation(state: ProjectState, request: ChatRequest, maxChars: number): string {
+  const chat = state.annotations.chats[request.chatId];
+  const earlier = (chat?.messages ?? []).filter(
+    (m) => !(m.role === 'writer' && m.id === request.messageId),
+  );
+  if (earlier.length === 0)
+    return '# The conversation so far\nThis is the first message of a new chat.';
+  const lines: string[] = [];
+  let used = 0;
+  let omitted = 0;
+  for (let i = earlier.length - 1; i >= 0; i--) {
+    const m = earlier[i] as (typeof earlier)[number];
+    let line: string;
+    if (m.role === 'writer') {
+      const about = m.aboutId ? ' (about one of the notes)' : '';
+      const outcome = m.status === 'failed' ? '\n(No reply: that session failed.)' : '';
+      line = `Writer, to ${editorLabel(m.editor)}${about}: ${quoteWriterText(clip(m.text, 2000))}${outcome}`;
+    } else {
+      const notes = state.annotations.agentSessions[m.feedbackSessionId]?.annotationIds.length ?? 0;
+      const left = notes > 0 ? ` (left ${notes} margin note${notes === 1 ? '' : 's'})` : '';
+      line = `${editorLabel(m.editor)}${left}: ${clip(m.body, 2000)}`;
+    }
+    if (used + line.length > maxChars && lines.length > 0) {
+      omitted = i + 1;
+      break;
+    }
+    used += line.length;
+    lines.unshift(line);
+  }
+  return [
+    '# The conversation so far',
+    `Earlier messages in this chat, oldest first. Replies are labeled with the editor who gave them; you may be a different editor.${omitted ? ` ${omitted} older message${omitted === 1 ? ' is' : 's are'} omitted.` : ''}`,
+    '',
+    lines.join('\n\n'),
+  ].join('\n');
+}
+
+function renderChatRequest(
+  request: ChatRequest,
+  scope: SnapshotScope,
+  docs: DocumentCache,
+): string {
+  const caps = capsFor(request.intensity);
+  const looking =
+    scope.kind === 'selection'
+      ? `a selection they attached in "${docs.get(scope.documentId)?.title ?? scope.documentId}"`
+      : scope.kind === 'document'
+        ? `the document "${docs.get(scope.documentId)?.title ?? scope.documentId}"`
+        : 'the whole project';
+  const intensity: Record<Intensity, string> = {
+    light: 'light touch',
+    standard: 'standard',
+    thorough: 'thorough',
+  };
+  return [
+    '# This message',
+    ...renderEditor(request.editor),
+    `They are looking at ${looking}.${request.context.aboutId ? ' They are asking about the note shown above.' : ''}`,
+    `Lenses: ${request.lenses.map((l) => LENS_LABELS[l]).join(', ')}. If you leave notes, focus on these.`,
+    `Intensity: ${intensity[request.intensity]}. If you leave notes: at most ${caps.maxItems} in total, of which at most ${caps.maxSuggestions} suggestions (${caps.maxInsertions} insertion${caps.maxInsertions === 1 ? '' : 's'}), ${caps.maxProposals} proposals and ${caps.maxQuestions} questions.`,
+    `The writer says: ${quoteWriterText(request.text)}`,
+    '',
+    'Decide whether this message calls for margin notes. Leave them first if it does, then call reply exactly once with your answer.',
+  ].join('\n');
+}
+
+// ---------------------------------------------------------------------------
 // Feedback history
 // ---------------------------------------------------------------------------
 
@@ -569,6 +750,36 @@ function seqOf(state: ProjectState, id: string): number {
   );
 }
 
+/** An annotation and where it points now (discuss, and chat messages about a note). */
+function renderAnnotationFocus(
+  state: ProjectState,
+  docs: DocumentCache,
+  id: string,
+  warnings: string[],
+): string[] {
+  const found = findAnnotation(state, id);
+  if (!found) {
+    warnings.push(`annotation ${id} not found in state`);
+    return [`(Annotation ${id} could not be found.)`];
+  }
+  const out = [found.description || `(${found.kind} ${id})`];
+  const doc = found.documentId ? docs.get(found.documentId) : null;
+  if (doc && found.range) {
+    const r = found.range;
+    const blocks = doc.seg.blocks.filter((b) => b.pos <= r.to && b.end >= r.from);
+    if (blocks.length) {
+      out.push(
+        '',
+        `Where it points now, in "${doc.title}" (document ${doc.id}, version ${doc.version}):`,
+        ...blocks.slice(0, 6).map((b) => renderBlock(b, doc.seg)),
+      );
+    }
+  } else if (found.documentId) {
+    out.push('', 'The text it pointed at has since been deleted or changed.');
+  }
+  return out;
+}
+
 /** Builds the prompt context and snapshot for a discuss session. */
 export function buildDiscussContext(input: DiscussContextInput): PromptContext {
   const { state, request } = input;
@@ -594,28 +805,10 @@ export function buildDiscussContext(input: DiscussContextInput): PromptContext {
     `The writer's style notes: ${orNotStated(s.styleNotes)}`,
   ].join('\n');
 
-  const found = findAnnotation(state, request.targetId);
-  const target: string[] = ['# The annotation under discussion'];
-  if (!found) {
-    warnings.push(`annotation ${request.targetId} not found in state`);
-    target.push(`(Annotation ${request.targetId} could not be found.)`);
-  } else {
-    target.push(found.description || `(${found.kind} ${request.targetId})`);
-    const doc = found.documentId ? docs.get(found.documentId) : null;
-    if (doc && found.range) {
-      const r = found.range;
-      const blocks = doc.seg.blocks.filter((b) => b.pos <= r.to && b.end >= r.from);
-      if (blocks.length) {
-        target.push(
-          '',
-          `Where it points now, in "${doc.title}" (document ${doc.id}, version ${doc.version}):`,
-          ...blocks.slice(0, 6).map((b) => renderBlock(b, doc.seg)),
-        );
-      }
-    } else if (found.documentId) {
-      target.push('', 'The text it pointed at has since been deleted or changed.');
-    }
-  }
+  const target = [
+    '# The annotation under discussion',
+    ...renderAnnotationFocus(state, docs, request.targetId, warnings),
+  ];
 
   const thread = state.annotations.discussions[request.threadId];
   const messages = [...(thread?.messages ?? [])].map((m) => ({ role: m.role, body: m.body }));

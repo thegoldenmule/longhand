@@ -4,8 +4,8 @@ import {
   buildDiscussContext,
   buildReviewContext,
   modelForRequest,
-  REVIEW_SYSTEM_PROMPT_V3,
-  DISCUSS_SYSTEM_PROMPT_V3,
+  REVIEW_SYSTEM_PROMPT_V4,
+  DISCUSS_SYSTEM_PROMPT_V4,
   SYSTEM_PROMPT_VERSION,
 } from './index';
 import { docRequest, makeState } from './fixtures.test-helpers';
@@ -16,7 +16,7 @@ describe('buildReviewContext (document scope)', () => {
   const ctx = buildReviewContext({ state, request: docRequest(), feedbackSessionId: 'fs1' });
 
   it('uses the versioned review system prompt and the full-review model', () => {
-    expect(ctx.systemPrompt).toBe(REVIEW_SYSTEM_PROMPT_V3);
+    expect(ctx.systemPrompt).toBe(REVIEW_SYSTEM_PROMPT_V4);
     expect(ctx.systemPromptVersion).toBe(SYSTEM_PROMPT_VERSION);
     expect(ctx.model).toBe('opus');
     expect(ctx.sessionKind).toBe('review');
@@ -327,7 +327,7 @@ describe('named editors', () => {
       request: { threadId: 'th1', targetId: 'sg0', message: 'Why slantwise?' },
       feedbackSessionId: 'fs2',
     });
-    expect(ctx.systemPrompt).toBe(DISCUSS_SYSTEM_PROMPT_V3);
+    expect(ctx.systemPrompt).toBe(DISCUSS_SYSTEM_PROMPT_V4);
     expect(ctx.sections.request).toContain('The writer asked their editor "Theo".');
     expect(ctx.sections.request).toContain(editor.brief);
     const plain = buildDiscussContext({

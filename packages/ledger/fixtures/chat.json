@@ -1,0 +1,3949 @@
+{
+  "name": "chat",
+  "description": "A feedback chat: a plain question answered with no notes; a selection review by another editor that leaves a comment and a word-choice suggestion, then replies; the selection mapped through a later edit; a question about a note whose session fails; a second chat that fails before starting; words retyped from a reply.",
+  "covers": [
+    "chat",
+    "chat-reply",
+    "chat-notes",
+    "chat-selection-scope-mapped",
+    "chat-about-note",
+    "chat-session-failed",
+    "chat-failed-before-start",
+    "chat-matched"
+  ],
+  "commits": [
+    {
+      "commitId": "c-0001",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 1,
+      "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "d214faf82b06f4f3ebf7d75fec77059e45fab7b485a8f86ed864f48aaff44340",
+      "clientTime": "2026-11-02T09:00:00.000Z",
+      "serverTime": "2026-11-02T09:00:00.250Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "ProjectCreated",
+      "payload": {
+        "title": "Harbour"
+      }
+    },
+    {
+      "commitId": "c-0002",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 2,
+      "prevHash": "d214faf82b06f4f3ebf7d75fec77059e45fab7b485a8f86ed864f48aaff44340",
+      "hash": "db60b29e4d34d32352cdeb0f364aa26ecd783136dc7085f47c993a0a93bec9d7",
+      "clientTime": "2026-11-02T09:00:00.400Z",
+      "serverTime": "2026-11-02T09:00:00.650Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "DocumentCreated",
+      "payload": {
+        "documentId": "doc-c",
+        "kind": "manuscript",
+        "title": "Chapter 1",
+        "parentId": null,
+        "index": 0
+      }
+    },
+    {
+      "commitId": "c-0003",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 3,
+      "prevHash": "db60b29e4d34d32352cdeb0f364aa26ecd783136dc7085f47c993a0a93bec9d7",
+      "hash": "c41aae53c7b37634f1af89f66a49ba04ae69e82eef05976d9047f863bff5d32a",
+      "clientTime": "2026-11-02T09:00:00.800Z",
+      "serverTime": "2026-11-02T09:00:01.050Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-c",
+        "baseVersion": 0,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 1,
+            "to": 1,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "T"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 2,
+            "to": 2,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 3,
+            "to": 3,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 4,
+            "to": 4,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 5,
+            "to": 5,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 6,
+            "to": 6,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 7,
+            "to": 7,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 8,
+            "to": 8,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 9,
+            "to": 9,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 10,
+            "to": 10,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "f"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 11,
+            "to": 11,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 12,
+            "to": 12,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 13,
+            "to": 13,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "l"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 14,
+            "to": 14,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 15,
+            "to": 15,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 16,
+            "to": 16,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 17,
+            "to": 17,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 18,
+            "to": 18,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 19,
+            "to": 19,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "w"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 20,
+            "to": 20,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 21,
+            "to": 21,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "y"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 22,
+            "to": 22,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 23,
+            "to": 23,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 24,
+            "to": 24,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 25,
+            "to": 25,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "v"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 26,
+            "to": 26,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 27,
+            "to": 27,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 28,
+            "to": 28,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 29,
+            "to": 29,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 30,
+            "to": 30,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 31,
+            "to": 31,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 32,
+            "to": 32,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 33,
+            "to": 33,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 34,
+            "to": 34,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 35,
+            "to": 35,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 36,
+            "to": 36,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "b"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 37,
+            "to": 37,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 38,
+            "to": 38,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "u"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 39,
+            "to": 39,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 40,
+            "to": 40,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 41,
+            "to": 41,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 42,
+            "to": 42,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "N"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 43,
+            "to": 43,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 44,
+            "to": 44,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "b"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 45,
+            "to": 45,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 46,
+            "to": 46,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 47,
+            "to": 47,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "y"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 48,
+            "to": 48,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 49,
+            "to": 49,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "c"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 50,
+            "to": 50,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 50,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 78,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 156,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 335,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 442,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 569,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 745,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 924,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1015,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1101,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1218,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1416,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1536,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1621,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1789,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1927,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2026,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2211,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2308,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2422,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2600,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2691,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2880,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2995,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3073,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3255,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3438,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3648,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3835,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3927,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4019,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4126,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4316,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4508,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4665,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4847,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4938,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5029,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5099,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5172,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5244,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5411,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5587,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5724,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5901,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6051,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6210,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6308,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6509,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6628,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 50,
+        "durationMs": 6628
+      }
+    },
+    {
+      "commitId": "c-0004",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 4,
+      "prevHash": "c41aae53c7b37634f1af89f66a49ba04ae69e82eef05976d9047f863bff5d32a",
+      "hash": "0444626ea0d73e7dbe256007cdc3cda05fef1fe477a50188044fed4d1048e9c7",
+      "clientTime": "2026-11-02T09:00:09.428Z",
+      "serverTime": "2026-11-02T09:00:09.678Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-c",
+        "baseVersion": 50,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 51,
+            "to": 51,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "m"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 52,
+            "to": 52,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 53,
+            "to": 53,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 54,
+            "to": 54,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 55,
+            "to": 55,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 56,
+            "to": 56,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 57,
+            "to": 57,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 58,
+            "to": 58,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 59,
+            "to": 59,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 60,
+            "to": 60,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 61,
+            "to": 61,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 62,
+            "to": 62,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 63,
+            "to": 63,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 64,
+            "to": 64,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 65,
+            "to": 65,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 66,
+            "to": 66,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 67,
+            "to": 67,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "M"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 68,
+            "to": 68,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 69,
+            "to": 69,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 70,
+            "to": 70,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 71,
+            "to": 71,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 72,
+            "to": 72,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "c"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 73,
+            "to": 73,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 74,
+            "to": 74,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "u"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 75,
+            "to": 75,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 76,
+            "to": 76,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 77,
+            "to": 77,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 78,
+            "to": 78,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "d"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 79,
+            "to": 79,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 80,
+            "to": 80,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 81,
+            "to": 81,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 82,
+            "to": 82,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 83,
+            "to": 83,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 84,
+            "to": 84,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "b"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 85,
+            "to": 85,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 86,
+            "to": 86,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 87,
+            "to": 87,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 88,
+            "to": 88,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "s"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 89,
+            "to": 89,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 90,
+            "to": 90,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 91,
+            "to": 91,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "w"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 92,
+            "to": 92,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 93,
+            "to": 93,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "c"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 94,
+            "to": 94,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 95,
+            "to": 95,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 45,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 149,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 291,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 499,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 663,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 770,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 875,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1024,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1232,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1365,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1439,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1622,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1692,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1902,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2043,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2116,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2300,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2451,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2651,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2766,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2957,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3141,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3291,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3436,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3646,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3733,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3932,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4020,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4192,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4263,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4418,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4620,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4764,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4857,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5052,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5155,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5307,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5474,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5552,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5697,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5802,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 5900,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6050,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6239,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 6446,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 45,
+        "durationMs": 6446
+      }
+    },
+    {
+      "commitId": "c-0005",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 5,
+      "prevHash": "0444626ea0d73e7dbe256007cdc3cda05fef1fe477a50188044fed4d1048e9c7",
+      "hash": "45d9bdb3883a0d82c042d87b47f47b1482f5b75f666d69c3f0aa6350efec50d4",
+      "clientTime": "2026-11-02T09:00:17.874Z",
+      "serverTime": "2026-11-02T09:00:18.124Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "ChatMessageSent",
+      "payload": {
+        "chatId": "chat-1",
+        "messageId": "m-1",
+        "text": "Is the title working?",
+        "editor": {
+          "id": "ed-theo",
+          "name": "Theo",
+          "role": "Line editor",
+          "brief": "Listens to every sentence."
+        },
+        "lenses": [
+          "clarity",
+          "word-choice"
+        ],
+        "intensity": "standard",
+        "context": {
+          "scope": {
+            "kind": "document",
+            "documentId": "doc-c"
+          },
+          "aboutId": null
+        }
+      }
+    },
+    {
+      "commitId": "c-0006",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 6,
+      "prevHash": "45d9bdb3883a0d82c042d87b47f47b1482f5b75f666d69c3f0aa6350efec50d4",
+      "hash": "9abe6a0d95373d17fc1b840455c12f188e6f237a851157b6ca475075dc4a0dbc",
+      "clientTime": "2026-11-02T09:00:19.774Z",
+      "serverTime": "2026-11-02T09:00:19.824Z",
+      "actor": {
+        "kind": "agent",
+        "id": "sonnet"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-c1",
+      "schemaVersion": 1,
+      "type": "FeedbackSessionStarted",
+      "payload": {
+        "feedbackSessionId": "fs-c1",
+        "trigger": {
+          "kind": "chat",
+          "chatId": "chat-1",
+          "messageId": "m-1"
+        },
+        "model": "sonnet",
+        "systemPromptVersion": "v4"
+      }
+    },
+    {
+      "commitId": "c-0007",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 7,
+      "prevHash": "9abe6a0d95373d17fc1b840455c12f188e6f237a851157b6ca475075dc4a0dbc",
+      "hash": "b66bd3a41b5188e1a8d64656281363a884e2909476262b2478ea642e7efcff6b",
+      "clientTime": "2026-11-02T09:00:21.274Z",
+      "serverTime": "2026-11-02T09:00:21.324Z",
+      "actor": {
+        "kind": "agent",
+        "id": "opus"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-c1",
+      "schemaVersion": 1,
+      "type": "ChatReplied",
+      "payload": {
+        "feedbackSessionId": "fs-c1",
+        "chatId": "chat-1",
+        "replyTo": "m-1",
+        "body": "Harbour works. It names the place the chapter never leaves.\n\nIf you want more pull, let the harbour wait for morning."
+      }
+    },
+    {
+      "commitId": "c-0008",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 8,
+      "prevHash": "b66bd3a41b5188e1a8d64656281363a884e2909476262b2478ea642e7efcff6b",
+      "hash": "31643c92976e5c7ab8350601d2e95b2260ecc7220a27c0f252a64c1f28f736e2",
+      "clientTime": "2026-11-02T09:00:21.274Z",
+      "serverTime": "2026-11-02T09:00:21.524Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "ChatMessageSent",
+      "payload": {
+        "chatId": "chat-1",
+        "messageId": "m-2",
+        "text": "Review this opening.",
+        "editor": {
+          "id": "ed-margaret",
+          "name": "Margaret",
+          "brief": "Big picture first."
+        },
+        "lenses": [
+          "structure",
+          "word-choice"
+        ],
+        "intensity": "light",
+        "context": {
+          "scope": {
+            "kind": "selection",
+            "documentId": "doc-c",
+            "from": 1,
+            "to": 66,
+            "version": 95
+          },
+          "aboutId": null
+        }
+      }
+    },
+    {
+      "commitId": "c-0009",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 9,
+      "prevHash": "31643c92976e5c7ab8350601d2e95b2260ecc7220a27c0f252a64c1f28f736e2",
+      "hash": "37722d72c2b0b03f22a10380d5e6a9ddf0659242db09412226a15d23ba2b3c00",
+      "clientTime": "2026-11-02T09:00:23.174Z",
+      "serverTime": "2026-11-02T09:00:23.224Z",
+      "actor": {
+        "kind": "agent",
+        "id": "sonnet"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-c2",
+      "schemaVersion": 1,
+      "type": "FeedbackSessionStarted",
+      "payload": {
+        "feedbackSessionId": "fs-c2",
+        "trigger": {
+          "kind": "chat",
+          "chatId": "chat-1",
+          "messageId": "m-2"
+        },
+        "model": "sonnet"
+      }
+    },
+    {
+      "commitId": "c-0010",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 10,
+      "prevHash": "37722d72c2b0b03f22a10380d5e6a9ddf0659242db09412226a15d23ba2b3c00",
+      "hash": "5391dd18513c953f9cfd8acf70925a4ea733142aef9662720698b2e4ad28d13d",
+      "clientTime": "2026-11-02T09:00:24.674Z",
+      "serverTime": "2026-11-02T09:00:24.724Z",
+      "actor": {
+        "kind": "agent",
+        "id": "opus"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-c2",
+      "schemaVersion": 1,
+      "type": "CommentAdded",
+      "payload": {
+        "commentId": "cmt-c",
+        "feedbackSessionId": "fs-c2",
+        "target": {
+          "anchor": {
+            "documentId": "doc-c",
+            "sentenceId": "p1.s2",
+            "quote": "Nobody came",
+            "occurrence": 0
+          },
+          "from": 42,
+          "to": 53,
+          "readVersion": 95,
+          "version": 95,
+          "kind": "anchor"
+        },
+        "category": "clarity",
+        "severity": "moderate",
+        "body": "The empty door is the real event; give it a beat."
+      }
+    },
+    {
+      "commitId": "c-0011",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 11,
+      "prevHash": "5391dd18513c953f9cfd8acf70925a4ea733142aef9662720698b2e4ad28d13d",
+      "hash": "d4155c6e95688c254cc32a9b5c7e8e87b2d80dbc12a95a107e4cb347229c1b6e",
+      "clientTime": "2026-11-02T09:00:26.174Z",
+      "serverTime": "2026-11-02T09:00:26.224Z",
+      "actor": {
+        "kind": "agent",
+        "id": "opus"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-c2",
+      "schemaVersion": 1,
+      "type": "SuggestionProposed",
+      "payload": {
+        "suggestionId": "sug-c",
+        "feedbackSessionId": "fs-c2",
+        "suggestion": {
+          "kind": "word-choice",
+          "target": {
+            "anchor": {
+              "documentId": "doc-c",
+              "sentenceId": "p1.s1",
+              "quote": "sideways",
+              "occurrence": 0
+            },
+            "from": 15,
+            "to": 23,
+            "readVersion": 95,
+            "version": 95
+          },
+          "alternatives": [
+            "slantwise"
+          ],
+          "rationale": "A rarer word slows the eye."
+        }
+      }
+    },
+    {
+      "commitId": "c-0012",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 12,
+      "prevHash": "d4155c6e95688c254cc32a9b5c7e8e87b2d80dbc12a95a107e4cb347229c1b6e",
+      "hash": "0db51be06c332d687ab95dfd1830149b42e1df92f38bc36f5af7ebf0d07f670d",
+      "clientTime": "2026-11-02T09:00:27.674Z",
+      "serverTime": "2026-11-02T09:00:27.724Z",
+      "actor": {
+        "kind": "agent",
+        "id": "opus"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-c2",
+      "schemaVersion": 1,
+      "type": "ChatReplied",
+      "payload": {
+        "feedbackSessionId": "fs-c2",
+        "chatId": "chat-1",
+        "replyTo": "m-2",
+        "body": "Two notes on the opening: the door matters more than the rain, and one word could slow the reader down."
+      }
+    },
+    {
+      "commitId": "c-0013",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 13,
+      "prevHash": "0db51be06c332d687ab95dfd1830149b42e1df92f38bc36f5af7ebf0d07f670d",
+      "hash": "64db96cb811417ea90822235956e8f4d844bb6269965097cf3f97f3e7f1d1d4d",
+      "clientTime": "2026-11-02T09:00:27.674Z",
+      "serverTime": "2026-11-02T09:00:27.924Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-c",
+        "baseVersion": 95,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 1,
+            "to": 1,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "N"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 2,
+            "to": 2,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 3,
+            "to": 3,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "g"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 4,
+            "to": 4,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 5,
+            "to": 5,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 6,
+            "to": 6,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 7,
+            "to": 7,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 7,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 85,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 157,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 336,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 531,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 712,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 835,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 7,
+        "durationMs": 835
+      }
+    },
+    {
+      "commitId": "c-0014",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 14,
+      "prevHash": "64db96cb811417ea90822235956e8f4d844bb6269965097cf3f97f3e7f1d1d4d",
+      "hash": "a23adfbd9821364480c423255414441f4a370de51b861c7cd4cd9ba938995645",
+      "clientTime": "2026-11-02T09:00:30.509Z",
+      "serverTime": "2026-11-02T09:00:30.759Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "ChatMessageSent",
+      "payload": {
+        "chatId": "chat-1",
+        "messageId": "m-3",
+        "text": "Why does the door matter?",
+        "editor": {
+          "id": "ed-margaret",
+          "name": "Margaret",
+          "brief": "Big picture first."
+        },
+        "lenses": [
+          "structure",
+          "word-choice"
+        ],
+        "intensity": "light",
+        "context": {
+          "scope": {
+            "kind": "document",
+            "documentId": "doc-c"
+          },
+          "aboutId": "cmt-c"
+        }
+      }
+    },
+    {
+      "commitId": "c-0015",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 15,
+      "prevHash": "a23adfbd9821364480c423255414441f4a370de51b861c7cd4cd9ba938995645",
+      "hash": "3dc7553c94d881eb47baa5cd8c61d41f3c905fbe873b3153f19d4406af4fae09",
+      "clientTime": "2026-11-02T09:00:32.409Z",
+      "serverTime": "2026-11-02T09:00:32.459Z",
+      "actor": {
+        "kind": "agent",
+        "id": "sonnet"
+      },
+      "deviceId": "server",
+      "sessionId": "fs-c3",
+      "schemaVersion": 1,
+      "type": "FeedbackSessionStarted",
+      "payload": {
+        "feedbackSessionId": "fs-c3",
+        "trigger": {
+          "kind": "chat",
+          "chatId": "chat-1",
+          "messageId": "m-3"
+        },
+        "model": "sonnet"
+      }
+    },
+    {
+      "commitId": "c-0016",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 16,
+      "prevHash": "3dc7553c94d881eb47baa5cd8c61d41f3c905fbe873b3153f19d4406af4fae09",
+      "hash": "f9c3c72e7d527e562afb7d4b63db3c2b69d8a97056fa095ad7493a288869af44",
+      "clientTime": "2026-11-02T09:00:32.459Z",
+      "serverTime": "2026-11-02T09:00:32.460Z",
+      "actor": {
+        "kind": "system",
+        "id": "ledger"
+      },
+      "deviceId": "server",
+      "sessionId": "system",
+      "schemaVersion": 1,
+      "type": "FeedbackSessionFailed",
+      "payload": {
+        "feedbackSessionId": "fs-c3",
+        "requestId": null,
+        "threadId": null,
+        "reason": "model unavailable"
+      }
+    },
+    {
+      "commitId": "c-0017",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 17,
+      "prevHash": "f9c3c72e7d527e562afb7d4b63db3c2b69d8a97056fa095ad7493a288869af44",
+      "hash": "ef511c049109d077cad27a93460e6bc75369330d60c15e318e1cf3f2d56c8723",
+      "clientTime": "2026-11-02T09:00:32.409Z",
+      "serverTime": "2026-11-02T09:00:32.659Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "ChatMessageSent",
+      "payload": {
+        "chatId": "chat-2",
+        "messageId": "m-4",
+        "text": "Anything else?",
+        "editor": {
+          "id": "ed-theo",
+          "name": "Theo",
+          "role": "Line editor",
+          "brief": "Listens to every sentence."
+        },
+        "lenses": [
+          "clarity"
+        ],
+        "intensity": "standard",
+        "context": {
+          "scope": {
+            "kind": "project"
+          },
+          "aboutId": null
+        }
+      }
+    },
+    {
+      "commitId": "c-0018",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 18,
+      "prevHash": "ef511c049109d077cad27a93460e6bc75369330d60c15e318e1cf3f2d56c8723",
+      "hash": "8a4a9cc7fc41a303c14ff401b62abe9be3f6938093f43acc34c22ffd7e1ea9df",
+      "clientTime": "2026-11-02T09:00:32.809Z",
+      "serverTime": "2026-11-02T09:00:32.810Z",
+      "actor": {
+        "kind": "system",
+        "id": "ledger"
+      },
+      "deviceId": "server",
+      "sessionId": "system",
+      "schemaVersion": 1,
+      "type": "FeedbackSessionFailed",
+      "payload": {
+        "feedbackSessionId": null,
+        "requestId": null,
+        "threadId": null,
+        "chat": {
+          "chatId": "chat-2",
+          "messageId": "m-4"
+        },
+        "reason": "the ledger service restarted"
+      }
+    },
+    {
+      "commitId": "c-0019",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 19,
+      "prevHash": "8a4a9cc7fc41a303c14ff401b62abe9be3f6938093f43acc34c22ffd7e1ea9df",
+      "hash": "b0ece179c7ec5f43f92b9bb46fcf5626912a2f354bddf26631c6c7840b538030",
+      "clientTime": "2026-11-02T09:00:32.809Z",
+      "serverTime": "2026-11-02T09:00:33.059Z",
+      "actor": {
+        "kind": "human",
+        "id": "writer-1"
+      },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-c",
+        "baseVersion": 102,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 103,
+            "to": 103,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 104,
+            "to": 104,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "L"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 105,
+            "to": 105,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 106,
+            "to": 106,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 107,
+            "to": 107,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 108,
+            "to": 108,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 109,
+            "to": 109,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 110,
+            "to": 110,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "e"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 111,
+            "to": 111,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 112,
+            "to": 112,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "h"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 113,
+            "to": 113,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 114,
+            "to": 114,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 115,
+            "to": 115,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "b"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 116,
+            "to": 116,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 117,
+            "to": 117,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "u"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 118,
+            "to": 118,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 119,
+            "to": 119,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 120,
+            "to": 120,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "w"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 121,
+            "to": 121,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "a"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 122,
+            "to": 122,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 123,
+            "to": 123,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "t"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 124,
+            "to": 124,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 125,
+            "to": 125,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "f"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 126,
+            "to": 126,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 127,
+            "to": 127,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 128,
+            "to": 128,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": " "
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 129,
+            "to": 129,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "m"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 130,
+            "to": 130,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "o"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 131,
+            "to": 131,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "r"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 132,
+            "to": 132,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 133,
+            "to": 133,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "i"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 134,
+            "to": 134,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "n"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 135,
+            "to": 135,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "g"
+                }
+              ]
+            }
+          },
+          {
+            "stepType": "replace",
+            "from": 136,
+            "to": 136,
+            "slice": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            }
+          }
+        ],
+        "runs": [
+          {
+            "steps": 34,
+            "method": "typed"
+          }
+        ],
+        "timeline": [
+          {
+            "t": 0,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 177,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 331,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 484,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 599,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 715,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 846,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 957,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1063,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1187,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1314,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1414,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1544,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1734,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1808,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 1923,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2077,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2157,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2364,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2464,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2547,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2735,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 2940,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3018,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3103,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3218,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3421,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3501,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3671,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3793,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 3996,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4102,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4201,
+            "kind": "insert",
+            "len": 1
+          },
+          {
+            "t": 4304,
+            "kind": "insert",
+            "len": 1
+          }
+        ],
+        "characters": 34,
+        "durationMs": 4304
+      }
+    }
+  ],
+  "expected": {
+    "headSeq": 19,
+    "headHash": "b0ece179c7ec5f43f92b9bb46fcf5626912a2f354bddf26631c6c7840b538030",
+    "state": {
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "headSeq": 19,
+      "headHash": "b0ece179c7ec5f43f92b9bb46fcf5626912a2f354bddf26631c6c7840b538030",
+      "settings": {
+        "genre": "",
+        "audience": "",
+        "goals": "",
+        "styleNotes": "",
+        "dailyWordGoal": null,
+        "citationStyle": "apa",
+        "title": "Harbour"
+      },
+      "createdSeq": 1,
+      "binder": {
+        "manuscript": [
+          {
+            "kind": "document",
+            "id": "doc-c"
+          }
+        ],
+        "notes": []
+      },
+      "folders": {},
+      "documents": {
+        "doc-c": {
+          "id": "doc-c",
+          "kind": "manuscript",
+          "area": "manuscript",
+          "title": "Chapter 1",
+          "parentId": null,
+          "synopsis": "",
+          "content": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Night. The rain fell sideways over the harbour. Nobody came to the door. Mara counted the boats twice. Let the harbour wait for morning."
+                  }
+                ]
+              }
+            ]
+          },
+          "version": 136,
+          "provenance": [
+            {
+              "from": 1,
+              "to": 8,
+              "class": "typed",
+              "originSeq": 13
+            },
+            {
+              "from": 8,
+              "to": 58,
+              "class": "typed",
+              "originSeq": 3
+            },
+            {
+              "from": 58,
+              "to": 103,
+              "class": "typed",
+              "originSeq": 4
+            },
+            {
+              "from": 103,
+              "to": 104,
+              "class": "typed",
+              "originSeq": 19
+            },
+            {
+              "from": 104,
+              "to": 136,
+              "class": "typed-from-suggestion",
+              "originSeq": 19,
+              "suggestionId": "chat-1",
+              "matchedKind": "chat"
+            },
+            {
+              "from": 136,
+              "to": 137,
+              "class": "typed",
+              "originSeq": 19
+            }
+          ],
+          "archived": false,
+          "imported": null,
+          "createdSeq": 2,
+          "contentSeq": 19,
+          "updatedSeq": 19
+        }
+      },
+      "annotations": {
+        "feedbackRequests": {},
+        "agentSessions": {
+          "fs-c1": {
+            "id": "fs-c1",
+            "kind": "chat",
+            "requestId": null,
+            "threadId": null,
+            "chatId": "chat-1",
+            "messageId": "m-1",
+            "model": "sonnet",
+            "systemPromptVersion": "v4",
+            "startedSeq": 6,
+            "startedAt": "2026-11-02T09:00:19.824Z",
+            "endedSeq": 7,
+            "status": "finished",
+            "failureReason": null,
+            "review": null,
+            "counts": {
+              "items": 0,
+              "suggestions": 0,
+              "insertions": 0,
+              "proposals": 0,
+              "questions": 0,
+              "searches": 0
+            },
+            "annotationIds": []
+          },
+          "fs-c2": {
+            "id": "fs-c2",
+            "kind": "chat",
+            "requestId": null,
+            "threadId": null,
+            "chatId": "chat-1",
+            "messageId": "m-2",
+            "model": "sonnet",
+            "systemPromptVersion": null,
+            "startedSeq": 9,
+            "startedAt": "2026-11-02T09:00:23.224Z",
+            "endedSeq": 12,
+            "status": "finished",
+            "failureReason": null,
+            "review": null,
+            "counts": {
+              "items": 2,
+              "suggestions": 1,
+              "insertions": 0,
+              "proposals": 0,
+              "questions": 0,
+              "searches": 0
+            },
+            "annotationIds": [
+              "cmt-c",
+              "sug-c"
+            ]
+          },
+          "fs-c3": {
+            "id": "fs-c3",
+            "kind": "chat",
+            "requestId": null,
+            "threadId": null,
+            "chatId": "chat-1",
+            "messageId": "m-3",
+            "model": "sonnet",
+            "systemPromptVersion": null,
+            "startedSeq": 15,
+            "startedAt": "2026-11-02T09:00:32.459Z",
+            "endedSeq": 16,
+            "status": "failed",
+            "failureReason": "model unavailable",
+            "review": null,
+            "counts": {
+              "items": 0,
+              "suggestions": 0,
+              "insertions": 0,
+              "proposals": 0,
+              "questions": 0,
+              "searches": 0
+            },
+            "annotationIds": []
+          }
+        },
+        "comments": {
+          "cmt-c": {
+            "id": "cmt-c",
+            "feedbackSessionId": "fs-c2",
+            "seq": 10,
+            "createdAt": "2026-11-02T09:00:24.724Z",
+            "target": {
+              "anchor": {
+                "documentId": "doc-c",
+                "sentenceId": "p1.s2",
+                "quote": "Nobody came",
+                "occurrence": 0
+              },
+              "from": 42,
+              "to": 53,
+              "readVersion": 95,
+              "version": 95,
+              "kind": "anchor"
+            },
+            "range": {
+              "documentId": "doc-c",
+              "from": 49,
+              "to": 60
+            },
+            "category": "clarity",
+            "severity": "moderate",
+            "body": "The empty door is the real event; give it a beat.",
+            "status": "open",
+            "dismissal": null
+          }
+        },
+        "questions": {},
+        "suggestions": {
+          "sug-c": {
+            "id": "sug-c",
+            "feedbackSessionId": "fs-c2",
+            "seq": 11,
+            "createdAt": "2026-11-02T09:00:26.224Z",
+            "dismissal": null,
+            "anchor": {
+              "documentId": "doc-c",
+              "sentenceId": "p1.s1",
+              "quote": "sideways",
+              "occurrence": 0
+            },
+            "status": "open",
+            "resolvedSeq": null,
+            "range": {
+              "documentId": "doc-c",
+              "from": 22,
+              "to": 30
+            },
+            "kind": "word-choice",
+            "alternatives": [
+              "slantwise"
+            ],
+            "rationale": "A rarer word slows the eye.",
+            "adoptedAlternative": null
+          }
+        },
+        "proposals": {},
+        "citationFlags": {},
+        "surfacedSources": {},
+        "sourceSuggestions": {},
+        "discussions": {},
+        "chats": {
+          "chat-1": {
+            "id": "chat-1",
+            "createdSeq": 5,
+            "createdAt": "2026-11-02T09:00:18.124Z",
+            "updatedSeq": 14,
+            "messages": [
+              {
+                "role": "writer",
+                "id": "m-1",
+                "seq": 5,
+                "createdAt": "2026-11-02T09:00:18.124Z",
+                "text": "Is the title working?",
+                "editor": {
+                  "id": "ed-theo",
+                  "name": "Theo",
+                  "role": "Line editor",
+                  "brief": "Listens to every sentence."
+                },
+                "lenses": [
+                  "clarity",
+                  "word-choice"
+                ],
+                "intensity": "standard",
+                "scope": {
+                  "kind": "document",
+                  "documentId": "doc-c"
+                },
+                "aboutId": null,
+                "status": "answered",
+                "feedbackSessionId": "fs-c1"
+              },
+              {
+                "role": "editor",
+                "id": "fs-c1",
+                "seq": 7,
+                "createdAt": "2026-11-02T09:00:21.324Z",
+                "body": "Harbour works. It names the place the chapter never leaves.\n\nIf you want more pull, let the harbour wait for morning.",
+                "replyTo": "m-1",
+                "feedbackSessionId": "fs-c1",
+                "editor": {
+                  "id": "ed-theo",
+                  "name": "Theo",
+                  "role": "Line editor",
+                  "brief": "Listens to every sentence."
+                }
+              },
+              {
+                "role": "writer",
+                "id": "m-2",
+                "seq": 8,
+                "createdAt": "2026-11-02T09:00:21.524Z",
+                "text": "Review this opening.",
+                "editor": {
+                  "id": "ed-margaret",
+                  "name": "Margaret",
+                  "brief": "Big picture first."
+                },
+                "lenses": [
+                  "structure",
+                  "word-choice"
+                ],
+                "intensity": "light",
+                "scope": {
+                  "kind": "selection",
+                  "documentId": "doc-c",
+                  "from": 8,
+                  "to": 73,
+                  "version": 136
+                },
+                "aboutId": null,
+                "status": "answered",
+                "feedbackSessionId": "fs-c2"
+              },
+              {
+                "role": "editor",
+                "id": "fs-c2",
+                "seq": 12,
+                "createdAt": "2026-11-02T09:00:27.724Z",
+                "body": "Two notes on the opening: the door matters more than the rain, and one word could slow the reader down.",
+                "replyTo": "m-2",
+                "feedbackSessionId": "fs-c2",
+                "editor": {
+                  "id": "ed-margaret",
+                  "name": "Margaret",
+                  "brief": "Big picture first."
+                }
+              },
+              {
+                "role": "writer",
+                "id": "m-3",
+                "seq": 14,
+                "createdAt": "2026-11-02T09:00:30.759Z",
+                "text": "Why does the door matter?",
+                "editor": {
+                  "id": "ed-margaret",
+                  "name": "Margaret",
+                  "brief": "Big picture first."
+                },
+                "lenses": [
+                  "structure",
+                  "word-choice"
+                ],
+                "intensity": "light",
+                "scope": {
+                  "kind": "document",
+                  "documentId": "doc-c"
+                },
+                "aboutId": "cmt-c",
+                "status": "failed",
+                "feedbackSessionId": "fs-c3"
+              }
+            ]
+          },
+          "chat-2": {
+            "id": "chat-2",
+            "createdSeq": 17,
+            "createdAt": "2026-11-02T09:00:32.659Z",
+            "updatedSeq": 17,
+            "messages": [
+              {
+                "role": "writer",
+                "id": "m-4",
+                "seq": 17,
+                "createdAt": "2026-11-02T09:00:32.659Z",
+                "text": "Anything else?",
+                "editor": {
+                  "id": "ed-theo",
+                  "name": "Theo",
+                  "role": "Line editor",
+                  "brief": "Listens to every sentence."
+                },
+                "lenses": [
+                  "clarity"
+                ],
+                "intensity": "standard",
+                "scope": {
+                  "kind": "project"
+                },
+                "aboutId": null,
+                "status": "failed",
+                "feedbackSessionId": null
+              }
+            ]
+          }
+        }
+      },
+      "sources": {},
+      "clippings": {},
+      "pastes": {},
+      "writingSessions": [
+        {
+          "index": 0,
+          "startSeq": 3,
+          "endSeq": 19,
+          "startTime": "2026-11-02T09:00:00.800Z",
+          "endTime": "2026-11-02T09:00:37.113Z",
+          "activeMs": 18213,
+          "commits": 4,
+          "charactersInserted": 136,
+          "documentIds": [
+            "doc-c"
+          ]
+        }
+      ]
+    },
+    "documents": {
+      "doc-c": {
+        "text": "Night. The rain fell sideways over the harbour. Nobody came to the door. Mara counted the boats twice. Let the harbour wait for morning.",
+        "words": [
+          {
+            "from": 1,
+            "to": 6,
+            "text": "Night",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              13
+            ]
+          },
+          {
+            "from": 8,
+            "to": 11,
+            "text": "The",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 12,
+            "to": 16,
+            "text": "rain",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 17,
+            "to": 21,
+            "text": "fell",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 22,
+            "to": 30,
+            "text": "sideways",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 31,
+            "to": 35,
+            "text": "over",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 36,
+            "to": 39,
+            "text": "the",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 40,
+            "to": 47,
+            "text": "harbour",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 49,
+            "to": 55,
+            "text": "Nobody",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3
+            ]
+          },
+          {
+            "from": 56,
+            "to": 60,
+            "text": "came",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              3,
+              4
+            ]
+          },
+          {
+            "from": 61,
+            "to": 63,
+            "text": "to",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 64,
+            "to": 67,
+            "text": "the",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 68,
+            "to": 72,
+            "text": "door",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 74,
+            "to": 78,
+            "text": "Mara",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 79,
+            "to": 86,
+            "text": "counted",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 87,
+            "to": 90,
+            "text": "the",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 91,
+            "to": 96,
+            "text": "boats",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 97,
+            "to": 102,
+            "text": "twice",
+            "class": "typed",
+            "blockId": "p1",
+            "originSeqs": [
+              4
+            ]
+          },
+          {
+            "from": 104,
+            "to": 107,
+            "text": "Let",
+            "class": "typed-from-suggestion",
+            "blockId": "p1",
+            "originSeqs": [
+              19
+            ],
+            "suggestionIds": [
+              "chat-1"
+            ]
+          },
+          {
+            "from": 108,
+            "to": 111,
+            "text": "the",
+            "class": "typed-from-suggestion",
+            "blockId": "p1",
+            "originSeqs": [
+              19
+            ],
+            "suggestionIds": [
+              "chat-1"
+            ]
+          },
+          {
+            "from": 112,
+            "to": 119,
+            "text": "harbour",
+            "class": "typed-from-suggestion",
+            "blockId": "p1",
+            "originSeqs": [
+              19
+            ],
+            "suggestionIds": [
+              "chat-1"
+            ]
+          },
+          {
+            "from": 120,
+            "to": 124,
+            "text": "wait",
+            "class": "typed-from-suggestion",
+            "blockId": "p1",
+            "originSeqs": [
+              19
+            ],
+            "suggestionIds": [
+              "chat-1"
+            ]
+          },
+          {
+            "from": 125,
+            "to": 128,
+            "text": "for",
+            "class": "typed-from-suggestion",
+            "blockId": "p1",
+            "originSeqs": [
+              19
+            ],
+            "suggestionIds": [
+              "chat-1"
+            ]
+          },
+          {
+            "from": 129,
+            "to": 136,
+            "text": "morning",
+            "class": "typed-from-suggestion",
+            "blockId": "p1",
+            "originSeqs": [
+              19
+            ],
+            "suggestionIds": [
+              "chat-1"
+            ]
+          }
+        ],
+        "wordsByClass": {
+          "total": 24,
+          "byClass": {
+            "typed": 18,
+            "typed-from-suggestion": 6,
+            "pasted-external": 0,
+            "pasted-internal": 0,
+            "imported": 0,
+            "quoted": 0
+          }
+        },
+        "charactersByClass": {
+          "total": 136,
+          "byClass": {
+            "typed": 104,
+            "typed-from-suggestion": 32,
+            "pasted-external": 0,
+            "pasted-internal": 0,
+            "imported": 0,
+            "quoted": 0
+          }
+        }
+      }
+    },
+    "projectWords": {
+      "total": 24,
+      "byClass": {
+        "typed": 18,
+        "typed-from-suggestion": 6,
+        "pasted-external": 0,
+        "pasted-internal": 0,
+        "imported": 0,
+        "quoted": 0
+      }
+    },
+    "projectCharacters": {
+      "total": 136,
+      "byClass": {
+        "typed": 104,
+        "typed-from-suggestion": 32,
+        "pasted-external": 0,
+        "pasted-internal": 0,
+        "imported": 0,
+        "quoted": 0
+      }
+    },
+    "issues": []
+  },
+  "witnesses": [
+    {
+      "projectId": "proj-1",
+      "seq": 1,
+      "hash": "d214faf82b06f4f3ebf7d75fec77059e45fab7b485a8f86ed864f48aaff44340",
+      "serverTime": "2026-11-02T09:00:00.250Z",
+      "signature": "z8igIGkGoUJr+aBikIfMnvlsSNMqZxnGUrF+tx8fb51xzxs390nU7YFPlSyAWvwG+XHx8vZ6feWjQ8BVyjxfsg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 2,
+      "hash": "db60b29e4d34d32352cdeb0f364aa26ecd783136dc7085f47c993a0a93bec9d7",
+      "serverTime": "2026-11-02T09:00:00.650Z",
+      "signature": "1zTqrwYV5jErbV9GPGWSNKLitL49CGBFLn0jUuiRdJB//krKKqgPpNiQtdNQVHn7VKkTizq1dYMZ9t6jJdUhbQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 3,
+      "hash": "c41aae53c7b37634f1af89f66a49ba04ae69e82eef05976d9047f863bff5d32a",
+      "serverTime": "2026-11-02T09:00:01.050Z",
+      "signature": "YAqCMVV05TsRpbkF7BBZsdYPI6oqJVb12IYz9C+ZsAdNNmtPhAHIkyMAtYmEcldZooMYM/AuJJFzLEnPlCx5uQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 4,
+      "hash": "0444626ea0d73e7dbe256007cdc3cda05fef1fe477a50188044fed4d1048e9c7",
+      "serverTime": "2026-11-02T09:00:09.678Z",
+      "signature": "12C193h3/39soAUz6qSlqRXnpaCg6T6N16ErI6XisskCp7D/fOpa0kCUkTe3TxsgBTvCroAObOjaJ9+F5VbZhA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 5,
+      "hash": "45d9bdb3883a0d82c042d87b47f47b1482f5b75f666d69c3f0aa6350efec50d4",
+      "serverTime": "2026-11-02T09:00:18.124Z",
+      "signature": "/YAL02q+4oSEpupRekRue41UO/Rgg/73JqWVrcgJwh97wbX821O6lZNvqK+DLRkPru3cfnVhfTglYwI5kqOGHg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 6,
+      "hash": "9abe6a0d95373d17fc1b840455c12f188e6f237a851157b6ca475075dc4a0dbc",
+      "serverTime": "2026-11-02T09:00:19.824Z",
+      "signature": "JwvJCzg3tJ8Pcm/dLXMa3h2dwAaFwzx9ZxrVQPhfvdpw90oLpdn3K3DCoGlzM7rtG92vOU5eihWcuAQKUOH0bQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 7,
+      "hash": "b66bd3a41b5188e1a8d64656281363a884e2909476262b2478ea642e7efcff6b",
+      "serverTime": "2026-11-02T09:00:21.324Z",
+      "signature": "92cdx3Ve482XnFJtiM9RVfJYJp+HXjEx8IwY4EFR5/VfJ8CxDoAVrWSTHS0KtRwipdOMtE0Olvf2qMGdgdEAWQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 8,
+      "hash": "31643c92976e5c7ab8350601d2e95b2260ecc7220a27c0f252a64c1f28f736e2",
+      "serverTime": "2026-11-02T09:00:21.524Z",
+      "signature": "Y95RJviHwtDAkIRnZ6gyT2IdG8caMG0Qw70X8hjCqI0GZuhgRFVD/PYXXaqWsP03B1yzdqkbTS73Tv5CseB7Yg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 9,
+      "hash": "37722d72c2b0b03f22a10380d5e6a9ddf0659242db09412226a15d23ba2b3c00",
+      "serverTime": "2026-11-02T09:00:23.224Z",
+      "signature": "9/s8PUR9hi3ormFlXbkahlg78QIRgMe8ArliqnMuCAlVTB+X9wBvke7WOrwfIyHZ93PBRERVhIXu1eT50qqtlw==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 10,
+      "hash": "5391dd18513c953f9cfd8acf70925a4ea733142aef9662720698b2e4ad28d13d",
+      "serverTime": "2026-11-02T09:00:24.724Z",
+      "signature": "FaFJVhhc5vSnzVL7lyONBsv7gA32cyGzB11TdUY4FY/yw5U8gPqgqy091wBkgjxS1+RbBJKLtI3JBCuZou/eaQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 11,
+      "hash": "d4155c6e95688c254cc32a9b5c7e8e87b2d80dbc12a95a107e4cb347229c1b6e",
+      "serverTime": "2026-11-02T09:00:26.224Z",
+      "signature": "3qZaxgOPgTEGjPs8ktDobTK5vk0DZXOVi2U6rZM3Y1NwwPd/EWOecCblvj0vL9FRwd3QeWMJN2JU+4KOrWWcWg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 12,
+      "hash": "0db51be06c332d687ab95dfd1830149b42e1df92f38bc36f5af7ebf0d07f670d",
+      "serverTime": "2026-11-02T09:00:27.724Z",
+      "signature": "umgKI3lAfG21ImgyU4Pvj5OU70NCW/M8XJrvLegX5CDrKYsUnYzQuE/PSePPQbcUxHGFqHeX5l9lerqMpp6xzg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 13,
+      "hash": "64db96cb811417ea90822235956e8f4d844bb6269965097cf3f97f3e7f1d1d4d",
+      "serverTime": "2026-11-02T09:00:27.924Z",
+      "signature": "NVdmV0Cn6nKiZaF38uIfJqkRv54obOqL464gN/9L6bYvLNziHnitGdYLHYznr2k9/GCvehapHa9//iUZFvaoSQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 14,
+      "hash": "a23adfbd9821364480c423255414441f4a370de51b861c7cd4cd9ba938995645",
+      "serverTime": "2026-11-02T09:00:30.759Z",
+      "signature": "hxJ2fq9MPhZLTHV9nNoiPPOl3DehuEAgR2mtT42/OD4+rFZC8bfqvKnX0vswomRR3gn6f+bvULAuVdVGfegp0g==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 15,
+      "hash": "3dc7553c94d881eb47baa5cd8c61d41f3c905fbe873b3153f19d4406af4fae09",
+      "serverTime": "2026-11-02T09:00:32.459Z",
+      "signature": "eso01jZxYJtnVHE4V8uSI64txKrrYCYcAFe0n/1rCCGk6jKkXfU5/i1m0D8iPcPLFIMsJoy3cmQ7XgXLSj5YFQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 16,
+      "hash": "f9c3c72e7d527e562afb7d4b63db3c2b69d8a97056fa095ad7493a288869af44",
+      "serverTime": "2026-11-02T09:00:32.460Z",
+      "signature": "vZeEO+THaxmcpdcCNhIdny93cjkvk3Pn3CJ+VgdyYdCHhzw6dscZBduVRa/1j6afZ3oFivSnB1dgZzpb9Ygocg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 17,
+      "hash": "ef511c049109d077cad27a93460e6bc75369330d60c15e318e1cf3f2d56c8723",
+      "serverTime": "2026-11-02T09:00:32.659Z",
+      "signature": "vTtzypuJwKmPDu9My39RHkUVj71pgaZp5axtATFINPusK0ucDsxvucf1gWE47WVw3n6amrK/BzK0KtaR1xM+XQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 18,
+      "hash": "8a4a9cc7fc41a303c14ff401b62abe9be3f6938093f43acc34c22ffd7e1ea9df",
+      "serverTime": "2026-11-02T09:00:32.810Z",
+      "signature": "SLIVbXQpwyA9llWyDKMTKNfJgbWPy6Zdvr4RZUhTjJrzaWa9eZZWLqECK3CQlUPESRgkjMn3F4LV7OxYJucyeg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 19,
+      "hash": "b0ece179c7ec5f43f92b9bb46fcf5626912a2f354bddf26631c6c7840b538030",
+      "serverTime": "2026-11-02T09:00:33.059Z",
+      "signature": "ewaect1APIvyS4aTOEO4MSJRdlzUmXUgAepYkCVsZTkoF3SgY+pMW0jHbgmGv8C22//z1AK0kAixEi2I2+zo3w==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    }
+  ],
+  "publicKeyPem": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEoInrdRkLs5lWE+qtD8cpCVp0gkEn\n0tllAdSMj9iVyF0MaAHny/cdaByyk3aWbk6dqMaXuaekIuWmvEJCsgbJBg==\n-----END PUBLIC KEY-----\n",
+  "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+}

@@ -560,3 +560,64 @@ describe('feedback requests and named editors', () => {
     expect(foldIssues(b.state)).toEqual([]);
   });
 });
+
+describe('feedback chat', () => {
+  function chat(intensity: 'light' | 'standard' | 'thorough' = 'light'): LedgerBuilder {
+    const b = new LedgerBuilder({ seed: 5 });
+    b.createDocument('d', 'Doc');
+    b.type('d', 'One sentence here. Two sentence here. Three sentence here.');
+    b.sendChat('c', 'm1', 'Review this.', {
+      intensity,
+      scope: { kind: 'document', documentId: 'd' },
+    });
+    b.startChat('s', 'c', 'm1');
+    return b;
+  }
+
+  it('a reply ends the session and records who replied; notes belong to the session', () => {
+    const b = chat();
+    b.question('s', 'q1', 'Why?');
+    b.replyInChat('s', 'c', 'm1', 'One question for you.');
+    const st = b.project.annotations;
+    expect(st.agentSessions.s).toMatchObject({
+      kind: 'chat',
+      chatId: 'c',
+      messageId: 'm1',
+      status: 'finished',
+      annotationIds: ['q1'],
+    });
+    expect(st.chats.c!.messages.map((m) => [m.role, m.id])).toEqual([
+      ['writer', 'm1'],
+      ['editor', 's'],
+    ]);
+    expect(st.chats.c!.messages[1]).toMatchObject({ editor: { name: 'Margaret' }, replyTo: 'm1' });
+    expect(() => b.replyInChat('s', 'c', 'm1', 'Again.')).toThrow(/session-not-running/);
+    expect(foldIssues(b.state)).toEqual([]);
+  });
+
+  it('a chat session obeys its message intensity caps and offers no finish_review', () => {
+    const b = chat('light');
+    for (let i = 0; i < 2; i++) b.question('s', `q${i}`, `Question ${i}?`);
+    expect(() => b.question('s', 'q3', 'Three?')).toThrow(/cap-exceeded/);
+    expect(() => b.finishReview('s', 'Done.')).toThrow(/session-kind/);
+  });
+
+  it('rejects a reply to another message, a second start, and notes about unknown cards', () => {
+    const b = chat();
+    expect(() => b.replyInChat('s', 'c', 'other', 'No.')).toThrow(/unknown-message/);
+    expect(() => b.startChat('s2', 'c', 'm1')).toThrow(/not-open/);
+    expect(() => b.startChat('s3', 'c', 'nope')).toThrow(/unknown-message/);
+    expect(() => b.sendChat('c', 'm2', 'About this?', { aboutId: 'missing-card' })).toThrow(
+      /unknown-target/,
+    );
+    expect(() => b.sendChat('c', 'm1', 'Duplicate id.')).toThrow(/duplicate-id/);
+  });
+
+  it('chat reply text counts for the four-word rule', () => {
+    const b = chat();
+    b.replyInChat('s', 'c', 'm1', 'Try letting the harbour wait until morning.');
+    b.type('d', ' The harbour wait until morning.');
+    const run = b.project.documents.d!.provenance.find((r) => r.matchedKind === 'chat');
+    expect(run).toMatchObject({ class: 'typed-from-suggestion', suggestionId: 'c' });
+  });
+});

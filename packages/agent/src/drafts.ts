@@ -28,7 +28,16 @@ export const AGENT_EVENT_TYPES = [
   'SourceSuggested',
   'ReviewFinished',
   'DiscussAnswered',
+  'ChatReplied',
 ] as const;
+
+/** Agent events that end a session: a review's summary, a discuss answer, a chat reply. */
+export const CLOSING_EVENT_TYPES = ['ReviewFinished', 'DiscussAnswered', 'ChatReplied'] as const;
+
+/** True if `type` ends the session that emitted it. */
+export function isClosingEventType(type: string): boolean {
+  return (CLOSING_EVENT_TYPES as readonly string[]).includes(type);
+}
 
 /** An agent event type. */
 export type AgentEventType = (typeof AGENT_EVENT_TYPES)[number];

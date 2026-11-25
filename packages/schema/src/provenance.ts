@@ -76,7 +76,8 @@ export const PROVENANCE_CLASS_INFO: Readonly<
  * - `citation-flag`, `surfaced-source`, `source-suggestion` — research cards (the
  *   flag's claim, the search query and candidate titles, the rationale);
  * - `discuss` — a discuss answer; `suggestionId` is the **thread** id;
- * - `review` — `finish_review` text; `suggestionId` is the **feedback session** id.
+ * - `review` — `finish_review` text; `suggestionId` is the **feedback session** id;
+ * - `chat` — a chat reply; `suggestionId` is the **chat** id.
  */
 export const MatchedKindSchema = z.enum([
   'suggestion',
@@ -89,6 +90,7 @@ export const MatchedKindSchema = z.enum([
   'source-suggestion',
   'discuss',
   'review',
+  'chat',
 ]);
 /** Kind of annotation a `typed-from-suggestion` run matched. */
 export type MatchedKind = z.infer<typeof MatchedKindSchema>;

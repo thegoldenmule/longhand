@@ -47,6 +47,7 @@ export type LedgerErrorCode =
   | 'unknown-source'
   | 'unknown-request'
   | 'unknown-thread'
+  | 'unknown-message'
   | 'unknown-hint'
   // Ingest validation only
   | 'invalid-draft'

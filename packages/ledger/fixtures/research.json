@@ -2903,6 +2903,8 @@
             "kind": "review",
             "requestId": "req-r",
             "threadId": null,
+            "chatId": null,
+            "messageId": null,
             "model": "opus",
             "systemPromptVersion": null,
             "startedSeq": 10,
@@ -3097,7 +3099,8 @@
             }
           }
         },
-        "discussions": {}
+        "discussions": {},
+        "chats": {}
       },
       "sources": {
         "src-okafor": {

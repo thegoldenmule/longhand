@@ -35,8 +35,11 @@ import {
   REPORT_VERSION,
   SESSION_GAP_MS,
   targetDocumentId,
+  type AgentSessionState,
+  type ChatWriterMessage,
   type Commit,
   type DocumentState,
+  type FeedbackScope,
   type MatchedKind,
   type ProjectState,
   type ReportScope,
@@ -49,6 +52,7 @@ import { utcDay } from './format';
 import {
   ASSISTED_KINDS,
   type AssistedKind,
+  type ListedAssistedKind,
   type Report,
   type ReportAiSession,
   type ReportExtensions,
@@ -167,13 +171,26 @@ function sortedValues<T extends { seq: number; id: string }>(rec: Record<string,
   return Object.values(rec).sort((a, b) => a.seq - b.seq || (a.id < b.id ? -1 : 1));
 }
 
+/** The writer message a chat session answered. */
+function chatMessageOf(ps: ProjectState, s: AgentSessionState): ChatWriterMessage | null {
+  if (s.kind !== 'chat' || !s.chatId || !s.messageId) return null;
+  const m = ps.annotations.chats[s.chatId]?.messages.find((x) => x.id === s.messageId);
+  return m && m.role === 'writer' ? m : null;
+}
+
+/** What a session was asked to look at: its request's scope, or its chat message's. */
+function sessionScope(ps: ProjectState, s: AgentSessionState): FeedbackScope | null {
+  if (s.requestId) return ps.annotations.feedbackRequests[s.requestId]?.scope ?? null;
+  return chatMessageOf(ps, s)?.scope ?? null;
+}
+
 /** Which document an annotation belongs to, for document reports (null: project-level). */
 function annotationDocuments(ps: ProjectState) {
   const ann = ps.annotations;
   const requestDoc = (sessionId: string): string | null => {
     const session = ann.agentSessions[sessionId];
-    const req = session?.requestId ? ann.feedbackRequests[session.requestId] : undefined;
-    return req && req.scope.kind !== 'project' ? req.scope.documentId : null;
+    const scope = session ? sessionScope(ps, session) : null;
+    return scope && scope.kind !== 'project' ? scope.documentId : null;
   };
   const ofTarget = (t: Target | null, sessionId: string): string | null =>
     t ? targetDocumentId(t) : requestDoc(sessionId);
@@ -307,11 +324,10 @@ export function computeReport(commits: readonly Commit[], opts: ComputeReportOpt
       }
     }
   }
-  const assistedByKind = Object.fromEntries(ASSISTED_KINDS.map((k) => [k, 0])) as Record<
-    AssistedKind,
-    number
-  >;
-  for (const kind of assistedIds.values()) assistedByKind[kind] += 1;
+  const assistedByKind = Object.fromEntries(
+    ASSISTED_KINDS.filter((k) => k !== 'chat').map((k) => [k, 0]),
+  ) as Record<ListedAssistedKind, number> & { chat?: number };
+  for (const kind of assistedIds.values()) assistedByKind[kind] = (assistedByKind[kind] ?? 0) + 1;
 
   // --- Time and sessions ---------------------------------------------------
   const scopedEntries = entries.filter((e) => inScope(e.documentId));
@@ -335,16 +351,22 @@ export function computeReport(commits: readonly Commit[], opts: ComputeReportOpt
     (t) => docScope === null || docs.threadDoc(t.id) === docScope,
   );
   const threadIds = new Set(threads.map((t) => t.id));
+  const inDocScope = (scope: FeedbackScope) =>
+    docScope === null || scope.kind === 'project' || scope.documentId === docScope;
+  let chatMessages = 0;
+  for (const chat of Object.values(ann.chats))
+    for (const m of chat.messages) if (m.role === 'writer' && inDocScope(m.scope)) chatMessages++;
   const aiSessions = Object.values(ann.agentSessions)
-    .filter(
-      (s) =>
-        docScope === null ||
-        (s.requestId !== null && requestIds.has(s.requestId)) ||
-        (s.threadId !== null && threadIds.has(s.threadId)),
-    )
+    .filter((s) => {
+      if (docScope === null) return true;
+      if (s.requestId !== null) return requestIds.has(s.requestId);
+      if (s.threadId !== null) return threadIds.has(s.threadId);
+      const m = chatMessageOf(ps, s);
+      return m !== null && inDocScope(m.scope);
+    })
     .sort((a, b) => a.startedSeq - b.startedSeq);
   const sessionList: ReportAiSession[] = aiSessions.map((s) => {
-    const req = s.requestId ? ann.feedbackRequests[s.requestId] : undefined;
+    const req = s.requestId ? ann.feedbackRequests[s.requestId] : chatMessageOf(ps, s);
     return {
       id: s.id,
       kind: s.kind,
@@ -360,6 +382,7 @@ export function computeReport(commits: readonly Commit[], opts: ComputeReportOpt
       scope: req ? req.scope.kind : null,
       annotations: s.annotationIds.length,
       failureReason: s.failureReason,
+      ...(s.kind === 'chat' && s.chatId ? { chatId: s.chatId } : {}),
     };
   });
   const countIn = (rec: Record<string, { id: string }>) =>
@@ -485,6 +508,7 @@ export function computeReport(commits: readonly Commit[], opts: ComputeReportOpt
       sourceSuggestions: countIn(ann.sourceSuggestions),
       discussThreads: threads.length,
       sessions: sessionList,
+      ...(chatMessages > 0 ? { chatMessages } : {}),
     },
     suggestions: { total: suggestionTotal, byKind: byKindTotals, byOutcome },
     proposals: { total: proposalTotal, byKind: proposalsByKind },

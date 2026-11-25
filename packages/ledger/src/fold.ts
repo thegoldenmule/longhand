@@ -187,6 +187,8 @@ function dispatch(tx: Tx, c: Commit): void {
       return agent.foldFeedbackRequested(tx, c);
     case 'DiscussRequested':
       return agent.foldDiscussRequested(tx, c);
+    case 'ChatMessageSent':
+      return agent.foldChatMessageSent(tx, c);
     case 'SourceAdded':
       return binder.foldSourceAdded(tx, c);
     case 'SourceUpdated':
@@ -223,6 +225,8 @@ function dispatch(tx: Tx, c: Commit): void {
       return agent.foldReviewFinished(tx, c);
     case 'DiscussAnswered':
       return agent.foldDiscussAnswered(tx, c);
+    case 'ChatReplied':
+      return agent.foldChatReplied(tx, c);
     case 'SuggestionResolved':
       return agent.foldSuggestionResolved(tx, c);
     case 'ChainHeadWitnessed':

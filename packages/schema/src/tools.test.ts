@@ -11,6 +11,7 @@ import {
   capViolation,
   countCall,
   rephraseGuidanceViolation,
+  SESSION_FINISH_TOOL,
   toolsForSession,
   type SessionCounts,
   type ToolName,
@@ -19,7 +20,7 @@ import {
 const anchor = { documentId: 'd1', sentenceId: 'p1.s1', quote: 'rain' };
 
 describe('catalog', () => {
-  it('has exactly the spec tools plus answer_discussion', () => {
+  it('has exactly the spec tools plus answer_discussion and reply', () => {
     expect([...TOOL_NAMES].sort()).toEqual(
       [
         'read_document',
@@ -39,6 +40,7 @@ describe('catalog', () => {
         'suggest_source',
         'finish_review',
         'answer_discussion',
+        'reply',
       ].sort(),
     );
   });
@@ -77,6 +79,17 @@ describe('catalog', () => {
     );
     expect(toolsForSession('review')).toContain('finish_review');
     expect(toolsForSession('review')).not.toContain('answer_discussion');
+    expect(toolsForSession('review')).not.toContain('reply');
+  });
+
+  it('gives chat sessions the read and annotation tools plus reply, never finish_review', () => {
+    const chat = toolsForSession('chat');
+    expect(chat).toContain('reply');
+    expect(chat).not.toContain('finish_review');
+    expect(chat).not.toContain('answer_discussion');
+    const review = toolsForSession('review').filter((t) => t !== 'finish_review');
+    expect([...chat].filter((t) => t !== 'reply').sort()).toEqual([...review].sort());
+    expect(SESSION_FINISH_TOOL.chat).toBe('reply');
   });
 });
 

@@ -5635,6 +5635,8 @@
             "kind": "review",
             "requestId": "req-1",
             "threadId": null,
+            "chatId": null,
+            "messageId": null,
             "model": "opus",
             "systemPromptVersion": "v1",
             "startedSeq": 9,
@@ -5673,6 +5675,8 @@
             "kind": "review",
             "requestId": "req-2",
             "threadId": null,
+            "chatId": null,
+            "messageId": null,
             "model": "sonnet",
             "systemPromptVersion": null,
             "startedSeq": 18,
@@ -5802,7 +5806,8 @@
         "citationFlags": {},
         "surfacedSources": {},
         "sourceSuggestions": {},
-        "discussions": {}
+        "discussions": {},
+        "chats": {}
       },
       "sources": {},
       "clippings": {},

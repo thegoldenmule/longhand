@@ -148,7 +148,7 @@ export function mapTracker(t: Tracker, step: StepFacts, scratch: Scratch): void 
       const to = map.map(t.range.to, -1);
       t.range = { from, to: Math.max(from, to) };
     }
-  } else if (t.range && t.group === 'feedbackRequests') {
+  } else if (t.range && (t.group === 'feedbackRequests' || t.group === 'chatMessages')) {
     // A selection scope never becomes null: it collapses to a point instead.
     const from = map.map(t.range.from, 1);
     t.range = { from, to: Math.max(from, map.map(t.range.to, -1)) };

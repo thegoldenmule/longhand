@@ -32,7 +32,14 @@ export const ASSISTED_KINDS: readonly AssistedKind[] = Object.freeze([
   'source-suggestion',
   'discuss',
   'review',
+  'chat',
 ]);
+
+/**
+ * Assisted kinds a report always lists, with zeros. `chat` appears only when
+ * nonzero, so reports of ledgers without chats are unchanged.
+ */
+export type ListedAssistedKind = Exclude<AssistedKind, 'chat'>;
 
 /** Report data beyond the schema's required fields (`report.extensions`). */
 export type ReportExtensions = {
@@ -46,7 +53,10 @@ export type ReportExtensions = {
    * The AI texts behind `typed-from-suggestion` words: how many distinct
    * annotations (or discuss threads, or reviews) the counted words matched.
    */
-  assisted: { annotations: number; byKind: Record<AssistedKind, number> };
+  assisted: {
+    annotations: number;
+    byKind: Record<ListedAssistedKind, number> & { chat?: number };
+  };
   /** Distinct library sources behind `quoted` words. */
   quoted: { sources: number };
   /** Suggestion outcomes per kind. */
@@ -88,11 +98,18 @@ export interface ReportAiSession {
   /** Annotations it created. */
   annotations: number;
   failureReason: string | null;
+  /** The chat a chat session answered in (chat sessions only). */
+  chatId?: string;
 }
 
 /** The report `computeReport` returns: the schema's shape with this lane's extensions typed. */
 export type Report = Omit<KnownFields<AuthorshipReport>, 'ai' | 'unwitnessed' | 'extensions'> & {
-  ai: AuthorshipReport['ai'] & { sourceSuggestions: number; sessions: ReportAiSession[] };
+  ai: AuthorshipReport['ai'] & {
+    sourceSuggestions: number;
+    sessions: ReportAiSession[];
+    /** Messages the writer sent the editors in the feedback chat (present only when nonzero). */
+    chatMessages?: number;
+  };
   unwitnessed: Array<
     AuthorshipReport['unwitnessed'][number] & {
       reason: 'queued-offline' | 'not-witnessed';
