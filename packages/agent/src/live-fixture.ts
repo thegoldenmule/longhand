@@ -1,7 +1,7 @@
 // A one-paragraph project for the live smoke test and the fixture recorder.
 // Test-support only; not exported from the package index.
 import { GENESIS_PREV_HASH, type ProjectState } from '@longhand/schema';
-import type { FeedbackRequest } from './context';
+import type { ChatRequest, FeedbackRequest } from './context';
 
 /** The paragraph under review. */
 export const LIVE_PARAGRAPH =
@@ -81,4 +81,45 @@ export function liveParagraphState(): ProjectState {
     pastes: {},
     writingSessions: [],
   };
+}
+
+/** A chat message about the paragraph, by the line editor in {@link LIVE_PARAGRAPH_REQUEST}. */
+export function liveChatRequest(messageId: string, text: string): ChatRequest {
+  return {
+    chatId: 'live-chat',
+    messageId,
+    text,
+    editor: { ...LIVE_PARAGRAPH_REQUEST.editor!, role: 'Line editor' },
+    lenses: ['clarity', 'word-choice', 'grammar-mechanics'],
+    intensity: 'light',
+    context: { scope: { kind: 'document', documentId: 'doc1' }, aboutId: null },
+  };
+}
+
+/** The paragraph's project with the chat message pending, as the fold has it. */
+export function liveChatState(request: ChatRequest): ProjectState {
+  const state = liveParagraphState();
+  state.annotations.chats[request.chatId] = {
+    id: request.chatId,
+    createdSeq: 6,
+    createdAt: '2026-11-25T10:00:00.000Z',
+    updatedSeq: 6,
+    messages: [
+      {
+        role: 'writer',
+        id: request.messageId,
+        seq: 6,
+        createdAt: '2026-11-25T10:00:00.000Z',
+        text: request.text,
+        editor: request.editor,
+        lenses: request.lenses,
+        intensity: request.intensity,
+        scope: request.context.scope,
+        aboutId: null,
+        status: 'pending',
+        feedbackSessionId: null,
+      },
+    ],
+  };
+  return state;
 }

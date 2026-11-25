@@ -14,10 +14,17 @@ import {
   ClaudeCliAdapter,
   InMemoryAnnotationSink,
   idTokens,
+  runChatSession,
   runFeedbackSession,
   type SessionProgressEvent,
 } from './index';
-import { LIVE_PARAGRAPH, LIVE_PARAGRAPH_REQUEST, liveParagraphState } from './live-fixture';
+import {
+  LIVE_PARAGRAPH,
+  LIVE_PARAGRAPH_REQUEST,
+  liveChatRequest,
+  liveChatState,
+  liveParagraphState,
+} from './live-fixture';
 
 const live = process.env.LONGHAND_LIVE_CLAUDE === '1';
 
@@ -122,6 +129,67 @@ describe.skipIf(!live)('live claude CLI smoke test', () => {
 
       // Items streamed as they arrived.
       expect(progress.filter((e) => e.kind === 'annotation')).toHaveLength(drafts.length - 1);
+    },
+    5 * 60_000,
+  );
+});
+
+describe.skipIf(!live)('live claude CLI chat', () => {
+  const runChat = async (messageId: string, text: string) => {
+    const request = liveChatRequest(messageId, text);
+    const sink = new InMemoryAnnotationSink();
+    const outcome = await runChatSession({
+      state: liveChatState(request),
+      request,
+      sink,
+      adapter: new ClaudeCliAdapter(),
+      model: 'sonnet',
+      feedbackSessionId: `live-${messageId}`,
+      timeoutMs: 4 * 60_000,
+    });
+    const drafts = sink.drafts.map((d) => d.draft);
+    console.log(
+      JSON.stringify(
+        {
+          text,
+          status: outcome.status,
+          reason: outcome.reason,
+          rejected: outcome.run?.toolCalls
+            .filter((c) => c.result?.isError)
+            .map((c) => `${c.name}: ${c.result?.text}`),
+          drafts: drafts.map((d) => d.type),
+          writerText: drafts.map((d) => writerText(d.payload)),
+          costUsd: outcome.run?.costUsd,
+        },
+        null,
+        2,
+      ),
+    );
+    expect(outcome.status).toBe('finished');
+    expect(drafts.at(-1)?.type).toBe('ChatReplied');
+    for (const d of drafts) {
+      expect(CommitDraftSchema.safeParse(d).success).toBe(true);
+      expect(isManuscriptEventType(d.type)).toBe(false);
+      for (const t of writerText(d.payload)) expect(idTokens(t)).toEqual([]);
+    }
+    return drafts.filter((d) => d.type !== 'FeedbackSessionStarted' && d.type !== 'ChatReplied');
+  };
+
+  it(
+    'a plain question gets a reply and no notes',
+    async () => {
+      const notes = await runChat('m-plain', 'Is "the meeting started late" a good way to open?');
+      expect(notes).toEqual([]);
+    },
+    5 * 60_000,
+  );
+
+  it(
+    'review this leaves notes within the caps, then replies',
+    async () => {
+      const notes = await runChat('m-review', 'Review this paragraph.');
+      expect(notes.length).toBeGreaterThan(0);
+      expect(notes.length).toBeLessThanOrEqual(capsFor('light').maxItems);
     },
     5 * 60_000,
   );
