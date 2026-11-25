@@ -14,6 +14,7 @@ import {
   type PMNodeJSON,
 } from '@longhand/schema';
 import { dropCursor } from 'prosemirror-dropcursor';
+import { gapCursor } from 'prosemirror-gapcursor';
 import { history } from 'prosemirror-history';
 import type { Node as PMNode } from 'prosemirror-model';
 import { Plugin, Selection, TextSelection, type EditorState, type Transaction } from 'prosemirror-state';
@@ -22,7 +23,7 @@ import { EditorView } from 'prosemirror-view';
 import { editorInputRules, editorKeymaps } from './commands';
 import type { DecorationLayer, LayerDecoration } from './decorations';
 import { encodeMarker, MARKER_MIME, stampMarker, type SliceMarker } from './input/clipboard';
-import type { InputTag } from './input/classify';
+import { EDITOR_INPUT_META, type DeclaredInput, type InputTag } from './input/classify';
 import { createInputGuard, inputTagOf, isRemoteTransaction, type GuardViolation, type InputGuard } from './input/guard';
 import { DocumentSync, type SubmittableEventType, type SyncError, type SyncStatus, type VersionChange } from './sync/engine';
 import { sharedFlusher, type CommitFlusher } from './sync/flusher';
@@ -264,6 +265,7 @@ export function createEditorView(opts: CreateEditorOptions): EditorHandle {
     ...editorKeymaps(guard),
     history({ newGroupDelay: 800 }),
     dropCursor({ class: 'lh-dropcursor' }),
+    gapCursor(),
     clipboardPlugin,
     typewriterPlugin({
       settings: { enabled: settings.typewriter, caretRatio: settings.caretRatio },
@@ -426,26 +428,23 @@ export function createEditorView(opts: CreateEditorOptions): EditorHandle {
     },
     setTraceSuggestion: (id) => guard.setTraceSuggestion(id),
     insertCitation({ sourceId, locator = null }) {
-      if (!guard.tracker.recentActivation()) {
-        console.error('[longhand/editor] insertCitation needs a user gesture');
-        return null;
-      }
+      const st = view.state;
       const citationId = newId();
       const node = nodes.citation.create({ sourceId, locator });
-      const st = view.state;
-      const tr = st.tr;
-      if (!st.selection.empty) tr.setSelection(TextSelection.create(st.doc, st.selection.to));
-      tr.replaceSelectionWith(node, false);
-      sync.citationInserted({ citationId, documentId, sourceId, locator });
-      guard.grant(tr, { units: 'all', activation: true, tag: { method: 'citation', citationId, kind: 'insert' } });
-      view.dispatch(tr.scrollIntoView());
-      return citationId;
+      const at = st.selection.to;
+      const tr = st.tr.insert(at, node);
+      tr.setSelection(TextSelection.create(tr.doc, at + node.nodeSize));
+      const input: DeclaredInput = {
+        run: { steps: tr.steps.length, method: 'citation', citationId },
+        companions: [{ type: 'CitationInserted', payload: { citationId, documentId, sourceId, locator } }],
+        characters: 0,
+        keystroke: { kind: 'paste', len: 0 },
+      };
+      const before = view.state;
+      view.dispatch(tr.setMeta(EDITOR_INPUT_META, input).scrollIntoView());
+      return view.state !== before ? citationId : null;
     },
     insertClipping({ clippingId, sourceId, locator = null, text }) {
-      if (!guard.tracker.recentActivation()) {
-        console.error('[longhand/editor] insertClipping needs a user gesture');
-        return false;
-      }
       const paragraphs = text
         .split('\n')
         .map((line) => nodes.paragraph.create(null, line ? schema.text(line) : null));
@@ -454,9 +453,16 @@ export function createEditorView(opts: CreateEditorOptions): EditorHandle {
       const { $from } = st.selection;
       const pos = $from.depth >= 1 ? $from.after(1) : st.doc.content.size;
       const tr = st.tr.insert(pos, block);
-      guard.grant(tr, { units: 'all', activation: true, tag: { method: 'clipping', clippingId, kind: 'paste' } });
+      tr.setSelection(Selection.near(tr.doc.resolve(pos + block.nodeSize), 1));
+      const characters = text.replace(/\n/g, '').length;
+      const input: DeclaredInput = {
+        run: { steps: tr.steps.length, method: 'clipping', clippingId },
+        companions: [],
+        characters,
+        keystroke: { kind: 'paste', len: characters },
+      };
       const before = view.state;
-      view.dispatch(tr.scrollIntoView());
+      view.dispatch(tr.setMeta(EDITOR_INPUT_META, input).scrollIntoView());
       return view.state !== before;
     },
     acceptProposal: (proposalId) => sync.acceptProposal(proposalId),

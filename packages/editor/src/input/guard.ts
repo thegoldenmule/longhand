@@ -15,13 +15,16 @@
  * `flag` (default in production) lets a violating *insertion* through as
  * `pasted-external`, so the writer never loses text and nothing is overclaimed.
  */
-import { inlineTextBetween } from '@longhand/schema';
+import { inlineTextBetween, KeystrokeKindSchema } from '@longhand/schema';
 import { EditorState, Plugin, PluginKey, type EditorStateConfig, type Transaction } from 'prosemirror-state';
 import type { EditorView } from 'prosemirror-view';
-import { changedRange, isSplitStep, transformTotals } from '../steps';
+import { changedRange, insertedNodeNames, isSplitStep, transformTotals } from '../steps';
 import { Emitter, isProduction, newId } from '../util';
 import {
   classifyTransaction,
+  EDITOR_INPUT_META,
+  RESEARCH_INPUT_META_ALIAS,
+  type DeclaredInput,
   type InputGrant,
   type InputTag,
   type TransactionFacts,
@@ -40,6 +43,21 @@ export function inputTagOf(tr: Transaction): InputTag | undefined {
 /** True if the transaction carries remote (ledger) steps rather than local input. */
 export function isRemoteTransaction(tr: Transaction): boolean {
   return REMOTE.has(tr);
+}
+
+/** The declared input on a transaction ({@link EDITOR_INPUT_META}, or the research alias). */
+export function readDeclaredInput(tr: Transaction): DeclaredInput | undefined {
+  const v = (tr.getMeta(EDITOR_INPUT_META) ?? tr.getMeta(RESEARCH_INPUT_META_ALIAS)) as DeclaredInput | undefined;
+  if (!v || typeof v !== 'object' || !v.run || typeof v.run !== 'object') return undefined;
+  return {
+    run: v.run,
+    companions: Array.isArray(v.companions) ? v.companions : [],
+    characters: typeof v.characters === 'number' ? v.characters : 0,
+    keystroke:
+      v.keystroke && KeystrokeKindSchema.safeParse(v.keystroke.kind).success && Number.isInteger(v.keystroke.len)
+        ? { kind: v.keystroke.kind, len: Math.max(0, v.keystroke.len) }
+        : { kind: 'paste', len: 0 },
+  };
 }
 
 /** A refused (or, under `flag`, downgraded) transaction. */
@@ -91,6 +109,9 @@ function factsOf(tr: Transaction, grant: InputGrant | undefined): TransactionFac
     structural: totals.structural,
     hintKind: grant?.kind,
     grant,
+    declared: readDeclaredInput(tr),
+    steps: tr.steps.length,
+    insertedNodeNames: insertedNodeNames(tr),
     insertedText: () => {
       if (text === null) {
         const r = changedRange(tr);

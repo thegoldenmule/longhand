@@ -124,3 +124,16 @@ export function isSplitStep(step: Step): boolean {
     .slice;
   return slice.openStart > 0 && slice.openEnd > 0 && slice.content.childCount >= 2 && inlineCharCount(slice.content) === 0;
 }
+
+/** Type names of every node a transform's steps insert (descendants included). */
+export function insertedNodeNames(tr: Transform): Set<string> {
+  const names = new Set<string>();
+  for (const step of tr.steps) {
+    const c = insertedContent(step);
+    c?.descendants((node) => {
+      names.add(node.type.name);
+      return true;
+    });
+  }
+  return names;
+}

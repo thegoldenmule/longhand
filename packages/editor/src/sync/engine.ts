@@ -257,6 +257,9 @@ export class DocumentSync implements FlushParticipant {
         ),
       );
     }
+    for (const c of tag.companions ?? []) {
+      if (c.type === 'CitationInserted') this.enqueue(makeDraft(this.ctx, 'CitationInserted', c.payload, at));
+    }
     if (this.pending.steps.length > 0 && this.pending.steps.length + tr.steps.length > this.maxSteps) this.flush();
 
     const runTag: RunTag = { method: tag.method };
@@ -277,7 +280,8 @@ export class DocumentSync implements FlushParticipant {
       this.pending.steps.push({ step, inverted: step.invert(before), tag: runTag, chars });
     });
     this.pending.lastAt = at;
-    this.pending.timeline.push(...timelineEntries(tag, inserted, deleted, at));
+    if (tag.timelineLen !== undefined) this.pending.timeline.push({ at, kind: tag.kind, len: tag.timelineLen });
+    else this.pending.timeline.push(...timelineEntries(tag, inserted, deleted, at));
 
     if (this.pending.steps.length >= this.maxSteps) this.flush();
     else this.scheduleIdle();
@@ -323,11 +327,6 @@ export class DocumentSync implements FlushParticipant {
     const draft = makeDraft(this.ctx, type, payload, this.clock());
     this.enqueue(draft as CommitDraft);
     return draft;
-  }
-
-  /** Emits `CitationInserted` (before the citation step is captured). */
-  citationInserted(payload: EventPayloads['CitationInserted']): void {
-    this.enqueue(makeDraft(this.ctx, 'CitationInserted', payload, this.clock()));
   }
 
   /** Accepts a proposal: flushes, then queues `ProposalAccepted` at the local version. */

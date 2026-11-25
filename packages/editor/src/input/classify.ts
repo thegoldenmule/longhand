@@ -4,6 +4,9 @@
  * keystroke kind, or refuse it.
  *
  * Rules (first match wins):
+ * 0. A declared input ({@link EDITOR_INPUT_META}, e.g. Cite or Place clipping from
+ *    the research lane) → its `citation`/`clipping` run, if a user gesture is
+ *    recent and the steps insert only what that method may insert.
  * 1. Undo/redo (prosemirror-history meta) → `history`, needs recent user input.
  * 2. `uiEvent: paste` → needs a trusted paste event. `pasted-internal` if the
  *    clipboard marker names this project and its text hash matches the inserted
@@ -23,7 +26,15 @@
  * through as `pasted-external` (never overclaim); deletions and format changes
  * without input are always refused.
  */
-import { countWords, sha256Hex, type InputMethod, type KeystrokeKind } from '@longhand/schema';
+import {
+  countWords,
+  sha256Hex,
+  type EventPayloads,
+  type InputMethod,
+  type InputRun,
+  type Keystroke,
+  type KeystrokeKind,
+} from '@longhand/schema';
 import type { TrackerState } from './tracker';
 
 /** Clipboard/drop details recorded in the companion `PasteOccurred`. */
@@ -50,6 +61,33 @@ export interface InputTag {
   paste?: PasteInfo;
   /** Set when policy `flag` let an unverifiable insertion through as `pasted-external`. */
   flagged?: boolean;
+  /** Companion events to commit before the `TextEdited` carrying these steps. */
+  companions?: DeclaredInput['companions'];
+  /** Keystroke-timeline `len` override (declared inputs). */
+  timelineLen?: number;
+}
+
+/**
+ * Transaction meta key any package may use to declare the input method of a
+ * command it dispatches on a user gesture: `tr.setMeta(EDITOR_INPUT_META, input)`.
+ * Only methods the fold verifies against an earlier event are accepted
+ * (`citation`, `clipping`); everything else is classified from real input events.
+ */
+export const EDITOR_INPUT_META = 'longhand/editor-input';
+
+/** Alias read for the research lane's commands (`RESEARCH_INPUT_META` in `@longhand/research`). */
+export const RESEARCH_INPUT_META_ALIAS = 'longhand/research-input';
+
+/** A declared input (the value of {@link EDITOR_INPUT_META}). */
+export interface DeclaredInput {
+  /** The run covering every step of the transaction (`run.steps === tr.steps.length`). */
+  run: InputRun;
+  /** Companion events committed before the `TextEdited` (only `CitationInserted`). */
+  companions: Array<{ type: 'CitationInserted'; payload: EventPayloads['CitationInserted'] }>;
+  /** Inline characters inserted (informational; the batcher counts from the steps). */
+  characters: number;
+  /** Keystroke-timeline entry for the action. */
+  keystroke: Pick<Keystroke, 'kind' | 'len'>;
 }
 
 /** A privileged grant from Longhand's own commands and input rules. */
@@ -57,8 +95,6 @@ export interface InputGrant {
   /** Units the command may insert beyond the typed budget (`all` for any). */
   units: number | 'all';
   kind?: KeystrokeKind;
-  /** Method override for privileged commands (`citation`, `clipping`). */
-  tag?: Omit<InputTag, 'kind'> & { kind?: KeystrokeKind };
   /** Command was triggered by user activation outside the editor (toolbar). */
   activation?: boolean;
 }
@@ -77,6 +113,12 @@ export interface TransactionFacts {
   /** Timeline kind hinted by the dispatcher (cannot change the method). */
   hintKind?: KeystrokeKind | undefined;
   grant?: InputGrant | undefined;
+  /** A declared input from {@link EDITOR_INPUT_META} (or its research alias). */
+  declared?: DeclaredInput | undefined;
+  /** Number of steps. */
+  steps: number;
+  /** Type names of every node the steps insert. */
+  insertedNodeNames: ReadonlySet<string>;
   /** Inline text inserted by the transaction (`inlineTextBetween(…, '\n')`). Lazy. */
   insertedText: () => string;
 }
@@ -159,11 +201,38 @@ export function classifyTransaction(
     return { ok: false, reason };
   };
 
-  // Privileged commands (citation / clipping / Longhand keymap and input rules).
-  if (grant?.tag) {
-    if (!(grant.activation ? activation : editorInput)) return violation('command without user input');
-    const { kind, ...rest } = grant.tag;
-    return { ok: true, tag: { ...rest, kind: kind ?? grant.kind ?? 'insert' }, consume: {} };
+  if (facts.declared) {
+    const d = facts.declared;
+    const refuse = (reason: string): Classification => ({ ok: false, reason: `declared input: ${reason}` });
+    if (!activation) return refuse('no recent user gesture');
+    const { run } = d;
+    if (run.steps !== facts.steps) return refuse(`run covers ${run.steps} steps, transaction has ${facts.steps}`);
+    if (facts.deletedChars > 0) return refuse('it deletes text');
+    const names = facts.insertedNodeNames;
+    if (run.method === 'citation') {
+      if (!run.citationId) return refuse('citation run without citationId');
+      if (facts.insertedChars > 0 || [...names].some((n) => n !== 'citation'))
+        return refuse('a citation run may insert only citation nodes');
+      if (d.companions.some((c) => c.type !== 'CitationInserted' || c.payload.citationId !== run.citationId))
+        return refuse('companion does not match the citation');
+    } else if (run.method === 'clipping') {
+      if (!run.clippingId) return refuse('clipping run without clippingId');
+      const allowed = new Set(['quote_block', 'paragraph', 'text', 'hard_break']);
+      if (!names.has('quote_block') || [...names].some((n) => !allowed.has(n)))
+        return refuse('a clipping run may insert only one quote block');
+      if (d.companions.length > 0) return refuse('clipping runs have no companions');
+    } else {
+      return refuse(`method ${run.method} cannot be declared`);
+    }
+    const tag: InputTag = {
+      method: run.method,
+      kind: d.keystroke.kind,
+      companions: d.companions,
+      timelineLen: d.keystroke.len,
+    };
+    if (run.citationId) tag.citationId = run.citationId;
+    if (run.clippingId) tag.clippingId = run.clippingId;
+    return { ok: true, tag, consume: {} };
   }
 
   if (facts.history) {

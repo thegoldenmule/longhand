@@ -33,13 +33,17 @@ export {
   createInputGuard,
   inputTagOf,
   isRemoteTransaction,
+  readDeclaredInput,
   type GuardViolation,
   type InputGuard,
   type InputGuardOptions,
 } from './input/guard';
 export {
   classifyTransaction,
+  EDITOR_INPUT_META,
+  RESEARCH_INPUT_META_ALIAS,
   type Classification,
+  type DeclaredInput,
   type InputGrant,
   type InputTag,
   type PasteInfo,
