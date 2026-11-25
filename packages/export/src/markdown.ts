@@ -3,7 +3,7 @@
  *
  * Isomorphic: pure string building, no Node APIs.
  */
-import { buildExportModel, type Block, type ExportModel, type Inline } from './model';
+import { buildExportModel, inlineMarks, type Block, type ExportModel, type Inline } from './model';
 import { groupThousands } from './format';
 import type { ExportInput, TextSpan } from './types';
 
@@ -68,24 +68,64 @@ interface InlineOptions {
   escapeHash?: boolean;
 }
 
-function nextText(content: readonly Inline[], i: number): string {
-  const n = content[i + 1];
+type Run = Extract<Inline, { kind: 'text' | 'citation' }>;
+/** A link: consecutive text and citations with the same href. */
+interface LinkGroup {
+  kind: 'link';
+  href: string;
+  children: Run[];
+}
+type Item = Inline | LinkGroup;
+
+function groupLinks(content: readonly Inline[]): Item[] {
+  const out: Item[] = [];
+  for (const node of content) {
+    const href = node.kind === 'text' || node.kind === 'citation' ? (node.href ?? null) : null;
+    if (href === null) {
+      out.push(node);
+      continue;
+    }
+    const last = out[out.length - 1];
+    if (last?.kind === 'link' && last.href === href) last.children.push(node as Run);
+    else out.push({ kind: 'link', href, children: [node as Run] });
+  }
+  return out;
+}
+
+function nextText(items: readonly Item[], i: number): string {
+  const n = items[i + 1];
   if (!n) return '';
   if (n.kind === 'text' || n.kind === 'citation') return n.text;
-  if (n.kind === 'footnoteRef') return '[';
+  if (n.kind === 'footnoteRef' || n.kind === 'link') return '[';
   return '';
+}
+
+/** A CommonMark code span: a fence longer than any backtick run inside, padded where needed. */
+function codeSpan(text: string): string {
+  const longest = Math.max(0, ...(text.match(/`+/g) ?? []).map((r) => r.length));
+  const fence = '`'.repeat(longest + 1);
+  const pad = text.startsWith('`') || text.endsWith('`') ? ' ' : '';
+  return `${fence}${pad}${text}${pad}${fence}`;
+}
+
+/** A link destination: parentheses and backslashes escaped (the href policy rules out spaces and `<>`). */
+function linkDestination(href: string): string {
+  return href.replace(/[()\\]/g, (c) => `\\${c}`);
 }
 
 /**
  * Renders inline content. Emphasis delimiters never touch whitespace on the
  * inside (`*foo *` would not parse), so leading and trailing whitespace of a
- * marked run is moved outside its delimiters.
+ * marked run is moved outside its delimiters. Links render as `[text](href)`,
+ * with the emphasis every part of the link shares outside the brackets, and
+ * inline code as a code span.
  */
 function renderInlines(content: readonly Inline[], opts: InlineOptions): string {
   let out = '';
   const stack: MarkName[] = [];
   let pending = '';
   let atLineStart = true;
+  const items = groupLinks(content);
 
   const transition = (want: ReadonlySet<MarkName>): void => {
     let keep = 0;
@@ -101,7 +141,7 @@ function renderInlines(content: readonly Inline[], opts: InlineOptions): string 
     }
   };
 
-  content.forEach((node, i) => {
+  items.forEach((node, i) => {
     switch (node.kind) {
       case 'text':
       case 'citation': {
@@ -115,19 +155,58 @@ function renderInlines(content: readonly Inline[], opts: InlineOptions): string 
           return;
         }
         if (atLineStart) lead = '';
-        let text =
-          node.kind === 'text'
-            ? escapeText(core)
-            : escapeGenerated(core, trail ? ' ' : nextText(content, i));
-        if (opts.escapeHash) text = text.replace(/#/g, '\\#');
-        if (atLineStart) text = escapeLineStart(text);
+        const marks = inlineMarks(node);
+        let text: string;
+        if (marks.code) {
+          text = codeSpan(core);
+        } else {
+          text =
+            node.kind === 'text'
+              ? escapeText(core)
+              : escapeGenerated(core, trail ? ' ' : nextText(items, i));
+          if (opts.escapeHash) text = text.replace(/#/g, '\\#');
+          if (atLineStart) text = escapeLineStart(text);
+        }
         const want = new Set<MarkName>();
-        if (node.strong) want.add('strong');
-        if (node.em) want.add('em');
+        if (marks.strong && !marks.code) want.add('strong');
+        if (marks.em && !marks.code) want.add('em');
         // Whitespace before the run goes outside any delimiters that change here.
         pending += lead;
         transition(want);
         out += text;
+        pending = trail;
+        atLineStart = false;
+        return;
+      }
+      case 'link': {
+        const children = node.children.map((c) => ({ ...c }));
+        const first = children[0] as Run;
+        const last = children[children.length - 1] as Run;
+        const lead = (/^\s*/.exec(first.text) as RegExpExecArray)[0];
+        first.text = first.text.slice(lead.length);
+        const trail = (/\s*$/.exec(last.text) as RegExpExecArray)[0];
+        last.text = last.text.slice(0, last.text.length - trail.length);
+        if (children.every((c) => c.text === '')) {
+          if (!atLineStart) pending += lead + trail;
+          return;
+        }
+        const want = new Set<MarkName>();
+        if (children.every((c) => c.strong && !inlineMarks(c).code)) want.add('strong');
+        if (children.every((c) => c.em && !inlineMarks(c).code)) want.add('em');
+        const inner = renderInlines(
+          children.map((c) => {
+            const { href: _href, ...rest } = c;
+            return {
+              ...rest,
+              strong: c.strong && !want.has('strong'),
+              em: c.em && !want.has('em'),
+            } as Run;
+          }),
+          { breaks: opts.breaks, ...(opts.escapeHash ? { escapeHash: true } : {}) },
+        );
+        if (!atLineStart) pending += lead;
+        transition(want);
+        out += `[${inner}](${linkDestination(node.href)})`;
         pending = trail;
         atLineStart = false;
         return;

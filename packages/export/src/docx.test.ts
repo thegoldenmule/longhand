@@ -88,6 +88,29 @@ describe('exportDocx', () => {
     );
   });
 
+  it('writes links as Word hyperlinks and inline code in a monospaced font', () => {
+    const para = find('Notes live in the archive');
+    expect(para.text).toBe(
+      'Notes live in the archive, and the editor answers. Build it with make `book` or see README.',
+    );
+    const rels = parts['word/_rels/document.xml.rels'] as string;
+    const target = (href: string): string => {
+      const rel = [...rels.matchAll(/<Relationship [^>]*\/>/g)]
+        .map((r) => r[0])
+        .find((r) => r.includes(`Target="${href}"`));
+      if (!rel) throw new Error(`no relationship for ${href}`);
+      expect(rel).toContain('TargetMode="External"');
+      return (/Id="([^"]+)"/.exec(rel) as RegExpExecArray)[1] as string;
+    };
+    const archive = target('https://example.org/archive_(2026)');
+    const mail = target('mailto:jane@example.org');
+    expect(para.xml).toContain(`r:id="${archive}"><w:r><w:rPr><w:rStyle w:val="Hyperlink"/>`);
+    // One hyperlink for "the editor", though its runs differ in marks.
+    expect(para.xml.split(`r:id="${mail}"`)).toHaveLength(2);
+    expect(para.xml).toMatch(/<w:rStyle w:val="Hyperlink"\/>/);
+    expect(para.xml).toMatch(/<w:rFonts w:ascii="Courier New"[^>]*\/>[\s\S]*?make `book`/);
+  });
+
   it('writes real Word footnotes, numbered across documents', () => {
     expect(find('The rain fell').text).toContain('late.[^1]');
     expect(find('After the quote.').text).toBe('After the quote.[^2]');

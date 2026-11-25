@@ -33,9 +33,21 @@ export class ExportError extends Error {
   override name = 'ExportError';
 }
 
-/** Inline content. Adjacent text with equal marks is merged. */
+/**
+ * Inline content. Adjacent text with equal marks is merged. `href` is the link
+ * the text sits in (absent for none) and `code` marks inline code (absent when
+ * false), so documents without either build exactly the model they always did.
+ * Citations never render as code.
+ */
 export type Inline =
-  | { kind: 'text'; text: string; em: boolean; strong: boolean }
+  | {
+      kind: 'text';
+      text: string;
+      em: boolean;
+      strong: boolean;
+      code?: boolean;
+      href?: string | null;
+    }
   | { kind: 'break' }
   | { kind: 'footnoteRef'; number: number }
   | {
@@ -45,7 +57,23 @@ export type Inline =
       locator: string | null;
       em: boolean;
       strong: boolean;
+      href?: string | null;
     };
+
+/** Marks of a text or citation inline, read with defaults. */
+export function inlineMarks(i: Extract<Inline, { kind: 'text' | 'citation' }>): {
+  em: boolean;
+  strong: boolean;
+  code: boolean;
+  href: string | null;
+} {
+  return {
+    em: i.em,
+    strong: i.strong,
+    code: i.kind === 'text' && !!i.code,
+    href: i.href ?? null,
+  };
+}
 
 /** Block content. Empty paragraphs are dropped. */
 export type Block =
@@ -135,7 +163,7 @@ export const HANDLED_NODE_TYPES: readonly NodeTypeName[] = [
 ];
 
 /** Every mark type the model builder handles. Must equal the schema's mark types. */
-export const HANDLED_MARK_TYPES: readonly MarkTypeName[] = ['em', 'strong'];
+export const HANDLED_MARK_TYPES: readonly MarkTypeName[] = ['link', 'em', 'strong', 'code'];
 
 /** Normalizes {@link RichText} to spans. */
 export function toSpans(rich: RichText): TextSpan[] {
@@ -216,46 +244,72 @@ export function buildExportModel(input: ExportInput): ExportModel {
       return source;
     };
 
-    const marksOf = (node: PMNodeJSON): { em: boolean; strong: boolean } => {
-      let em = false;
-      let strong = false;
+    interface Marks {
+      em: boolean;
+      strong: boolean;
+      code: boolean;
+      href: string | null;
+    }
+    const marksOf = (node: PMNodeJSON): Marks => {
+      const marks: Marks = { em: false, strong: false, code: false, href: null };
       for (const m of node.marks ?? []) {
         const t = m.type as MarkTypeName;
         switch (t) {
           case 'em':
-            em = true;
+            marks.em = true;
             break;
           case 'strong':
-            strong = true;
+            marks.strong = true;
+            break;
+          case 'code':
+            marks.code = true;
+            break;
+          case 'link':
+            // docFromJSON already checked the href against the link policy.
+            marks.href = str(m.attrs?.href);
             break;
           default:
             throw new ExportError(`${where}: unknown mark type "${m.type as string}"`);
         }
       }
-      return { em, strong };
+      return marks;
     };
 
     const inlines = (nodes: readonly PMNodeJSON[] | undefined, inFootnote: boolean): Inline[] => {
       const out: Inline[] = [];
-      const pushText = (text: string, em: boolean, strong: boolean): void => {
+      const pushText = (text: string, m: Marks): void => {
         if (text === '') return;
         const last = out[out.length - 1];
-        if (last && last.kind === 'text' && last.em === em && last.strong === strong) {
+        if (
+          last &&
+          last.kind === 'text' &&
+          last.em === m.em &&
+          last.strong === m.strong &&
+          !!last.code === m.code &&
+          (last.href ?? null) === m.href
+        ) {
           last.text += text;
         } else {
-          out.push({ kind: 'text', text, em, strong });
+          out.push({
+            kind: 'text',
+            text,
+            em: m.em,
+            strong: m.strong,
+            ...(m.code ? { code: true } : {}),
+            ...(m.href !== null ? { href: m.href } : {}),
+          });
         }
       };
       for (const node of nodes ?? []) {
         const type = node.type as NodeTypeName;
         switch (type) {
           case 'text': {
-            const { em, strong } = marksOf(node);
+            const m = marksOf(node);
             // Text nodes should not hold line breaks; if one does, treat it as a hard break.
             const parts = (node.text ?? '').split(/\r\n|\r|\n/);
             parts.forEach((part, i) => {
               if (i > 0) out.push({ kind: 'break' });
-              pushText(part, em, strong);
+              pushText(part, m);
             });
             break;
           }
@@ -264,7 +318,7 @@ export function buildExportModel(input: ExportInput): ExportModel {
             out.push({ kind: 'break' });
             break;
           case 'citation': {
-            const { em, strong } = marksOf(node);
+            const { em, strong, href } = marksOf(node);
             const sourceId = str(node.attrs?.sourceId) ?? '';
             const locator = str(node.attrs?.locator);
             const source = checkSource(sourceId);
@@ -275,7 +329,15 @@ export function buildExportModel(input: ExportInput): ExportModel {
               inFootnote,
               documentIndex,
             });
-            out.push({ kind: 'citation', text, sourceId, locator, em, strong });
+            out.push({
+              kind: 'citation',
+              text,
+              sourceId,
+              locator,
+              em,
+              strong,
+              ...(href !== null ? { href } : {}),
+            });
             break;
           }
           case 'footnote': {

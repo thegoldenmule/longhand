@@ -107,6 +107,7 @@ The output is CommonMark plus GFM tables and footnotes (`[^n]`).
 - Writer text is escaped so that it renders literally. This covers emphasis characters, brackets, HTML, and block syntax at the start of a line, such as `#`, `>`, list markers and setext underlines.
 - Generated citation text keeps `[3]` readable, and brackets are escaped only where they could form a link.
 - Whitespace at the edge of a marked run is moved outside its delimiters.
+- Links are `[text](href)`, with `(`, `)` and `\` escaped in the destination. Emphasis that covers the whole link goes outside the brackets, and emphasis inside it stays inside. Inline code is a code span whose fence is longer than any backtick run in the code, padded with a space when the code starts or ends with a backtick.
 - Two adjacent lists of the same kind are separated with `<!-- -->`.
 - Tests snapshot the golden output (`src/__snapshots__/*.md.snap`) and parse it back with markdown-it to check the structure.
 
@@ -125,6 +126,7 @@ Styles:
 Other behaviour:
 
 - Footnotes are **real Word footnotes**.
+- Links are **real Word hyperlinks** (external relationships) in Word's `Hyperlink` character style. Inline code is set in Courier New.
 - Lists use Word numbering. Each ordered list has its own definition, so it starts at its `order` and restarts after other content.
 - Each document title starts a new page.
 - Page numbers sit in the footer, with none on the title page.
@@ -155,6 +157,7 @@ Typography:
 - Page numbers are centered at the foot of every page except the title page.
 - Headings are kept with the next two lines, and a paragraph won't leave a single first line at the foot of a page.
 - A quote block of up to a third of a page is kept on one page.
+- Links are underlined and clickable (a URI annotation over each piece of linked text). Inline code is set in Courier, slightly smaller.
 
 `PdfOptions` has `pageSize` (`letter`, `a4`, `a5` or `trade`), `fontSize`, `fonts` and `creationDate`. Pass a fixed `creationDate` and the output is byte-for-byte reproducible.
 
@@ -164,6 +167,7 @@ Tests parse the output with pdfjs-dist and assert:
 - the page count and the page each section starts on;
 - that each footnote is on the same page as its reference, and that a long footnote continues on the next page without losing text;
 - that the fonts are embedded;
+- that links are clickable annotations with the right URLs;
 - the metadata, bookmarks and page numbers.
 
 ## Tests
@@ -178,5 +182,7 @@ The golden documents are in `src/fixtures.test-helpers.ts`: three documents that
 - **Fallback citations.** The built-in citation and bibliography formatting is a readable fallback, not a CSL processor. APA, MLA and Chicago come from the research lane through `formatCitation` and `formatBibliographyEntry`.
 - **No reproducible DOCX.** The DOCX core properties carry the time of export (set by the `docx` package), so DOCX output isn't byte-reproducible. Markdown always is, and PDF is with `creationDate`.
 - **Footnote numbering never restarts per chapter.**
-- **No live links.** The verification note and URLs print as plain text. The schema has no link mark.
+- **Links.** The writer's links (the `link` mark) are live in all three formats. The verification note and URLs in generated text still print as plain text.
+- **Inline code in PDF** uses the standard Courier font, which draws only Latin-1. Code with other characters falls back to the body font.
+- **DOCX hyperlink ids are random** (the `docx` package picks them), another reason DOCX output isn't byte-reproducible.
 - **Markdown emphasis edge cases.** Emphasis next to punctuation and letters, as in `*foo.*bar`, can fail CommonMark's flanking rules and print literal asterisks. This is rare in prose.

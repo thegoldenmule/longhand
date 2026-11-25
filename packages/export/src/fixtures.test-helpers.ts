@@ -4,9 +4,16 @@
 import type { CslItem, PMNodeJSON, ProvenanceSummary } from '@longhand/schema';
 import type { ExportInput } from './types';
 
-const t = (text: string, ...marks: ('em' | 'strong')[]): PMNodeJSON =>
+type MarkArg = 'em' | 'strong' | 'code' | { link: string };
+const t = (text: string, ...marks: MarkArg[]): PMNodeJSON =>
   marks.length > 0
-    ? { type: 'text', text, marks: marks.map((type) => ({ type })) }
+    ? {
+        type: 'text',
+        text,
+        marks: marks.map((m) =>
+          typeof m === 'string' ? { type: m } : { type: 'link', attrs: { href: m.link } },
+        ),
+      }
     : { type: 'text', text };
 const p = (...content: PMNodeJSON[]): PMNodeJSON =>
   content.length > 0 ? { type: 'paragraph', content } : { type: 'paragraph' };
@@ -176,7 +183,21 @@ export const CHAPTER_TWO: PMNodeJSON = {
 
 export const AFTERWORD: PMNodeJSON = {
   type: 'doc',
-  content: [p(t('A short afterword.'))],
+  content: [
+    p(t('A short afterword.')),
+    p(
+      t('Notes live in '),
+      t('the archive', { link: 'https://example.org/archive_(2026)' }),
+      t(', and '),
+      t('the ', 'em', { link: 'mailto:jane@example.org' }),
+      t('editor', 'strong', 'em', { link: 'mailto:jane@example.org' }),
+      t(' answers. Build it with '),
+      t('make `book`', 'code'),
+      t(' or see '),
+      t('README', 'code', { link: 'https://example.org/readme' }),
+      t('.'),
+    ),
+  ],
 };
 
 export const PROVENANCE: ProvenanceSummary = {

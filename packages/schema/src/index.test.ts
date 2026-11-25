@@ -33,6 +33,9 @@ describe('public API', () => {
       'provenanceSummaryFromReport',
       'MatchedKindSchema',
       'DECLARABLE_INPUT_METHODS',
+      'normalizeHref',
+      'isAllowedHref',
+      'pastedLinkHref',
     ]) {
       expect(api, name).toHaveProperty(name);
     }

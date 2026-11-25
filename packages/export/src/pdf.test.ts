@@ -99,6 +99,28 @@ describe('exportPdf (golden documents)', () => {
     }
   });
 
+  it('makes links clickable and keeps link and code text', async () => {
+    expect(flat(parsed.pages.join('\n'))).toContain(
+      'Notes live in the archive, and the editor answers. Build it with make `book` or see README.',
+    );
+    const task = getDocument({ data: bytes.slice() });
+    const pdf = await task.promise;
+    const urls: string[] = [];
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const annots = (await (await pdf.getPage(i)).getAnnotations()) as Array<{ url?: string }>;
+      for (const a of annots) if (a.url) urls.push(a.url);
+    }
+    await task.destroy();
+    expect(new Set(urls)).toEqual(
+      new Set([
+        'https://example.org/archive_(2026)',
+        'mailto:jane@example.org',
+        'https://example.org/readme',
+      ]),
+    );
+    expect(new TextDecoder('latin1').decode(bytes)).toContain('/BaseFont /Courier');
+  });
+
   it('renders every block type, in order', () => {
     const text = flat(parsed.pages.slice(1, 3).join('\n'));
     const order = [

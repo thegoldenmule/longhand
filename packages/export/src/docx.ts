@@ -16,6 +16,7 @@ import {
   AlignmentType,
   BorderStyle,
   Document,
+  ExternalHyperlink,
   Footer,
   FootnoteReferenceRun,
   LevelFormat,
@@ -31,7 +32,7 @@ import {
   type ParagraphChild,
 } from 'docx';
 import { groupThousands } from './format';
-import { buildExportModel, type Block, type ExportModel, type Inline } from './model';
+import { buildExportModel, inlineMarks, type Block, type ExportModel, type Inline } from './model';
 import type { ExportInput, TextSpan } from './types';
 
 /** DOCX-only options. */
@@ -73,6 +74,9 @@ const HEADINGS: readonly HeadingStyle[] = ['Heading1', 'Heading2', 'Heading3', '
 
 const QUOTE_INDENT = TWIP_PER_INCH / 2;
 
+/** Font for inline code. */
+const CODE_FONT = 'Courier New';
+
 /** Left indent (twips) of list text at a nesting level. */
 function listIndent(level: number): number {
   return 360 * (level + 2);
@@ -112,20 +116,35 @@ export function buildDocxDocument(model: ExportModel, options: DocxOptions = {})
   ];
   let orderedCount = 0;
 
+  // Links are real Word hyperlinks (Word's `Hyperlink` character style); inline
+  // code uses a monospaced font.
   const runs = (content: readonly Inline[]): ParagraphChild[] => {
     const out: ParagraphChild[] = [];
+    const open: { link: { href: string; children: TextRun[] } | null } = { link: null };
+    const endLink = (): void => {
+      const l = open.link;
+      if (l) out.push(new ExternalHyperlink({ link: l.href, children: l.children }));
+      open.link = null;
+    };
     for (const node of content) {
+      const href = node.kind === 'text' || node.kind === 'citation' ? (node.href ?? null) : null;
+      if (open.link && open.link.href !== href) endLink();
       switch (node.kind) {
         case 'text':
-        case 'citation':
-          out.push(
-            new TextRun({
-              text: node.text,
-              italics: node.em || undefined,
-              bold: node.strong || undefined,
-            }),
-          );
+        case 'citation': {
+          const m = inlineMarks(node);
+          const run = new TextRun({
+            text: node.text,
+            italics: m.em || undefined,
+            bold: m.strong || undefined,
+            ...(m.code ? { font: CODE_FONT } : {}),
+            ...(href !== null ? { style: 'Hyperlink' } : {}),
+          });
+          if (href === null) out.push(run);
+          else if (open.link) open.link.children.push(run);
+          else open.link = { href, children: [run] };
           break;
+        }
         case 'break':
           out.push(new TextRun({ break: 1 }));
           break;
@@ -134,6 +153,7 @@ export function buildDocxDocument(model: ExportModel, options: DocxOptions = {})
           break;
       }
     }
+    endLink();
     return out;
   };
 

@@ -69,6 +69,8 @@ Woolf again [2, pp. 20–24].
 
 A short afterword.
 
+Notes live in [the archive](https://example.org/archive_\(2026\)), and *[the **editor**](mailto:jane@example.org)* answers. Build it with `` make `book` `` or see [`README`](https://example.org/readme).
+
 # References
 
 [1] Smith, Ada, and Ben Jones. 2019. “Salt and Memory.” *Journal of Coastal History* 12(3): 45–67. https://doi.org/10.1000/xyz123.

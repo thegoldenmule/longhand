@@ -9,6 +9,7 @@
  * - canonical  — RFC 8785 canonical JSON and SHA-256
  * - ids        — id, timestamp, hash, position schemas
  * - document   — the ProseMirror schema
+ * - links      — the link href policy (`normalizeHref`, `isAllowedHref`)
  * - text       — word counter and sentence splitter
  * - anchors    — segmenter (`p3.s2` ids), anchors and span/move/split/merge resolvers
  * - domain     — lenses, intensity, input methods, settings, CSL-JSON
@@ -25,6 +26,7 @@
 export * from './canonical';
 export * from './ids';
 export * from './document';
+export * from './links';
 export * from './text';
 export * from './anchors';
 export * from './domain';

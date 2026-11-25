@@ -17,7 +17,7 @@
 import PDFDocument from 'pdfkit';
 import { defaultPdfFonts, type PdfFontSet } from './pdf-fonts';
 import { groupThousands } from './format';
-import { buildExportModel, type Block, type ExportModel, type Inline } from './model';
+import { buildExportModel, inlineMarks, type Block, type ExportModel, type Inline } from './model';
 import type { ExportInput, TextSpan } from './types';
 
 export type { PdfFontSet, PdfFontSource } from './pdf-fonts';
@@ -48,7 +48,16 @@ export async function exportPdf(
 // ---------------------------------------------------------------------------
 // Geometry and styles
 
-type FontKey = 'regular' | 'italic' | 'bold' | 'boldItalic';
+type FontKey = 'regular' | 'italic' | 'bold' | 'boldItalic' | 'code';
+
+/** Inline code uses PDF's standard Courier, which draws only Latin-1. */
+const CODE_FONT = 'Courier';
+const CODE_SCALE = 0.88;
+const LATIN1 = /^[\u0020-\u007E\u00A0-\u00FF]*$/;
+
+function fontName(key: FontKey): string {
+  return key === 'code' ? CODE_FONT : key;
+}
 
 const PAGE_SIZES = {
   letter: [612, 792],
@@ -88,6 +97,8 @@ interface Piece {
   /** Baseline shift upwards (superscripts). */
   rise: number;
   width: number;
+  /** The link this text sits in (a clickable, underlined area), or null. */
+  href: string | null;
 }
 
 /** An unbreakable word, possibly in several fonts, plus the space after it. */
@@ -211,7 +222,7 @@ class PdfWriter {
     const key = `${font}\u0000${size}\u0000${text}`;
     let w = this.widthCache.get(key);
     if (w === undefined) {
-      w = this.doc.font(font).fontSize(size).widthOfString(text);
+      w = this.doc.font(fontName(font)).fontSize(size).widthOfString(text);
       this.widthCache.set(key, w);
     }
     return w;
@@ -236,8 +247,8 @@ class PdfWriter {
 
   // -- tokens and lines ----------------------------------------------------
 
-  piece(text: string, font: FontKey, size: number, rise = 0): Piece {
-    return { text, font, size, rise, width: this.measure(text, font, size) };
+  piece(text: string, font: FontKey, size: number, rise = 0, href: string | null = null): Piece {
+    return { text, font, size, rise, width: this.measure(text, font, size), href };
   }
 
   tokens(content: readonly Inline[], style: ParaStyle): Token[] {
@@ -253,7 +264,13 @@ class PdfWriter {
     const addPiece = (p: Piece): void => {
       const t = open();
       const last = t.pieces[t.pieces.length - 1];
-      if (last && last.font === p.font && last.size === p.size && last.rise === p.rise) {
+      if (
+        last &&
+        last.font === p.font &&
+        last.size === p.size &&
+        last.rise === p.rise &&
+        last.href === p.href
+      ) {
         last.text += p.text;
         last.width = this.measure(last.text, last.font, last.size);
       } else {
@@ -265,15 +282,19 @@ class PdfWriter {
       switch (node.kind) {
         case 'text':
         case 'citation': {
-          const font = fontKey(style.italic !== node.em, style.bold || node.strong);
-          for (const part of cleanText(node.text).split(/(\s+)/)) {
+          const m = inlineMarks(node);
+          const text = cleanText(node.text);
+          const code = m.code && LATIN1.test(text);
+          const font = code ? 'code' : fontKey(style.italic !== m.em, style.bold || m.strong);
+          const size = code ? style.size * CODE_SCALE : style.size;
+          for (const part of text.split(/(\s+)/)) {
             if (part === '') continue;
             if (/^\s+$/.test(part)) {
               if (cur && !(cur as Token).space)
-                (cur as Token).space = this.piece(' ', font, style.size);
+                (cur as Token).space = this.piece(' ', font, size, 0, m.href);
               cur = null;
             } else {
-              addPiece(this.piece(part, font, style.size));
+              addPiece(this.piece(part, font, size, 0, m.href));
             }
           }
           break;
@@ -305,7 +326,7 @@ class PdfWriter {
       for (const ch of Array.from(p.text)) {
         const w = this.measure(buf + ch, p.font, p.size);
         if (cur.width + w > width && (buf !== '' || cur.pieces.length > 0)) {
-          if (buf) cur.pieces.push(this.piece(buf, p.font, p.size, p.rise));
+          if (buf) cur.pieces.push(this.piece(buf, p.font, p.size, p.rise, p.href));
           cur.width = cur.pieces.reduce((s, x) => s + x.width, 0);
           out.push(cur);
           cur = { pieces: [], width: 0, space: null, breakAfter: false, footnotes: [] };
@@ -315,7 +336,7 @@ class PdfWriter {
         }
       }
       if (buf) {
-        cur.pieces.push(this.piece(buf, p.font, p.size, p.rise));
+        cur.pieces.push(this.piece(buf, p.font, p.size, p.rise, p.href));
         cur.width = cur.pieces.reduce((s, x) => s + x.width, 0);
       }
     }
@@ -407,6 +428,7 @@ class PdfWriter {
     line.tokens.forEach((tok, i) => {
       for (const p of tok.pieces) {
         this.drawText(p.text, p.font, p.size, x, baseline - p.rise);
+        if (p.href) this.drawLink(p.href, x, p.width, top, style, baseline);
         x += p.width;
       }
       if (tok.space) {
@@ -416,8 +438,29 @@ class PdfWriter {
     });
   }
 
+  /** A link: a thin underline and a clickable URI annotation over the text. */
+  private drawLink(
+    href: string,
+    x: number,
+    width: number,
+    top: number,
+    style: ParaStyle,
+    baseline: number,
+  ): void {
+    const under = baseline + style.size * 0.12;
+    this.doc
+      .save()
+      .moveTo(x, under)
+      .lineTo(x + width, under)
+      .lineWidth(Math.max(0.4, style.size * 0.04))
+      .strokeColor('#000000')
+      .stroke()
+      .restore();
+    this.doc.link(x, top, width, style.leading, href);
+  }
+
   private drawText(text: string, font: FontKey, size: number, x: number, baseline: number): void {
-    this.doc.font(font).fontSize(size).fillColor('#000000').text(text, x, baseline, {
+    this.doc.font(fontName(font)).fontSize(size).fillColor('#000000').text(text, x, baseline, {
       lineBreak: false,
       baseline: 'alphabetic',
     });

@@ -20,7 +20,7 @@ describe('document schema', () => {
         'text',
       ].sort(),
     );
-    expect(Object.keys(schema.marks).sort()).toEqual(['em', 'strong']);
+    expect(Object.keys(schema.marks)).toEqual(['link', 'em', 'strong', 'code']);
   });
 
   it('round-trips a document using every node type', () => {

@@ -90,8 +90,39 @@ describe('exportMarkdown', () => {
     const markdown = exportMarkdown(goldenInput({ options: { citationStyle: 'numbered' } }));
     expect(markdown).toContain('As Woolf argued [2, p. 12], a writer');
     expect(markdown).toContain('[1] Smith, Ada');
-    // The only links are the footnote references and back-references.
-    expect(html(markdown)).not.toMatch(/<a href="(?!#fn)/);
+    // The only links are the footnote references and back-references, and the writer's own.
+    expect(html(markdown)).not.toMatch(/<a href="(?!#fn|https:\/\/example\.org\/|mailto:)/);
+  });
+
+  it('writes links as [text](href) and inline code as code spans', () => {
+    const link = (href: string) => ({ type: 'link', attrs: { href } });
+    const out = exportMarkdown(
+      one(
+        p(
+          t('See '),
+          { type: 'text', text: 'the *site*', marks: [link('https://example.com/a_(b)')] },
+          t(' and '),
+          { type: 'text', text: 'x', marks: [link('https://example.com/x'), { type: 'strong' }] },
+          { type: 'text', text: 'y', marks: [link('https://example.com/x')] },
+          t(' or '),
+          { type: 'text', text: '``tick', marks: [{ type: 'code' }] },
+          t('.'),
+        ),
+      ),
+    );
+    expect(out).toBe(
+      'See [the \\*site\\*](https://example.com/a_\\(b\\)) and [**x**y](https://example.com/x) or ``` ``tick ```.\n',
+    );
+    expect(html(out)).toBe(
+      '<p>See <a href="https://example.com/a_(b)">the *site*</a> and <a href="https://example.com/x"><strong>x</strong>y</a> or <code>``tick</code>.</p>\n',
+    );
+  });
+
+  it('keeps emphasis shared by a whole link outside its brackets', () => {
+    const marks = [{ type: 'link', attrs: { href: 'mailto:a@example.com' } }, { type: 'em' }];
+    const out = exportMarkdown(one(p({ type: 'text', text: ' write ', marks }, t('now'))));
+    expect(out).toBe('*[write](mailto:a@example.com)* now\n');
+    expect(html(out)).toBe('<p><em><a href="mailto:a@example.com">write</a></em> now</p>\n');
   });
 
   it('moves whitespace outside emphasis delimiters', () => {

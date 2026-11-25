@@ -13,7 +13,14 @@
  * - `citation` and `quote_block` carry only references (`sourceId`, `clippingId`,
  *   `locator`); the words of a quote block are ordinary text children whose
  *   provenance is derived by the fold, never from attrs.
- * - There is no link mark and no code mark in v1.
+ * - Marks, in rank order: `link`, `em`, `strong`, `code`. `link` and `code` were
+ *   added after v1 shipped. They are additive (no existing document changes
+ *   shape and `em`/`strong` keep their relative order), so `SCHEMA_VERSION` stays 1.
+ * - `link` carries one attr, `href`, which must pass the href policy in `links.ts`
+ *   (`http:`, `https:`, `mailto:` only, normalized). It is non-inclusive: typing
+ *   at its end does not extend it. The href is formatting, never manuscript text:
+ *   it does not count as words and the matcher and attribution never see it.
+ * - `code` is inline code. It excludes `em` and `strong` and may sit inside a link.
  */
 import {
   Schema,
@@ -24,6 +31,7 @@ import {
   type NodeSpec,
 } from 'prosemirror-model';
 import { z } from 'zod';
+import { isAllowedHref, normalizeHref } from './links';
 
 const nodes: Record<string, NodeSpec> = {
   doc: { content: 'block+' },
@@ -182,7 +190,30 @@ function checkHeadingLevel(v: unknown): void {
     throw new RangeError(`heading level must be 1, 2 or 3, got ${String(v)}`);
 }
 
+function checkHref(v: unknown): void {
+  if (!isAllowedHref(v))
+    throw new RangeError(`link href must be an http, https or mailto URL, got ${String(v)}`);
+}
+
 const marks: Record<string, MarkSpec> = {
+  link: {
+    attrs: { href: { validate: checkHref } },
+    inclusive: false,
+    parseDOM: [
+      {
+        tag: 'a[href]',
+        getAttrs: (dom: HTMLElement) => {
+          const href = normalizeHref(dom.getAttribute('href') ?? '');
+          return href ? { href } : false;
+        },
+      },
+    ],
+    toDOM: (mark): DOMOutputSpec => [
+      'a',
+      { href: mark.attrs.href as string, rel: 'noopener noreferrer', target: '_blank' },
+      0,
+    ],
+  },
   em: {
     parseDOM: [{ tag: 'i' }, { tag: 'em' }, { style: 'font-style=italic' }],
     toDOM: (): DOMOutputSpec => ['em', 0],
@@ -197,6 +228,12 @@ const marks: Record<string, MarkSpec> = {
       },
     ],
     toDOM: (): DOMOutputSpec => ['strong', 0],
+  },
+  code: {
+    code: true,
+    excludes: 'em strong code',
+    parseDOM: [{ tag: 'code' }],
+    toDOM: (): DOMOutputSpec => ['code', 0],
   },
 };
 
@@ -220,7 +257,7 @@ export type NodeTypeName =
   | 'citation';
 
 /** Mark type names in {@link schema}. */
-export type MarkTypeName = 'em' | 'strong';
+export type MarkTypeName = 'link' | 'em' | 'strong' | 'code';
 
 /** Allowed heading levels. */
 export const HEADING_LEVELS = [1, 2, 3] as const;
