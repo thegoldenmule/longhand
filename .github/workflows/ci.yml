@@ -34,5 +34,45 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm typecheck
       - run: pnpm lint
+      - run: pnpm format:check
       - run: pnpm dev:setup
       - run: pnpm test
+
+  e2e:
+    # Every Playwright suite, including the full-stack one (fresh database,
+    # real ledger service with the mock reviewer, production web build).
+    runs-on: ubuntu-latest
+    needs: check
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: longhand
+          POSTGRES_PASSWORD: longhand
+          POSTGRES_DB: longhand
+        ports:
+          - 5434:5432
+        options: >-
+          --health-cmd "pg_isready -U longhand"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      # Google Chrome is preinstalled on GitHub's Ubuntu runners; the suites use it.
+      - run: pnpm --filter @longhand/web exec playwright install-deps chromium
+      - run: pnpm e2e
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-results
+          path: |
+            apps/web/test-results
+            packages/*/test-results
+          retention-days: 7

@@ -41,6 +41,9 @@ for (const theme of ['light', 'dark'] as const) {
     await shot('02-quiet');
     await page.keyboard.press('ControlOrMeta+Alt+Backslash');
 
+    await page.getByTestId('ask-feedback').click();
+    await expect(page.getByRole('form', { name: 'Ask for feedback' })).toBeVisible();
+    await shot('03a-feedback-form');
     await askForFeedback(page, ['Structure', 'Word choice']);
     await expect(marginCards(page).first()).toBeVisible();
     await shot('03-review-streaming');
@@ -105,6 +108,11 @@ for (const theme of ['light', 'dark'] as const) {
       theme === 'light' ? 'Salt and Iron' : 'The Lighthouse',
     );
     await shot('00-home');
+    await page.getByRole('button', { name: 'Import a draft' }).click();
+    await page
+      .getByRole('textbox', { name: 'Draft' })
+      .fill('# On Harbours\n\nHarbours are where *cities* begin.');
+    await shot('13-import');
     expect(pid).toBeTruthy();
   });
 }

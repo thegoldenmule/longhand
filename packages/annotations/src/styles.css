@@ -286,7 +286,7 @@
   transition: top 180ms ease;
 }
 
-.lh-card {
+:where(.lh-ann).lh-card {
   background: var(--lh-ann-card);
   border: 1px solid var(--lh-ann-rule);
   border-left: 2px solid var(--lh-ann-ai-line);
@@ -300,33 +300,33 @@
     box-shadow 160ms ease,
     opacity 160ms ease;
 }
-.lh-card:hover {
+:where(.lh-ann).lh-card:hover {
   border-color: var(--lh-ann-ai-line);
 }
-.lh-card.is-active {
+:where(.lh-ann).lh-card.is-active {
   border-color: var(--lh-ann-ai);
   box-shadow: 0 4px 18px rgb(0 0 0 / 0.06);
 }
-.lh-card.is-stale {
+:where(.lh-ann).lh-card.is-stale {
   border-left-color: var(--lh-ann-stale);
   opacity: 0.66;
 }
-.lh-card.is-resolved {
+:where(.lh-ann).lh-card.is-resolved {
   border-left-color: var(--lh-ann-rule);
   opacity: 0.78;
 }
-.lh-card-list + .lh-card-list {
+:where(.lh-ann) .lh-card-list + .lh-card-list {
   margin-top: 0.5rem;
 }
 
-.lh-card-head {
+:where(.lh-ann) .lh-card-head {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   gap: 0.25rem 0.5rem;
   margin-bottom: 0.25rem;
 }
-.lh-card-kind {
+:where(.lh-ann) .lh-card-kind {
   font-size: 0.6875rem;
   font-weight: 600;
   letter-spacing: 0.06em;
@@ -337,11 +337,11 @@
 .is-resolved .lh-card-kind {
   color: var(--lh-ann-ink-soft);
 }
-.lh-card-meta {
+:where(.lh-ann) .lh-card-meta {
   font-size: 0.6875rem;
   color: var(--lh-ann-ink-faint);
 }
-.lh-card-outcome {
+:where(.lh-ann) .lh-card-outcome {
   margin-left: auto;
   font-size: 0.6875rem;
   color: var(--lh-ann-ink-soft);
@@ -351,7 +351,7 @@
 .lh-outcome-cited {
   color: var(--lh-ann-done);
 }
-.lh-card-quote {
+:where(.lh-ann) .lh-card-quote {
   margin: 0.15rem 0 0.35rem;
   font-family: var(--lh-ann-font-text);
   font-style: italic;
@@ -362,27 +362,27 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.lh-card-quote::before {
+:where(.lh-ann) .lh-card-quote::before {
   content: '“';
 }
-.lh-card-quote::after {
+:where(.lh-ann) .lh-card-quote::after {
   content: '”';
 }
-.lh-card-title {
+:where(.lh-ann) .lh-card-title {
   margin: 0.2rem 0;
   font-weight: 550;
 }
-.lh-card-text {
+:where(.lh-ann) .lh-card-text {
   margin: 0.3rem 0;
 }
-.lh-card-question {
+:where(.lh-ann) .lh-card-question {
   font-family: var(--lh-ann-font-text);
   font-size: 0.9375rem;
 }
-.lh-card-guidance {
+:where(.lh-ann) .lh-card-guidance {
   font-style: italic;
 }
-.lh-card-ghost-line {
+:where(.lh-ann) .lh-card-ghost-line {
   margin: 0.3rem 0;
   font-family: var(--lh-ann-font-text);
   font-size: 0.9375rem;
@@ -458,7 +458,7 @@
   font-size: 0.72rem;
   color: var(--lh-ann-done);
 }
-.lh-card-actions {
+:where(.lh-ann) .lh-card-actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -500,7 +500,7 @@
 .lh-btn:focus-visible,
 .lh-alt:focus-visible,
 .lh-chip:focus-visible,
-.lh-card:focus-visible {
+:where(.lh-ann).lh-card:focus-visible {
   outline: 2px solid var(--lh-ann-ai);
   outline-offset: 1px;
 }
@@ -835,34 +835,34 @@
 }
 /* Quiet cards: until a card is active, long text is clamped and older thread
    messages fold away, so the margin stays close to the text it annotates. */
-.lh-card:not(.is-active) .lh-card-quote {
+:where(.lh-ann).lh-card:not(.is-active) .lh-card-quote {
   -webkit-line-clamp: 1;
 }
-.lh-card:not(.is-active) .lh-card-text {
+:where(.lh-ann).lh-card:not(.is-active) .lh-card-text {
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.lh-card:not(.is-active) .lh-thread-messages > li:not(:last-child) {
+:where(.lh-ann).lh-card:not(.is-active) .lh-thread-messages > li:not(:last-child) {
   display: none;
 }
 /* Panel list items are summaries: click one to open it (and its margin card). */
-.lh-card-list:not(.is-active) {
+:where(.lh-ann) .lh-card-list:not(.is-active) {
   cursor: pointer;
 }
-.lh-card-list:not(.is-active) .lh-card-actions,
-.lh-card-list:not(.is-active) .lh-alts,
-.lh-card-list:not(.is-active) .lh-thread,
-.lh-card-list:not(.is-active) .lh-trace-status {
+:where(.lh-ann) .lh-card-list:not(.is-active) .lh-card-actions,
+:where(.lh-ann) .lh-card-list:not(.is-active) .lh-alts,
+:where(.lh-ann) .lh-card-list:not(.is-active) .lh-thread,
+:where(.lh-ann) .lh-card-list:not(.is-active) .lh-trace-status {
   display: none;
 }
-.lh-card-list:not(.is-active) .lh-card-text {
+:where(.lh-ann) .lh-card-list:not(.is-active) .lh-card-text {
   -webkit-line-clamp: 2;
 }
-.lh-card-margin.is-resolved:not(.is-active) .lh-card-text,
-.lh-card-margin.is-resolved:not(.is-active) .lh-alts,
-.lh-card-margin.is-stale:not(.is-active) .lh-alts {
+:where(.lh-ann) .lh-card-margin.is-resolved:not(.is-active) .lh-card-text,
+:where(.lh-ann) .lh-card-margin.is-resolved:not(.is-active) .lh-alts,
+:where(.lh-ann) .lh-card-margin.is-stale:not(.is-active) .lh-alts {
   display: none;
 }
 
@@ -927,7 +927,7 @@
     animation: none;
   }
   .lh-margin > .lh-card,
-  .lh-card,
+  :where(.lh-ann).lh-card,
   .lh-ann-mark {
     transition: none;
   }

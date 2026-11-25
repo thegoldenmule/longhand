@@ -394,12 +394,12 @@
   gap: 16px;
 }
 
-.lh-card {
+:where(.lh-cork) .lh-card {
   position: relative;
   border-radius: var(--lh-binder-radius);
 }
 
-.lh-card-inner {
+:where(.lh-cork) .lh-card-inner {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -413,28 +413,28 @@
   box-shadow: var(--lh-binder-card-shadow);
 }
 
-.lh-card--folder .lh-card-inner {
+:where(.lh-cork) .lh-card--folder .lh-card-inner {
   box-shadow:
     var(--lh-binder-card-shadow),
     3px 3px 0 -1px var(--lh-binder-card),
     3px 3px 0 0 var(--lh-binder-rule);
 }
 
-.lh-card.is-selected .lh-card-inner {
+:where(.lh-cork) .lh-card.is-selected .lh-card-inner {
   border-color: var(--lh-binder-accent);
 }
 
-.lh-card.is-moving .lh-card-inner {
+:where(.lh-cork) .lh-card.is-moving .lh-card-inner {
   border-color: var(--lh-binder-accent);
   background: var(--lh-binder-accent-soft);
 }
 
-.lh-card.is-dragging {
+:where(.lh-cork) .lh-card.is-dragging {
   opacity: 0.45;
 }
 
-.lh-card.is-drop-before::before,
-.lh-card.is-drop-after::after {
+:where(.lh-cork) .lh-card.is-drop-before::before,
+:where(.lh-cork) .lh-card.is-drop-after::after {
   content: '';
   position: absolute;
   top: 4px;
@@ -444,21 +444,21 @@
   background: var(--lh-binder-accent);
 }
 
-.lh-card.is-drop-before::before {
+:where(.lh-cork) .lh-card.is-drop-before::before {
   left: -10px;
 }
 
-.lh-card.is-drop-after::after {
+:where(.lh-cork) .lh-card.is-drop-after::after {
   right: -10px;
 }
 
-.lh-card-head {
+:where(.lh-cork) .lh-card-head {
   display: flex;
   align-items: flex-start;
   gap: 8px;
 }
 
-.lh-card-title {
+:where(.lh-cork) .lh-card-title {
   flex: 1 1 auto;
   min-width: 0;
   margin: 0;
@@ -469,7 +469,7 @@
   overflow-wrap: anywhere;
 }
 
-.lh-card-open {
+:where(.lh-cork) .lh-card-open {
   font: inherit;
   color: inherit;
   text-align: left;
@@ -479,13 +479,13 @@
   cursor: pointer;
 }
 
-.lh-card-open:hover {
+:where(.lh-cork) .lh-card-open:hover {
   text-decoration: underline;
   text-decoration-color: var(--lh-binder-faint);
   text-underline-offset: 3px;
 }
 
-.lh-card-handle {
+:where(.lh-cork) .lh-card-handle {
   flex: none;
   width: 22px;
   height: 22px;
@@ -498,19 +498,19 @@
   place-items: center;
 }
 
-.lh-card-handle:hover,
-.lh-card-handle[aria-pressed='true'] {
+:where(.lh-cork) .lh-card-handle:hover,
+:where(.lh-cork) .lh-card-handle[aria-pressed='true'] {
   background: var(--lh-binder-hover);
 }
 
-.lh-card-grip {
+:where(.lh-cork) .lh-card-grip {
   width: 8px;
   height: 12px;
   background-image: radial-gradient(circle, var(--lh-binder-faint) 1.2px, transparent 1.4px);
   background-size: 4px 4px;
 }
 
-.lh-card-synopsis {
+:where(.lh-cork) .lh-card-synopsis {
   flex: 1 1 auto;
   margin: 0;
   font-family: var(--lh-binder-font-text);
@@ -522,12 +522,12 @@
   cursor: text;
 }
 
-.lh-card-synopsis.is-empty {
+:where(.lh-cork) .lh-card-synopsis.is-empty {
   font-style: italic;
   color: var(--lh-binder-faint);
 }
 
-.lh-card-action {
+:where(.lh-cork) .lh-card-action {
   align-self: flex-start;
   font: inherit;
   font-size: 12px;
@@ -538,18 +538,18 @@
   cursor: pointer;
 }
 
-.lh-card-action:hover {
+:where(.lh-cork) .lh-card-action:hover {
   color: var(--lh-binder-ink);
 }
 
-.lh-card-edit {
+:where(.lh-cork) .lh-card-edit {
   display: flex;
   flex-direction: column;
   gap: 4px;
   flex: 1 1 auto;
 }
 
-.lh-card-textarea {
+:where(.lh-cork) .lh-card-textarea {
   flex: 1 1 auto;
   width: 100%;
   box-sizing: border-box;
@@ -565,21 +565,21 @@
   outline: none;
 }
 
-.lh-card-hint,
-.lh-card-meta,
-.lh-card-count {
+:where(.lh-cork) .lh-card-hint,
+:where(.lh-cork) .lh-card-meta,
+:where(.lh-cork) .lh-card-count {
   margin: 0;
   font-size: 11px;
   color: var(--lh-binder-faint);
 }
 
-.lh-card-count {
+:where(.lh-cork) .lh-card-count {
   font-variant-numeric: tabular-nums;
 }
 
-.lh-card-open:focus-visible,
-.lh-card-handle:focus-visible,
-.lh-card-action:focus-visible {
+:where(.lh-cork) .lh-card-open:focus-visible,
+:where(.lh-cork) .lh-card-handle:focus-visible,
+:where(.lh-cork) .lh-card-action:focus-visible {
   outline: 2px solid var(--lh-binder-focus);
   outline-offset: 1px;
 }
