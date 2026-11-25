@@ -15,10 +15,23 @@ import {
 import * as agent from './fold-agent';
 import * as binder from './fold-binder';
 import { foldProposalAccepted } from './fold-proposals';
-import { foldCitationInserted, foldPasteOccurred, foldSliceCopied, foldTextEdited } from './fold-text';
+import {
+  foldCitationInserted,
+  foldPasteOccurred,
+  foldSliceCopied,
+  foldTextEdited,
+} from './fold-text';
 import { FoldError } from './issues';
 import { pvecFrom, pvecGet, pvecPush, pvecToArray } from './pvec';
-import { emptyInternal, internal, opaque, Tx, type Internal, type LedgerState, type MsEntry } from './state';
+import {
+  emptyInternal,
+  internal,
+  opaque,
+  Tx,
+  type Internal,
+  type LedgerState,
+  type MsEntry,
+} from './state';
 
 /** The state before any commit. */
 export function emptyState(): LedgerState {
@@ -40,7 +53,9 @@ function sessionsFrom(entries: readonly MsEntry[]): WritingSession[] {
         activeMs: last.activeMs + e.durationMs,
         commits: last.commits + 1,
         charactersInserted: last.charactersInserted + e.characters,
-        documentIds: last.documentIds.includes(e.documentId) ? last.documentIds : [...last.documentIds, e.documentId],
+        documentIds: last.documentIds.includes(e.documentId)
+          ? last.documentIds
+          : [...last.documentIds, e.documentId],
       };
     } else {
       endMs = e.timeMs + e.durationMs;
@@ -61,7 +76,13 @@ function sessionsFrom(entries: readonly MsEntry[]): WritingSession[] {
   return out;
 }
 
-function addSessionEntry(tx: Tx, c: Commit, documentId: string, characters: number, durationMs: number): void {
+function addSessionEntry(
+  tx: Tx,
+  c: Commit,
+  documentId: string,
+  characters: number,
+  durationMs: number,
+): void {
   const entry: MsEntry = {
     seq: c.seq,
     timeMs: Date.parse(c.clientTime),
@@ -87,11 +108,16 @@ function addSessionEntry(tx: Tx, c: Commit, documentId: string, characters: numb
           activeMs: ls.activeMs + durationMs,
           commits: ls.commits + 1,
           charactersInserted: ls.charactersInserted + characters,
-          documentIds: ls.documentIds.includes(documentId) ? ls.documentIds : [...ls.documentIds, documentId],
+          documentIds: ls.documentIds.includes(documentId)
+            ? ls.documentIds
+            : [...ls.documentIds, documentId],
         },
       ];
     } else {
-      tx.s.sessions = [...sessions, ...sessionsFrom([entry]).map((s) => ({ ...s, index: sessions.length }))];
+      tx.s.sessions = [
+        ...sessions,
+        ...sessionsFrom([entry]).map((s) => ({ ...s, index: sessions.length })),
+      ];
     }
     return;
   }
@@ -146,7 +172,8 @@ function dispatch(tx: Tx, c: Commit): void {
       if (foldProposalAccepted(tx, c)) {
         const after = tx.s.docs[c.payload.documentId];
         let chars = 0;
-        if (before && after) for (const r of after.runs) if (r.p.originSeq === c.seq) chars += r.to - r.from;
+        if (before && after)
+          for (const r of after.runs) if (r.p.originSeq === c.seq) chars += r.to - r.from;
         addSessionEntry(tx, c, c.payload.documentId, chars, 0);
       }
       return;
@@ -213,16 +240,32 @@ export function applyCommit(state: LedgerState, commit: Commit): LedgerState {
     throw new FoldError(commit.seq, 'seq-gap', `expected seq ${s.headSeq + 1}, got ${commit.seq}`);
   }
   if (commit.prevHash !== s.headHash) {
-    throw new FoldError(commit.seq, 'prev-hash-mismatch', `prevHash does not match the hash of seq ${s.headSeq}`);
+    throw new FoldError(
+      commit.seq,
+      'prev-hash-mismatch',
+      `prevHash does not match the hash of seq ${s.headSeq}`,
+    );
   }
   if (s.headSeq === 0 && commit.type !== 'ProjectCreated') {
-    throw new FoldError(commit.seq, 'project-not-created', 'the first commit must be ProjectCreated');
+    throw new FoldError(
+      commit.seq,
+      'project-not-created',
+      'the first commit must be ProjectCreated',
+    );
   }
   if (s.headSeq > 0 && commit.type === 'ProjectCreated') {
-    throw new FoldError(commit.seq, 'project-already-created', 'ProjectCreated must be the first commit');
+    throw new FoldError(
+      commit.seq,
+      'project-already-created',
+      'ProjectCreated must be the first commit',
+    );
   }
   if (s.headSeq > 0 && (commit.projectId !== s.projectId || commit.accountId !== s.accountId)) {
-    throw new FoldError(commit.seq, 'project-mismatch', `commit belongs to project ${commit.projectId}`);
+    throw new FoldError(
+      commit.seq,
+      'project-mismatch',
+      `commit belongs to project ${commit.projectId}`,
+    );
   }
   const tx = new Tx(s, commit.seq, commit.serverTime);
   dispatch(tx, commit);
@@ -230,7 +273,11 @@ export function applyCommit(state: LedgerState, commit: Commit): LedgerState {
   if (!MANUSCRIPT.has(commit.type)) {
     for (const [id, d] of Object.entries(s.docs)) {
       if (tx.s.docs[id]?.node !== d.node) {
-        throw new FoldError(commit.seq, 'invalid-content', `${commit.type} changed the text of ${id}`);
+        throw new FoldError(
+          commit.seq,
+          'invalid-content',
+          `${commit.type} changed the text of ${id}`,
+        );
       }
     }
   }
@@ -257,7 +304,10 @@ export function applyCommit(state: LedgerState, commit: Commit): LedgerState {
 }
 
 /** Folds a whole ledger (seq 1…n in order). */
-export function foldCommits(commits: readonly Commit[], from: LedgerState = emptyState()): LedgerState {
+export function foldCommits(
+  commits: readonly Commit[],
+  from: LedgerState = emptyState(),
+): LedgerState {
   let s = from;
   for (const c of commits) s = applyCommit(s, c);
   return s;

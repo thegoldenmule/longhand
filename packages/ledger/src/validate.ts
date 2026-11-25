@@ -70,7 +70,11 @@ export interface ValidateOptions {
   accountId?: string;
 }
 
-function fail(code: LedgerErrorCode, message: string, path?: string): { ok: false; errors: ValidationError[] } {
+function fail(
+  code: LedgerErrorCode,
+  message: string,
+  path?: string,
+): { ok: false; errors: ValidationError[] } {
   return { ok: false, errors: [path === undefined ? { code, message } : { code, message, path }] };
 }
 
@@ -81,8 +85,15 @@ interface StampRef {
 
 function stamps(d: CommitDraft): StampRef[] {
   const out: StampRef[] = [];
-  const t = (x: { anchor: { documentId: string }; version: number } | { span: { documentId: string }; version: number }) =>
-    out.push({ documentId: 'anchor' in x ? x.anchor.documentId : x.span.documentId, version: x.version });
+  const t = (
+    x:
+      | { anchor: { documentId: string }; version: number }
+      | { span: { documentId: string }; version: number },
+  ) =>
+    out.push({
+      documentId: 'anchor' in x ? x.anchor.documentId : x.span.documentId,
+      version: x.version,
+    });
   switch (d.type) {
     case 'CommentAdded':
     case 'CutProposed':
@@ -96,7 +107,8 @@ function stamps(d: CommitDraft): StampRef[] {
       break;
     case 'SuggestionProposed': {
       const s = d.payload.suggestion;
-      if (s.kind === 'insertion') out.push({ documentId: s.target.documentId, version: s.target.version });
+      if (s.kind === 'insertion')
+        out.push({ documentId: s.target.documentId, version: s.target.version });
       else t(s.target);
       break;
     }
@@ -134,7 +146,8 @@ export function resolutionsBetween(
   }
   for (const id of Object.keys(b.proposals).sort()) {
     const p = b.proposals[id]!;
-    if (p.resolvedSeq !== seq || p.status !== 'stale' || a.proposals[id]?.status === 'stale') continue;
+    if (p.resolvedSeq !== seq || p.status !== 'stale' || a.proposals[id]?.status === 'stale')
+      continue;
     out.push({ targetId: id, targetKind: 'proposal', outcome: 'stale', triggerSeq: seq });
   }
   return out;
@@ -156,7 +169,10 @@ export function validateDraft(
     return fail('actor-not-permitted', `a ${raw.actor.kind} actor may not emit ${raw.type}`);
   }
   if (raw.actor.kind !== actor.kind || raw.actor.id !== actor.id) {
-    return fail('actor-mismatch', `the draft claims actor ${raw.actor.kind}:${String(raw.actor.id)}, authenticated as ${actor.kind}:${actor.id}`);
+    return fail(
+      'actor-mismatch',
+      `the draft claims actor ${raw.actor.kind}:${String(raw.actor.id)}, authenticated as ${actor.kind}:${actor.id}`,
+    );
   }
   const parsed = CommitDraftSchema.safeParse(draft);
   if (!parsed.success) {
@@ -174,12 +190,15 @@ export function validateDraft(
     return fail('project-not-created', 'the first commit must be ProjectCreated');
   }
   if (s.headSeq > 0) {
-    if (d.type === 'ProjectCreated') return fail('project-already-created', 'the project already exists');
-    if (d.projectId !== s.projectId) return fail('project-mismatch', `draft is for project ${d.projectId}`);
+    if (d.type === 'ProjectCreated')
+      return fail('project-already-created', 'the project already exists');
+    if (d.projectId !== s.projectId)
+      return fail('project-mismatch', `draft is for project ${d.projectId}`);
   }
   if (d.type === 'TextEdited' || d.type === 'ProposalAccepted') {
     const doc = s.docs[d.payload.documentId];
-    if (!doc) return fail('unknown-document', `no document ${d.payload.documentId}`, 'payload.documentId');
+    if (!doc)
+      return fail('unknown-document', `no document ${d.payload.documentId}`, 'payload.documentId');
     if (d.type === 'TextEdited' && d.payload.baseVersion < doc.version) {
       return fail(
         'stale-base-version',
@@ -188,14 +207,21 @@ export function validateDraft(
       );
     }
     if (d.payload.baseVersion > doc.version) {
-      return fail('future-base-version', `baseVersion ${d.payload.baseVersion} is ahead of version ${doc.version}`, 'payload.baseVersion');
+      return fail(
+        'future-base-version',
+        `baseVersion ${d.payload.baseVersion} is ahead of version ${doc.version}`,
+        'payload.baseVersion',
+      );
     }
   }
   for (const st of stamps(d)) {
     const doc = s.docs[st.documentId];
     if (!doc) return fail('unknown-document', `no document ${st.documentId}`);
     if (st.version !== doc.version) {
-      return fail('invalid-version', `positions are at version ${st.version}, document ${doc.id} is at ${doc.version}`);
+      return fail(
+        'invalid-version',
+        `positions are at version ${st.version}, document ${doc.id} is at ${doc.version}`,
+      );
     }
   }
   const accountId = s.headSeq === 0 ? (opts.accountId ?? 'pending') : s.accountId;
@@ -214,7 +240,9 @@ export function validateDraft(
   } catch (e) {
     if (e instanceof FoldError) {
       const code: LedgerErrorCode =
-        e.code === 'invalid-content' && !isManuscriptEventType(d.type) ? 'manuscript-change-forbidden' : e.code;
+        e.code === 'invalid-content' && !isManuscriptEventType(d.type)
+          ? 'manuscript-change-forbidden'
+          : e.code;
       return fail(code, e.message);
     }
     throw e;
@@ -229,5 +257,10 @@ export function validateDraft(
     }
     return { ok: false, errors };
   }
-  return { ok: true, commit, state: next, resolutions: resolutionsBetween(state, next, commit.seq) };
+  return {
+    ok: true,
+    commit,
+    state: next,
+    resolutions: resolutionsBetween(state, next, commit.seq),
+  };
 }

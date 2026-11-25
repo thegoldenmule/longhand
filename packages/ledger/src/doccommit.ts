@@ -3,7 +3,12 @@
  * the document and its trackers, step application, and the end-of-commit pass
  * (matcher upgrades, suggestion lifecycle, proposal staleness, citation flags).
  */
-import { splitSentences, tokenizeWords, type ProposalState, type SuggestionState } from '@longhand/schema';
+import {
+  splitSentences,
+  tokenizeWords,
+  type ProposalState,
+  type SuggestionState,
+} from '@longhand/schema';
 import type { Step } from 'prosemirror-transform';
 import { blockAt, blockText, textBetween } from './doctext';
 import {
@@ -54,7 +59,8 @@ export function beginDocCommit(tx: Tx, base: DocInternal): DocCommit {
   const trackers: Tracker[] = [];
   for (const id of ids) {
     const t = tx.s.trackers[id];
-    if (t && (t.range !== null || t.point !== null || t.ref !== null)) trackers.push(cloneTracker(t));
+    if (t && (t.range !== null || t.point !== null || t.ref !== null))
+      trackers.push(cloneTracker(t));
   }
   return {
     tx,
@@ -92,7 +98,11 @@ export function stepDoc(
 ): AppliedStep {
   const applied = applyStep(dc.node, dc.runs, step);
   if (!applied) {
-    throw new FoldError(dc.seq, 'step-failed', `a step does not apply to document ${dc.base.id} at version ${dc.version}`);
+    throw new FoldError(
+      dc.seq,
+      'step-failed',
+      `a step does not apply to document ${dc.base.id} at version ${dc.version}`,
+    );
   }
   const p = plan(applied);
   dc.runs = carryRuns(dc.runs, applied.map, applied.changes, p.assigned);
@@ -109,8 +119,14 @@ export function stepDoc(
 }
 
 /** Buries every deleted unit of every change. */
-export function buryAll(changes: readonly Change[], seq: number, tag: object): Array<Array<{ pos: number; unit: DeadUnit }>> {
-  return changes.map((c) => c.deleted.map((u) => ({ pos: u.pos, unit: { key: u.key, p: u.p, seq, tag } })));
+export function buryAll(
+  changes: readonly Change[],
+  seq: number,
+  tag: object,
+): Array<Array<{ pos: number; unit: DeadUnit }>> {
+  return changes.map((c) =>
+    c.deleted.map((u) => ({ pos: u.pos, unit: { key: u.key, p: u.p, seq, tag } })),
+  );
 }
 
 // ---------------------------------------------------------------------------
@@ -146,10 +162,17 @@ type Outcome =
   | { status: 'adopted'; alternative: number }
   | { status: 'adapted' | 'stale' };
 
-function evaluateSuggestion(dc: DocCommit, t: Tracker, sug: SuggestionState, upgrades: Upgrade[]): Outcome {
+function evaluateSuggestion(
+  dc: DocCommit,
+  t: Tracker,
+  sug: SuggestionState,
+  upgrades: Upgrade[],
+): Outcome {
   const s = dc.scratch;
   const range = t.range;
-  const region = range ? normalizePositioned(textBetween(dc.node, range.from, range.to)) : { text: '', pos: [] };
+  const region = range
+    ? normalizePositioned(textBetween(dc.node, range.from, range.to))
+    : { text: '', pos: [] };
   const typed = s.typedTouch.has(t.id);
   const other = s.otherTouch.has(t.id);
   if (sug.kind === 'rephrase') {
@@ -176,7 +199,11 @@ function evaluateSuggestion(dc: DocCommit, t: Tracker, sug: SuggestionState, upg
     });
     if (best !== null) {
       const b = best as { i: number; len: number; at: number };
-      upgrades.push({ positions: region.pos.slice(b.at, b.at + b.len), id: sug.id, afterSeq: sug.seq });
+      upgrades.push({
+        positions: region.pos.slice(b.at, b.at + b.len),
+        id: sug.id,
+        afterSeq: sug.seq,
+      });
       return { status: 'adopted', alternative: b.i };
     }
     // An insertion whose sentence was deleted is stale.
@@ -216,7 +243,8 @@ function fourWordUpgrades(dc: DocCommit, upgrades: Upgrade[]): void {
   if (ai.length === 0) return;
   const fresh: number[] = [];
   for (const r of dc.runs) {
-    if (r.p.originSeq === dc.seq && r.p.class === 'typed') for (let p = r.from; p < r.to; p++) fresh.push(p);
+    if (r.p.originSeq === dc.seq && r.p.class === 'typed')
+      for (let p = r.from; p < r.to; p++) fresh.push(p);
   }
   if (fresh.length === 0) return;
   const freshSet = new Set(fresh);
@@ -250,7 +278,11 @@ function fourWordUpgrades(dc: DocCommit, upgrades: Upgrade[]): void {
  * True if a verified (`quoted`) citation node sits inside a flag's range or after
  * it in the same sentence (up to the first character of the next sentence).
  */
-export function isCited(node: DocCommit['node'], runs: readonly IRun[], range: { from: number; to: number }): boolean {
+export function isCited(
+  node: DocCommit['node'],
+  runs: readonly IRun[],
+  range: { from: number; to: number },
+): boolean {
   const block = blockAt(node, range.from);
   if (!block) return false;
   let hasCitation = false;
@@ -312,7 +344,8 @@ export function finishDocCommit(dc: DocCommit, opts: FinishOptions): void {
         if (t.range && t.range.from === t.range.to && sug.kind !== 'insertion') t.range = null;
         if (t.range && t.range.from < t.range.to) t.isPoint = false;
         const next = { ...sug, status: o.status, resolvedSeq: seq } as SuggestionState;
-        if (next.kind === 'word-choice' && o.status === 'adopted') next.adoptedAlternative = o.alternative;
+        if (next.kind === 'word-choice' && o.status === 'adopted')
+          next.adoptedAlternative = o.alternative;
         tx.ann('suggestions')[t.id] = next;
       }
     }

@@ -35,14 +35,22 @@ function setSiblings(tx: Tx, area: BinderArea, parentId: string | null, list: Bi
   tx.rec('folders')[parentId] = { ...f, children: list, updatedSeq: tx.seq };
 }
 
-function insertRef(tx: Tx, area: BinderArea, parentId: string | null, index: number, ref: BinderRef): void {
+function insertRef(
+  tx: Tx,
+  area: BinderArea,
+  parentId: string | null,
+  index: number,
+  ref: BinderRef,
+): void {
   const list = [...siblings(tx, area, parentId)];
   list.splice(Math.min(index, list.length), 0, ref);
   setSiblings(tx, area, parentId, list);
 }
 
 function removeRef(tx: Tx, area: BinderArea, parentId: string | null, ref: BinderRef): void {
-  const list = siblings(tx, area, parentId).filter((r) => !(r.kind === ref.kind && r.id === ref.id));
+  const list = siblings(tx, area, parentId).filter(
+    (r) => !(r.kind === ref.kind && r.id === ref.id),
+  );
   setSiblings(tx, area, parentId, list);
 }
 
@@ -63,7 +71,13 @@ function checkParent(tx: Tx, area: BinderArea, parentId: string | null): boolean
 
 function newDoc(
   tx: Tx,
-  p: { documentId: string; kind: DocInternal['kind']; title: string; parentId: string | null; index: number },
+  p: {
+    documentId: string;
+    kind: DocInternal['kind'];
+    title: string;
+    parentId: string | null;
+    index: number;
+  },
   node: PMNode,
   imported: DocInternal['imported'],
 ): void {
@@ -75,7 +89,9 @@ function newDoc(
   if (!checkParent(tx, area, p.parentId)) return;
   insertRef(tx, area, p.parentId, p.index, { kind: 'document', id: p.documentId });
   const ip = prov('imported', tx.seq);
-  const runs = imported ? runsFromUnits(unitsBetween(node, 0, node.content.size).map((u) => ({ pos: u.pos, p: ip }))) : [];
+  const runs = imported
+    ? runsFromUnits(unitsBetween(node, 0, node.content.size).map((u) => ({ pos: u.pos, p: ip })))
+    : [];
   tx.setDoc({
     id: p.documentId,
     kind: p.kind,
@@ -108,9 +124,18 @@ export function foldDocumentImported(tx: Tx, c: CommitOf<'DocumentImported'>): v
   try {
     node = docFromJSON(p.content);
   } catch (e) {
-    throw new FoldError(c.seq, 'invalid-content', `imported content is not a valid document: ${(e as Error).message}`);
+    throw new FoldError(
+      c.seq,
+      'invalid-content',
+      `imported content is not a valid document: ${(e as Error).message}`,
+    );
   }
-  newDoc(tx, p, node, { seq: c.seq, sourceFormat: p.sourceFormat, sourceName: p.sourceName, sourceHash: p.sourceHash });
+  newDoc(tx, p, node, {
+    seq: c.seq,
+    sourceFormat: p.sourceFormat,
+    sourceName: p.sourceName,
+    sourceHash: p.sourceHash,
+  });
 }
 
 function docOrIssue(tx: Tx, id: string): DocInternal | null {

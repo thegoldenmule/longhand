@@ -58,7 +58,8 @@ function unitsText(units: readonly UnitRef[]): string {
 
 function sameKeys(a: readonly { key: string }[], b: readonly { key: string }[]): boolean {
   if (a.length !== b.length) return false;
-  for (let i = 0; i < a.length; i++) if ((a[i] as { key: string }).key !== (b[i] as { key: string }).key) return false;
+  for (let i = 0; i < a.length; i++)
+    if ((a[i] as { key: string }).key !== (b[i] as { key: string }).key) return false;
   return true;
 }
 
@@ -88,7 +89,8 @@ function verifyClipping(dc: DocCommit, pending: readonly UnitRef[], clippingId: 
   if (qb.attrs.clippingId !== clippingId || qb.attrs.sourceId !== clip.sourceId) return false;
   const inside = unitsBetween(dc.node, qbPos + 1, qbPos + qb.nodeSize - 1);
   if (inside.length !== pending.length) return false;
-  for (let i = 0; i < inside.length; i++) if ((inside[i] as UnitRef).pos !== (pending[i] as UnitRef).pos) return false;
+  for (let i = 0; i < inside.length; i++)
+    if ((inside[i] as UnitRef).pos !== (pending[i] as UnitRef).pos) return false;
   return collapseBlankLines(quoteBlockText(qb)) === collapseBlankLines(clip.text);
 }
 
@@ -99,12 +101,23 @@ function verifyCitation(dc: DocCommit, pending: readonly UnitRef[], citationId: 
   for (const u of pending) {
     if (!isCitationKey(u.key)) return false;
     const node = dc.node.nodeAt(u.pos);
-    if (!node || node.attrs.sourceId !== rec.sourceId || (node.attrs.locator ?? null) !== rec.locator) return false;
+    if (
+      !node ||
+      node.attrs.sourceId !== rec.sourceId ||
+      (node.attrs.locator ?? null) !== rec.locator
+    )
+      return false;
   }
   return true;
 }
 
-function recordPaste(tx: Tx, pasteId: string, seq: number, units: readonly UnitRef[], verifiedInternal: boolean): void {
+function recordPaste(
+  tx: Tx,
+  pasteId: string,
+  seq: number,
+  units: readonly UnitRef[],
+  verifiedInternal: boolean,
+): void {
   const paste = tx.s.pastes[pasteId];
   if (!paste || paste.insertedSeq !== null) return;
   const text = unitsText(units);
@@ -129,8 +142,10 @@ function foldRun(dc: DocCommit, run: InputRun, steps: readonly Step[]): void {
   if (run.traceSuggestionId !== undefined) {
     const sug = tx.s.ann.suggestions[run.traceSuggestionId];
     const docOf = sug ? (sug.kind === 'insertion' ? sug.documentId : sug.anchor.documentId) : null;
-    if (!sug) tx.issue('unknown-hint', `traceSuggestionId ${run.traceSuggestionId} names no suggestion`);
-    else if (docOf !== dc.base.id) tx.issue('document-mismatch', `suggestion ${sug.id} is in another document`);
+    if (!sug)
+      tx.issue('unknown-hint', `traceSuggestionId ${run.traceSuggestionId} names no suggestion`);
+    else if (docOf !== dc.base.id)
+      tx.issue('document-mismatch', `suggestion ${sug.id} is in another document`);
     else hint = sug.id;
   }
   const typedProv = hint ? prov('typed-from-suggestion', seq, hint) : prov('typed', seq);
@@ -162,17 +177,29 @@ function foldRun(dc: DocCommit, run: InputRun, steps: readonly Step[]): void {
               s++;
             }
             assigned[ci] = ins.map((_, j) =>
-              j < k ? del[j]!.p : j >= ins.length - s ? del[del.length - (ins.length - j)]!.p : typedProv,
+              j < k
+                ? del[j]!.p
+                : j >= ins.length - s
+                  ? del[del.length - (ins.length - j)]!.p
+                  : typedProv,
             );
             buried[ci] = del
               .slice(k, del.length - s)
               .map((u) => ({ pos: u.pos, unit: { key: u.key, p: u.p, seq, tag: token } }));
             return;
           }
-          buried[ci] = (buryAll([c], seq, token)[0] ?? []) as Array<{ pos: number; unit: DeadUnit }>;
+          buried[ci] = (buryAll([c], seq, token)[0] ?? []) as Array<{
+            pos: number;
+            unit: DeadUnit;
+          }>;
           if (method === 'history' && ins.length > 0) {
             const current: Tomb[] = tombs ?? [...dc.tombs];
-            const m = findInTombs(current, ins.map((u) => u.key), c.oldStart, c.oldEnd);
+            const m = findInTombs(
+              current,
+              ins.map((u) => u.key),
+              c.oldStart,
+              c.oldEnd,
+            );
             if (m) {
               const tomb = current[m.tombIndex] as Tomb;
               const matched = tomb.units.slice(m.start, m.start + m.length);
@@ -211,7 +238,11 @@ function foldRun(dc: DocCommit, run: InputRun, steps: readonly Step[]): void {
   if (method === 'pasted-external') {
     const units = unitsWhere(dc, (p) => p === pasteProv);
     const plain = prov('pasted-external', seq);
-    dc.runs = remapUnits(dc.runs, units.map((u) => u.pos), () => plain);
+    dc.runs = remapUnits(
+      dc.runs,
+      units.map((u) => u.pos),
+      () => plain,
+    );
     const paste = run.pasteId ? tx.s.pastes[run.pasteId] : undefined;
     if (paste && paste.documentId === dc.base.id) recordPaste(tx, paste.id, seq, units, false);
   }
@@ -261,7 +292,11 @@ function foldRun(dc: DocCommit, run: InputRun, steps: readonly Step[]): void {
   const fallback = prov('pasted-external', seq);
   const byPos = new Map<number, Prov>();
   pending.forEach((u, i) => byPos.set(u.pos, resolved ? (resolved[i] as Prov) : fallback));
-  dc.runs = remapUnits(dc.runs, pending.map((u) => u.pos), (_p, pos) => byPos.get(pos) ?? fallback);
+  dc.runs = remapUnits(
+    dc.runs,
+    pending.map((u) => u.pos),
+    (_p, pos) => byPos.get(pos) ?? fallback,
+  );
   // Pending units deleted within the run itself are buried as pasted-external.
   if (dc.tombs.some((t) => t.units.some((u) => u.p.pend === token))) {
     dc.tombs = dc.tombs.map((t) => ({
@@ -296,12 +331,18 @@ export function foldTextEdited(tx: Tx, c: CommitOf<'TextEdited'>): number {
     i += run.steps;
   }
   // No placeholder survives the commit (defensive: e.g. undo of a paste within one batch).
-  const plain = (p: Prov): Prov => (p.pend !== undefined ? prov(p.class, p.originSeq, p.suggestionId, p.moves) : p);
+  const plain = (p: Prov): Prov =>
+    p.pend !== undefined ? prov(p.class, p.originSeq, p.suggestionId, p.moves) : p;
   if (dc.runs.some((r) => r.p.pend !== undefined)) {
-    dc.runs = canonicalRuns(dc.runs.map((r) => (r.p.pend !== undefined ? { ...r, p: plain(r.p) } : r)));
+    dc.runs = canonicalRuns(
+      dc.runs.map((r) => (r.p.pend !== undefined ? { ...r, p: plain(r.p) } : r)),
+    );
   }
   if (dc.tombs.some((t) => t.units.some((u) => u.p.pend !== undefined))) {
-    dc.tombs = dc.tombs.map((t) => ({ pos: t.pos, units: t.units.map((u) => ({ ...u, p: plain(u.p) })) }));
+    dc.tombs = dc.tombs.map((t) => ({
+      pos: t.pos,
+      units: t.units.map((u) => ({ ...u, p: plain(u.p) })),
+    }));
   }
   finishDocCommit(dc, { matcher: true, contentChanged: !dc.node.eq(base.node) });
   return dc.insertedChars;
@@ -323,7 +364,10 @@ export function foldSliceCopied(tx: Tx, c: CommitOf<'SliceCopied'>): void {
   if (p.version === d.version && p.to <= d.node.content.size) {
     const text = inlineTextBetween(d.node, p.from, p.to, '\n');
     if (sha256Hex(text) === p.textHash) {
-      units = unitsBetween(d.node, p.from, p.to).map((u) => ({ key: u.key, p: provAt(d.runs, u.pos) as Prov }));
+      units = unitsBetween(d.node, p.from, p.to).map((u) => ({
+        key: u.key,
+        p: provAt(d.runs, u.pos) as Prov,
+      }));
       if (units.length === 0) units = null;
     }
   }

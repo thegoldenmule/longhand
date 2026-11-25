@@ -186,7 +186,12 @@ export function remapUnits(
 /** Public canonical runs. */
 export function toPublicRuns(runs: readonly IRun[]): ProvenanceRun[] {
   return runs.map((r) => {
-    const out: ProvenanceRun = { from: r.from, to: r.to, class: r.p.class, originSeq: r.p.originSeq };
+    const out: ProvenanceRun = {
+      from: r.from,
+      to: r.to,
+      class: r.p.class,
+      originSeq: r.p.originSeq,
+    };
     if (r.p.suggestionId !== undefined) out.suggestionId = r.p.suggestionId;
     if (r.p.moves !== undefined && r.p.moves.length > 0) out.moves = [...r.p.moves];
     return out;

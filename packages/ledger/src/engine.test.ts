@@ -2,12 +2,20 @@ import { schema } from '@longhand/schema';
 import { Transform } from 'prosemirror-transform';
 import { describe, expect, it } from 'vitest';
 import { applyStep, carryRuns, carryTombs, findInTombs, touchedBetween, type Tomb } from './engine';
-import { editDistance, normalize, normalizedEditDistance, ngramsOf, wordBoundedIndexes } from './matcher';
+import {
+  editDistance,
+  normalize,
+  normalizedEditDistance,
+  ngramsOf,
+  wordBoundedIndexes,
+} from './matcher';
 import { canonicalRuns, prov, remapUnits, toPublicRuns, withMove, type IRun } from './prov';
 import { pvecFrom, pvecGet, pvecPush, pvecToArray, pvecEmpty } from './pvec';
 import { unitsBetween } from './units';
 
-const doc = schema.nodes.doc!.create(null, [schema.nodes.paragraph!.create(null, schema.text('abcdef'))]);
+const doc = schema.nodes.doc!.create(null, [
+  schema.nodes.paragraph!.create(null, schema.text('abcdef')),
+]);
 const A = prov('typed', 1);
 const B = prov('pasted-external', 2);
 
@@ -47,7 +55,11 @@ describe('runs', () => {
       [3, 6, 3],
       [6, 8, 2],
     ]);
-    expect(unitsBetween(a.doc, 1, 8).map((u) => u.key).join('')).toBe('abXYZef');
+    expect(
+      unitsBetween(a.doc, 1, 8)
+        .map((u) => u.key)
+        .join(''),
+    ).toBe('abXYZef');
   });
 
   it('buries deleted units in order and finds them again', () => {
@@ -61,7 +73,9 @@ describe('runs', () => {
     ] as const) {
       const step = new Transform(d).delete(from, to).steps[0]!;
       const a = applyStep(d, runs, step)!;
-      const buried = a.changes.map((c) => c.deleted.map((u) => ({ pos: u.pos, unit: { key: u.key, p: u.p, seq: 5 } })));
+      const buried = a.changes.map((c) =>
+        c.deleted.map((u) => ({ pos: u.pos, unit: { key: u.key, p: u.p, seq: 5 } })),
+      );
       tombs = carryTombs(tombs, a.map, a.changes, buried);
       runs = carryRuns(runs, a.map, a.changes, []);
       d = a.doc;
@@ -85,7 +99,10 @@ describe('matcher', () => {
     expect(editDistance('kitten', 'sitting')).toBe(3);
     expect(normalizedEditDistance('lingered', 'lingerd')).toBeCloseTo(1 / 8);
     expect(normalize('  The   Storm’s  ')).toBe("the storm's");
-    expect([...ngramsOf('One two three four five')]).toEqual(['one two three four', 'two three four five']);
+    expect([...ngramsOf('One two three four five')]).toEqual([
+      'one two three four',
+      'two three four five',
+    ]);
     expect(wordBoundedIndexes('drizzle drizzled', 'drizzle')).toEqual([0]);
   });
 });

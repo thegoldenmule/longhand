@@ -49,7 +49,10 @@ function toNode(doc: PMNode | PMNodeJSON): PMNode {
 }
 
 function emptyCounts(): ClassCounts {
-  const byClass = Object.fromEntries(PROVENANCE_CLASSES.map((c) => [c, 0])) as Record<ProvenanceClass, number>;
+  const byClass = Object.fromEntries(PROVENANCE_CLASSES.map((c) => [c, 0])) as Record<
+    ProvenanceClass,
+    number
+  >;
   return { total: 0, byClass };
 }
 
@@ -59,7 +62,10 @@ function runCursor(runs: readonly ProvenanceRun[]) {
 }
 
 /** Attributes every word of `doc` to one class (see module docs). */
-export function attributeWords(doc: PMNode | PMNodeJSON, runs: readonly ProvenanceRun[]): WordAttribution[] {
+export function attributeWords(
+  doc: PMNode | PMNodeJSON,
+  runs: readonly ProvenanceRun[],
+): WordAttribution[] {
   const seg = segmentDoc(toNode(doc));
   const at = runCursor(runs);
   const out: WordAttribution[] = [];
@@ -70,7 +76,11 @@ export function attributeWords(doc: PMNode | PMNodeJSON, runs: readonly Provenan
       const sugs = new Set<string>();
       for (let i = tok.start; i < tok.end; i++) {
         const r = at(block.charPos[i] as number);
-        const c: RunClass = r ? (r.class === 'pasted-internal' ? 'pasted-external' : r.class) : 'pasted-external';
+        const c: RunClass = r
+          ? r.class === 'pasted-internal'
+            ? 'pasted-external'
+            : r.class
+          : 'pasted-external';
         if (TRUST_ORDER[c] < TRUST_ORDER[cls]) cls = c;
         if (r) seqs.add(r.originSeq);
         if (r?.suggestionId) sugs.add(r.suggestionId);
@@ -91,7 +101,10 @@ export function attributeWords(doc: PMNode | PMNodeJSON, runs: readonly Provenan
 }
 
 /** Words per class of one document. */
-export function wordsByClass(doc: PMNode | PMNodeJSON, runs: readonly ProvenanceRun[]): ClassCounts {
+export function wordsByClass(
+  doc: PMNode | PMNodeJSON,
+  runs: readonly ProvenanceRun[],
+): ClassCounts {
   const counts = emptyCounts();
   for (const w of attributeWords(doc, runs)) {
     counts.byClass[w.class] += 1;
@@ -105,7 +118,10 @@ export function wordsByClass(doc: PMNode | PMNodeJSON, runs: readonly Provenance
  * (text characters and hard breaks, UTF-16 code units; citations and block
  * boundaries excluded).
  */
-export function charactersByClass(doc: PMNode | PMNodeJSON, runs: readonly ProvenanceRun[]): ClassCounts {
+export function charactersByClass(
+  doc: PMNode | PMNodeJSON,
+  runs: readonly ProvenanceRun[],
+): ClassCounts {
   const seg = segmentDoc(toNode(doc));
   const at = runCursor(runs);
   const counts = emptyCounts();
@@ -139,19 +155,29 @@ export interface CountScope {
 }
 
 function scopedDocs(state: ProjectState, scope: CountScope) {
-  if (scope.documentIds) return scope.documentIds.map((id) => state.documents[id]).filter((d) => d !== undefined);
+  if (scope.documentIds)
+    return scope.documentIds.map((id) => state.documents[id]).filter((d) => d !== undefined);
   return Object.keys(state.documents)
     .sort()
     .map((id) => state.documents[id]!)
-    .filter((d) => (scope.includeNotes || d.kind === 'manuscript') && (scope.includeArchived || !d.archived));
+    .filter(
+      (d) =>
+        (scope.includeNotes || d.kind === 'manuscript') && (scope.includeArchived || !d.archived),
+    );
 }
 
 /** Words per class across a project's documents (default: non-archived manuscript documents). */
 export function projectWordsByClass(state: ProjectState, scope: CountScope = {}): ClassCounts {
-  return scopedDocs(state, scope).reduce((acc, d) => addCounts(acc, wordsByClass(d.content, d.provenance)), emptyCounts());
+  return scopedDocs(state, scope).reduce(
+    (acc, d) => addCounts(acc, wordsByClass(d.content, d.provenance)),
+    emptyCounts(),
+  );
 }
 
 /** Characters per class across a project's documents (same scope rules). */
 export function projectCharactersByClass(state: ProjectState, scope: CountScope = {}): ClassCounts {
-  return scopedDocs(state, scope).reduce((acc, d) => addCounts(acc, charactersByClass(d.content, d.provenance)), emptyCounts());
+  return scopedDocs(state, scope).reduce(
+    (acc, d) => addCounts(acc, charactersByClass(d.content, d.provenance)),
+    emptyCounts(),
+  );
 }

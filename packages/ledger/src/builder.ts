@@ -226,7 +226,9 @@ export class LedgerBuilder {
     const actor = draft.actor as Actor;
     const v = validateDraft(this.state, draft, actor, { serverTime, accountId: this.accountId });
     if (!v.ok) {
-      throw new Error(`builder: ${draft.type} rejected: ${v.errors.map((e) => `${e.code}: ${e.message}`).join('; ')}`);
+      throw new Error(
+        `builder: ${draft.type} rejected: ${v.errors.map((e) => `${e.code}: ${e.message}`).join('; ')}`,
+      );
     }
     const prev = this.commits.length > 0 ? this.head : null;
     const commit = appendToChain(prev, draft, serverTime, { accountId: this.accountId });
@@ -235,7 +237,8 @@ export class LedgerBuilder {
     this.commits.push(commit);
     this.snapshot();
     if (this.autoResolve && actor.kind === 'human') {
-      for (const r of resolutionsBetween(before, this.state, commit.seq)) this.system('SuggestionResolved', r);
+      for (const r of resolutionsBetween(before, this.state, commit.seq))
+        this.system('SuggestionResolved', r);
     }
     return commit;
   }
@@ -261,10 +264,19 @@ export class LedgerBuilder {
   }
 
   /** Appends a human event. */
-  human<K extends EventType>(type: K, payload: EventPayload<K>, opts: { clientTime?: string } = {}): Commit {
+  human<K extends EventType>(
+    type: K,
+    payload: EventPayload<K>,
+    opts: { clientTime?: string } = {},
+  ): Commit {
     const clientTime = opts.clientTime ?? this.now();
     const draft = {
-      ...this.envelope({ kind: 'human', id: this.userId }, this.editorSessionId, this.deviceId, clientTime),
+      ...this.envelope(
+        { kind: 'human', id: this.userId },
+        this.editorSessionId,
+        this.deviceId,
+        clientTime,
+      ),
       type,
       payload,
     } as unknown as CommitDraft;
@@ -274,7 +286,12 @@ export class LedgerBuilder {
   }
 
   /** Appends an agent event in a feedback session. */
-  agent<K extends EventType>(type: K, payload: EventPayload<K>, sessionId: string, model = 'opus'): Commit {
+  agent<K extends EventType>(
+    type: K,
+    payload: EventPayload<K>,
+    sessionId: string,
+    model = 'opus',
+  ): Commit {
     this.clock += 1500;
     const draft = {
       ...this.envelope({ kind: 'agent', id: model }, sessionId, 'server', this.now()),
@@ -287,7 +304,12 @@ export class LedgerBuilder {
   /** Appends a system event. */
   system<K extends EventType>(type: K, payload: EventPayload<K>): Commit {
     const draft = {
-      ...this.envelope({ kind: 'system', id: 'ledger' }, 'system', 'server', ISO(Math.max(this.clock, this.lastServer))),
+      ...this.envelope(
+        { kind: 'system', id: 'ledger' },
+        'system',
+        'server',
+        ISO(Math.max(this.clock, this.lastServer)),
+      ),
       type,
       payload,
     } as unknown as CommitDraft;
@@ -306,7 +328,9 @@ export class LedgerBuilder {
   ): this {
     const kind = opts.kind ?? 'manuscript';
     const area = kind === 'note' ? 'notes' : 'manuscript';
-    const siblings = opts.parentId ? this.project.folders[opts.parentId]?.children ?? [] : this.project.binder[area];
+    const siblings = opts.parentId
+      ? (this.project.folders[opts.parentId]?.children ?? [])
+      : this.project.binder[area];
     this.human('DocumentCreated', {
       documentId,
       kind,
@@ -322,18 +346,27 @@ export class LedgerBuilder {
     documentId: string,
     title: string,
     content: string | PMNodeClass,
-    opts: { kind?: 'manuscript' | 'note'; parentId?: string | null; index?: number; sourceName?: string } = {},
+    opts: {
+      kind?: 'manuscript' | 'note';
+      parentId?: string | null;
+      index?: number;
+      sourceName?: string;
+    } = {},
   ): this {
     const node =
       typeof content === 'string'
         ? schema.nodes.doc!.create(
             null,
-            content.split(/\n\n+/).map((p) => schema.nodes.paragraph!.create(null, p ? schema.text(p) : null)),
+            content
+              .split(/\n\n+/)
+              .map((p) => schema.nodes.paragraph!.create(null, p ? schema.text(p) : null)),
           )
         : content;
     const kind = opts.kind ?? 'manuscript';
     const area = kind === 'note' ? 'notes' : 'manuscript';
-    const siblings = opts.parentId ? this.project.folders[opts.parentId]?.children ?? [] : this.project.binder[area];
+    const siblings = opts.parentId
+      ? (this.project.folders[opts.parentId]?.children ?? [])
+      : this.project.binder[area];
     this.human('DocumentImported', {
       documentId,
       kind,
@@ -349,10 +382,22 @@ export class LedgerBuilder {
   }
 
   /** Creates a folder. */
-  createFolder(folderId: string, title: string, opts: { area?: 'manuscript' | 'notes'; parentId?: string | null; index?: number } = {}): this {
+  createFolder(
+    folderId: string,
+    title: string,
+    opts: { area?: 'manuscript' | 'notes'; parentId?: string | null; index?: number } = {},
+  ): this {
     const area = opts.area ?? 'manuscript';
-    const siblings = opts.parentId ? this.project.folders[opts.parentId]?.children ?? [] : this.project.binder[area];
-    this.human('FolderCreated', { folderId, area, title, parentId: opts.parentId ?? null, index: opts.index ?? siblings.length });
+    const siblings = opts.parentId
+      ? (this.project.folders[opts.parentId]?.children ?? [])
+      : this.project.binder[area];
+    this.human('FolderCreated', {
+      folderId,
+      area,
+      title,
+      parentId: opts.parentId ?? null,
+      index: opts.index ?? siblings.length,
+    });
     return this;
   }
 
@@ -376,7 +421,8 @@ export class LedgerBuilder {
     if (found < 0) {
       // Fall back to inline text across text nodes.
       const all = inlineTextBetween(doc, 0, doc.content.size, '\u0000');
-      if (!all.includes(text)) throw new Error(`builder: text ${JSON.stringify(text)} not found in ${documentId}`);
+      if (!all.includes(text))
+        throw new Error(`builder: text ${JSON.stringify(text)} not found in ${documentId}`);
       throw new Error(`builder: text ${JSON.stringify(text)} spans nodes; use a numeric position`);
     }
     if ('after' in at) return found + text.length;
@@ -391,7 +437,11 @@ export class LedgerBuilder {
    */
   edit(
     documentId: string,
-    parts: Array<{ build: (tr: Transform) => void; run: Omit<InputRun, 'steps'>; keys?: Array<{ kind: KeystrokeKind; len: number; dt: number }> }>,
+    parts: Array<{
+      build: (tr: Transform) => void;
+      run: Omit<InputRun, 'steps'>;
+      keys?: Array<{ kind: KeystrokeKind; len: number; dt: number }>;
+    }>,
     opts: { record?: boolean } = {},
   ): Commit {
     const doc = this.doc(documentId);
@@ -407,11 +457,23 @@ export class LedgerBuilder {
       const n = tr.steps.length - before;
       if (n === 0) continue;
       runs.push({ ...part.run, steps: n } as InputRun);
-      const keys = part.keys ?? [{ kind: 'insert' as KeystrokeKind, len: Math.max(0, tr.doc.content.size - sizeBefore), dt: 0 }];
+      const keys = part.keys ?? [
+        {
+          kind: 'insert' as KeystrokeKind,
+          len: Math.max(0, tr.doc.content.size - sizeBefore),
+          dt: 0,
+        },
+      ];
       keys.forEach((k, i) => {
         if (timeline.length > 0 || i > 0) t += k.dt;
         timeline.push({ t, kind: k.kind, len: k.len });
-        if (k.kind === 'insert' || k.kind === 'compose' || k.kind === 'paste' || k.kind === 'drop' || k.kind === 'autocorrect') {
+        if (
+          k.kind === 'insert' ||
+          k.kind === 'compose' ||
+          k.kind === 'paste' ||
+          k.kind === 'drop' ||
+          k.kind === 'autocorrect'
+        ) {
           characters += k.len;
         }
       });
@@ -457,7 +519,10 @@ export class LedgerBuilder {
       let p = pos;
       this.edit(documentId, [
         {
-          run: { method, ...(opts.traceSuggestionId ? { traceSuggestionId: opts.traceSuggestionId } : {}) },
+          run: {
+            method,
+            ...(opts.traceSuggestionId ? { traceSuggestionId: opts.traceSuggestionId } : {}),
+          },
           build: (tr) => {
             for (const ch of batch) {
               if (ch === '\n') {
@@ -522,7 +587,13 @@ export class LedgerBuilder {
 
   /** Selects `[from, to)` and deletes it with one keystroke. */
   deleteRange(documentId: string, from: number, to: number): this {
-    this.edit(documentId, [{ run: { method: 'typed' }, build: (tr) => tr.delete(from, to), keys: [{ kind: 'delete', len: to - from, dt: 0 }] }]);
+    this.edit(documentId, [
+      {
+        run: { method: 'typed' },
+        build: (tr) => tr.delete(from, to),
+        keys: [{ kind: 'delete', len: to - from, dt: 0 }],
+      },
+    ]);
     return this;
   }
 
@@ -533,13 +604,22 @@ export class LedgerBuilder {
   }
 
   /** Selects `[from, to)` and types `text` over it (the first keystroke replaces the selection). */
-  typeOver(documentId: string, from: number, to: number, text: string, opts: Omit<TypeOptions, 'at'> = {}): this {
+  typeOver(
+    documentId: string,
+    from: number,
+    to: number,
+    text: string,
+    opts: Omit<TypeOptions, 'at'> = {},
+  ): this {
     const chars = Array.from(text);
     const keys: Array<{ kind: KeystrokeKind; len: number; dt: number }> = [];
     let p = from;
     this.edit(documentId, [
       {
-        run: { method: opts.method ?? 'typed', ...(opts.traceSuggestionId ? { traceSuggestionId: opts.traceSuggestionId } : {}) },
+        run: {
+          method: opts.method ?? 'typed',
+          ...(opts.traceSuggestionId ? { traceSuggestionId: opts.traceSuggestionId } : {}),
+        },
         build: (tr) => {
           chars.forEach((ch, i) => {
             if (i === 0) tr.replaceWith(from, to, schema.text(ch));
@@ -557,18 +637,30 @@ export class LedgerBuilder {
   /** Presses Enter at a position. */
   enter(documentId: string, opts: { at?: At } = {}): this {
     const p = this.pos(documentId, opts.at ?? 'end');
-    this.edit(documentId, [{ run: { method: 'typed' }, build: (tr) => tr.split(p), keys: [{ kind: 'break', len: 0, dt: 0 }] }]);
+    this.edit(documentId, [
+      {
+        run: { method: 'typed' },
+        build: (tr) => tr.split(p),
+        keys: [{ kind: 'break', len: 0, dt: 0 }],
+      },
+    ]);
     return this;
   }
 
   /** Applies a formatting change (marks, block type) as typed input. */
   format(documentId: string, build: (tr: Transform) => void): this {
-    this.edit(documentId, [{ run: { method: 'typed' }, build, keys: [{ kind: 'format', len: 0, dt: 0 }] }]);
+    this.edit(documentId, [
+      { run: { method: 'typed' }, build, keys: [{ kind: 'format', len: 0, dt: 0 }] },
+    ]);
     return this;
   }
 
   /** Pastes external text (`\n` separates paragraphs): `PasteOccurred` then a `pasted-external` run. */
-  pasteExternal(documentId: string, text: string, opts: { at?: At; replace?: [number, number]; via?: 'clipboard' | 'drop' } = {}): string {
+  pasteExternal(
+    documentId: string,
+    text: string,
+    opts: { at?: At; replace?: [number, number]; via?: 'clipboard' | 'drop' } = {},
+  ): string {
     const pasteId = this.id('paste');
     const slice = textSlice(text);
     const plain = text.split('\n').join('\n');
@@ -583,7 +675,10 @@ export class LedgerBuilder {
       textHash: sha256Hex(plain),
       mimeTypes: ['text/plain', 'text/html'],
     });
-    const [from, to] = opts.replace ?? [this.pos(documentId, opts.at ?? 'end'), this.pos(documentId, opts.at ?? 'end')];
+    const [from, to] = opts.replace ?? [
+      this.pos(documentId, opts.at ?? 'end'),
+      this.pos(documentId, opts.at ?? 'end'),
+    ];
     this.edit(documentId, [
       {
         run: { method: 'pasted-external', pasteId },
@@ -611,7 +706,13 @@ export class LedgerBuilder {
       characters: text.length,
     });
     if (opts.cut) {
-      this.edit(documentId, [{ run: { method: 'typed' }, build: (tr) => tr.delete(from, to), keys: [{ kind: 'cut', len: to - from, dt: 0 }] }]);
+      this.edit(documentId, [
+        {
+          run: { method: 'typed' },
+          build: (tr) => tr.delete(from, to),
+          keys: [{ kind: 'cut', len: to - from, dt: 0 }],
+        },
+      ]);
     }
     return copyId;
   }
@@ -621,7 +722,10 @@ export class LedgerBuilder {
     const slice = opts.slice ?? this.copies.get(copyId);
     if (!slice) throw new Error(`builder: unknown copy ${copyId}`);
     const pasteId = this.id('paste');
-    const tmp = schema.nodes.doc!.create(null, slice.openStart > 0 ? slice.content : schema.nodes.paragraph!.create(null, slice.content));
+    const tmp = schema.nodes.doc!.create(
+      null,
+      slice.openStart > 0 ? slice.content : schema.nodes.paragraph!.create(null, slice.content),
+    );
     const text = inlineTextBetween(tmp, 0, tmp.content.size, '\n');
     this.human('PasteOccurred', {
       pasteId,
@@ -636,7 +740,11 @@ export class LedgerBuilder {
     });
     const at = this.pos(documentId, opts.at ?? 'end');
     this.edit(documentId, [
-      { run: { method: 'pasted-internal', pasteId }, build: (tr) => tr.replace(at, at, slice), keys: [{ kind: 'paste', len: text.length, dt: 0 }] },
+      {
+        run: { method: 'pasted-internal', pasteId },
+        build: (tr) => tr.replace(at, at, slice),
+        keys: [{ kind: 'paste', len: text.length, dt: 0 }],
+      },
     ]);
     return pasteId;
   }
@@ -689,7 +797,13 @@ export class LedgerBuilder {
     if (!e) throw new Error('builder: nothing to redo');
     this.edit(
       e.docId,
-      [{ run: { method: 'history' }, build: (tr) => e.steps.forEach((s) => tr.step(s)), keys: [{ kind: 'redo', len: 0, dt: 0 }] }],
+      [
+        {
+          run: { method: 'history' },
+          build: (tr) => e.steps.forEach((s) => tr.step(s)),
+          keys: [{ kind: 'redo', len: 0, dt: 0 }],
+        },
+      ],
       { record: false },
     );
     this.undoStack.push({ ...e, version: this.version(e.docId) });
@@ -706,7 +820,12 @@ export class LedgerBuilder {
   // -------------------------------------------------------------------------
 
   /** Adds a library source. */
-  addSource(sourceId: string, csl: Omit<CslItem, 'id'>, origin: SourceOrigin = { kind: 'manual', value: null }, from?: { surfacedId: string; candidateIndex: number }): this {
+  addSource(
+    sourceId: string,
+    csl: Omit<CslItem, 'id'>,
+    origin: SourceOrigin = { kind: 'manual', value: null },
+    from?: { surfacedId: string; candidateIndex: number },
+  ): this {
     this.human('SourceAdded', {
       sourceId,
       csl: { ...csl, id: sourceId } as CslItem,
@@ -718,13 +837,24 @@ export class LedgerBuilder {
   }
 
   /** Saves a clipping. */
-  saveClipping(clippingId: string, sourceId: string, text: string, locator: string | null = null, note: string | null = null): this {
+  saveClipping(
+    clippingId: string,
+    sourceId: string,
+    text: string,
+    locator: string | null = null,
+    note: string | null = null,
+  ): this {
     this.human('ClippingSaved', { clippingId, sourceId, text, locator, note });
     return this;
   }
 
   /** Cites a source: `CitationInserted` then a `citation` run inserting the node. */
-  cite(documentId: string, sourceId: string, locator: string | null, opts: { at?: At } = {}): string {
+  cite(
+    documentId: string,
+    sourceId: string,
+    locator: string | null,
+    opts: { at?: At } = {},
+  ): string {
     const citationId = this.id('cite');
     this.human('CitationInserted', { citationId, documentId, sourceId, locator });
     const at = this.pos(documentId, opts.at ?? 'end');
@@ -739,7 +869,11 @@ export class LedgerBuilder {
   }
 
   /** Places a clipping as a quote block after the top-level block containing `at` (a `clipping` run). */
-  placeClipping(documentId: string, clippingId: string, opts: { at?: At; text?: string } = {}): this {
+  placeClipping(
+    documentId: string,
+    clippingId: string,
+    opts: { at?: At; text?: string } = {},
+  ): this {
     const clip = this.project.clippings[clippingId];
     if (!clip) throw new Error(`builder: no clipping ${clippingId}`);
     const doc = this.doc(documentId);
@@ -751,7 +885,11 @@ export class LedgerBuilder {
       text.split('\n').map((l) => schema.nodes.paragraph!.create(null, l ? schema.text(l) : null)),
     );
     this.edit(documentId, [
-      { run: { method: 'clipping', clippingId }, build: (tr) => tr.insert(insertAt, qb), keys: [{ kind: 'paste', len: text.length, dt: 0 }] },
+      {
+        run: { method: 'clipping', clippingId },
+        build: (tr) => tr.insert(insertAt, qb),
+        keys: [{ kind: 'paste', len: text.length, dt: 0 }],
+      },
     ]);
     return this;
   }
@@ -761,7 +899,15 @@ export class LedgerBuilder {
   // -------------------------------------------------------------------------
 
   /** The writer asks for feedback. */
-  requestFeedback(requestId: string, opts: { scope?: FeedbackScope; lenses?: Lens[]; intensity?: Intensity; ask?: string | null } = {}): this {
+  requestFeedback(
+    requestId: string,
+    opts: {
+      scope?: FeedbackScope;
+      lenses?: Lens[];
+      intensity?: Intensity;
+      ask?: string | null;
+    } = {},
+  ): this {
     this.human('FeedbackRequested', {
       requestId,
       scope: opts.scope ?? { kind: 'project' },
@@ -774,13 +920,23 @@ export class LedgerBuilder {
 
   /** The service starts a review session for a request. */
   startReview(sessionId: string, requestId: string, model = 'opus'): this {
-    this.agent('FeedbackSessionStarted', { feedbackSessionId: sessionId, trigger: { kind: 'feedback', requestId }, model }, sessionId, model);
+    this.agent(
+      'FeedbackSessionStarted',
+      { feedbackSessionId: sessionId, trigger: { kind: 'feedback', requestId }, model },
+      sessionId,
+      model,
+    );
     return this;
   }
 
   /** The service starts a discuss session for a thread. */
   startDiscuss(sessionId: string, threadId: string, model = 'sonnet'): this {
-    this.agent('FeedbackSessionStarted', { feedbackSessionId: sessionId, trigger: { kind: 'discuss', threadId }, model }, sessionId, model);
+    this.agent(
+      'FeedbackSessionStarted',
+      { feedbackSessionId: sessionId, trigger: { kind: 'discuss', threadId }, model },
+      sessionId,
+      model,
+    );
     return this;
   }
 
@@ -790,7 +946,14 @@ export class LedgerBuilder {
     return node;
   }
 
-  private forward(documentId: string, readVersion: number, from: number, to: number, point = false, assoc: 1 | -1 = 1) {
+  private forward(
+    documentId: string,
+    readVersion: number,
+    from: number,
+    to: number,
+    point = false,
+    assoc: 1 | -1 = 1,
+  ) {
     let f = from;
     let t = to;
     for (const m of this.mapsSince(documentId, readVersion)) {
@@ -829,36 +992,70 @@ export class LedgerBuilder {
   }
 
   /** `comment`. */
-  comment(sessionId: string, commentId: string, target: TargetSpec, body: string, opts: { category?: Lens; severity?: Severity } = {}): this {
-    this.agent('CommentAdded', {
-      commentId,
-      feedbackSessionId: sessionId,
-      target: this.target(target),
-      category: opts.category ?? 'clarity',
-      severity: opts.severity ?? 'moderate',
-      body,
-    }, sessionId);
+  comment(
+    sessionId: string,
+    commentId: string,
+    target: TargetSpec,
+    body: string,
+    opts: { category?: Lens; severity?: Severity } = {},
+  ): this {
+    this.agent(
+      'CommentAdded',
+      {
+        commentId,
+        feedbackSessionId: sessionId,
+        target: this.target(target),
+        category: opts.category ?? 'clarity',
+        severity: opts.severity ?? 'moderate',
+        body,
+      },
+      sessionId,
+    );
     return this;
   }
 
   /** `ask_question`. */
-  question(sessionId: string, questionId: string, question: string, anchor: AnchorSpec | null = null): this {
-    this.agent('QuestionAsked', {
-      questionId,
-      feedbackSessionId: sessionId,
-      target: anchor ? { kind: 'anchor', ...this.resolvedAnchor(anchor) } : null,
-      question,
-    }, sessionId);
+  question(
+    sessionId: string,
+    questionId: string,
+    question: string,
+    anchor: AnchorSpec | null = null,
+  ): this {
+    this.agent(
+      'QuestionAsked',
+      {
+        questionId,
+        feedbackSessionId: sessionId,
+        target: anchor ? { kind: 'anchor', ...this.resolvedAnchor(anchor) } : null,
+        question,
+      },
+      sessionId,
+    );
     return this;
   }
 
   /** `suggest_word_choice`. */
-  suggestWordChoice(sessionId: string, suggestionId: string, anchor: AnchorSpec, alternatives: string[], rationale: string): this {
-    this.agent('SuggestionProposed', {
-      suggestionId,
-      feedbackSessionId: sessionId,
-      suggestion: { kind: 'word-choice', target: this.resolvedAnchor(anchor), alternatives, rationale },
-    }, sessionId);
+  suggestWordChoice(
+    sessionId: string,
+    suggestionId: string,
+    anchor: AnchorSpec,
+    alternatives: string[],
+    rationale: string,
+  ): this {
+    this.agent(
+      'SuggestionProposed',
+      {
+        suggestionId,
+        feedbackSessionId: sessionId,
+        suggestion: {
+          kind: 'word-choice',
+          target: this.resolvedAnchor(anchor),
+          alternatives,
+          rationale,
+        },
+      },
+      sessionId,
+    );
     return this;
   }
 
@@ -866,133 +1063,242 @@ export class LedgerBuilder {
   suggestInsertion(
     sessionId: string,
     suggestionId: string,
-    where: { documentId: string; position: 'before' | 'after'; sentenceId: string; readVersion?: number },
+    where: {
+      documentId: string;
+      position: 'before' | 'after';
+      sentenceId: string;
+      readVersion?: number;
+    },
     sentence: string,
     purpose: string,
   ): this {
     const version = this.version(where.documentId);
     const readVersion = where.readVersion ?? version;
-    const r = resolveInsertionPoint(this.docAt(where.documentId, readVersion), where.position, where.sentenceId);
+    const r = resolveInsertionPoint(
+      this.docAt(where.documentId, readVersion),
+      where.position,
+      where.sentenceId,
+    );
     if (!r.ok) throw new Error(`builder: ${r.error.message}`);
     const assoc = where.position === 'before' ? 1 : -1;
     const { from } = this.forward(where.documentId, readVersion, r.pos, r.pos, true, assoc);
-    this.agent('SuggestionProposed', {
-      suggestionId,
-      feedbackSessionId: sessionId,
-      suggestion: {
-        kind: 'insertion',
-        target: { documentId: where.documentId, position: where.position, sentenceId: where.sentenceId, pos: from, readVersion, version },
-        sentence,
-        purpose,
+    this.agent(
+      'SuggestionProposed',
+      {
+        suggestionId,
+        feedbackSessionId: sessionId,
+        suggestion: {
+          kind: 'insertion',
+          target: {
+            documentId: where.documentId,
+            position: where.position,
+            sentenceId: where.sentenceId,
+            pos: from,
+            readVersion,
+            version,
+          },
+          sentence,
+          purpose,
+        },
       },
-    }, sessionId);
+      sessionId,
+    );
     return this;
   }
 
   /** `suggest_rephrase`. */
-  suggestRephrase(sessionId: string, suggestionId: string, anchor: AnchorSpec, guidance: string): this {
-    this.agent('SuggestionProposed', {
-      suggestionId,
-      feedbackSessionId: sessionId,
-      suggestion: { kind: 'rephrase', target: this.resolvedAnchor(anchor), guidance },
-    }, sessionId);
+  suggestRephrase(
+    sessionId: string,
+    suggestionId: string,
+    anchor: AnchorSpec,
+    guidance: string,
+  ): this {
+    this.agent(
+      'SuggestionProposed',
+      {
+        suggestionId,
+        feedbackSessionId: sessionId,
+        suggestion: { kind: 'rephrase', target: this.resolvedAnchor(anchor), guidance },
+      },
+      sessionId,
+    );
     return this;
   }
 
   /** `propose_move`. */
-  proposeMove(sessionId: string, proposalId: string, span: SpanRef, destination: { position: 'before' | 'after'; id: string }, rationale: string): this {
+  proposeMove(
+    sessionId: string,
+    proposalId: string,
+    span: SpanRef,
+    destination: { position: 'before' | 'after'; id: string },
+    rationale: string,
+  ): this {
     const version = this.version(span.documentId);
     const r = resolveMove(this.doc(span.documentId), span, destination);
     if (!r.ok) throw new Error(`builder: ${r.error.message}`);
-    this.agent('MoveProposed', {
-      proposalId,
-      feedbackSessionId: sessionId,
-      source: { span, from: r.from, to: r.to, readVersion: version, version },
-      destination: { ...destination, pos: r.insertAt },
-      rationale,
-    }, sessionId);
+    this.agent(
+      'MoveProposed',
+      {
+        proposalId,
+        feedbackSessionId: sessionId,
+        source: { span, from: r.from, to: r.to, readVersion: version, version },
+        destination: { ...destination, pos: r.insertAt },
+        rationale,
+      },
+      sessionId,
+    );
     return this;
   }
 
   /** `propose_cut`. */
   proposeCut(sessionId: string, proposalId: string, target: TargetSpec, rationale: string): this {
-    this.agent('CutProposed', { proposalId, feedbackSessionId: sessionId, target: this.target(target), rationale }, sessionId);
+    this.agent(
+      'CutProposed',
+      { proposalId, feedbackSessionId: sessionId, target: this.target(target), rationale },
+      sessionId,
+    );
     return this;
   }
 
   /** `propose_split`. */
-  proposeSplit(sessionId: string, proposalId: string, documentId: string, paragraphId: string, sentenceId: string, rationale: string): this {
+  proposeSplit(
+    sessionId: string,
+    proposalId: string,
+    documentId: string,
+    paragraphId: string,
+    sentenceId: string,
+    rationale: string,
+  ): this {
     const version = this.version(documentId);
     const r = resolveSplit(this.doc(documentId), paragraphId, sentenceId);
     if (!r.ok) throw new Error(`builder: ${r.error.message}`);
-    this.agent('SplitProposed', {
-      proposalId,
-      feedbackSessionId: sessionId,
-      documentId,
-      paragraphId,
-      sentenceId,
-      pos: r.pos,
-      readVersion: version,
-      version,
-      rationale,
-    }, sessionId);
+    this.agent(
+      'SplitProposed',
+      {
+        proposalId,
+        feedbackSessionId: sessionId,
+        documentId,
+        paragraphId,
+        sentenceId,
+        pos: r.pos,
+        readVersion: version,
+        version,
+        rationale,
+      },
+      sessionId,
+    );
     return this;
   }
 
   /** `propose_merge`. */
-  proposeMerge(sessionId: string, proposalId: string, documentId: string, first: string, second: string, rationale: string): this {
+  proposeMerge(
+    sessionId: string,
+    proposalId: string,
+    documentId: string,
+    first: string,
+    second: string,
+    rationale: string,
+  ): this {
     const version = this.version(documentId);
     const r = resolveMerge(this.doc(documentId), first, second);
     if (!r.ok) throw new Error(`builder: ${r.error.message}`);
-    this.agent('MergeProposed', {
-      proposalId,
-      feedbackSessionId: sessionId,
-      documentId,
-      firstParagraphId: first,
-      secondParagraphId: second,
-      joinPos: r.joinPos,
-      from: r.first.pos,
-      to: r.second.end,
-      readVersion: version,
-      version,
-      rationale,
-    }, sessionId);
+    this.agent(
+      'MergeProposed',
+      {
+        proposalId,
+        feedbackSessionId: sessionId,
+        documentId,
+        firstParagraphId: first,
+        secondParagraphId: second,
+        joinPos: r.joinPos,
+        from: r.first.pos,
+        to: r.second.end,
+        readVersion: version,
+        version,
+        rationale,
+      },
+      sessionId,
+    );
     return this;
   }
 
   /** `flag_citation_needed`. */
   flagCitationNeeded(sessionId: string, flagId: string, anchor: AnchorSpec, claim: string): this {
-    this.agent('CitationNeededFlagged', { flagId, feedbackSessionId: sessionId, target: this.resolvedAnchor(anchor), claim }, sessionId);
+    this.agent(
+      'CitationNeededFlagged',
+      { flagId, feedbackSessionId: sessionId, target: this.resolvedAnchor(anchor), claim },
+      sessionId,
+    );
     return this;
   }
 
   /** `search_sources`. */
-  surfaceSources(sessionId: string, surfacedId: string, query: string, candidates: SurfacedCandidate[], anchor: AnchorSpec | null = null): this {
-    this.agent('SourceSurfaced', {
-      surfacedId,
-      feedbackSessionId: sessionId,
-      query,
-      target: anchor ? this.resolvedAnchor(anchor) : null,
-      candidates,
-    }, sessionId);
+  surfaceSources(
+    sessionId: string,
+    surfacedId: string,
+    query: string,
+    candidates: SurfacedCandidate[],
+    anchor: AnchorSpec | null = null,
+  ): this {
+    this.agent(
+      'SourceSurfaced',
+      {
+        surfacedId,
+        feedbackSessionId: sessionId,
+        query,
+        target: anchor ? this.resolvedAnchor(anchor) : null,
+        candidates,
+      },
+      sessionId,
+    );
     return this;
   }
 
   /** `suggest_source`. */
-  suggestSource(sessionId: string, sourceSuggestionId: string, anchor: AnchorSpec, sourceId: string, rationale: string): this {
-    this.agent('SourceSuggested', { sourceSuggestionId, feedbackSessionId: sessionId, target: this.resolvedAnchor(anchor), sourceId, rationale }, sessionId);
+  suggestSource(
+    sessionId: string,
+    sourceSuggestionId: string,
+    anchor: AnchorSpec,
+    sourceId: string,
+    rationale: string,
+  ): this {
+    this.agent(
+      'SourceSuggested',
+      {
+        sourceSuggestionId,
+        feedbackSessionId: sessionId,
+        target: this.resolvedAnchor(anchor),
+        sourceId,
+        rationale,
+      },
+      sessionId,
+    );
     return this;
   }
 
   /** `finish_review`. */
-  finishReview(sessionId: string, summary: string, strengths: string[] = [], topPriorities: string[] = []): this {
-    this.agent('ReviewFinished', { feedbackSessionId: sessionId, summary, strengths, topPriorities }, sessionId);
+  finishReview(
+    sessionId: string,
+    summary: string,
+    strengths: string[] = [],
+    topPriorities: string[] = [],
+  ): this {
+    this.agent(
+      'ReviewFinished',
+      { feedbackSessionId: sessionId, summary, strengths, topPriorities },
+      sessionId,
+    );
     return this;
   }
 
   /** `answer_discussion`. */
   answerDiscussion(sessionId: string, threadId: string, targetId: string, body: string): this {
-    this.agent('DiscussAnswered', { feedbackSessionId: sessionId, threadId, targetId, body }, sessionId, 'sonnet');
+    this.agent(
+      'DiscussAnswered',
+      { feedbackSessionId: sessionId, threadId, targetId, body },
+      sessionId,
+      'sonnet',
+    );
     return this;
   }
 
@@ -1027,4 +1333,3 @@ export class LedgerBuilder {
     return this;
   }
 }
-

@@ -172,7 +172,8 @@ export function carryTombs(
   const merged: Tomb[] = [];
   for (const t of out) {
     const last = merged[merged.length - 1];
-    if (last && last.pos === t.pos) merged[merged.length - 1] = { pos: t.pos, units: [...last.units, ...t.units] };
+    if (last && last.pos === t.pos)
+      merged[merged.length - 1] = { pos: t.pos, units: [...last.units, ...t.units] };
     else merged.push(t);
   }
   return merged;
@@ -247,7 +248,11 @@ export interface MapNode {
 }
 
 /** Maps between `from` and `to` (ascending), or null if the history does not reach. */
-export function mapsBetween(head: MapNode | null, fromVersion: number, toVersion: number): StepMap[] | null {
+export function mapsBetween(
+  head: MapNode | null,
+  fromVersion: number,
+  toVersion: number,
+): StepMap[] | null {
   const out: StepMap[] = [];
   let n = head;
   while (n && n.version > toVersion) n = n.prev;
@@ -265,11 +270,7 @@ export function mapsBetween(head: MapNode | null, fromVersion: number, toVersion
  * it, or (for a point, `from === to`) replaced content at it. Walks backwards,
  * mapping the range into each earlier version.
  */
-export function touchedBetween(
-  maps: readonly StepMap[],
-  from: number,
-  to: number,
-): boolean {
+export function touchedBetween(maps: readonly StepMap[], from: number, to: number): boolean {
   let f = from;
   let t = to;
   for (let k = maps.length - 1; k >= 0; k--) {

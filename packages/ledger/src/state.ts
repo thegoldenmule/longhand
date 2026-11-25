@@ -300,7 +300,10 @@ export class Tx {
   /** A writable copy of the binder (both area lists copied once per commit). */
   binder(): BinderState {
     if (!this.owned.has('binder')) {
-      this.s.binder = { manuscript: [...this.s.binder.manuscript], notes: [...this.s.binder.notes] };
+      this.s.binder = {
+        manuscript: [...this.s.binder.manuscript],
+        notes: [...this.s.binder.notes],
+      };
       this.owned.add('binder');
     }
     return this.s.binder;

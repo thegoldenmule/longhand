@@ -4,7 +4,10 @@
 import type { CurrentRange, ProposalState } from '@longhand/schema';
 import type { Span, Tracker, Tx } from './state';
 
-function sameRange(a: { from: number; to: number } | null, b: { from: number; to: number } | null): boolean {
+function sameRange(
+  a: { from: number; to: number } | null,
+  b: { from: number; to: number } | null,
+): boolean {
   if (a === null || b === null) return a === b;
   return a.from === b.from && a.to === b.to;
 }
@@ -21,7 +24,10 @@ export function syncTrackerRecord(tx: Tx, t: Tracker, version: number): void {
       if (!rec || rec.scope.kind !== 'selection' || !t.range) return;
       const sc = rec.scope;
       if (sc.from === t.range.from && sc.to === t.range.to && sc.version === version) return;
-      tx.ann('feedbackRequests')[t.id] = { ...rec, scope: { ...sc, from: t.range.from, to: t.range.to, version } };
+      tx.ann('feedbackRequests')[t.id] = {
+        ...rec,
+        scope: { ...sc, from: t.range.from, to: t.range.to, version },
+      };
       return;
     }
     case 'comments':
@@ -48,7 +54,8 @@ export function syncTrackerRecord(tx: Tx, t: Tracker, version: number): void {
           }
           break;
         case 'cut':
-          if (!sameRange(rec.range, t.range)) next = { ...rec, range: t.range ? { ...t.range } : null };
+          if (!sameRange(rec.range, t.range))
+            next = { ...rec, range: t.range ? { ...t.range } : null };
           break;
         case 'split':
           if (rec.pos !== t.point) next = { ...rec, pos: t.point };

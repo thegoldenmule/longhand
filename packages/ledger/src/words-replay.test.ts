@@ -38,7 +38,14 @@ describe('attributeWords', () => {
   it('counts words and characters by class', () => {
     expect(wordsByClass(doc, runs)).toEqual({
       total: 5,
-      byClass: { typed: 1, 'typed-from-suggestion': 1, 'pasted-external': 2, 'pasted-internal': 0, imported: 1, quoted: 0 },
+      byClass: {
+        typed: 1,
+        'typed-from-suggestion': 1,
+        'pasted-external': 2,
+        'pasted-internal': 0,
+        imported: 1,
+        quoted: 0,
+      },
     });
     const chars = charactersByClass(doc.toJSON(), runs);
     expect(chars.total).toBe(29);
@@ -67,7 +74,9 @@ describe('replay', () => {
         const b = canonicalize(projectState(foldCommits(commits.slice(0, seq))));
         expect(a, `${name}@${seq}`).toBe(b);
       }
-      expect(canonicalize(projectState(stateAtSeq(commits, commits.length)))).toBe(canonicalize(loadFixture(name).expected.state));
+      expect(canonicalize(projectState(stateAtSeq(commits, commits.length)))).toBe(
+        canonicalize(loadFixture(name).expected.state),
+      );
     }
   });
 
@@ -96,14 +105,34 @@ describe('spanHistory', () => {
     const typed = b.head.seq;
     b.requestFeedback('r', { scope: { kind: 'document', documentId: 'd' } });
     b.startReview('s', 'r');
-    b.suggestWordChoice('s', 'w', { documentId: 'd', sentenceId: 'p1.s1', quote: 'one' }, ['first'], 'r');
-    b.proposeMove('s', 'm', { documentId: 'd', unit: 'sentence', ids: ['p1.s2'] }, { position: 'before', id: 'p1.s1' }, 'r');
+    b.suggestWordChoice(
+      's',
+      'w',
+      { documentId: 'd', sentenceId: 'p1.s1', quote: 'one' },
+      ['first'],
+      'r',
+    );
+    b.proposeMove(
+      's',
+      'm',
+      { documentId: 'd', unit: 'sentence', ids: ['p1.s2'] },
+      { position: 'before', id: 'p1.s1' },
+      'r',
+    );
     b.finishReview('s', 'ok');
     b.typeOver('d', b.pos('d', { before: 'one' }), b.pos('d', { after: 'one' }), 'first');
     b.acceptProposal('m');
     const h = spanHistory(b.state, 'd', b.pos('d', { before: 'Beta' }))!;
-    expect(h.origin).toMatchObject({ seq: typed, type: 'TextEdited', editorSessionId: 'editor-1', methods: ['typed'], writingSessionIndex: 0 });
-    expect(h.moves).toEqual([expect.objectContaining({ seq: b.head.seq, kind: 'move', proposalId: 'm' })]);
+    expect(h.origin).toMatchObject({
+      seq: typed,
+      type: 'TextEdited',
+      editorSessionId: 'editor-1',
+      methods: ['typed'],
+      writingSessionIndex: 0,
+    });
+    expect(h.moves).toEqual([
+      expect.objectContaining({ seq: b.head.seq, kind: 'move', proposalId: 'm' }),
+    ]);
     const h2 = spanHistory(b.state, 'd', b.pos('d', { before: 'first' }))!;
     expect(h2.run.class).toBe('typed-from-suggestion');
     expect(h2.matched).toEqual({ id: 'w', group: 'suggestions' });

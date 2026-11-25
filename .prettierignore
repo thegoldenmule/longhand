@@ -8,3 +8,8 @@ playwright-report
 test-results
 docs/
 .claude/
+
+# Generated or vendored
+packages/ledger/fixtures/**/*.json
+packages/research/src/bibliography/styles.generated.ts
+packages/research/vendor/

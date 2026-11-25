@@ -72,18 +72,29 @@ export function appendToChain(
     typeof raw.actor.kind === 'string' &&
     !canActorEmit(raw.type, raw.actor.kind as 'human')
   ) {
-    throw new ChainError('actor-not-permitted', `a ${String(raw.actor.kind)} actor may not emit ${raw.type}`);
+    throw new ChainError(
+      'actor-not-permitted',
+      `a ${String(raw.actor.kind)} actor may not emit ${raw.type}`,
+    );
   }
   const parsedDraft = CommitDraftSchema.safeParse(draft);
   if (!parsedDraft.success) {
-    throw new ChainError('invalid-draft', 'the draft is not a valid commit draft', zodIssues(parsedDraft.error));
+    throw new ChainError(
+      'invalid-draft',
+      'the draft is not a valid commit draft',
+      zodIssues(parsedDraft.error),
+    );
   }
   const d = parsedDraft.data;
   if (prev && d.projectId !== prev.projectId) {
-    throw new ChainError('project-mismatch', `draft is for project ${d.projectId}, the chain is ${prev.projectId}`);
+    throw new ChainError(
+      'project-mismatch',
+      `draft is for project ${d.projectId}, the chain is ${prev.projectId}`,
+    );
   }
   const accountId = opts.accountId ?? prev?.accountId;
-  if (accountId === undefined) throw new ChainError('invalid-draft', 'accountId is required for the first commit');
+  if (accountId === undefined)
+    throw new ChainError('invalid-draft', 'accountId is required for the first commit');
   const unhashed = {
     ...d,
     seq: prev ? prev.seq + 1 : 1,
@@ -144,7 +155,10 @@ export function verifyChain(
 ): ChainVerification {
   const problems: ChainProblem[] = [];
   if (commits.length === 0) {
-    return { ok: false, problems: [{ code: 'empty', index: -1, seq: null, message: 'the ledger has no commits' }] };
+    return {
+      ok: false,
+      problems: [{ code: 'empty', index: -1, seq: null, message: 'the ledger has no commits' }],
+    };
   }
   const seen = new Map<number, number>();
   const ids = new Map<string, number>();
@@ -156,7 +170,12 @@ export function verifyChain(
     const c = raw as Partial<Commit>;
     const seq = typeof c?.seq === 'number' ? c.seq : null;
     const add = (code: ChainProblemCode, message: string): void => {
-      problems.push({ code, index, seq, message: `commit #${index} (seq ${seq ?? '?'}): ${message}` });
+      problems.push({
+        code,
+        index,
+        seq,
+        message: `commit #${index} (seq ${seq ?? '?'}): ${message}`,
+      });
     };
     const parsed = CommitSchema.safeParse(raw);
     if (!parsed.success) add('invalid-commit', zodIssues(parsed.error).join('; '));
@@ -167,7 +186,11 @@ export function verifyChain(
       } catch {
         actual = null;
       }
-      if (actual !== c.hash) add('hash-mismatch', `hash ${c.hash} does not match its content (${actual ?? 'unhashable'})`);
+      if (actual !== c.hash)
+        add(
+          'hash-mismatch',
+          `hash ${c.hash} does not match its content (${actual ?? 'unhashable'})`,
+        );
     }
     if (seq !== null) {
       // prevSeq is the highest seq seen so far.
@@ -182,18 +205,25 @@ export function verifyChain(
       prevSeq += 1;
     }
     if (index === 0) {
-      if (c?.prevHash !== GENESIS_PREV_HASH) add('genesis-mismatch', 'the first commit must have prevHash of 64 zeros');
+      if (c?.prevHash !== GENESIS_PREV_HASH)
+        add('genesis-mismatch', 'the first commit must have prevHash of 64 zeros');
     } else if (c?.prevHash !== prevHash) {
-      add('prev-hash-mismatch', `prevHash ${c?.prevHash} is not the previous commit's hash ${prevHash}`);
+      add(
+        'prev-hash-mismatch',
+        `prevHash ${c?.prevHash} is not the previous commit's hash ${prevHash}`,
+      );
     }
     if (typeof c?.commitId === 'string') {
-      if (ids.has(c.commitId)) add('duplicate-commit-id', `commitId ${c.commitId} also used at #${ids.get(c.commitId)}`);
+      if (ids.has(c.commitId))
+        add('duplicate-commit-id', `commitId ${c.commitId} also used at #${ids.get(c.commitId)}`);
       ids.set(c.commitId, index);
     }
     if (projectId === null) projectId = c?.projectId ?? null;
-    else if (c?.projectId !== projectId) add('project-mismatch', `project ${c?.projectId} is not ${projectId}`);
+    else if (c?.projectId !== projectId)
+      add('project-mismatch', `project ${c?.projectId} is not ${projectId}`);
     if (accountId === null) accountId = c?.accountId ?? null;
-    else if (c?.accountId !== accountId) add('account-mismatch', `account ${c?.accountId} is not ${accountId}`);
+    else if (c?.accountId !== accountId)
+      add('account-mismatch', `account ${c?.accountId} is not ${accountId}`);
     prevHash = typeof c?.hash === 'string' ? c.hash : null;
   });
   const last = commits[commits.length - 1] as Partial<Commit>;
@@ -208,7 +238,12 @@ export function verifyChain(
     }
   }
   if (problems.length > 0) return { ok: false, problems };
-  return { ok: true, headSeq: last.seq as number, headHash: last.hash as string, length: commits.length };
+  return {
+    ok: true,
+    headSeq: last.seq as number,
+    headHash: last.hash as string,
+    length: commits.length,
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -220,7 +255,12 @@ export async function signWitness(
   signer: WitnessSigner,
   commit: Pick<Commit, 'projectId' | 'seq' | 'hash' | 'serverTime'>,
 ): Promise<Witness> {
-  const subject = { projectId: commit.projectId, seq: commit.seq, hash: commit.hash, serverTime: commit.serverTime };
+  const subject = {
+    projectId: commit.projectId,
+    seq: commit.seq,
+    hash: commit.hash,
+    serverTime: commit.serverTime,
+  };
   const sig = await signer.sign(witnessMessage(subject));
   return { ...subject, signature: base64Encode(sig), keyId: signer.keyId };
 }
@@ -272,7 +312,11 @@ export async function verifyWitnesses(
   const bySeq = new Map<number, Witness>();
   for (const w of witnesses) {
     if (bySeq.has(w.seq) || w.seq < 1 || w.seq > commits.length) {
-      problems.push({ code: 'extra-witness', seq: w.seq, message: `unexpected witness for seq ${w.seq}` });
+      problems.push({
+        code: 'extra-witness',
+        seq: w.seq,
+        message: `unexpected witness for seq ${w.seq}`,
+      });
       continue;
     }
     bySeq.set(w.seq, w);
@@ -280,19 +324,36 @@ export async function verifyWitnesses(
   for (const c of commits) {
     const w = bySeq.get(c.seq);
     if (!w) {
-      if (requireAll) problems.push({ code: 'missing-witness', seq: c.seq, message: `seq ${c.seq} has no witness` });
+      if (requireAll)
+        problems.push({
+          code: 'missing-witness',
+          seq: c.seq,
+          message: `seq ${c.seq} has no witness`,
+        });
       continue;
     }
     if (w.projectId !== c.projectId || w.hash !== c.hash || w.serverTime !== c.serverTime) {
-      problems.push({ code: 'subject-mismatch', seq: c.seq, message: `the witness of seq ${c.seq} signs different fields` });
+      problems.push({
+        code: 'subject-mismatch',
+        seq: c.seq,
+        message: `the witness of seq ${c.seq} signs different fields`,
+      });
       continue;
     }
     if (w.keyId !== keyId) {
-      problems.push({ code: 'key-mismatch', seq: c.seq, message: `the witness of seq ${c.seq} names key ${w.keyId}` });
+      problems.push({
+        code: 'key-mismatch',
+        seq: c.seq,
+        message: `the witness of seq ${c.seq} names key ${w.keyId}`,
+      });
       continue;
     }
     if (!(await verifyWitnessSignature(w, key))) {
-      problems.push({ code: 'bad-signature', seq: c.seq, message: `the witness signature of seq ${c.seq} does not verify` });
+      problems.push({
+        code: 'bad-signature',
+        seq: c.seq,
+        message: `the witness signature of seq ${c.seq} does not verify`,
+      });
       continue;
     }
     witnessed.push(c.seq);
@@ -301,8 +362,17 @@ export async function verifyWitnesses(
     if (c.type !== 'ChainHeadWitnessed') continue;
     const p = c.payload;
     const target = commits[p.witnessedSeq - 1];
-    if (!target || target.hash !== p.witnessedHash || target.serverTime !== p.serverTime || p.witnessedSeq >= c.seq) {
-      problems.push({ code: 'embedded-mismatch', seq: c.seq, message: `ChainHeadWitnessed at seq ${c.seq} does not match seq ${p.witnessedSeq}` });
+    if (
+      !target ||
+      target.hash !== p.witnessedHash ||
+      target.serverTime !== p.serverTime ||
+      p.witnessedSeq >= c.seq
+    ) {
+      problems.push({
+        code: 'embedded-mismatch',
+        seq: c.seq,
+        message: `ChainHeadWitnessed at seq ${c.seq} does not match seq ${p.witnessedSeq}`,
+      });
       continue;
     }
     const w: Witness = {
@@ -314,7 +384,11 @@ export async function verifyWitnesses(
       keyId: p.keyId,
     };
     if (p.keyId !== keyId || !(await verifyWitnessSignature(w, key))) {
-      problems.push({ code: 'embedded-bad-signature', seq: c.seq, message: `the embedded witness at seq ${c.seq} does not verify` });
+      problems.push({
+        code: 'embedded-bad-signature',
+        seq: c.seq,
+        message: `the embedded witness at seq ${c.seq} does not verify`,
+      });
     }
   }
   return { ok: problems.length === 0, keyId, witnessed, problems };
@@ -324,7 +398,10 @@ export async function verifyWitnesses(
  * A {@link WitnessSigner} over a WebCrypto ECDSA P-256 private key (tests, local
  * development, fixtures). Production signs with KMS behind the same interface.
  */
-export async function webCryptoSigner(privateKey: CryptoKey, publicKeyPem: string): Promise<WitnessSigner> {
+export async function webCryptoSigner(
+  privateKey: CryptoKey,
+  publicKeyPem: string,
+): Promise<WitnessSigner> {
   return {
     keyId: keyIdFromPublicKeyPem(publicKeyPem),
     publicKeyPem,

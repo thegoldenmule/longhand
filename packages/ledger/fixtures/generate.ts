@@ -104,12 +104,20 @@ export function expectedOutputs(commits: readonly Commit[]): ExpectedOutputs {
 }
 
 /** Builds a fixture's commits and expected outputs (no witnesses). */
-export function buildFixture(name: string): Omit<FixtureFile, 'witnesses' | 'publicKeyPem' | 'keyId'> {
+export function buildFixture(
+  name: string,
+): Omit<FixtureFile, 'witnesses' | 'publicKeyPem' | 'keyId'> {
   const def = FIXTURE_DEFINITIONS[name];
   if (!def) throw new Error(`no fixture ${name}`);
   const b = def.build();
   const commits = plain(b.commits);
-  return { name, description: def.description, covers: def.covers, commits, expected: expectedOutputs(commits) };
+  return {
+    name,
+    description: def.description,
+    covers: def.covers,
+    commits,
+    expected: expectedOutputs(commits),
+  };
 }
 
 /** Builds a tampered fixture from its base fixture file. */
@@ -126,7 +134,11 @@ export async function buildTampered(name: string, base: FixtureFile): Promise<Ta
   let witnesses: TamperedFixtureFile['expected']['witnesses'] = null;
   const chain = verifyChain(commits);
   if (chain.ok) {
-    const w = await verifyWitnesses(commits as unknown as Commit[], base.witnesses, base.publicKeyPem);
+    const w = await verifyWitnesses(
+      commits as unknown as Commit[],
+      base.witnesses,
+      base.publicKeyPem,
+    );
     witnesses = { ok: w.ok, problems: w.problems.map((p) => ({ code: p.code, seq: p.seq })) };
   }
   return {
@@ -138,6 +150,10 @@ export async function buildTampered(name: string, base: FixtureFile): Promise<Ta
     publicKeyPem: base.publicKeyPem,
     keyId: base.keyId,
     trueHead,
-    expected: { chain: pick(chain), chainWithHead: pick(verifyChain(commits, { expectedHead: trueHead })), witnesses },
+    expected: {
+      chain: pick(chain),
+      chainWithHead: pick(verifyChain(commits, { expectedHead: trueHead })),
+      witnesses,
+    },
   };
 }

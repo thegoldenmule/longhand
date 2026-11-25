@@ -73,7 +73,12 @@ function idTaken(tx: Tx, id: string): boolean {
 // Sessions
 // ---------------------------------------------------------------------------
 
-function sessionFor(tx: Tx, c: Commit, feedbackSessionId: string, tool: ToolName): AgentSessionState | null {
+function sessionFor(
+  tx: Tx,
+  c: Commit,
+  feedbackSessionId: string,
+  tool: ToolName,
+): AgentSessionState | null {
   const s = tx.s.ann.agentSessions[feedbackSessionId];
   if (!s) {
     tx.issue('unknown-session', `no feedback session ${feedbackSessionId}`);
@@ -84,7 +89,10 @@ function sessionFor(tx: Tx, c: Commit, feedbackSessionId: string, tool: ToolName
     return null;
   }
   if (c.sessionId !== feedbackSessionId) {
-    tx.issue('session-mismatch', `envelope sessionId ${c.sessionId} is not feedback session ${feedbackSessionId}`);
+    tx.issue(
+      'session-mismatch',
+      `envelope sessionId ${c.sessionId} is not feedback session ${feedbackSessionId}`,
+    );
     return null;
   }
   if (!(TOOLS[tool].sessions as readonly string[]).includes(s.kind)) {
@@ -104,7 +112,12 @@ function sessionFor(tx: Tx, c: Commit, feedbackSessionId: string, tool: ToolName
   return s;
 }
 
-function countInSession(tx: Tx, s: AgentSessionState, tool: ToolName, annotationId: string | null): void {
+function countInSession(
+  tx: Tx,
+  s: AgentSessionState,
+  tool: ToolName,
+  annotationId: string | null,
+): void {
   tx.ann('agentSessions')[s.id] = {
     ...s,
     counts: countCall(tool, s.counts),
@@ -153,7 +166,12 @@ function place(
   tx: Tx,
   documentId: string,
   stamp: Stamp,
-  opts: { point?: boolean; assoc?: 1 | -1; quote?: string; exact?: (doc: Tx['s']['docs'][string]['node']) => boolean },
+  opts: {
+    point?: boolean;
+    assoc?: 1 | -1;
+    quote?: string;
+    exact?: (doc: Tx['s']['docs'][string]['node']) => boolean;
+  },
 ): Placed | null {
   const d = tx.s.docs[documentId];
   if (!d) {
@@ -161,7 +179,10 @@ function place(
     return null;
   }
   if (stamp.version > d.version || stamp.readVersion > stamp.version) {
-    tx.issue('invalid-version', `versions ${stamp.readVersion}→${stamp.version} but document ${documentId} is at ${d.version}`);
+    tx.issue(
+      'invalid-version',
+      `versions ${stamp.readVersion}→${stamp.version} but document ${documentId} is at ${d.version}`,
+    );
     return null;
   }
   if (stamp.from > stamp.to || (opts.point && stamp.from !== stamp.to)) {
@@ -171,14 +192,25 @@ function place(
   const forward = mapsBetween(d.maps, stamp.version, d.version);
   const back = mapsBetween(d.maps, stamp.readVersion, stamp.version);
   if (!forward || !back) {
-    tx.issue('invalid-version', `step history does not cover versions ${stamp.readVersion}→${d.version}`);
+    tx.issue(
+      'invalid-version',
+      `step history does not cover versions ${stamp.readVersion}→${d.version}`,
+    );
     return null;
   }
   if (stamp.version === d.version && stamp.to > d.node.content.size) {
-    tx.issue('invalid-position', `range ${stamp.from}-${stamp.to} is outside document ${documentId}`);
+    tx.issue(
+      'invalid-position',
+      `range ${stamp.from}-${stamp.to} is outside document ${documentId}`,
+    );
     return null;
   }
-  if (stamp.readVersion === stamp.version && stamp.version === d.version && opts.exact && !opts.exact(d.node)) {
+  if (
+    stamp.readVersion === stamp.version &&
+    stamp.version === d.version &&
+    opts.exact &&
+    !opts.exact(d.node)
+  ) {
     tx.issue('target-mismatch', `positions do not match the target at version ${stamp.version}`);
     return null;
   }
@@ -198,7 +230,8 @@ function place(
     }
   }
   if (forward.length > 0 && touchedBetween(forward, from, to)) stale = true;
-  if (opts.quote !== undefined && !dead && inlineTextBetween(d.node, from, to) !== opts.quote) stale = true;
+  if (opts.quote !== undefined && !dead && inlineTextBetween(d.node, from, to) !== opts.quote)
+    stale = true;
   if (!opts.point && to <= from) dead = true;
   return { range: dead ? null : { from, to }, staleOnArrival: stale || dead };
 }
@@ -210,13 +243,15 @@ function sameRange(r: { ok: boolean; from?: number; to?: number }, s: Stamp): bo
 function placeAnchor(tx: Tx, t: ResolvedAnchor): Placed | null {
   return place(tx, t.anchor.documentId, t, {
     quote: t.anchor.quote,
-    exact: (doc) => sameRange(resolveAnchor(doc, t.anchor) as { ok: boolean; from?: number; to?: number }, t),
+    exact: (doc) =>
+      sameRange(resolveAnchor(doc, t.anchor) as { ok: boolean; from?: number; to?: number }, t),
   });
 }
 
 function placeSpan(tx: Tx, t: { span: SpanRef } & Stamp): Placed | null {
   return place(tx, t.span.documentId, t, {
-    exact: (doc) => sameRange(resolveSpan(doc, t.span) as { ok: boolean; from?: number; to?: number }, t),
+    exact: (doc) =>
+      sameRange(resolveSpan(doc, t.span) as { ok: boolean; from?: number; to?: number }, t),
   });
 }
 
@@ -229,10 +264,23 @@ function targetDoc(t: Target | ResolvedAnchor): string {
 }
 
 function anchorTarget(t: ResolvedAnchor): Target {
-  return { kind: 'anchor', anchor: t.anchor, from: t.from, to: t.to, readVersion: t.readVersion, version: t.version };
+  return {
+    kind: 'anchor',
+    anchor: t.anchor,
+    from: t.from,
+    to: t.to,
+    readVersion: t.readVersion,
+    version: t.version,
+  };
 }
 
-function newTracker(id: string, docId: string, group: TrackedGroup, range: Span | null, extra: Partial<Tracker> = {}): Tracker {
+function newTracker(
+  id: string,
+  docId: string,
+  group: TrackedGroup,
+  range: Span | null,
+  extra: Partial<Tracker> = {},
+): Tracker {
   return {
     id,
     docId,
@@ -250,7 +298,10 @@ function newTracker(id: string, docId: string, group: TrackedGroup, range: Span 
   };
 }
 
-function current(docId: string, r: Span | null): { documentId: string; from: number; to: number } | null {
+function current(
+  docId: string,
+  r: Span | null,
+): { documentId: string; from: number; to: number } | null {
   return r ? { documentId: docId, from: r.from, to: r.to } : null;
 }
 
@@ -266,7 +317,10 @@ export function foldSessionStarted(tx: Tx, c: CommitOf<'FeedbackSessionStarted'>
     return;
   }
   if (c.sessionId !== p.feedbackSessionId) {
-    tx.issue('session-mismatch', `envelope sessionId ${c.sessionId} is not feedback session ${p.feedbackSessionId}`);
+    tx.issue(
+      'session-mismatch',
+      `envelope sessionId ${c.sessionId} is not feedback session ${p.feedbackSessionId}`,
+    );
     return;
   }
   let requestId: string | null = null;
@@ -281,7 +335,11 @@ export function foldSessionStarted(tx: Tx, c: CommitOf<'FeedbackSessionStarted'>
       tx.issue('not-open', `feedback request ${req.id} is ${req.status}`);
       return;
     }
-    tx.ann('feedbackRequests')[req.id] = { ...req, status: 'running', feedbackSessionId: p.feedbackSessionId };
+    tx.ann('feedbackRequests')[req.id] = {
+      ...req,
+      status: 'running',
+      feedbackSessionId: p.feedbackSessionId,
+    };
     requestId = req.id;
   } else {
     const thr = tx.s.ann.discussions[p.trigger.threadId];
@@ -320,7 +378,11 @@ export function foldCommentAdded(tx: Tx, c: CommitOf<'CommentAdded'>): void {
   const placed = placeTarget(tx, p.target);
   if (!placed) return;
   const docId = targetDoc(p.target);
-  tx.addTracker(newTracker(p.commentId, docId, 'comments', placed.range, { nodeRange: p.target.kind === 'span' && p.target.span.unit !== 'sentence' }));
+  tx.addTracker(
+    newTracker(p.commentId, docId, 'comments', placed.range, {
+      nodeRange: p.target.kind === 'span' && p.target.span.unit !== 'sentence',
+    }),
+  );
   tx.ann('comments')[p.commentId] = {
     id: p.commentId,
     feedbackSessionId: p.feedbackSessionId,
@@ -370,7 +432,11 @@ export function foldSuggestionProposed(tx: Tx, c: CommitOf<'SuggestionProposed'>
   const p = c.payload;
   const sg = p.suggestion;
   const tool: ToolName =
-    sg.kind === 'word-choice' ? 'suggest_word_choice' : sg.kind === 'insertion' ? 'suggest_insertion' : 'suggest_rephrase';
+    sg.kind === 'word-choice'
+      ? 'suggest_word_choice'
+      : sg.kind === 'insertion'
+        ? 'suggest_insertion'
+        : 'suggest_rephrase';
   const s = sessionFor(tx, c, p.feedbackSessionId, tool);
   if (!s || idTaken(tx, p.suggestionId)) return;
   const common = {
@@ -385,21 +451,28 @@ export function foldSuggestionProposed(tx: Tx, c: CommitOf<'SuggestionProposed'>
   if (sg.kind === 'insertion') {
     const t = sg.target;
     const assoc: 1 | -1 = t.position === 'before' ? 1 : -1;
-    const placed = place(tx, t.documentId, { from: t.pos, to: t.pos, readVersion: t.readVersion, version: t.version }, {
-      point: true,
-      assoc,
-      exact: (doc) => {
-        const r = resolveInsertionPoint(doc, t.position, t.sentenceId);
-        return r.ok && r.pos === t.pos;
+    const placed = place(
+      tx,
+      t.documentId,
+      { from: t.pos, to: t.pos, readVersion: t.readVersion, version: t.version },
+      {
+        point: true,
+        assoc,
+        exact: (doc) => {
+          const r = resolveInsertionPoint(doc, t.position, t.sentenceId);
+          return r.ok && r.pos === t.pos;
+        },
       },
-    });
+    );
     if (!placed) return;
     let ref: Span | null = null;
     let stale = placed.staleOnArrival || placed.range === null;
     if (placed.range) {
       const pos = placed.range.from;
       const d = tx.s.docs[t.documentId]!;
-      const sent = segmentDoc(d.node).sentences.find((x) => (t.position === 'before' ? x.from === pos : x.to === pos));
+      const sent = segmentDoc(d.node).sentences.find((x) =>
+        t.position === 'before' ? x.from === pos : x.to === pos,
+      );
       if (sent) ref = { from: sent.from, to: sent.to };
       else stale = true;
     }
@@ -440,7 +513,13 @@ export function foldSuggestionProposed(tx: Tx, c: CommitOf<'SuggestionProposed'>
     };
     record =
       sg.kind === 'word-choice'
-        ? { ...base, kind: 'word-choice', alternatives: sg.alternatives, rationale: sg.rationale, adoptedAlternative: null }
+        ? {
+            ...base,
+            kind: 'word-choice',
+            alternatives: sg.alternatives,
+            rationale: sg.rationale,
+            adoptedAlternative: null,
+          }
         : { ...base, kind: 'rephrase', guidance: sg.guidance };
   }
   tx.addTracker(tracker);
@@ -451,7 +530,14 @@ export function foldSuggestionProposed(tx: Tx, c: CommitOf<'SuggestionProposed'>
   else addAiText(tx, p.suggestionId, [sg.guidance]);
 }
 
-function proposalCommon(c: Commit, proposalId: string, feedbackSessionId: string, documentId: string, rationale: string, stale: boolean) {
+function proposalCommon(
+  c: Commit,
+  proposalId: string,
+  feedbackSessionId: string,
+  documentId: string,
+  rationale: string,
+  stale: boolean,
+) {
   return {
     id: proposalId,
     feedbackSessionId,
@@ -480,7 +566,17 @@ export function foldMoveProposed(tx: Tx, c: CommitOf<'MoveProposed'>): void {
   });
   if (!placed) return;
   const assoc: 1 | -1 = p.destination.position === 'before' ? 1 : -1;
-  const dest = place(tx, docId, { from: p.destination.pos, to: p.destination.pos, readVersion: src.readVersion, version: src.version }, { point: true, assoc });
+  const dest = place(
+    tx,
+    docId,
+    {
+      from: p.destination.pos,
+      to: p.destination.pos,
+      readVersion: src.readVersion,
+      version: src.version,
+    },
+    { point: true, assoc },
+  );
   if (!dest) return;
   const stale = placed.staleOnArrival || dest.staleOnArrival || !placed.range || !dest.range;
   tx.addTracker(
@@ -533,14 +629,19 @@ export function foldSplitProposed(tx: Tx, c: CommitOf<'SplitProposed'>): void {
   const p = c.payload;
   const s = sessionFor(tx, c, p.feedbackSessionId, 'propose_split');
   if (!s || idTaken(tx, p.proposalId)) return;
-  const placed = place(tx, p.documentId, { from: p.pos, to: p.pos, readVersion: p.readVersion, version: p.version }, {
-    point: true,
-    assoc: 1,
-    exact: (doc) => {
-      const r = resolveSplit(doc, p.paragraphId, p.sentenceId);
-      return r.ok && r.pos === p.pos;
+  const placed = place(
+    tx,
+    p.documentId,
+    { from: p.pos, to: p.pos, readVersion: p.readVersion, version: p.version },
+    {
+      point: true,
+      assoc: 1,
+      exact: (doc) => {
+        const r = resolveSplit(doc, p.paragraphId, p.sentenceId);
+        return r.ok && r.pos === p.pos;
+      },
     },
-  });
+  );
   if (!placed) return;
   let stale = placed.staleOnArrival || !placed.range;
   let para: Span | null = null;
@@ -585,7 +686,12 @@ export function foldMergeProposed(tx: Tx, c: CommitOf<'MergeProposed'>): void {
     },
   });
   if (!placed) return;
-  const join = place(tx, p.documentId, { ...stamp, from: p.joinPos, to: p.joinPos }, { point: true, assoc: 1 });
+  const join = place(
+    tx,
+    p.documentId,
+    { ...stamp, from: p.joinPos, to: p.joinPos },
+    { point: true, assoc: 1 },
+  );
   if (!join) return;
   const stale = placed.staleOnArrival || join.staleOnArrival || !placed.range || !join.range;
   tx.addTracker(
@@ -727,7 +833,13 @@ export function foldDiscussAnswered(tx: Tx, c: CommitOf<'DiscussAnswered'>): voi
     ...thr,
     messages: [
       ...thr.messages,
-      { role: 'editor', body: p.body, seq: c.seq, createdAt: c.serverTime, feedbackSessionId: s.id },
+      {
+        role: 'editor',
+        body: p.body,
+        seq: c.seq,
+        createdAt: c.serverTime,
+        feedbackSessionId: s.id,
+      },
     ],
     status: 'answered',
   };
@@ -783,7 +895,12 @@ export function foldProposalRejected(tx: Tx, c: CommitOf<'ProposalRejected'>): v
     tx.issue('not-open', `proposal ${prop.id} is ${prop.status}`);
     return;
   }
-  const next = { ...prop, status: 'rejected', resolvedSeq: c.seq, rejectReason: p.reason } as ProposalState;
+  const next = {
+    ...prop,
+    status: 'rejected',
+    resolvedSeq: c.seq,
+    rejectReason: p.reason,
+  } as ProposalState;
   if (next.kind === 'move') {
     next.source = null;
     next.insertAt = null;
@@ -815,7 +932,10 @@ export function foldFeedbackRequested(tx: Tx, c: CommitOf<'FeedbackRequested'>):
     const d = tx.s.docs[scope.documentId]!;
     const maps = scope.version <= d.version ? mapsBetween(d.maps, scope.version, d.version) : null;
     if (!maps || scope.from > scope.to) {
-      tx.issue('invalid-version', `selection at version ${scope.version} cannot be mapped to ${d.version}`);
+      tx.issue(
+        'invalid-version',
+        `selection at version ${scope.version} cannot be mapped to ${d.version}`,
+      );
       return;
     }
     let from = scope.from;
@@ -825,7 +945,10 @@ export function foldFeedbackRequested(tx: Tx, c: CommitOf<'FeedbackRequested'>):
       to = Math.max(from, m.map(to, -1));
     }
     if (to > d.node.content.size) {
-      tx.issue('invalid-position', `selection ${scope.from}-${scope.to} is outside document ${d.id}`);
+      tx.issue(
+        'invalid-position',
+        `selection ${scope.from}-${scope.to} is outside document ${d.id}`,
+      );
       return;
     }
     scope = { ...scope, from, to, version: d.version };
@@ -852,7 +975,13 @@ export function foldDiscussRequested(tx: Tx, c: CommitOf<'DiscussRequested'>): v
     return;
   }
   const thr = tx.s.ann.discussions[p.threadId];
-  const msg = { role: 'writer' as const, body: p.message, seq: c.seq, createdAt: c.serverTime, feedbackSessionId: null };
+  const msg = {
+    role: 'writer' as const,
+    body: p.message,
+    seq: c.seq,
+    createdAt: c.serverTime,
+    feedbackSessionId: null,
+  };
   if (thr && thr.targetId !== p.targetId) {
     tx.issue('target-mismatch', `thread ${thr.id} discusses ${thr.targetId}, not ${p.targetId}`);
     return;
@@ -874,7 +1003,9 @@ export function foldSuggestionResolved(tx: Tx, c: CommitOf<'SuggestionResolved'>
     return;
   }
   const rec =
-    p.targetKind === 'suggestion' ? tx.s.ann.suggestions[p.targetId] : tx.s.ann.proposals[p.targetId];
+    p.targetKind === 'suggestion'
+      ? tx.s.ann.suggestions[p.targetId]
+      : tx.s.ann.proposals[p.targetId];
   if (!rec) {
     tx.issue('unknown-target', `no ${p.targetKind} ${p.targetId}`);
     return;
@@ -892,7 +1023,10 @@ export function foldChainHeadWitnessed(tx: Tx, c: CommitOf<'ChainHeadWitnessed'>
   const p = c.payload;
   const info = p.witnessedSeq < c.seq ? pvecGet(tx.s.commits, p.witnessedSeq - 1) : undefined;
   if (!info || info.hash !== p.witnessedHash || info.serverTime !== p.serverTime) {
-    tx.issue('witness-mismatch', `embedded witness of seq ${p.witnessedSeq} does not match the chain`);
+    tx.issue(
+      'witness-mismatch',
+      `embedded witness of seq ${p.witnessedSeq} does not match the chain`,
+    );
   }
 }
 
@@ -906,13 +1040,21 @@ export function foldSessionFailed(tx: Tx, c: CommitOf<'FeedbackSessionFailed'>):
   if (p.feedbackSessionId !== null) {
     const s = tx.s.ann.agentSessions[p.feedbackSessionId];
     if (!s) tx.issue('unknown-session', `no feedback session ${p.feedbackSessionId}`);
-    else if (s.status !== 'running') tx.issue('session-not-running', `feedback session ${s.id} is ${s.status}`);
-    else tx.ann('agentSessions')[s.id] = { ...s, status: 'failed', failureReason: p.reason, endedSeq: c.seq };
+    else if (s.status !== 'running')
+      tx.issue('session-not-running', `feedback session ${s.id} is ${s.status}`);
+    else
+      tx.ann('agentSessions')[s.id] = {
+        ...s,
+        status: 'failed',
+        failureReason: p.reason,
+        endedSeq: c.seq,
+      };
   }
   if (p.requestId !== null) {
     const r = tx.s.ann.feedbackRequests[p.requestId];
     if (!r) tx.issue('unknown-request', `no feedback request ${p.requestId}`);
-    else if (r.status === 'finished') tx.issue('not-open', `feedback request ${r.id} already finished`);
+    else if (r.status === 'finished')
+      tx.issue('not-open', `feedback request ${r.id} already finished`);
     else tx.ann('feedbackRequests')[r.id] = { ...r, status: 'failed' };
   }
   if (p.threadId !== null) {
@@ -921,4 +1063,3 @@ export function foldSessionFailed(tx: Tx, c: CommitOf<'FeedbackSessionFailed'>):
     else tx.ann('discussions')[t.id] = { ...t, status: 'failed' };
   }
 }
-

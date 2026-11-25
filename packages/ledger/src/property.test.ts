@@ -23,7 +23,18 @@ import { documentNode, foldIssues, projectState } from './project';
 import { stateAtSeq } from './replay';
 
 const DOCS = ['d1', 'd2'];
-const words = fc.constantFrom('rain', 'the', 'harbour', 'stone', 'quiet', 'Elena', 'ran', 'and', 'light', 'over');
+const words = fc.constantFrom(
+  'rain',
+  'the',
+  'harbour',
+  'stone',
+  'quiet',
+  'Elena',
+  'ran',
+  'and',
+  'light',
+  'over',
+);
 const phrase = fc.array(words, { minLength: 1, maxLength: 6 }).map((w) => w.join(' '));
 const frac = fc.double({ min: 0, max: 0.999, noNaN: true });
 
@@ -43,31 +54,90 @@ type Cmd =
   | { k: 'finish' };
 
 const cmd: fc.Arbitrary<Cmd> = fc.oneof(
-  { weight: 6, arbitrary: fc.record({ k: fc.constant('type' as const), doc: fc.nat(1), at: frac, text: phrase, sentence: fc.boolean() }) },
-  { weight: 2, arbitrary: fc.record({ k: fc.constant('enter' as const), doc: fc.nat(1), at: frac }) },
-  { weight: 2, arbitrary: fc.record({ k: fc.constant('delete' as const), doc: fc.nat(1), at: frac, len: fc.integer({ min: 1, max: 8 }) }) },
-  { weight: 2, arbitrary: fc.record({ k: fc.constant('paste' as const), doc: fc.nat(1), at: frac, text: phrase }) },
+  {
+    weight: 6,
+    arbitrary: fc.record({
+      k: fc.constant('type' as const),
+      doc: fc.nat(1),
+      at: frac,
+      text: phrase,
+      sentence: fc.boolean(),
+    }),
+  },
   {
     weight: 2,
-    arbitrary: fc.record({ k: fc.constant('copyPaste' as const), doc: fc.nat(1), at: frac, len: fc.integer({ min: 1, max: 12 }), to: frac, dst: fc.nat(1) }),
+    arbitrary: fc.record({ k: fc.constant('enter' as const), doc: fc.nat(1), at: frac }),
+  },
+  {
+    weight: 2,
+    arbitrary: fc.record({
+      k: fc.constant('delete' as const),
+      doc: fc.nat(1),
+      at: frac,
+      len: fc.integer({ min: 1, max: 8 }),
+    }),
+  },
+  {
+    weight: 2,
+    arbitrary: fc.record({
+      k: fc.constant('paste' as const),
+      doc: fc.nat(1),
+      at: frac,
+      text: phrase,
+    }),
+  },
+  {
+    weight: 2,
+    arbitrary: fc.record({
+      k: fc.constant('copyPaste' as const),
+      doc: fc.nat(1),
+      at: frac,
+      len: fc.integer({ min: 1, max: 12 }),
+      to: frac,
+      dst: fc.nat(1),
+    }),
   },
   { weight: 1, arbitrary: fc.constant({ k: 'undo' as const }) },
   { weight: 1, arbitrary: fc.constant({ k: 'review' as const }) },
-  { weight: 2, arbitrary: fc.record({ k: fc.constant('comment' as const), doc: fc.nat(1), s: frac }) },
-  { weight: 3, arbitrary: fc.record({ k: fc.constant('wordChoice' as const), doc: fc.nat(1), s: frac, alt: words }) },
-  { weight: 4, arbitrary: fc.record({ k: fc.constant('proposal' as const), doc: fc.nat(1), kind: fc.nat(3), a: frac, b: frac }) },
+  {
+    weight: 2,
+    arbitrary: fc.record({ k: fc.constant('comment' as const), doc: fc.nat(1), s: frac }),
+  },
+  {
+    weight: 3,
+    arbitrary: fc.record({
+      k: fc.constant('wordChoice' as const),
+      doc: fc.nat(1),
+      s: frac,
+      alt: words,
+    }),
+  },
+  {
+    weight: 4,
+    arbitrary: fc.record({
+      k: fc.constant('proposal' as const),
+      doc: fc.nat(1),
+      kind: fc.nat(3),
+      a: frac,
+      b: frac,
+    }),
+  },
   { weight: 3, arbitrary: fc.record({ k: fc.constant('retype' as const), pick: frac }) },
-  { weight: 4, arbitrary: fc.record({ k: fc.constant('resolve' as const), pick: frac, how: fc.nat(2) }) },
+  {
+    weight: 4,
+    arbitrary: fc.record({ k: fc.constant('resolve' as const), pick: frac, how: fc.nat(2) }),
+  },
   { weight: 1, arbitrary: fc.constant({ k: 'finish' as const }) },
 );
 
 /** Errors that mean "this random command does not apply here", not a bug. */
-const SKIPPABLE = /cap-exceeded|not-open|nothing to undo|builder: (No |The |Destination|.* is not|.* are not|text )/;
+const SKIPPABLE =
+  /cap-exceeded|not-open|nothing to undo|builder: (No |The |Destination|.* is not|.* are not|text )/;
 
 function textPos(b: LedgerBuilder, doc: string, f: number): number {
   const blocks = segmentDoc(b.doc(doc)).blocks;
   const blk = blocks[Math.floor(f * blocks.length)]!;
-  return blk.contentFrom + Math.floor(f * 997) % (blk.contentTo - blk.contentFrom + 1);
+  return blk.contentFrom + (Math.floor(f * 997) % (blk.contentTo - blk.contentFrom + 1));
 }
 
 function run(cmds: Cmd[]): LedgerBuilder {
@@ -131,9 +201,20 @@ function run(cmds: Cmd[]): LedgerBuilder {
           const quote = s.text.split(' ')[0]!;
           if (!quote.trim()) break;
           if (c.k === 'comment') {
-            b.comment(session, `c${n}`, { kind: 'anchor', documentId: doc, sentenceId: s.id, quote, occurrence: 0 }, `Look again at the harbour light and ${quote}.`);
+            b.comment(
+              session,
+              `c${n}`,
+              { kind: 'anchor', documentId: doc, sentenceId: s.id, quote, occurrence: 0 },
+              `Look again at the harbour light and ${quote}.`,
+            );
           } else {
-            b.suggestWordChoice(session, `w${n}`, { documentId: doc, sentenceId: s.id, quote, occurrence: 0 }, [c.alt], 'Try this.');
+            b.suggestWordChoice(
+              session,
+              `w${n}`,
+              { documentId: doc, sentenceId: s.id, quote, occurrence: 0 },
+              [c.alt],
+              'Try this.',
+            );
           }
           break;
         }
@@ -146,11 +227,28 @@ function run(cmds: Cmd[]): LedgerBuilder {
           if (c.kind === 0 && blocks.length > 1) {
             const bj = (bi + 1 + Math.floor(c.b * (blocks.length - 1))) % blocks.length;
             const position = bj > bi ? 'after' : 'before';
-            b.proposeMove(session, `p${n}`, { documentId: doc, unit: 'paragraph', ids: [blk.id] }, { position, id: blocks[bj]!.id }, 'Order.');
+            b.proposeMove(
+              session,
+              `p${n}`,
+              { documentId: doc, unit: 'paragraph', ids: [blk.id] },
+              { position, id: blocks[bj]!.id },
+              'Order.',
+            );
           } else if (c.kind === 0 && blk.sentences.length > 1) {
-            b.proposeMove(session, `p${n}`, { documentId: doc, unit: 'sentence', ids: [blk.sentences.at(-1)!.id] }, { position: 'before', id: blk.sentences[0]!.id }, 'Order.');
+            b.proposeMove(
+              session,
+              `p${n}`,
+              { documentId: doc, unit: 'sentence', ids: [blk.sentences.at(-1)!.id] },
+              { position: 'before', id: blk.sentences[0]!.id },
+              'Order.',
+            );
           } else if (c.kind === 1 && blk.sentences.length > 0) {
-            b.proposeCut(session, `p${n}`, { kind: 'span', documentId: doc, unit: 'sentence', ids: [blk.sentences[0]!.id] }, 'Trim.');
+            b.proposeCut(
+              session,
+              `p${n}`,
+              { kind: 'span', documentId: doc, unit: 'sentence', ids: [blk.sentences[0]!.id] },
+              'Trim.',
+            );
           } else if (c.kind === 2 && blk.sentences.length > 1) {
             b.proposeSplit(session, `p${n}`, doc, blk.id, blk.sentences[1]!.id, 'Split.');
           } else if (c.kind === 3 && bi + 1 < blocks.length) {
@@ -159,7 +257,9 @@ function run(cmds: Cmd[]): LedgerBuilder {
           break;
         }
         case 'retype': {
-          const open = Object.values(b.project.annotations.suggestions).filter((s) => s.status === 'open' && s.kind === 'word-choice' && s.range);
+          const open = Object.values(b.project.annotations.suggestions).filter(
+            (s) => s.status === 'open' && s.kind === 'word-choice' && s.range,
+          );
           if (open.length === 0) break;
           const s = open[Math.floor(c.pick * open.length)]!;
           if (s.kind !== 'word-choice' || !s.range) break;
@@ -167,8 +267,12 @@ function run(cmds: Cmd[]): LedgerBuilder {
           break;
         }
         case 'resolve': {
-          const props = Object.values(b.project.annotations.proposals).filter((p) => p.status === 'open');
-          const sugs = Object.values(b.project.annotations.suggestions).filter((s) => s.status === 'open');
+          const props = Object.values(b.project.annotations.proposals).filter(
+            (p) => p.status === 'open',
+          );
+          const sugs = Object.values(b.project.annotations.suggestions).filter(
+            (s) => s.status === 'open',
+          );
           if (c.how < 2 && props.length > 0) {
             const p = props[Math.floor(c.pick * props.length)]!;
             if (c.how === 0) b.acceptProposal(p.id);
@@ -198,12 +302,14 @@ describe('fold invariants (property)', () => {
         const commits = b.commits;
         if (process.env.FC_DEBUG) console.log('types', commits.map((x) => x.type).join(' '));
         let s = foldCommits(commits.slice(0, 1));
-        const contents = (ids: readonly string[]) => ids.map((d) => canonicalize(documentNode(s, d)!.toJSON()));
+        const contents = (ids: readonly string[]) =>
+          ids.map((d) => canonicalize(documentNode(s, d)!.toJSON()));
         for (const c of commits.slice(1)) {
           const existing = DOCS.filter((d) => documentNode(s, d) !== undefined);
           const before = contents(existing);
           s = foldCommits([c], s);
-          if (!MANUSCRIPT.has(c.type)) expect(contents(existing), `${c.type}@${c.seq}`).toEqual(before);
+          if (!MANUSCRIPT.has(c.type))
+            expect(contents(existing), `${c.type}@${c.seq}`).toEqual(before);
           if (c.actor.kind !== 'human') expect(MANUSCRIPT.has(c.type)).toBe(false);
         }
         expect(foldIssues(s)).toEqual([]);

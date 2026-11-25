@@ -9,7 +9,13 @@
  *   AI-visible text, excluding 4-grams already in the project when that text
  *   arrived.
  */
-import { isWhitespace, isWordCodePoint, segmentDoc, tokenizeWords, type PMNode } from '@longhand/schema';
+import {
+  isWhitespace,
+  isWordCodePoint,
+  segmentDoc,
+  tokenizeWords,
+  type PMNode,
+} from '@longhand/schema';
 
 /** Maximum normalized edit distance for the edit-distance rule. */
 export const EDIT_DISTANCE_THRESHOLD = 0.15;
@@ -80,7 +86,11 @@ export function editDistance(a: string, b: string): number {
     const ca = a.charCodeAt(i - 1);
     for (let j = 1; j <= b.length; j++) {
       const cost = ca === b.charCodeAt(j - 1) ? 0 : 1;
-      cur[j] = Math.min((prev[j] as number) + 1, (cur[j - 1] as number) + 1, (prev[j - 1] as number) + cost);
+      cur[j] = Math.min(
+        (prev[j] as number) + 1,
+        (cur[j - 1] as number) + 1,
+        (prev[j - 1] as number) + cost,
+      );
     }
     [prev, cur] = [cur, prev];
   }

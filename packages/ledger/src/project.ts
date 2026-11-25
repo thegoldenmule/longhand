@@ -94,7 +94,10 @@ export function documentVersion(state: LedgerState, documentId: string): number 
 }
 
 /** A document's canonical provenance runs, or undefined. */
-export function documentProvenance(state: LedgerState, documentId: string): ProvenanceRun[] | undefined {
+export function documentProvenance(
+  state: LedgerState,
+  documentId: string,
+): ProvenanceRun[] | undefined {
   const d = internal(state).docs[documentId];
   return d ? publicDoc(d).provenance : undefined;
 }

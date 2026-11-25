@@ -15,7 +15,11 @@ function setup() {
   return b;
 }
 
-function envelope(b: LedgerBuilder, actor: { kind: 'human' | 'agent' | 'system'; id: string }, sessionId = 'editor-1') {
+function envelope(
+  b: LedgerBuilder,
+  actor: { kind: 'human' | 'agent' | 'system'; id: string },
+  sessionId = 'editor-1',
+) {
   return {
     commitId: 'c-new',
     projectId: b.projectId,
@@ -67,7 +71,11 @@ describe('validateDraft', () => {
       expect(r.ok).toBe(false);
       if (!r.ok) expect(r.errors[0]!.code).toBe('actor-not-permitted');
     }
-    const p = { ...envelope(b, agent, 'fs'), type: 'ProposalAccepted', payload: { proposalId: 'x', documentId: 'd', baseVersion: 0 } };
+    const p = {
+      ...envelope(b, agent, 'fs'),
+      type: 'ProposalAccepted',
+      payload: { proposalId: 'x', documentId: 'd', baseVersion: 0 },
+    };
     const r = validateDraft(b.state, p, agent);
     expect(!r.ok && r.errors[0]!.code).toBe('actor-not-permitted');
   });
@@ -100,7 +108,14 @@ describe('validateDraft', () => {
   it('rejects steps that do not apply', () => {
     const b = setup();
     const d = textEdited(b) as unknown as { payload: { steps: unknown[] } };
-    d.payload.steps = [{ stepType: 'replace', from: 500, to: 500, slice: { content: [{ type: 'text', text: 'x' }] } }];
+    d.payload.steps = [
+      {
+        stepType: 'replace',
+        from: 500,
+        to: 500,
+        slice: { content: [{ type: 'text', text: 'x' }] },
+      },
+    ];
     const r = validateDraft(b.state, d, human);
     expect(!r.ok && r.errors[0]!.code).toBe('step-failed');
   });
@@ -112,7 +127,14 @@ describe('validateDraft', () => {
     const comment = (target: unknown, sessionId = 's') => ({
       ...envelope(b, agent, sessionId),
       type: 'CommentAdded',
-      payload: { commentId: 'c1', feedbackSessionId: 's', target, category: 'clarity', severity: 'minor', body: 'x' },
+      payload: {
+        commentId: 'c1',
+        feedbackSessionId: 's',
+        target,
+        category: 'clarity',
+        severity: 'minor',
+        body: 'x',
+      },
     });
     const v = b.version('d');
     const anchor = { documentId: 'd', sentenceId: 'p1.s1', quote: 'world', occurrence: 0 };
@@ -120,9 +142,17 @@ describe('validateDraft', () => {
     expect(validateDraft(b.state, comment(good), agent).ok).toBe(true);
     const wrongPos = validateDraft(b.state, comment({ ...good, from: 6 }), agent);
     expect(!wrongPos.ok && wrongPos.errors[0]!.code).toBe('target-mismatch');
-    const oldVersion = validateDraft(b.state, comment({ ...good, version: v - 1, readVersion: v - 1 }), agent);
+    const oldVersion = validateDraft(
+      b.state,
+      comment({ ...good, version: v - 1, readVersion: v - 1 }),
+      agent,
+    );
     expect(!oldVersion.ok && oldVersion.errors[0]!.code).toBe('invalid-version');
-    const unknownDoc = validateDraft(b.state, comment({ ...good, anchor: { ...anchor, documentId: 'zzz' } }), agent);
+    const unknownDoc = validateDraft(
+      b.state,
+      comment({ ...good, anchor: { ...anchor, documentId: 'zzz' } }),
+      agent,
+    );
     expect(!unknownDoc.ok && unknownDoc.errors[0]!.code).toBe('unknown-document');
     const wrongSession = validateDraft(b.state, comment(good, 'other'), agent);
     expect(!wrongSession.ok && wrongSession.errors[0]!.code).toBe('session-mismatch');
@@ -135,13 +165,24 @@ describe('validateDraft', () => {
     const b = setup();
     b.requestFeedback('r', { scope: { kind: 'document', documentId: 'd' } });
     b.startReview('s', 'r');
-    b.suggestWordChoice('s', 'w', { documentId: 'd', sentenceId: 'p1.s1', quote: 'world' }, ['planet'], 'r');
+    b.suggestWordChoice(
+      's',
+      'w',
+      { documentId: 'd', sentenceId: 'p1.s1', quote: 'world' },
+      ['planet'],
+      'r',
+    );
     const sys = { kind: 'system' as const, id: 'ledger' };
     const draft = {
       ...envelope(b, sys, 'system'),
       deviceId: 'server',
       type: 'SuggestionResolved',
-      payload: { targetId: 'w', targetKind: 'suggestion', outcome: 'adopted', triggerSeq: b.head.seq },
+      payload: {
+        targetId: 'w',
+        targetKind: 'suggestion',
+        outcome: 'adopted',
+        triggerSeq: b.head.seq,
+      },
     };
     const r = validateDraft(b.state, draft, sys);
     expect(!r.ok && r.errors[0]!.code).toBe('resolution-mismatch');
@@ -153,7 +194,13 @@ describe('validateDraft', () => {
     b.type('d', 'Hello world.');
     b.requestFeedback('r', { scope: { kind: 'document', documentId: 'd' } });
     b.startReview('s', 'r');
-    b.suggestWordChoice('s', 'w', { documentId: 'd', sentenceId: 'p1.s1', quote: 'world' }, ['planet'], 'r');
+    b.suggestWordChoice(
+      's',
+      'w',
+      { documentId: 'd', sentenceId: 'p1.s1', quote: 'world' },
+      ['planet'],
+      'r',
+    );
     const tr = new Transform(b.doc('d')).replaceWith(7, 12, schema.text('planet'));
     const draft = {
       ...envelope(b, human),
@@ -169,7 +216,9 @@ describe('validateDraft', () => {
       },
     };
     const r = validateDraft(b.state, draft, human);
-    expect(r.ok && r.resolutions).toEqual([{ targetId: 'w', targetKind: 'suggestion', outcome: 'adopted', triggerSeq: b.head.seq + 1 }]);
+    expect(r.ok && r.resolutions).toEqual([
+      { targetId: 'w', targetKind: 'suggestion', outcome: 'adopted', triggerSeq: b.head.seq + 1 },
+    ]);
   });
 
   it('accepts ProposalAccepted at an older baseVersion while open, not when stale', () => {
@@ -177,10 +226,19 @@ describe('validateDraft', () => {
     b.type('d', ' Second sentence.');
     b.requestFeedback('r', { scope: { kind: 'document', documentId: 'd' } });
     b.startReview('s', 'r');
-    b.proposeCut('s', 'p', { kind: 'span', documentId: 'd', unit: 'sentence', ids: ['p1.s2'] }, 'r');
+    b.proposeCut(
+      's',
+      'p',
+      { kind: 'span', documentId: 'd', unit: 'sentence', ids: ['p1.s2'] },
+      'r',
+    );
     const seen = b.version('d');
     b.type('d', 'Hi. ', { at: 1 });
-    const draft = { ...envelope(b, human), type: 'ProposalAccepted', payload: { proposalId: 'p', documentId: 'd', baseVersion: seen } };
+    const draft = {
+      ...envelope(b, human),
+      type: 'ProposalAccepted',
+      payload: { proposalId: 'p', documentId: 'd', baseVersion: seen },
+    };
     expect(validateDraft(b.state, draft, human).ok).toBe(true);
     b.type('d', 'X', { at: { after: 'Second' } });
     const r = validateDraft(b.state, draft, human);

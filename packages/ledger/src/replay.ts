@@ -2,7 +2,13 @@
  * Replay: the state at any seq (with periodic snapshots so scrubbing a long ledger
  * is fast), and the span inspector's history of one position.
  */
-import { SESSION_GAP_MS, type Commit, type InputMethod, type ProvenanceRun, type SuggestionState } from '@longhand/schema';
+import {
+  SESSION_GAP_MS,
+  type Commit,
+  type InputMethod,
+  type ProvenanceRun,
+  type SuggestionState,
+} from '@longhand/schema';
 import { applyCommit, emptyState } from './fold';
 import { projectState } from './project';
 import { pvecGet, pvecToArray } from './pvec';
@@ -39,7 +45,8 @@ export class Replay {
     while (this.latestSeq < seq) {
       this.latest = applyCommit(this.latest, this.commits[this.latestSeq] as Commit);
       this.latestSeq += 1;
-      if (this.latestSeq % this.snapshotEvery === 0) this.snapshots[this.latestSeq / this.snapshotEvery] = this.latest;
+      if (this.latestSeq % this.snapshotEvery === 0)
+        this.snapshots[this.latestSeq / this.snapshotEvery] = this.latest;
     }
   }
 
@@ -55,7 +62,8 @@ export class Replay {
     }
     const k = Math.floor(seq / this.snapshotEvery);
     let s = this.snapshots[k] as LedgerState;
-    for (let i = k * this.snapshotEvery; i < seq; i++) s = applyCommit(s, this.commits[i] as Commit);
+    for (let i = k * this.snapshotEvery; i < seq; i++)
+      s = applyCommit(s, this.commits[i] as Commit);
     return s;
   }
 
@@ -110,12 +118,21 @@ export interface SpanHistory {
   /** The annotation a `typed-from-suggestion` run matched (suggestion, comment, …). */
   matched: { id: string; group: string } | null;
   /** Suggestions open in this document when the text was typed. */
-  visibleSuggestions: Array<{ id: string; kind: SuggestionState['kind']; status: SuggestionState['status']; seq: number }>;
+  visibleSuggestions: Array<{
+    id: string;
+    kind: SuggestionState['kind'];
+    status: SuggestionState['status'];
+    seq: number;
+  }>;
   moves: SpanMove[];
 }
 
 /** The history of the unit at `pos` (see {@link SpanHistory}), or null if there is none. */
-export function spanHistory(state: LedgerState, documentId: string, pos: number): SpanHistory | null {
+export function spanHistory(
+  state: LedgerState,
+  documentId: string,
+  pos: number,
+): SpanHistory | null {
   const s = internal(state);
   const d = s.docs[documentId];
   if (!d) return null;
@@ -141,11 +158,21 @@ export function spanHistory(state: LedgerState, documentId: string, pos: number)
   }
   let matched: SpanHistory['matched'] = null;
   if (p.suggestionId) {
-    for (const g of ['suggestions', 'comments', 'questions', 'citationFlags', 'surfacedSources', 'sourceSuggestions', 'proposals'] as const) {
+    for (const g of [
+      'suggestions',
+      'comments',
+      'questions',
+      'citationFlags',
+      'surfacedSources',
+      'sourceSuggestions',
+      'proposals',
+    ] as const) {
       if (pub.annotations[g][p.suggestionId]) matched = { id: p.suggestionId, group: g };
     }
-    if (!matched && pub.annotations.discussions[p.suggestionId]) matched = { id: p.suggestionId, group: 'discussions' };
-    if (!matched && pub.annotations.agentSessions[p.suggestionId]) matched = { id: p.suggestionId, group: 'agentSessions' };
+    if (!matched && pub.annotations.discussions[p.suggestionId])
+      matched = { id: p.suggestionId, group: 'discussions' };
+    if (!matched && pub.annotations.agentSessions[p.suggestionId])
+      matched = { id: p.suggestionId, group: 'agentSessions' };
   }
   const visible = Object.values(pub.annotations.suggestions)
     .filter((sg) => {

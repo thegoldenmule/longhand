@@ -30,7 +30,9 @@ describe('typed input', () => {
     const b = fresh();
     b.type('d', 'x'.repeat(120));
     const edits = b.commits.filter((c) => c.type === 'TextEdited');
-    expect(edits.map((c) => (c.payload as { steps: unknown[] }).steps.length)).toEqual([50, 50, 20]);
+    expect(edits.map((c) => (c.payload as { steps: unknown[] }).steps.length)).toEqual([
+      50, 50, 20,
+    ]);
   });
 
   it('keeps the old provenance for a common prefix/suffix when typing over text', () => {
@@ -38,7 +40,9 @@ describe('typed input', () => {
     b.pasteExternal('d', 'colour');
     const pasteSeq = b.head.seq;
     // Replace "colour" with "colours" in one typed step (e.g. a spellchecker-style replace).
-    b.edit('d', [{ run: { method: 'typed' }, build: (tr) => tr.replaceWith(1, 7, schema.text('colours')) }]);
+    b.edit('d', [
+      { run: { method: 'typed' }, build: (tr) => tr.replaceWith(1, 7, schema.text('colours')) },
+    ]);
     expect(runsOf(b, 'd')).toEqual([
       ['colour', 'pasted-external', pasteSeq],
       ['s', 'typed', b.head.seq],
@@ -48,7 +52,9 @@ describe('typed input', () => {
   it('treats IME and autocorrect as typed', () => {
     const b = fresh();
     b.compose('d', ['に', 'にほ', 'にほん', '日本']);
-    b.edit('d', [{ run: { method: 'autocorrect' }, build: (tr) => tr.insert(3, schema.text('語')) }]);
+    b.edit('d', [
+      { run: { method: 'autocorrect' }, build: (tr) => tr.insert(3, schema.text('語')) },
+    ]);
     expect(runsOf(b, 'd').map((r) => r[1])).toEqual(['typed', 'typed']);
   });
 
@@ -183,7 +189,9 @@ describe('undo / redo (history)', () => {
   it('a history run inserting never-deleted text is pasted-external', () => {
     const b = fresh();
     b.type('d', 'Start.');
-    b.edit('d', [{ run: { method: 'history' }, build: (tr) => tr.insert(7, schema.text(' Invented.')) }]);
+    b.edit('d', [
+      { run: { method: 'history' }, build: (tr) => tr.insert(7, schema.text(' Invented.')) },
+    ]);
     expect(runsOf(b, 'd').at(-1)).toEqual([' Invented.', 'pasted-external', b.head.seq]);
   });
 });
@@ -206,24 +214,48 @@ describe('citations and clippings', () => {
 
   it('a citation run inserting text, or a citation of another source, is pasted-external', () => {
     const b = withSource();
-    b.human('CitationInserted', { citationId: 'ci', documentId: 'd', sourceId: 's1', locator: null });
-    b.edit('d', [{ run: { method: 'citation', citationId: 'ci' }, build: (tr) => tr.insert(9, schema.text('(Doe)')) }]);
+    b.human('CitationInserted', {
+      citationId: 'ci',
+      documentId: 'd',
+      sourceId: 's1',
+      locator: null,
+    });
+    b.edit('d', [
+      {
+        run: { method: 'citation', citationId: 'ci' },
+        build: (tr) => tr.insert(9, schema.text('(Doe)')),
+      },
+    ]);
     expect(runsOf(b, 'd').at(-1)).toEqual(['(Doe)', 'pasted-external', b.head.seq]);
     b.addSource('s2', { type: 'book', title: 'Other' });
-    b.human('CitationInserted', { citationId: 'ci2', documentId: 'd', sourceId: 's1', locator: null });
+    b.human('CitationInserted', {
+      citationId: 'ci2',
+      documentId: 'd',
+      sourceId: 's1',
+      locator: null,
+    });
     b.edit('d', [
       {
         run: { method: 'citation', citationId: 'ci2' },
-        build: (tr) => tr.insert(1, schema.nodes.citation!.create({ sourceId: 's2', locator: null })),
+        build: (tr) =>
+          tr.insert(1, schema.nodes.citation!.create({ sourceId: 's2', locator: null })),
       },
     ]);
-    expect(b.project.documents.d!.provenance[0]).toMatchObject({ from: 1, to: 2, class: 'pasted-external' });
+    expect(b.project.documents.d!.provenance[0]).toMatchObject({
+      from: 1,
+      to: 2,
+      class: 'pasted-external',
+    });
   });
 
   it('a clipping placed as one quote block with the clipping text is quoted', () => {
     const b = withSource();
     b.placeClipping('d', 'k1');
-    expect(runsOf(b, 'd').slice(1).map((r) => [r[0], r[1]])).toEqual([
+    expect(
+      runsOf(b, 'd')
+        .slice(1)
+        .map((r) => [r[0], r[1]]),
+    ).toEqual([
       ['Quoted line one.', 'quoted'],
       ['Quoted line two.', 'quoted'],
     ]);
@@ -232,14 +264,22 @@ describe('citations and clippings', () => {
   it('a clipping run with different text is pasted-external', () => {
     const b = withSource();
     b.placeClipping('d', 'k1', { text: 'Quoted line one.\nAltered.' });
-    expect(runsOf(b, 'd').slice(1).map((r) => r[1])).toEqual(['pasted-external', 'pasted-external']);
+    expect(
+      runsOf(b, 'd')
+        .slice(1)
+        .map((r) => r[1]),
+    ).toEqual(['pasted-external', 'pasted-external']);
   });
 
   it('a removed clipping can no longer be verified', () => {
     const b = withSource();
     b.human('ClippingRemoved', { clippingId: 'k1' });
     b.placeClipping('d', 'k1');
-    expect(runsOf(b, 'd').slice(1).map((r) => r[1])).toEqual(['pasted-external', 'pasted-external']);
+    expect(
+      runsOf(b, 'd')
+        .slice(1)
+        .map((r) => r[1]),
+    ).toEqual(['pasted-external', 'pasted-external']);
   });
 });
 
@@ -267,13 +307,22 @@ describe('fold errors', () => {
     const before = b.state;
     const last = commits.at(-1)!;
     expect(() => applyCommit(before, last)).toThrow(FoldError);
-    const bogus = { ...last, seq: last.seq + 1, prevHash: last.hash, payload: { ...last.payload, baseVersion: 0 } };
+    const bogus = {
+      ...last,
+      seq: last.seq + 1,
+      prevHash: last.hash,
+      payload: { ...last.payload, baseVersion: 0 },
+    };
     expect(() => applyCommit(before, bogus as never)).toThrow(/baseVersion/);
     const bad = {
       ...last,
       seq: last.seq + 1,
       prevHash: last.hash,
-      payload: { ...last.payload, baseVersion: 3, steps: [{ stepType: 'replace', from: 900, to: 900 }] },
+      payload: {
+        ...last.payload,
+        baseVersion: 3,
+        steps: [{ stepType: 'replace', from: 900, to: 900 }],
+      },
     };
     expect(() => applyCommit(before, bad as never)).toThrow(/does not apply/);
     expect(foldIssues(before)).toEqual([]);

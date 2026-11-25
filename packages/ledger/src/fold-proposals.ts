@@ -19,7 +19,13 @@
  * Inserted spaces are class `typed` with `originSeq` = the accept seq (they carry
  * no words).
  */
-import { isWhitespace, schema, type CommitOf, type PMNode, type ProposalState } from '@longhand/schema';
+import {
+  isWhitespace,
+  schema,
+  type CommitOf,
+  type PMNode,
+  type ProposalState,
+} from '@longhand/schema';
 import { Fragment, Slice } from 'prosemirror-model';
 import { ReplaceStep, StepMap } from 'prosemirror-transform';
 import { beginDocCommit, buryAll, finishDocCommit, stepDoc, type DocCommit } from './doccommit';
@@ -54,7 +60,10 @@ function insertSpace(dc: DocCommit, pos: number): void {
   stepDoc(
     dc,
     new ReplaceStep(pos, pos, SPACE()),
-    (a) => ({ assigned: a.changes.map((c) => c.inserted.map(() => p)), buried: a.changes.map(() => []) }),
+    (a) => ({
+      assigned: a.changes.map((c) => c.inserted.map(() => p)),
+      buried: a.changes.map(() => []),
+    }),
     { typed: false, hint: null },
   );
 }
@@ -65,7 +74,10 @@ function deleteRange(dc: DocCommit, from: number, to: number, slice: Slice = Sli
   stepDoc(
     dc,
     new ReplaceStep(from, to, slice),
-    (a) => ({ assigned: a.changes.map((c) => c.inserted.map(() => p)), buried: buryAll(a.changes, dc.seq, token) }),
+    (a) => ({
+      assigned: a.changes.map((c) => c.inserted.map(() => p)),
+      buried: buryAll(a.changes, dc.seq, token),
+    }),
     { typed: false, hint: null },
   );
 }
@@ -89,15 +101,20 @@ function acceptMove(dc: DocCommit, t: Tracker, unit: 'sentence' | 'paragraph' | 
   const src = t.range;
   const insertAt = t.point;
   if (!src || insertAt === null) fail(dc.seq, 'move proposal has no current positions');
-  if (insertAt >= src.from && insertAt <= src.to) fail(dc.seq, 'move destination lies inside its source');
+  if (insertAt >= src.from && insertAt <= src.to)
+    fail(dc.seq, 'move destination lies inside its source');
   const doc = dc.node;
   if (unit !== 'sentence') {
     for (const p of [src.from, src.to, insertAt]) {
-      if (doc.resolve(p).depth !== 0) fail(dc.seq, 'move positions are no longer top-level boundaries');
+      if (doc.resolve(p).depth !== 0)
+        fail(dc.seq, 'move positions are no longer top-level boundaries');
     }
   }
   const slice = doc.slice(src.from, src.to);
-  const moved = unitsBetween(doc, src.from, src.to).map((u) => ({ key: u.key, p: provAt(dc.runs, u.pos) as Prov }));
+  const moved = unitsBetween(doc, src.from, src.to).map((u) => ({
+    key: u.key,
+    p: provAt(dc.runs, u.pos) as Prov,
+  }));
   const delMap = new StepMap([src.from, src.to - src.from, 0]);
   const ins = delMap.map(insertAt, insertAt < src.from ? 1 : -1);
   // Annotations wholly inside the moved text move with it.
@@ -115,21 +132,31 @@ function acceptMove(dc: DocCommit, t: Tracker, unit: 'sentence' | 'paragraph' | 
     });
   }
   const facts = { typed: false, hint: null, relocated };
-  stepDoc(dc, new ReplaceStep(src.from, src.to, Slice.empty), (a) => ({
-    assigned: a.changes.map((c) => c.inserted.map(() => prov('typed', dc.seq))),
-    buried: a.changes.map(() => []),
-  }), facts);
-  stepDoc(dc, new ReplaceStep(ins, ins, slice), (a) => {
-    const assigned = a.changes.map((c) => {
-      if (c.inserted.length !== moved.length) fail(dc.seq, 'moved content changed shape');
-      return c.inserted.map((u, i) => {
-        const m = moved[i] as { key: string; p: Prov };
-        if (m.key !== u.key) fail(dc.seq, 'moved content changed');
-        return withMove(m.p, dc.seq);
+  stepDoc(
+    dc,
+    new ReplaceStep(src.from, src.to, Slice.empty),
+    (a) => ({
+      assigned: a.changes.map((c) => c.inserted.map(() => prov('typed', dc.seq))),
+      buried: a.changes.map(() => []),
+    }),
+    facts,
+  );
+  stepDoc(
+    dc,
+    new ReplaceStep(ins, ins, slice),
+    (a) => {
+      const assigned = a.changes.map((c) => {
+        if (c.inserted.length !== moved.length) fail(dc.seq, 'moved content changed shape');
+        return c.inserted.map((u, i) => {
+          const m = moved[i] as { key: string; p: Prov };
+          if (m.key !== u.key) fail(dc.seq, 'moved content changed');
+          return withMove(m.p, dc.seq);
+        });
       });
-    });
-    return { assigned, buried: a.changes.map(() => []) };
-  }, facts);
+      return { assigned, buried: a.changes.map(() => []) };
+    },
+    facts,
+  );
   // Relocated trackers are already at their final positions; restore ref ranges too.
   for (const o of dc.trackers) {
     if (!relocated.has(o.id) || !o.ref) continue;
@@ -169,7 +196,8 @@ function acceptCut(dc: DocCommit, t: Tracker, inline: boolean): void {
     return;
   }
   if (!inline) {
-    for (const p of [r.from, r.to]) if (doc.resolve(p).depth !== 0) fail(dc.seq, 'cut range is no longer whole nodes');
+    for (const p of [r.from, r.to])
+      if (doc.resolve(p).depth !== 0) fail(dc.seq, 'cut range is no longer whole nodes');
   }
   deleteRange(dc, r.from, r.to);
   if (inline) cleanGap(dc, r.from);
@@ -179,7 +207,8 @@ function acceptSplit(dc: DocCommit, t: Tracker): void {
   const pos = t.point;
   if (pos === null) fail(dc.seq, 'split proposal has no current position');
   const $p = dc.node.resolve(pos);
-  if ($p.parent.type.name !== 'paragraph' || $p.parentOffset === 0) fail(dc.seq, 'split position is not inside a paragraph');
+  if ($p.parent.type.name !== 'paragraph' || $p.parentOffset === 0)
+    fail(dc.seq, 'split position is not inside a paragraph');
   let w = pos;
   for (;;) {
     const ch = charBefore(dc.node, w);
@@ -254,7 +283,11 @@ export function foldProposalAccepted(tx: Tx, c: CommitOf<'ProposalAccepted'>): b
   t.range = null;
   t.point = null;
   t.ref = null;
-  tx.ann('proposals')[prop.id] = { ...prop, status: 'accepted', resolvedSeq: c.seq } as ProposalState;
+  tx.ann('proposals')[prop.id] = {
+    ...prop,
+    status: 'accepted',
+    resolvedSeq: c.seq,
+  } as ProposalState;
   finishDocCommit(dc, { matcher: false, contentChanged: !dc.node.eq(base.node) });
   return true;
 }

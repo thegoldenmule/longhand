@@ -16,14 +16,21 @@ import { readFileSync } from 'node:fs';
 import { FIXTURE_DEFINITIONS, TAMPER_DEFINITIONS } from './definitions';
 import type { FixtureFile, TamperedFixtureFile } from './generate';
 
-export type { ExpectedDocument, ExpectedOutputs, FixtureFile, TamperedFixtureFile } from './generate';
+export type {
+  ExpectedDocument,
+  ExpectedOutputs,
+  FixtureFile,
+  TamperedFixtureFile,
+} from './generate';
 export { LedgerBuilder } from '../src/builder';
 
 /** Names of the golden fixtures. */
 export const FIXTURE_NAMES: readonly string[] = Object.freeze(Object.keys(FIXTURE_DEFINITIONS));
 
 /** Names of the tampered fixtures. */
-export const TAMPERED_FIXTURE_NAMES: readonly string[] = Object.freeze(Object.keys(TAMPER_DEFINITIONS));
+export const TAMPERED_FIXTURE_NAMES: readonly string[] = Object.freeze(
+  Object.keys(TAMPER_DEFINITIONS),
+);
 
 const dir = new URL('./', import.meta.url);
 
@@ -47,7 +54,11 @@ export function loadTamperedFixture(name: string): TamperedFixtureFile {
 }
 
 /** The test-only witness key the fixtures are signed with. Never use it outside tests. */
-export function loadFixtureWitnessKey(): { publicKeyPem: string; privateKeyPkcs8Pem: string; keyId: string } {
+export function loadFixtureWitnessKey(): {
+  publicKeyPem: string;
+  privateKeyPkcs8Pem: string;
+  keyId: string;
+} {
   return JSON.parse(readFileSync(new URL('witness-test-key.json', dir), 'utf8')) as {
     publicKeyPem: string;
     privateKeyPkcs8Pem: string;

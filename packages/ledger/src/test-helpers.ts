@@ -13,10 +13,17 @@ export function textOf(b: LedgerBuilder, id: string): string {
 export function runsOf(b: LedgerBuilder, id: string): Array<[string, string, number, string?]> {
   const n = documentNode(b.state, id)!;
   return b.project.documents[id]!.provenance.map((r: ProvenanceRun) => {
-    const extra = [r.suggestionId ? `sug=${r.suggestionId}` : '', r.moves ? `moves=${r.moves.join(',')}` : '']
+    const extra = [
+      r.suggestionId ? `sug=${r.suggestionId}` : '',
+      r.moves ? `moves=${r.moves.join(',')}` : '',
+    ]
       .filter(Boolean)
       .join(' ');
-    const row: [string, string, number, string?] = [inlineTextBetween(n, r.from, r.to), r.class, r.originSeq];
+    const row: [string, string, number, string?] = [
+      inlineTextBetween(n, r.from, r.to),
+      r.class,
+      r.originSeq,
+    ];
     if (extra) row.push(extra);
     return row;
   });

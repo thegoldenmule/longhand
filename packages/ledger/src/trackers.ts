@@ -58,7 +58,12 @@ export function newScratch(): Scratch {
 }
 
 /** True if a change touches the text range `[from, to)` (old coordinates). */
-export function touchesRange(changes: readonly Change[], from: number, to: number, inclusive = false): boolean {
+export function touchesRange(
+  changes: readonly Change[],
+  from: number,
+  to: number,
+  inclusive = false,
+): boolean {
   for (const c of changes) {
     if (inclusive) {
       if (c.oldStart <= to && c.oldEnd >= from) return true;
@@ -75,7 +80,8 @@ export function touchesRange(changes: readonly Change[], from: number, to: numbe
 
 /** True if a change removes content on both sides of `pos`, or replaces content at it. */
 export function touchesPoint(changes: readonly Change[], pos: number): boolean {
-  for (const c of changes) if (c.oldEnd > c.oldStart && c.oldStart < pos && c.oldEnd > pos) return true;
+  for (const c of changes)
+    if (c.oldEnd > c.oldStart && c.oldStart < pos && c.oldEnd > pos) return true;
   return false;
 }
 

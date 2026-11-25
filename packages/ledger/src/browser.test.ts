@@ -29,7 +29,11 @@ export function run(json) {
 describe('browser runtime', () => {
   it('folds every fixture to byte-identical output', async () => {
     const out = await build({
-      stdin: { contents: ENTRY, resolveDir: fileURLToPath(new URL('.', import.meta.url)), loader: 'ts' },
+      stdin: {
+        contents: ENTRY,
+        resolveDir: fileURLToPath(new URL('.', import.meta.url)),
+        loader: 'ts',
+      },
       bundle: true,
       platform: 'browser',
       format: 'iife',
@@ -44,7 +48,9 @@ describe('browser runtime', () => {
     vm.runInContext(code, context);
     const ledgers = FIXTURE_NAMES.map((n) => loadFixture(n).commits);
     // Pass JSON text so every object is created inside the browser-like realm.
-    const browser = (context as { __longhand: { run: (json: string) => string[] } }).__longhand.run(JSON.stringify(ledgers));
+    const browser = (context as { __longhand: { run: (json: string) => string[] } }).__longhand.run(
+      JSON.stringify(ledgers),
+    );
     const node = ledgers.map((commits) => {
       const ps = projectState(foldCommits(commits));
       return canonicalize({ state: ps, words: projectWordsByClass(ps), chain: true });
