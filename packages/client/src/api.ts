@@ -319,6 +319,11 @@ export class LonghandClient {
     return this.json('POST', `${this.p(projectId)}/feedback`, { draft });
   }
 
+  /** Appends the writer's `ChatMessageSent` draft and returns the session replying to it. */
+  sendChat(projectId: string, draft: CommitDraft): Promise<SessionStart> {
+    return this.json('POST', `${this.p(projectId)}/chat`, { draft });
+  }
+
   /** Appends the writer's `DiscussRequested` draft and returns the session answering it. */
   requestDiscuss(projectId: string, draft: CommitDraft): Promise<SessionStart> {
     return this.json('POST', `${this.p(projectId)}/discuss`, { draft });

@@ -9,6 +9,7 @@ import {
   HttpAnnotationSink,
   TOOL_EVENT_TYPES,
   runDiscussSession,
+  runChatSession,
   runFeedbackSession,
   toolForDraft,
   type ModelAdapter,
@@ -33,7 +34,7 @@ import { HttpError, errMsg } from '../util';
 import { mockAdapter } from './mock-script';
 
 /** Kind of agent session. */
-export type SessionKind = 'review' | 'discuss';
+export type SessionKind = 'review' | 'discuss' | 'chat';
 
 /** Agent event types the events endpoint accepts, per session kind (agent README). */
 const REVIEW_TYPES = new Set<string>([
@@ -56,9 +57,20 @@ const DISCUSS_TYPES = new Set<string>([
   'DiscussAnswered',
   'FeedbackSessionFailed',
 ]);
+/** A chat session may leave the review's notes, and ends with `ChatReplied` instead of `ReviewFinished`. */
+const CHAT_TYPES = new Set<string>([
+  ...[...REVIEW_TYPES].filter((t) => t !== 'ReviewFinished'),
+  'ChatReplied',
+]);
+const TYPES_BY_KIND: Readonly<Record<SessionKind, ReadonlySet<string>>> = {
+  review: REVIEW_TYPES,
+  discuss: DISCUSS_TYPES,
+  chat: CHAT_TYPES,
+};
 const CLOSING_TYPES = new Set<string>([
   'ReviewFinished',
   'DiscussAnswered',
+  'ChatReplied',
   'FeedbackSessionFailed',
 ]);
 
@@ -80,6 +92,8 @@ export interface AgentSession {
   kind: SessionKind;
   requestId: string | null;
   threadId: string | null;
+  /** Chat sessions: the conversation and the writer message being answered. */
+  chat: { chatId: string; messageId: string } | null;
   intensity: Intensity | null;
   tokenHash: Buffer;
   /** `open`: drafts accepted; `cancelling`: only `FeedbackSessionFailed`; `closed`: nothing. */
@@ -97,9 +111,12 @@ export interface AgentSession {
 export type AdapterFactory = (ctx: {
   kind: SessionKind;
   lens?: string;
-  /** Every lens the writer asked for (review sessions). */
+  /** Every lens the writer asked for (review and chat sessions). */
   lenses?: readonly string[];
   threadId?: string;
+  /** Chat sessions: the writer's message, and the note it is about. */
+  message?: string;
+  aboutId?: string | null;
 }) => ModelAdapter;
 
 /** Adapter factory for `MODEL_ADAPTER` (`claude` or `mock`). */
@@ -114,6 +131,8 @@ export function adapterFactory(
         ...(ctx.lens ? { lens: ctx.lens } : {}),
         ...(ctx.lenses ? { lenses: ctx.lenses } : {}),
         ...(ctx.threadId ? { threadId: ctx.threadId } : {}),
+        ...(ctx.message !== undefined ? { message: ctx.message } : {}),
+        ...(ctx.aboutId ? { aboutId: ctx.aboutId } : {}),
         ...(opts.mockStepDelayMs ? { stepDelayMs: opts.mockStepDelayMs } : {}),
       });
   }
@@ -171,6 +190,7 @@ export class SessionManager {
     kind: SessionKind;
     requestId?: string | null;
     threadId?: string | null;
+    chat?: { chatId: string; messageId: string } | null;
     intensity?: Intensity | null;
     sessionId?: string;
   }): Promise<{ session: AgentSession; token: string }> {
@@ -185,6 +205,7 @@ export class SessionManager {
       kind: opts.kind,
       requestId: opts.requestId ?? null,
       threadId: opts.threadId ?? null,
+      chat: opts.chat ?? null,
       intensity: opts.intensity ?? null,
       tokenHash: hashToken(token),
       phase: 'open',
@@ -253,8 +274,7 @@ export class SessionManager {
         throw new HttpError(400, 'invalid-draft', `The draft is not a valid commit: ${detail}`);
       }
       const draft = parsed.data as CommitDraft;
-      const allowed = session.kind === 'discuss' ? DISCUSS_TYPES : REVIEW_TYPES;
-      if (!allowed.has(draft.type)) {
+      if (!TYPES_BY_KIND[session.kind].has(draft.type)) {
         throw new HttpError(
           403,
           'forbidden',
@@ -298,7 +318,11 @@ export class SessionManager {
         const ok =
           session.kind === 'discuss'
             ? trigger.kind === 'discuss' && trigger.threadId === session.threadId
-            : trigger.kind === 'feedback' && trigger.requestId === session.requestId;
+            : session.kind === 'chat'
+              ? trigger.kind === 'chat' &&
+                trigger.chatId === session.chat?.chatId &&
+                trigger.messageId === session.chat.messageId
+              : trigger.kind === 'feedback' && trigger.requestId === session.requestId;
         if (!ok)
           throw new HttpError(403, 'forbidden', 'The session was started for another request.');
       } else if (isFailure) {
@@ -338,9 +362,9 @@ export class SessionManager {
       if (
         (TOOL_EVENT_TYPES as readonly string[]).includes(draft.type) &&
         folded &&
-        session.kind === 'review'
+        (session.kind === 'review' || session.kind === 'chat')
       ) {
-        const intensity = session.intensity ?? requestIntensity(state, session.requestId);
+        const intensity = session.intensity ?? sessionIntensity(state, session);
         if (intensity) {
           const violation = capViolation(
             toolForDraft(draft as ToolEventDraft),
@@ -438,6 +462,58 @@ export class SessionManager {
     return session;
   }
 
+  /** Starts a chat reply for a folded `ChatMessageSent`. */
+  async startChat(opts: {
+    projectId: string;
+    accountId: string;
+    request: EventPayload<'ChatMessageSent'>;
+    model?: string;
+  }): Promise<AgentSession> {
+    const ledger = await this.deps.ledger(opts.projectId);
+    const chat = { chatId: opts.request.chatId, messageId: opts.request.messageId };
+    const { session, token } = await this.open({
+      projectId: opts.projectId,
+      accountId: opts.accountId,
+      kind: 'chat',
+      chat,
+      intensity: opts.request.intensity,
+    });
+    const state = ledger.publicState;
+    // Pass the selection the fold mapped to the current version.
+    const msg = state.annotations.chats[chat.chatId]?.messages.find((m) => m.id === chat.messageId);
+    const selection =
+      msg && msg.role === 'writer' && msg.scope.kind === 'selection'
+        ? { from: msg.scope.from, to: msg.scope.to }
+        : undefined;
+    const adapter = this.deps.adapters({
+      kind: 'chat',
+      lens: opts.request.lenses[0],
+      lenses: opts.request.lenses,
+      message: opts.request.text,
+      aboutId: opts.request.context.aboutId,
+    });
+    session.done = this.supervise(session, () =>
+      runChatSession({
+        state,
+        request: opts.request,
+        sink: this.sink(session, token),
+        adapter,
+        search: this.deps.search,
+        feedbackSessionId: session.id,
+        ...(selection ? { selection } : {}),
+        ...(opts.model ? { model: opts.model } : {}),
+        ...(this.deps.models ? { models: this.modelChoice() } : {}),
+        ...(this.deps.timeoutMs ? { timeoutMs: this.deps.timeoutMs } : {}),
+        ...(this.deps.finishGraceMs !== undefined
+          ? { finishGraceMs: this.deps.finishGraceMs }
+          : {}),
+        signal: session.abort.signal,
+        onProgress: (e) => this.progress(session, e),
+      }),
+    );
+    return session;
+  }
+
   /** Starts a discuss reply for a folded `DiscussRequested`. */
   async startDiscuss(opts: {
     projectId: string;
@@ -477,7 +553,7 @@ export class SessionManager {
     const m = this.deps.models ?? {};
     return {
       ...(m.full ? { fullReview: m.full } : {}),
-      ...(m.quick ? { selection: m.quick, discuss: m.quick } : {}),
+      ...(m.quick ? { selection: m.quick, discuss: m.quick, chat: m.quick } : {}),
     };
   }
 
@@ -519,6 +595,8 @@ export class SessionManager {
           feedbackSessionId: folded ? session.id : null,
           requestId: session.requestId,
           threadId: session.threadId,
+          // Before the session started, a chat message is named directly.
+          ...(session.chat && !folded ? { chat: session.chat } : {}),
           reason: why.slice(0, 500),
         });
       }
@@ -563,8 +641,17 @@ export class SessionManager {
   }
 }
 
-function requestIntensity(state: ProjectState, requestId: string | null): Intensity | null {
-  return requestId ? (state.annotations.feedbackRequests[requestId]?.intensity ?? null) : null;
+/** The intensity whose caps bound a session: its request's, or its chat message's. */
+function sessionIntensity(state: ProjectState, session: AgentSession): Intensity | null {
+  if (session.requestId)
+    return state.annotations.feedbackRequests[session.requestId]?.intensity ?? null;
+  if (session.chat) {
+    const m = state.annotations.chats[session.chat.chatId]?.messages.find(
+      (x) => x.id === session.chat?.messageId,
+    );
+    return m && m.role === 'writer' ? m.intensity : null;
+  }
+  return null;
 }
 
 function actorOf(body: unknown): Actor {

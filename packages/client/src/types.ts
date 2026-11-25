@@ -122,7 +122,7 @@ export interface SessionStart {
 /** `GET /sessions/:id`. */
 export interface SessionInfo {
   id: string;
-  kind: 'review' | 'discuss';
+  kind: 'review' | 'discuss' | 'chat';
   requestId: string | null;
   threadId: string | null;
   phase: 'open' | 'cancelling' | 'closed';

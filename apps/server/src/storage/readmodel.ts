@@ -29,6 +29,7 @@ export const ANNOTATION_COLLECTIONS = [
   'surfacedSources',
   'sourceSuggestions',
   'discussions',
+  'chats',
 ] as const;
 
 type AnnotationCollection = (typeof ANNOTATION_COLLECTIONS)[number];
@@ -222,8 +223,8 @@ export class ReadModel {
       if (prev?.annotations.agentSessions[id] === s) continue;
       await this.q(
         `INSERT INTO agent_sessions (session_id, project_id, kind, request_id, thread_id, model, status,
-                                     started_seq, ended_seq, failure_reason)
-         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
+                                     started_seq, ended_seq, failure_reason, chat_id)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
          ON CONFLICT (project_id, session_id) DO UPDATE SET
            status = EXCLUDED.status, ended_seq = EXCLUDED.ended_seq, failure_reason = EXCLUDED.failure_reason`,
         [
@@ -237,6 +238,7 @@ export class ReadModel {
           s.startedSeq,
           s.endedSeq,
           s.failureReason,
+          s.chatId,
         ],
       );
     }
@@ -258,7 +260,11 @@ export class ReadModel {
         projectId,
         collection,
         id,
-        typeof rec.seq === 'number' ? rec.seq : 0,
+        typeof rec.seq === 'number'
+          ? rec.seq
+          : typeof rec.createdSeq === 'number'
+            ? rec.createdSeq
+            : 0,
         statusOf(rec),
         documentIdOf(rec),
         typeof rec.feedbackSessionId === 'string' ? rec.feedbackSessionId : null,

@@ -2,13 +2,22 @@
  * The canned script `MODEL_ADAPTER=mock` plays (e2e tests and offline demos). It
  * reads the first segmented sentence of the prompt, comments on it, asks a
  * question about it and finishes the review; a discuss session answers once.
+ *
+ * A chat session always replies. A message containing the word "review" first
+ * leaves the review's notes (the comment, the question and the lens-driven
+ * extras); a message about a note answers about it; anything else gets a
+ * reply only. See {@link MOCK_CHAT_REPLIES}.
  * Every call goes through the real MCP tool server, relay and ledger ingest.
  */
 import { MockModelAdapter, type MockStep, type ModelRunInput } from '@longhand/agent';
 
 /** What the script needs from the request. */
 export interface MockScriptContext {
-  kind: 'review' | 'discuss';
+  kind: 'review' | 'discuss' | 'chat';
+  /** Chat sessions: the writer's message (a "review" in it asks for notes). */
+  message?: string;
+  /** Chat sessions: the note the message is about. */
+  aboutId?: string;
   lens?: string;
   /**
    * Every lens asked for. `word-choice` adds a word-choice suggestion and
@@ -149,6 +158,38 @@ function lensSteps(prompt: string, lenses: readonly string[], delay: MockStep[])
   return steps;
 }
 
+/** The mock's chat replies, by kind of message. */
+export const MOCK_CHAT_REPLIES = {
+  review:
+    'I left notes on the opening. The main question is what the reader should expect after the first line.',
+  about: 'The point is that the reader needs the stakes earlier. The choice of words is yours.',
+  plain:
+    'Short answer: yes, it holds. The opening line does its job. Ask me to review it if you want notes in the margin.',
+} as const;
+
+/** The review's notes for the first anchorable sentence, plus the lens-driven extras. */
+function noteSteps(ctx: MockScriptContext, prompt: string, delay: MockStep[]): MockStep[] {
+  const anchor = firstAnchor(prompt);
+  const steps: MockStep[] = [];
+  if (anchor) {
+    steps.push(...delay, {
+      tool: 'comment',
+      input: {
+        anchor,
+        category: ctx.lens ?? 'clarity',
+        severity: 'moderate',
+        body: 'This opening carries the scene; consider what the reader should feel first.',
+      },
+    });
+    steps.push(...delay, {
+      tool: 'ask_question',
+      input: { anchor, question: 'What do you want the reader to expect after this line?' },
+    });
+  }
+  if (ctx.lenses?.length) steps.push(...lensSteps(prompt, ctx.lenses, delay));
+  return steps;
+}
+
 /** Builds the canned script for one run. */
 export function mockScript(ctx: MockScriptContext): (input: ModelRunInput) => MockStep[] {
   const delay: MockStep[] = ctx.stepDelayMs ? [{ delayMs: ctx.stepDelayMs }] : [];
@@ -165,24 +206,24 @@ export function mockScript(ctx: MockScriptContext): (input: ModelRunInput) => Mo
         },
       ];
     }
-    const anchor = firstAnchor(input.prompt);
-    const steps: MockStep[] = [{ text: 'Reading the text.' }];
-    if (anchor) {
-      steps.push(...delay, {
-        tool: 'comment',
-        input: {
-          anchor,
-          category: ctx.lens ?? 'clarity',
-          severity: 'moderate',
-          body: 'This opening carries the scene; consider what the reader should feel first.',
-        },
-      });
-      steps.push(...delay, {
-        tool: 'ask_question',
-        input: { anchor, question: 'What do you want the reader to expect after this line?' },
-      });
+    if (ctx.kind === 'chat') {
+      const review = /\breview\b/i.test(ctx.message ?? '');
+      const body = ctx.aboutId
+        ? MOCK_CHAT_REPLIES.about
+        : review
+          ? MOCK_CHAT_REPLIES.review
+          : MOCK_CHAT_REPLIES.plain;
+      return [
+        { text: 'Reading the text.' },
+        ...(review && !ctx.aboutId ? noteSteps(ctx, input.prompt, delay) : []),
+        ...delay,
+        { tool: 'reply', input: { body } },
+      ];
     }
-    if (ctx.lenses?.length) steps.push(...lensSteps(input.prompt, ctx.lenses, delay));
+    const steps: MockStep[] = [
+      { text: 'Reading the text.' },
+      ...noteSteps(ctx, input.prompt, delay),
+    ];
     steps.push(...delay, {
       tool: 'finish_review',
       input: {

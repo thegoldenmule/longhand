@@ -316,9 +316,10 @@ export async function replayFixture(t: TestServer, f: FixtureFile): Promise<void
   const projectId = (f.commits[0] as Commit).projectId;
   const sessionFor = async (
     sessionId: string,
-    kind: 'review' | 'discuss',
+    kind: 'review' | 'discuss' | 'chat',
     requestId: string | null,
     threadId: string | null,
+    chat: { chatId: string; messageId: string } | null = null,
   ) => {
     let tok = tokens.get(sessionId);
     if (!tok) {
@@ -328,6 +329,7 @@ export async function replayFixture(t: TestServer, f: FixtureFile): Promise<void
         kind,
         requestId,
         threadId,
+        chat,
         sessionId,
       });
       tokens.set(sessionId, (tok = token));
@@ -359,23 +361,39 @@ export async function replayFixture(t: TestServer, f: FixtureFile): Promise<void
     if (c.type === 'FeedbackSessionStarted') {
       const p = c.payload as {
         feedbackSessionId: string;
-        trigger: { kind: 'feedback'; requestId: string } | { kind: 'discuss'; threadId: string };
+        trigger:
+          | { kind: 'feedback'; requestId: string }
+          | { kind: 'discuss'; threadId: string }
+          | { kind: 'chat'; chatId: string; messageId: string };
       };
       sessionId = p.feedbackSessionId;
+      const tr = p.trigger;
       token =
-        p.trigger.kind === 'feedback'
-          ? await sessionFor(sessionId, 'review', p.trigger.requestId, null)
-          : await sessionFor(sessionId, 'discuss', null, p.trigger.threadId);
+        tr.kind === 'feedback'
+          ? await sessionFor(sessionId, 'review', tr.requestId, null)
+          : tr.kind === 'chat'
+            ? await sessionFor(sessionId, 'chat', null, null, {
+                chatId: tr.chatId,
+                messageId: tr.messageId,
+              })
+            : await sessionFor(sessionId, 'discuss', null, tr.threadId);
     } else if (c.type === 'FeedbackSessionFailed') {
       const p = c.payload as {
         feedbackSessionId: string | null;
         requestId: string | null;
         threadId: string | null;
+        chat?: { chatId: string; messageId: string };
       };
       sessionId = p.feedbackSessionId ?? `never-started-${++failedSessions}`;
       token =
         tokens.get(sessionId) ??
-        (await sessionFor(sessionId, p.threadId ? 'discuss' : 'review', p.requestId, p.threadId));
+        (await sessionFor(
+          sessionId,
+          p.chat ? 'chat' : p.threadId ? 'discuss' : 'review',
+          p.requestId,
+          p.threadId,
+          p.chat ?? null,
+        ));
     } else {
       sessionId = (c.payload as { feedbackSessionId: string }).feedbackSessionId;
       token = tokens.get(sessionId) as string;

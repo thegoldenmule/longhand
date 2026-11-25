@@ -59,6 +59,14 @@ export interface ServiceOptions {
   log?: (msg: string) => void;
 }
 
+/** Human events that start an agent session. */
+export type SessionTriggerType = 'FeedbackRequested' | 'DiscussRequested' | 'ChatMessageSent';
+const SESSION_TRIGGERS = new Set<string>([
+  'FeedbackRequested',
+  'DiscussRequested',
+  'ChatMessageSent',
+]);
+
 /** A commit counts as arriving late (queued offline) above this lag. */
 export const LATE_ARRIVAL_MS = 2 * 60_000;
 
@@ -385,7 +393,7 @@ export class LedgerService {
 
   private triggerKey(
     projectId: string,
-    kind: 'request' | 'thread',
+    kind: 'request' | 'thread' | 'chat',
     id: string,
     seq?: number,
   ): string {
@@ -394,41 +402,34 @@ export class LedgerService {
 
   private maybeStartSession(ledger: ProjectLedger, commit: Commit): void {
     if (this.opts.autoStartSessions === false) return;
-    if (commit.type !== 'FeedbackRequested' && commit.type !== 'DiscussRequested') return;
+    if (!SESSION_TRIGGERS.has(commit.type)) return;
     void this.startSessionFor(ledger, commit).catch((e) =>
       this.log(`[sessions] could not start a session for seq ${commit.seq}: ${errMsg(e)}`),
     );
   }
 
-  /** Starts (once) the agent session serving a FeedbackRequested / DiscussRequested commit. */
+  /** Starts (once) the agent session serving a FeedbackRequested, DiscussRequested or ChatMessageSent commit. */
   startSessionFor(ledger: ProjectLedger, commit: Commit): Promise<AgentSession> {
-    const key =
-      commit.type === 'FeedbackRequested'
-        ? this.triggerKey(
-            ledger.projectId,
-            'request',
-            (commit.payload as EventPayload<'FeedbackRequested'>).requestId,
-          )
-        : this.triggerKey(
-            ledger.projectId,
-            'thread',
-            (commit.payload as EventPayload<'DiscussRequested'>).threadId,
-            commit.seq,
-          );
+    const pid = ledger.projectId;
+    let key: string;
+    let start: () => Promise<AgentSession>;
+    const base = { projectId: pid, accountId: ledger.accountId };
+    if (commit.type === 'FeedbackRequested') {
+      const request = commit.payload as EventPayload<'FeedbackRequested'>;
+      key = this.triggerKey(pid, 'request', request.requestId);
+      start = () => this.sessions.startReview({ ...base, request });
+    } else if (commit.type === 'ChatMessageSent') {
+      const request = commit.payload as EventPayload<'ChatMessageSent'>;
+      key = this.triggerKey(pid, 'chat', `${request.chatId}/${request.messageId}`);
+      start = () => this.sessions.startChat({ ...base, request });
+    } else {
+      const request = commit.payload as EventPayload<'DiscussRequested'>;
+      key = this.triggerKey(pid, 'thread', request.threadId, commit.seq);
+      start = () => this.sessions.startDiscuss({ ...base, request });
+    }
     const existing = this.sessionsByTrigger.get(key);
     if (existing) return existing;
-    const started =
-      commit.type === 'FeedbackRequested'
-        ? this.sessions.startReview({
-            projectId: ledger.projectId,
-            accountId: ledger.accountId,
-            request: commit.payload as EventPayload<'FeedbackRequested'>,
-          })
-        : this.sessions.startDiscuss({
-            projectId: ledger.projectId,
-            accountId: ledger.accountId,
-            request: commit.payload as EventPayload<'DiscussRequested'>,
-          });
+    const started = start();
     // Registered synchronously, so a racing call does not start a second session.
     this.sessionsByTrigger.set(key, started);
     started.catch(() => this.sessionsByTrigger.delete(key));
@@ -436,14 +437,14 @@ export class LedgerService {
   }
 
   /**
-   * `POST /feedback` and `POST /discuss`: appends the writer's request draft and
-   * returns the session serving it.
+   * `POST /feedback`, `POST /discuss` and `POST /chat`: appends the writer's draft
+   * and returns the session serving it.
    */
   async requestSession(
     principal: Principal,
     projectId: string,
     draft: CommitDraft,
-    type: 'FeedbackRequested' | 'DiscussRequested',
+    type: SessionTriggerType,
   ): Promise<{ outcome: SubmitOutcome; session: AgentSession | null }> {
     if (draft?.type !== type)
       throw new HttpError(422, 'invalid-draft', `Expected a ${type} draft.`);

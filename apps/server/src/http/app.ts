@@ -10,7 +10,7 @@ import type { SessionStreamEvent } from '../agent/sessions';
 import { renderExport, type ExportRequest } from '../research/export';
 import { parseEditorInput, type EditorStore } from '../storage/editors';
 import { BlockedUrlError, fetchPublicPage, type PageFetchOptions } from '../research/ssrf';
-import type { LedgerService, SubmitOutcome } from '../service';
+import type { LedgerService, SessionTriggerType, SubmitOutcome } from '../service';
 import { HttpError, InvariantViolation, errMsg } from '../util';
 import { nodeToJSON } from '../ledger/history';
 import { sse } from './sse';
@@ -314,29 +314,29 @@ export function createApp(opts: AppOptions): Hono<Env> {
   });
 
   // Feedback and Discuss
-  const startSession =
-    (type: 'FeedbackRequested' | 'DiscussRequested') => async (c: Context<Env>) => {
-      const body = await jsonBody<{ draft?: CommitDraft } & Partial<CommitDraft>>(c);
-      const draft = (body.draft ?? body) as CommitDraft;
-      const { outcome, session } = await service.requestSession(
-        c.get('principal'),
-        c.req.param('pid') as string,
-        draft,
-        type,
-      );
-      if (!session) return submitResponse(c, outcome);
-      return c.json(
-        {
-          ok: true,
-          status: outcome.status,
-          seq: 'seq' in outcome ? outcome.seq : null,
-          sessionId: session.id,
-        },
-        outcome.status === 'ack' ? 201 : 200,
-      );
-    };
+  const startSession = (type: SessionTriggerType) => async (c: Context<Env>) => {
+    const body = await jsonBody<{ draft?: CommitDraft } & Partial<CommitDraft>>(c);
+    const draft = (body.draft ?? body) as CommitDraft;
+    const { outcome, session } = await service.requestSession(
+      c.get('principal'),
+      c.req.param('pid') as string,
+      draft,
+      type,
+    );
+    if (!session) return submitResponse(c, outcome);
+    return c.json(
+      {
+        ok: true,
+        status: outcome.status,
+        seq: 'seq' in outcome ? outcome.seq : null,
+        sessionId: session.id,
+      },
+      outcome.status === 'ack' ? 201 : 200,
+    );
+  };
   v1.post('/projects/:pid/feedback', startSession('FeedbackRequested'));
   v1.post('/projects/:pid/discuss', startSession('DiscussRequested'));
+  v1.post('/projects/:pid/chat', startSession('ChatMessageSent'));
 
   v1.get('/projects/:pid/sessions/:sid', async (c) => {
     const principal = c.get('principal');
