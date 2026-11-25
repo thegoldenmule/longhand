@@ -8,7 +8,6 @@
  */
 import {
   TEXT_LIMITS,
-  editorSummary,
   type EditorProfile,
   type FeedbackScope,
   type Intensity,
@@ -143,7 +142,7 @@ export function FeedbackRequestForm(props: FeedbackRequestFormProps): React.JSX.
                     onChange={() => choose(ed.id)}
                   />
                   <span className="lh-editor-name">{ed.name}</span>
-                  <span className="lh-editor-summary">{editorSummary(ed.brief) || 'No brief'}</span>
+                  {ed.role && <span className="lh-editor-role">{ed.role}</span>}
                 </label>
               );
             })}
@@ -223,7 +222,6 @@ export function FeedbackRequestForm(props: FeedbackRequestFormProps): React.JSX.
           placeholder={canned ? 'Add to that, if you like' : 'Your own question (optional)'}
           onChange={(e) => setAsk(e.target.value.slice(0, askRoom))}
         />
-        <span className="lh-hint">This goes to the editor only. It never enters your text.</span>
       </div>
 
       {error && (

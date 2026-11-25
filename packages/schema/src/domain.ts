@@ -124,6 +124,7 @@ export const TEXT_LIMITS = {
   styleNotesMaxChars: 4000,
   feedbackAskMaxChars: 1000,
   editorNameMaxChars: 60,
+  editorRoleMaxChars: 40,
   editorBriefMaxChars: 600,
   editorQuestionMaxChars: 160,
   discussMessageMaxChars: 1000,

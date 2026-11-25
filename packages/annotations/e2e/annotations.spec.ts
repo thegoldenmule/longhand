@@ -221,7 +221,7 @@ test.describe('reviews', () => {
     );
     await expect(page.getByTestId('annotation-margin').locator('[data-card-id]')).toHaveCount(0);
     const form = page.getByTestId('feedback-form');
-    // Editors, not lenses: a short list with a line of each brief.
+    // Editors, not lenses: a short list, one line each (name and role).
     await expect(form.locator('.lh-editor-option')).toHaveCount(4);
     await expect(form.getByText('Word choice', { exact: true })).toHaveCount(0);
     await form.locator('.lh-editor-option', { hasText: 'Sam' }).click();

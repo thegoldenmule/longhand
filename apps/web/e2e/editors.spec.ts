@@ -43,6 +43,7 @@ test('17 · editors: add, edit, ask from a project, delete; the record keeps the
   await page.getByRole('button', { name: 'New editor' }).click();
   const form = page.getByRole('form', { name: 'New editor' });
   await form.getByLabel('Name').fill('Quinn');
+  await form.getByLabel('Role').fill('Structural editor');
   await form.getByLabel(/^Brief/).fill('A patient structural editor. Asks before it tells.');
   await form.locator('label', { hasText: 'Pacing' }).click();
   await form.getByLabel('Thorough').check();
@@ -52,8 +53,14 @@ test('17 · editors: add, edit, ask from a project, delete; the record keeps the
   await form.getByRole('textbox', { name: 'Question 2' }).fill('Where would you cut?');
   await form.getByRole('button', { name: 'Add editor' }).click();
   await expect(rows.filter({ hasText: 'Quinn' })).toBeVisible();
+  // A row shows the name and role and labeled facts, never the brief.
+  await expect(rows.filter({ hasText: 'Quinn' }).locator('.lh-editor-row-role')).toHaveText(
+    'Structural editor',
+  );
+  await expect(rows.filter({ hasText: 'Quinn' })).not.toContainText('A patient structural editor');
   let quinn = (await editorsFromApi()).find((e) => e.name === 'Quinn')!;
   expect(quinn).toMatchObject({
+    role: 'Structural editor',
     brief: 'A patient structural editor. Asks before it tells.',
     lenses: ['clarity', 'pacing'],
     intensity: 'thorough',
@@ -87,7 +94,7 @@ test('17 · editors: add, edit, ask from a project, delete; the record keeps the
     lenses: ['clarity', 'pacing'],
     intensity: 'thorough',
     ask: 'Is the ending earned?\nBe gentle.',
-    editor: { id: quinn.id, name: 'Quincy', brief: quinn.brief },
+    editor: { id: quinn.id, name: 'Quincy', role: 'Structural editor', brief: quinn.brief },
   });
 
   // The request form links to the Editors page, with a way back.

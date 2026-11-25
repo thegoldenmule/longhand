@@ -252,11 +252,13 @@ describe.skipIf(!inject('dbAvailable'))('HttpCommitTransport against the ledger 
     expect(starters.map((e) => e.name)).toEqual(STARTER_EDITORS.map((s) => s.name));
     const ed = await client.createEditor({
       name: 'Theo',
+      role: 'Line editor',
       brief: 'A blunt line editor who hates adverbs.',
       lenses: ['word-choice'],
       intensity: 'light',
       questions: ['Which adverbs would you cut?'],
     });
+    expect(ed.role).toBe('Line editor');
     expect(await client.getEditor(ed.id)).toEqual(ed);
     const up = await client.updateEditor(ed.id, { ...ed, name: 'Theodora' });
     expect(up).toMatchObject({ id: ed.id, name: 'Theodora' });

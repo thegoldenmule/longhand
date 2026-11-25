@@ -7,7 +7,6 @@ import {
   EditorProfileSchema,
   FeedbackEditorSchema,
   STARTER_EDITORS,
-  editorSummary,
   feedbackEditorOf,
 } from './editors';
 import { FeedbackRequestedSchema } from './events';
@@ -15,6 +14,7 @@ import { FeedbackRequestedSchema } from './events';
 const profile = {
   id: 'ed-1',
   name: 'Theo',
+  role: 'Line editor',
   brief: 'A blunt line editor who hates adverbs.',
   lenses: ['word-choice', 'clarity'],
   intensity: 'standard',
@@ -77,9 +77,9 @@ describe('FeedbackRequested.editor', () => {
     expect(canonicalize(parsed)).toBe(canonicalize(base));
   });
 
-  it('records the editor id, name and brief', () => {
+  it('records the editor id, name, role and brief', () => {
     const editor = feedbackEditorOf(EditorProfileSchema.parse(profile));
-    expect(editor).toEqual({ id: 'ed-1', name: 'Theo', brief: profile.brief });
+    expect(editor).toEqual({ id: 'ed-1', name: 'Theo', role: 'Line editor', brief: profile.brief });
     expect(FeedbackRequestedSchema.parse({ ...base, editor }).editor).toEqual(editor);
     expect(FeedbackEditorSchema.safeParse({ ...editor, name: '' }).success).toBe(false);
     expect(FeedbackRequestedSchema.safeParse({ ...base, editor: { name: 'Theo' } }).success).toBe(
@@ -105,17 +105,24 @@ describe('starter editors', () => {
   });
 });
 
-describe('editorSummary', () => {
-  it('takes the first sentence', () => {
-    expect(editorSummary('A blunt line editor. Hates adverbs.')).toBe('A blunt line editor.');
-    expect(editorSummary('  No full stop  ')).toBe('No full stop');
-    expect(editorSummary('')).toBe('');
+describe('editor roles', () => {
+  it('reads a profile saved without a role as no role', () => {
+    const { role: _role, ...old } = profile;
+    expect(EditorProfileSchema.parse(old).role).toBe('');
   });
 
-  it('clips long sentences at a word', () => {
-    const s = editorSummary(`${'word '.repeat(40)}end.`, 30);
-    expect(s.length).toBeLessThanOrEqual(30);
-    expect(s.endsWith('…')).toBe(true);
-    expect(s).not.toMatch(/\s…$/);
+  it('caps the role and records it on a request only when set', () => {
+    expect(EditorProfileSchema.safeParse({ ...profile, role: 'x'.repeat(41) }).success).toBe(false);
+    expect(feedbackEditorOf(EditorProfileSchema.parse(profile)).role).toBe('Line editor');
+    expect('role' in feedbackEditorOf(EditorProfileSchema.parse({ ...profile, role: '  ' }))).toBe(
+      false,
+    );
+  });
+
+  it('gives every starter a role, and no brief uses a semicolon', () => {
+    for (const s of STARTER_EDITORS) {
+      expect(s.role.length).toBeGreaterThan(0);
+      expect(s.brief).not.toContain(';');
+    }
   });
 });

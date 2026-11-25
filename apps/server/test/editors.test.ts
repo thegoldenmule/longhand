@@ -321,7 +321,7 @@ describe.skipIf(!DB())('a feedback request names its editor', () => {
     });
     // The session runner handed the editor to the agent.
     const run = prompts.find((p) => p.sessionKind === 'review')!;
-    expect(run.prompt).toContain('The writer asked their editor "Theo".');
+    expect(run.prompt).toContain('The writer asked their editor "Theo" (role: "Line editor").');
     expect(run.prompt).toContain(`"""${ed.brief}"""`);
     expect(run.allowedTools.every((x) => x.startsWith('mcp__longhand__'))).toBe(true);
   });

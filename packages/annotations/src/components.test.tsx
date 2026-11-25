@@ -52,14 +52,15 @@ describe('<FeedbackRequestForm>', () => {
       />,
     );
     const form = screen.getByTestId('feedback-form');
-    // A short list of editors: name plus a line of the brief; no lens or intensity pickers.
+    // A short list of editors, one line each (name and role, never the brief), with no lens
+    // or intensity pickers.
     expect(within(form).getAllByRole('radio', { name: /./ }).length).toBeGreaterThan(0);
     expect(form.querySelectorAll('.lh-editor-option')).toHaveLength(EDITORS.length);
     expect(within(form).queryByText('Light touch')).toBeNull();
     expect(within(form).queryByText('Word choice')).toBeNull();
-    expect(form.querySelector('[data-editor-id="ed-2"]')!.textContent).toContain(
-      'Line editor; every sentence counts.',
-    );
+    const theo = form.querySelector('[data-editor-id="ed-2"]')!;
+    expect(theo.querySelector('.lh-editor-role')?.textContent).toBe('Line editor');
+    expect(theo.textContent).toBe('TheoLine editor');
     // Selection is unavailable without a selection; the document is the default.
     expect((within(form).getByLabelText('Selection') as HTMLInputElement).disabled).toBe(true);
     expect(within(form).getByRole('button', { name: 'Ask Margaret' })).toBeTruthy();
@@ -78,7 +79,7 @@ describe('<FeedbackRequestForm>', () => {
       lenses: ['clarity', 'word-choice', 'tone-voice'],
       intensity: 'standard',
       ask: `${THEO.questions[1]}\nEspecially the dialogue.`,
-      editor: { id: 'ed-2', name: 'Theo', brief: THEO.brief },
+      editor: { id: 'ed-2', name: 'Theo', role: 'Line editor', brief: THEO.brief },
     });
     expect(FeedbackRequestedSchema.safeParse(event.payload).success).toBe(true);
   });
@@ -383,7 +384,6 @@ describe('<FeedbackPanel>', () => {
     render(<FeedbackPanel controller={controller} editors={EDITORS} />);
     expect(screen.getByTestId('feedback-form')).toBeTruthy();
     expect(screen.queryByTestId('review-session')).toBeNull();
-    expect(screen.getByText(/speak only when you ask/)).toBeTruthy();
     const margin = render(<AnnotationMargin controller={controller} />);
     expect(margin.container.querySelector('[data-card-id]')).toBeNull();
   });

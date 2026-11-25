@@ -30,6 +30,7 @@ export function parseEditorInput(body: unknown): EditorProfileInput {
   const b = (body && typeof body === 'object' ? body : {}) as Record<string, unknown>;
   const trimmed = {
     name: typeof b.name === 'string' ? b.name.trim() : b.name,
+    role: typeof b.role === 'string' ? b.role.trim() : (b.role ?? ''),
     brief: typeof b.brief === 'string' ? b.brief.trim() : (b.brief ?? ''),
     lenses: b.lenses,
     intensity: b.intensity,

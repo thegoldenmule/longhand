@@ -1,7 +1,7 @@
 'use client';
 /**
  * Your editors: the account-wide roster of named AI editors every project asks
- * for feedback. Add, edit (name, brief, lenses, intensity, canned questions),
+ * for feedback. Add, edit (name, role, brief, lenses, intensity, canned questions),
  * delete, or reset to the starters. A feedback request records the editor as it
  * was when asked, so changing or deleting one never rewrites a past review.
  */
@@ -24,6 +24,7 @@ import { ThemeToggle } from '../ui/ThemeToggle';
 
 const BLANK: EditorProfileInput = {
   name: '',
+  role: '',
   brief: '',
   lenses: ['clarity'],
   intensity: 'standard',
@@ -132,10 +133,6 @@ export function EditorsPage() {
             </p>
           )}
           <h1>Your editors</h1>
-          <p className="lh-muted lh-editors-lede">
-            Each editor reads with its own lenses, intensity and brief. Every project can ask any of
-            them. Changing one never changes a review it already gave.
-          </p>
           <div className="lh-home-actions">
             <button
               type="button"
@@ -230,7 +227,10 @@ function EditorRow(props: { editor: EditorProfile; onEdit: () => void }) {
   return (
     <article className="lh-editor-row">
       <header className="lh-editor-row-head">
-        <h2 className="lh-editor-row-name">{ed.name}</h2>
+        <h2 className="lh-editor-row-name">
+          {ed.name}
+          {ed.role && <span className="lh-editor-row-role">{ed.role}</span>}
+        </h2>
         <button
           type="button"
           className="lh-link-quiet"
@@ -240,19 +240,24 @@ function EditorRow(props: { editor: EditorProfile; onEdit: () => void }) {
           Edit
         </button>
       </header>
-      {ed.brief && <p className="lh-editor-row-brief">{ed.brief}</p>}
-      <p className="lh-editor-row-meta lh-muted">
-        {ed.lenses.map((l) => LENS_LABELS[l]).join(' · ')}
-        <span aria-hidden="true"> — </span>
-        {intensityLabel(ed.intensity)}
-      </p>
-      {ed.questions.length > 0 && (
-        <ul className="lh-editor-row-questions" aria-label={`${ed.name}’s questions`}>
-          {ed.questions.map((q) => (
-            <li key={q}>{q}</li>
-          ))}
-        </ul>
-      )}
+      <dl className="lh-editor-facts">
+        <dt>Lenses</dt>
+        <dd>{ed.lenses.map((l) => LENS_LABELS[l]).join(' · ')}</dd>
+        <dt>Intensity</dt>
+        <dd>{intensityLabel(ed.intensity)}</dd>
+        {ed.questions.length > 0 && (
+          <>
+            <dt>Questions</dt>
+            <dd>
+              <ul className="lh-editor-row-questions" aria-label={`${ed.name}’s questions`}>
+                {ed.questions.map((q) => (
+                  <li key={q}>{q}</li>
+                ))}
+              </ul>
+            </dd>
+          </>
+        )}
+      </dl>
     </article>
   );
 }
@@ -267,6 +272,7 @@ function EditorForm(props: {
 }) {
   const uid = useId();
   const [name, setName] = useState(props.initial.name);
+  const [role, setRole] = useState(props.initial.role);
   const [brief, setBrief] = useState(props.initial.brief);
   const [lenses, setLenses] = useState<Lens[]>([...props.initial.lenses]);
   const [intensity, setIntensity] = useState<Intensity>(props.initial.intensity);
@@ -283,6 +289,7 @@ function EditorForm(props: {
     if (!valid) return;
     props.onSubmit({
       name: name.trim(),
+      role: role.trim(),
       brief: brief.trim(),
       lenses: LENSES.filter((l) => lenses.includes(l)),
       intensity,
@@ -309,11 +316,18 @@ function EditorForm(props: {
         />
       </label>
       <label className="lh-field">
+        <span>Role</span>
+        <input
+          name="role"
+          value={role}
+          maxLength={TEXT_LIMITS.editorRoleMaxChars}
+          placeholder="Line editor"
+          onChange={(e) => setRole(e.target.value)}
+        />
+      </label>
+      <label className="lh-field">
         <span>
-          Brief{' '}
-          <em className="lh-editor-hint">
-            who they are, what they look for first, how they put things
-          </em>
+          Brief <em className="lh-editor-hint">what they look for first, and how they put it</em>
         </span>
         <textarea
           name="brief"

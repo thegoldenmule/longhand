@@ -11,6 +11,7 @@ export const E2E_ACCOUNT = 'e2e-account';
 
 export const TEST_EDITOR: EditorProfileInput = {
   name: 'Iris',
+  role: 'Test editor',
   brief: 'Structure and word choice, for the e2e mock reviewer. Moves first, then words.',
   lenses: ['structure', 'word-choice'],
   intensity: 'standard',

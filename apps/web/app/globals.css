@@ -463,12 +463,6 @@ kbd {
 .lh-editors-back {
   margin: 0 0 18px;
 }
-.lh-editors-lede {
-  margin: 0;
-  max-width: 34em;
-  font-size: 14.5px;
-  line-height: 1.55;
-}
 .lh-editors-confirm {
   display: inline-flex;
   align-items: center;
@@ -500,26 +494,43 @@ kbd {
   gap: 16px;
 }
 .lh-editor-row-name {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
   margin: 0;
   font-family: var(--app-font-text);
   font-weight: 400;
   font-size: 19px;
 }
-.lh-editor-row-brief {
-  margin: 0;
-  font-family: var(--app-font-text);
-  font-size: 15px;
-  line-height: 1.55;
+.lh-editor-row-role {
+  font-family: var(--app-font-ui);
+  font-size: 13px;
+  color: var(--app-ink-muted);
 }
-.lh-editor-row-meta {
+/* What an editor does, as labeled rows rather than prose. */
+.lh-editor-facts {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 8px 16px;
+  margin: 6px 0 0;
+  font-size: 13.5px;
+}
+.lh-editor-facts dt {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--app-ink-faint);
+  padding-top: 2px;
+}
+.lh-editor-facts dd {
   margin: 0;
-  font-size: 12.5px;
 }
 .lh-editor-row-questions {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin: 4px 0 0;
+  margin: 0;
   padding: 0;
   list-style: none;
 }

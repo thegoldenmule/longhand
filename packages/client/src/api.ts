@@ -154,7 +154,7 @@ export class LonghandClient {
     return (await this.json<{ editor: EditorProfile }>('POST', '/v1/editors', input)).editor;
   }
 
-  /** Replaces an editor's name, brief, lenses, intensity and questions. */
+  /** Replaces an editor's name, role, brief, lenses, intensity and questions. */
   async updateEditor(editorId: string, input: EditorProfileInput): Promise<EditorProfile> {
     return (
       await this.json<{ editor: EditorProfile }>(

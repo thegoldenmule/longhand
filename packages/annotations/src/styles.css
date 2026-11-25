@@ -653,12 +653,6 @@
   gap: 0.5rem;
   margin-bottom: 0.75rem;
 }
-.lh-panel-empty {
-  color: var(--lh-ann-ink-soft);
-  font-family: var(--lh-ann-font-text);
-  font-size: 0.9375rem;
-  line-height: 1.55;
-}
 .lh-panel-none {
   margin: 0.4rem 0;
 }
@@ -841,7 +835,7 @@
   flex-wrap: wrap;
   gap: 0.3rem;
 }
-/* The editor list: a short, quiet radio list (name, then a line of the brief). */
+/* The editor list: a short, quiet radio list, one line each (name, then role). */
 .lh-editor-list {
   display: flex;
   flex-direction: column;
@@ -852,8 +846,9 @@
 .lh-editor-option {
   position: relative;
   display: flex;
-  flex-direction: column;
-  gap: 0.05rem;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
   padding: 0.38rem 0.6rem;
   border-top: 1px solid var(--lh-ann-rule-soft);
   cursor: pointer;
@@ -886,7 +881,8 @@
 .lh-editor-option.is-on .lh-editor-name {
   color: var(--lh-ann-ai);
 }
-.lh-editor-summary {
+.lh-editor-role {
+  min-width: 0;
   font-size: 0.72rem;
   color: var(--lh-ann-ink-soft);
   white-space: nowrap;

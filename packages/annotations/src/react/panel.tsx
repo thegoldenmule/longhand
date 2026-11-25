@@ -222,13 +222,6 @@ export function FeedbackPanel(props: FeedbackPanelProps): React.JSX.Element {
         />
       )}
 
-      {!asked && (
-        <p className="lh-panel-empty">
-          Your editors speak only when you ask. Choose one and what to look at, and it will read,
-          comment and propose. It never writes in your text.
-        </p>
-      )}
-
       {snap.reviews.length > 0 && (
         <div className="lh-panel-section">
           <h3>Reviews</h3>
