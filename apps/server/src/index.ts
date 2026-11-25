@@ -16,6 +16,7 @@ export type { LedgerStore, StreamRecord, RegistryRecord } from './storage/stream
 export { openDb, migrate, loadMigrations, dropSchema, MIGRATIONS_DIR } from './storage/db';
 export type { Db } from './storage/db';
 export { ReadModel, READ_MODEL_TABLES } from './storage/readmodel';
+export { EditorStore, MAX_EDITORS, parseEditorInput } from './storage/editors';
 export { ProjectLedger, SYSTEM_ACTOR } from './ledger/project';
 export type { ClockHooks, IngestOutcome, AppendedCommit } from './ledger/project';
 export { DocHistory, ProjectHistory, type RemoteUpdate } from './ledger/history';

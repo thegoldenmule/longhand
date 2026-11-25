@@ -15,6 +15,7 @@ import type { PageFetchOptions } from './research/ssrf';
 import { LedgerService, type CadenceConfig } from './service';
 import { DevFileSigner, KmsSigner, type Signer } from './signer';
 import { migrate, openDb, type Db } from './storage/db';
+import { EditorStore } from './storage/editors';
 import { ReadModel } from './storage/readmodel';
 import { DurableStreamsStore, type LedgerStore } from './storage/streams';
 
@@ -49,6 +50,8 @@ export interface ServerHandle {
   url: string;
   port: number;
   service: LedgerService;
+  /** The account editor rosters (`/v1/editors`). */
+  editors: EditorStore;
   /** Cancels sessions (recording their end), flushes the read model, stops HTTP. Does not close `db`. */
   close(): Promise<void>;
   /**
@@ -78,9 +81,11 @@ export async function startServer(o: ServerOptions): Promise<ServerHandle> {
     ...(o.log ? { log: o.log } : {}),
   });
   await service.start();
+  const editors = new EditorStore(o.db);
   const app = createApp({
     service,
     auth: o.auth,
+    editors,
     ...(o.corsOrigins ? { corsOrigins: o.corsOrigins } : {}),
     ...(o.pageFetch ? { pageFetch: o.pageFetch } : {}),
   });
@@ -102,6 +107,7 @@ export async function startServer(o: ServerOptions): Promise<ServerHandle> {
     url,
     port,
     service,
+    editors,
     close: () =>
       (closing ??= (async () => {
         await service.close();

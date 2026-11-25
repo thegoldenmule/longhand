@@ -8,6 +8,7 @@ import type { CommitDraft, PMNodeJSON, ProvenanceSummary } from '@longhand/schem
 import { bearerToken, type Authenticator, type Principal } from '../auth';
 import type { SessionStreamEvent } from '../agent/sessions';
 import { renderExport, type ExportRequest } from '../research/export';
+import { parseEditorInput, type EditorStore } from '../storage/editors';
 import { BlockedUrlError, fetchPublicPage, type PageFetchOptions } from '../research/ssrf';
 import type { LedgerService, SubmitOutcome } from '../service';
 import { HttpError, InvariantViolation, errMsg } from '../util';
@@ -20,6 +21,8 @@ type Env = { Variables: { principal: Principal } };
 export interface AppOptions {
   service: LedgerService;
   auth: Authenticator;
+  /** The account's named editors (`/v1/editors`). Without it those routes answer 503. */
+  editors?: EditorStore;
   /** Allowed browser origins (CORS). Default `http://localhost:3100`. */
   corsOrigins?: string[];
   pageFetch?: PageFetchOptions;
@@ -105,7 +108,7 @@ export function createApp(opts: AppOptions): Hono<Env> {
     cors({
       origin: opts.corsOrigins ?? ['http://localhost:3100'],
       allowHeaders: ['authorization', 'content-type', 'last-event-id'],
-      allowMethods: ['GET', 'POST', 'OPTIONS'],
+      allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
       exposeHeaders: ['content-disposition', 'x-longhand-final-url'],
       maxAge: 600,
     }),
@@ -161,6 +164,43 @@ export function createApp(opts: AppOptions): Hono<Env> {
   });
 
   v1.get('/me', (c) => c.json({ ok: true, ...c.get('principal'), authMode: auth.mode }));
+
+  // Named editors (account-wide roster)
+  const editorStore = (): EditorStore => {
+    if (!opts.editors)
+      throw new HttpError(503, 'editors-unavailable', 'Editors are not configured.');
+    return opts.editors;
+  };
+  v1.get('/editors', async (c) =>
+    c.json({ ok: true, editors: await editorStore().list(c.get('principal').accountId) }),
+  );
+  v1.post('/editors', async (c) => {
+    const input = parseEditorInput(await jsonBody<unknown>(c));
+    const editor = await editorStore().create(c.get('principal').accountId, input);
+    return c.json({ ok: true, editor }, 201);
+  });
+  v1.post('/editors/reset', async (c) =>
+    c.json({ ok: true, editors: await editorStore().reset(c.get('principal').accountId) }),
+  );
+  v1.get('/editors/:eid', async (c) =>
+    c.json({
+      ok: true,
+      editor: await editorStore().get(c.get('principal').accountId, c.req.param('eid')),
+    }),
+  );
+  v1.put('/editors/:eid', async (c) => {
+    const input = parseEditorInput(await jsonBody<unknown>(c));
+    const editor = await editorStore().update(
+      c.get('principal').accountId,
+      c.req.param('eid'),
+      input,
+    );
+    return c.json({ ok: true, editor });
+  });
+  v1.delete('/editors/:eid', async (c) => {
+    await editorStore().delete(c.get('principal').accountId, c.req.param('eid'));
+    return c.json({ ok: true, deleted: c.req.param('eid') });
+  });
 
   // Projects
   v1.get('/projects', async (c) => {
