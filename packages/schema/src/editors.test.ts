@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { canonicalize } from './canonical';
-import { TEXT_LIMITS } from './domain';
+import { LENSES, TEXT_LIMITS } from './domain';
 import {
   EDITOR_MAX_QUESTIONS,
   EditorProfileInputSchema,
@@ -96,6 +96,7 @@ describe('starter editors', () => {
       expect(EditorProfileInputSchema.safeParse(s).success, s.name).toBe(true);
       expect(s.questions.length).toBeGreaterThanOrEqual(2);
       expect(s.questions.length).toBeLessThanOrEqual(3);
+      expect(s.lenses, s.name).toEqual(LENSES.filter((l) => s.lenses.includes(l)));
     }
     expect(new Set(STARTER_EDITORS.map((s) => s.name)).size).toBe(STARTER_EDITORS.length);
     const lenses = new Set(STARTER_EDITORS.flatMap((s) => s.lenses));

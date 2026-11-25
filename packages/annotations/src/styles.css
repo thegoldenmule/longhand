@@ -676,8 +676,16 @@
   align-items: baseline;
   gap: 0.2rem 0.6rem;
 }
+.lh-review-editor {
+  font-weight: 600;
+  color: var(--lh-ann-ai);
+}
 .lh-review-scope {
   font-weight: 600;
+}
+.lh-review-editor + .lh-review-scope {
+  font-weight: 400;
+  color: var(--lh-ann-ink-soft);
 }
 .lh-review-meta {
   font-size: 0.75rem;
@@ -832,6 +840,79 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.3rem;
+}
+/* The editor list: a short, quiet radio list (name, then a line of the brief). */
+.lh-editor-list {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--lh-ann-rule);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.lh-editor-option {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+  padding: 0.38rem 0.6rem;
+  border-top: 1px solid var(--lh-ann-rule-soft);
+  cursor: pointer;
+}
+.lh-editor-option:first-child {
+  border-top: none;
+}
+.lh-editor-option:hover {
+  background: var(--lh-ann-rule-soft);
+}
+.lh-editor-option.is-on {
+  background: var(--lh-ann-ai-soft);
+  box-shadow: inset 2px 0 0 var(--lh-ann-ai);
+}
+.lh-editor-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 1px;
+  height: 1px;
+}
+.lh-editor-option:has(input:focus-visible) {
+  outline: 2px solid var(--lh-ann-ai);
+  outline-offset: -2px;
+}
+.lh-editor-name {
+  font-weight: 600;
+  color: var(--lh-ann-ink);
+}
+.lh-editor-option.is-on .lh-editor-name {
+  color: var(--lh-ann-ai);
+}
+.lh-editor-summary {
+  font-size: 0.72rem;
+  color: var(--lh-ann-ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lh-editor-manage {
+  align-self: flex-start;
+  color: var(--lh-ann-ink-soft);
+  text-decoration: underline;
+  text-decoration-color: var(--lh-ann-rule);
+  text-underline-offset: 2px;
+}
+.lh-editor-manage:hover {
+  color: var(--lh-ann-ai);
+}
+.lh-editor-none a {
+  color: var(--lh-ann-ai);
+}
+.lh-questions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+.lh-question-chip {
+  text-align: left;
 }
 /* Quiet cards: until a card is active, long text is clamped and older thread
    messages fold away, so the margin stays close to the text it annotates. */

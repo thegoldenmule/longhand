@@ -5,9 +5,9 @@
  * cards grouped by kind with filters.
  *
  * Nothing shows until the writer asks: with no request in the ledger the panel
- * only offers the request form.
+ * only offers the request form, which asks one of the writer's named editors.
  */
-import { LENS_LABELS } from '@longhand/schema';
+import { LENS_LABELS, type EditorProfile } from '@longhand/schema';
 import { useMemo, useState } from 'react';
 import type { AnnotationsController } from '../controller';
 import {
@@ -33,6 +33,10 @@ export interface FeedbackPanelProps {
   documentTitle?: string;
   /** Show the request form open at first. Default: open when nothing has been requested yet. */
   formOpen?: boolean;
+  /** The writer's named editors (account-wide), in roster order. `null` while they load. */
+  editors: readonly EditorProfile[] | null;
+  /** Where the writer manages their editors. */
+  manageEditorsHref?: string;
   className?: string;
 }
 
@@ -68,6 +72,11 @@ function ReviewSession(props: {
       data-phase={failed ? 'failed' : review.phase}
     >
       <header className="lh-review-head">
+        {req.editor && (
+          <span className="lh-review-editor" data-testid="review-editor">
+            {req.editor.name}
+          </span>
+        )}
         <span className="lh-review-scope">{scopeLabel(snap.state, req)}</span>
         <span className="lh-review-meta">
           {req.lenses.map((l) => LENS_LABELS[l]).join(', ')} · {intensity}
@@ -163,6 +172,14 @@ export function FeedbackPanel(props: FeedbackPanelProps): React.JSX.Element {
   const showForm = formOpen ?? !asked;
   const [groups, setGroups] = useState<CardGroup[]>([]);
   const [phase, setPhase] = useState<PhaseFilter>('open');
+  // Default to the editor asked last, if it is still on the roster.
+  const lastEditorId = useMemo(() => {
+    const last = [...snap.reviews]
+      .filter((r) => r.request.editor)
+      .sort((a, b) => b.request.seq - a.request.seq)[0];
+    const id = last?.request.editor?.id ?? null;
+    return id && props.editors?.some((e) => e.id === id) ? id : null;
+  }, [snap.reviews, props.editors]);
 
   const questions = useMemo(
     () => snap.cards.filter((c) => c.kind === 'question' && c.status === 'open'),
@@ -195,6 +212,9 @@ export function FeedbackPanel(props: FeedbackPanelProps): React.JSX.Element {
           documentId={snap.documentId}
           {...(props.documentTitle ? { documentTitle: props.documentTitle } : {})}
           selection={snap.selection}
+          editors={props.editors}
+          defaultEditorId={lastEditorId}
+          {...(props.manageEditorsHref ? { manageEditorsHref: props.manageEditorsHref } : {})}
           onRequest={(event) => {
             if (controller.requestFeedback(event.payload)) setFormOpen(false);
           }}
@@ -204,8 +224,8 @@ export function FeedbackPanel(props: FeedbackPanelProps): React.JSX.Element {
 
       {!asked && (
         <p className="lh-panel-empty">
-          The editor speaks only when you ask. Choose what to look at and it will read, comment and
-          propose — it never writes in your text.
+          Your editors speak only when you ask. Choose one and what to look at, and it will read,
+          comment and propose. It never writes in your text.
         </p>
       )}
 

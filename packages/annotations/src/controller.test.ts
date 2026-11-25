@@ -2,6 +2,7 @@ import { CommitDraftSchema, type CommitDraft } from '@longhand/schema';
 import { afterEach, describe, expect, it } from 'vitest';
 import { harness, settle, type Harness } from '../test-support/fixtures';
 import type { SubmittedEvent } from './controller';
+import { retryRequest } from './drafts';
 import { traceKey } from './trace';
 
 const open: Harness[] = [];
@@ -239,6 +240,35 @@ describe('controller: events', () => {
     const reqs = h.transport.projectState().annotations.feedbackRequests;
     expect(reqs['id-1']!.status).toBe('pending');
     expect(reqs['id-2']).toMatchObject({ ask: 'Too slow?', intensity: 'thorough' });
+  });
+
+  it('asks a named editor, and a retry asks the same editor again', async () => {
+    let n = 0;
+    const h = make('feedback-session', { prefix: 'all', controller: { newId: () => `ed-${++n}` } });
+    await settle();
+    const editor = { id: 'ed-theo', name: 'Theo', brief: 'A blunt line editor.' };
+    h.controller.requestFeedback({
+      scope: { kind: 'project' },
+      lenses: ['word-choice'],
+      intensity: 'light',
+      ask: 'Which words?',
+      editor,
+    });
+    await h.commit();
+    expect(h.transport.rejected).toEqual([]);
+    const req = h.transport.projectState().annotations.feedbackRequests['ed-1']!;
+    expect(req).toMatchObject({ editor, lenses: ['word-choice'], intensity: 'light' });
+    const state = h.transport.projectState();
+    const retry = retryRequest(state, 'ed-1', () => 'ed-again')!;
+    expect(retry.payload).toMatchObject({
+      requestId: 'ed-again',
+      editor,
+      lenses: ['word-choice'],
+      intensity: 'light',
+      ask: 'Which words?',
+    });
+    // A request that named no editor retries without one.
+    expect('editor' in retryRequest(state, 'req-2', () => 'x')!.payload).toBe(false);
   });
 
   it('hands Cite to the host', async () => {

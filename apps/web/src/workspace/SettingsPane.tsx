@@ -7,6 +7,7 @@ import type { ProjectSettings } from '@longhand/schema';
 import { useTheme, type ThemePref } from '../ui/theme';
 
 export function SettingsPane(props: {
+  editorsHref: string;
   settings: ProjectSettings;
   onDraft: (d: BinderDraft) => void;
   prefs: EditorSettings;
@@ -60,6 +61,15 @@ export function SettingsPane(props: {
             <option value="dark">Dark</option>
           </select>
         </label>
+      </section>
+      <section className="ws-prefs ws-editors-link" aria-label="Editors">
+        <h3>Editors</h3>
+        <p className="ws-muted">
+          Your named editors are shared by every project.{' '}
+          <a className="lh-link-quiet" href={props.editorsHref}>
+            Manage editors
+          </a>
+        </p>
       </section>
       <ProjectSettingsForm
         settings={props.settings}

@@ -51,6 +51,7 @@ export {
 export {
   discussRequested,
   feedbackRequested,
+  feedbackRequestFor,
   newId,
   proposalRejected,
   retryRequest,
@@ -101,5 +102,6 @@ export { FeedbackPanel, type FeedbackPanelProps } from './react/panel';
 export {
   FeedbackRequestForm,
   INTENSITY_OPTIONS,
+  composeAsk,
   type FeedbackRequestFormProps,
 } from './react/form';

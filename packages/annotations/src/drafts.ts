@@ -12,8 +12,11 @@ import {
   ProposalRejectedSchema,
   SuggestionDismissedSchema,
   TEXT_LIMITS,
+  feedbackEditorOf,
   type DismissReason,
+  type EditorProfile,
   type EventPayloads,
+  type FeedbackEditor,
   type FeedbackScope,
   type Intensity,
   type Lens,
@@ -52,6 +55,8 @@ export interface FeedbackRequestInput {
   intensity: Intensity;
   /** The writer's free-text ask; blank means none. */
   ask?: string | null;
+  /** The named editor asked, as it is now (its lenses and intensity are `lenses` and `intensity`). */
+  editor?: FeedbackEditor;
   requestId?: string;
 }
 
@@ -67,8 +72,31 @@ export function feedbackRequested(
     lenses: [...new Set(input.lenses)],
     intensity: input.intensity,
     ask,
+    ...(input.editor ? { editor: input.editor } : {}),
   });
   return { type: 'FeedbackRequested', payload };
+}
+
+/**
+ * Builds the `FeedbackRequested` for asking a named editor: its lenses and
+ * intensity, and a record of its id, name and brief as they are now.
+ */
+export function feedbackRequestFor(
+  profile: EditorProfile,
+  input: { scope: FeedbackScope; ask?: string | null; requestId?: string },
+  makeId: () => string = newId,
+): AnnotationEventOf<'FeedbackRequested'> {
+  return feedbackRequested(
+    {
+      scope: input.scope,
+      lenses: profile.lenses,
+      intensity: profile.intensity,
+      ask: input.ask ?? null,
+      editor: feedbackEditorOf(profile),
+      ...(input.requestId ? { requestId: input.requestId } : {}),
+    },
+    makeId,
+  );
 }
 
 /** Builds a `SuggestionDismissed` event (any card except proposals). */
@@ -116,7 +144,7 @@ export function discussRequested(
   };
 }
 
-/** A retry of a failed review: the same scope, lenses, intensity and ask under a new request id. */
+/** A retry of a failed review: the same scope, lenses, intensity, ask and editor under a new request id. */
 export function retryRequest(
   state: ProjectState,
   requestId: string,
@@ -125,7 +153,13 @@ export function retryRequest(
   const req = state.annotations.feedbackRequests[requestId];
   if (!req) return null;
   return feedbackRequested(
-    { scope: req.scope, lenses: req.lenses, intensity: req.intensity, ask: req.ask },
+    {
+      scope: req.scope,
+      lenses: req.lenses,
+      intensity: req.intensity,
+      ask: req.ask,
+      ...(req.editor ? { editor: req.editor } : {}),
+    },
     makeId,
   );
 }

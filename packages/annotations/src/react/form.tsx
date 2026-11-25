@@ -1,19 +1,21 @@
 /**
- * `<FeedbackRequestForm>`: scope, lenses, intensity and a free-text ask (F3). It
- * emits a validated `FeedbackRequested` event through `onRequest`; the host (or
+ * `<FeedbackRequestForm>`: ask one of the writer's named editors (F3). The writer
+ * picks an editor, a scope (the selection, this document or the whole project)
+ * and, optionally, one of the editor's canned questions and/or their own
+ * question. Lenses and intensity come from the editor. It emits a validated
+ * `FeedbackRequested` event (with `editor`) through `onRequest`; the host (or
  * the controller) submits it with `editor.submitEvent`.
  */
 import {
-  LENSES,
-  LENS_LABELS,
   TEXT_LIMITS,
+  editorSummary,
+  type EditorProfile,
   type FeedbackScope,
   type Intensity,
-  type Lens,
 } from '@longhand/schema';
 import { useId, useState, type FormEvent } from 'react';
 import type { SelectionScope } from '../controller';
-import { feedbackRequested, newId, type AnnotationEventOf } from '../drafts';
+import { feedbackRequestFor, newId, type AnnotationEventOf } from '../drafts';
 
 /** Intensity labels and hints. */
 export const INTENSITY_OPTIONS: ReadonlyArray<{ value: Intensity; label: string; hint: string }> = [
@@ -27,46 +29,52 @@ export interface FeedbackRequestFormProps {
   /** The current document. */
   documentId: string;
   documentTitle?: string;
-  /** The writer's selection, if any (enables the selection scope). */
+  /** The writer's selection, if any (enables the selection scope, and is the default). */
   selection?: SelectionScope | null;
+  /** The writer's editors, in roster order. `null` while they load. */
+  editors: readonly EditorProfile[] | null;
+  /** The editor chosen at first (default: the first). */
+  defaultEditorId?: string | null;
+  /** Where the writer manages their editors (a link under the list). */
+  manageEditorsHref?: string;
   /** Called with the `FeedbackRequested` event when the writer submits. */
   onRequest: (event: AnnotationEventOf<'FeedbackRequested'>) => void;
   onCancel?: () => void;
   defaultScope?: FeedbackScope['kind'];
-  defaultLenses?: readonly Lens[];
-  defaultIntensity?: Intensity;
   newId?: () => string;
   className?: string;
 }
 
+/** The ask the form sends: the canned question, then the writer's own, one per line. */
+export function composeAsk(canned: string | null, typed: string): string {
+  return [canned?.trim(), typed.trim()].filter((s) => !!s).join('\n');
+}
+
 /** The feedback request form. */
 export function FeedbackRequestForm(props: FeedbackRequestFormProps): React.JSX.Element {
-  const {
-    documentId,
-    documentTitle,
-    selection = null,
-    onRequest,
-    onCancel,
-    defaultLenses = ['clarity'],
-    defaultIntensity = 'standard',
-  } = props;
+  const { documentId, documentTitle, selection = null, onRequest, onCancel, editors } = props;
   const uid = useId();
   const [scopeKind, setScopeKind] = useState<FeedbackScope['kind']>(
     props.defaultScope ?? (selection ? 'selection' : 'document'),
   );
-  const [lenses, setLenses] = useState<Lens[]>([...defaultLenses]);
-  const [intensity, setIntensity] = useState<Intensity>(defaultIntensity);
+  const [chosenId, setChosenId] = useState<string | null>(null);
+  const [canned, setCanned] = useState<string | null>(null);
   const [ask, setAsk] = useState('');
   const [error, setError] = useState<string | null>(null);
   const effectiveScope = scopeKind === 'selection' && !selection ? 'document' : scopeKind;
+  const wanted = chosenId ?? props.defaultEditorId ?? null;
+  const editor = editors?.find((e) => e.id === wanted) ?? editors?.[0] ?? null;
+  const askRoom = TEXT_LIMITS.feedbackAskMaxChars - (canned ? canned.length + 1 : 0);
 
-  const toggleLens = (lens: Lens): void =>
-    setLenses((cur) => (cur.includes(lens) ? cur.filter((l) => l !== lens) : [...cur, lens]));
+  const choose = (id: string): void => {
+    setChosenId(id);
+    setCanned(null);
+  };
 
   const submit = (e: FormEvent): void => {
     e.preventDefault();
-    if (lenses.length === 0) {
-      setError('Pick at least one lens.');
+    if (!editor) {
+      setError('Choose an editor.');
       return;
     }
     let scope: FeedbackScope;
@@ -81,12 +89,12 @@ export function FeedbackRequestForm(props: FeedbackRequestFormProps): React.JSX.
     else if (effectiveScope === 'project') scope = { kind: 'project' };
     else scope = { kind: 'document', documentId };
     try {
-      const ordered = LENSES.filter((l) => lenses.includes(l));
       onRequest(
-        feedbackRequested({ scope, lenses: ordered, intensity, ask }, props.newId ?? newId),
+        feedbackRequestFor(editor, { scope, ask: composeAsk(canned, ask) }, props.newId ?? newId),
       );
       setError(null);
       setAsk('');
+      setCanned(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
     }
@@ -100,7 +108,56 @@ export function FeedbackRequestForm(props: FeedbackRequestFormProps): React.JSX.
       data-testid="feedback-form"
     >
       <fieldset className="lh-request-group">
-        <legend>Scope</legend>
+        <legend>Editor</legend>
+        {editors === null ? (
+          <p className="lh-hint" role="status">
+            Loading your editors…
+          </p>
+        ) : editors.length === 0 ? (
+          <p className="lh-hint lh-editor-none">
+            You have no editors yet.
+            {props.manageEditorsHref && (
+              <>
+                {' '}
+                <a className="lh-btn-link" href={props.manageEditorsHref}>
+                  Set one up
+                </a>
+              </>
+            )}
+          </p>
+        ) : (
+          <div className="lh-editor-list" role="radiogroup" aria-label="Editor">
+            {editors.map((ed) => {
+              const on = ed.id === editor?.id;
+              return (
+                <label
+                  key={ed.id}
+                  className={`lh-editor-option${on ? ' is-on' : ''}`}
+                  data-editor-id={ed.id}
+                >
+                  <input
+                    type="radio"
+                    name={`${uid}-editor`}
+                    value={ed.id}
+                    checked={on}
+                    onChange={() => choose(ed.id)}
+                  />
+                  <span className="lh-editor-name">{ed.name}</span>
+                  <span className="lh-editor-summary">{editorSummary(ed.brief) || 'No brief'}</span>
+                </label>
+              );
+            })}
+          </div>
+        )}
+        {props.manageEditorsHref && editors && editors.length > 0 && (
+          <a className="lh-hint lh-editor-manage" href={props.manageEditorsHref}>
+            Manage editors
+          </a>
+        )}
+      </fieldset>
+
+      <fieldset className="lh-request-group">
+        <legend>Look at</legend>
         <div className="lh-segmented" role="presentation">
           <label
             className={effectiveScope === 'selection' ? 'is-on' : ''}
@@ -139,54 +196,35 @@ export function FeedbackRequestForm(props: FeedbackRequestFormProps): React.JSX.
         </div>
       </fieldset>
 
-      <fieldset className="lh-request-group">
-        <legend>Lenses</legend>
-        <div className="lh-lenses">
-          {LENSES.map((lens) => (
-            <label key={lens} className={`lh-chip${lenses.includes(lens) ? ' is-on' : ''}`}>
-              <input
-                type="checkbox"
-                name={`${uid}-lens`}
-                value={lens}
-                checked={lenses.includes(lens)}
-                onChange={() => toggleLens(lens)}
-              />
-              {LENS_LABELS[lens]}
-            </label>
-          ))}
-        </div>
-      </fieldset>
-
-      <fieldset className="lh-request-group">
-        <legend>Intensity</legend>
-        <div className="lh-segmented">
-          {INTENSITY_OPTIONS.map((o) => (
-            <label key={o.value} className={intensity === o.value ? 'is-on' : ''} title={o.hint}>
-              <input
-                type="radio"
-                name={`${uid}-intensity`}
-                value={o.value}
-                checked={intensity === o.value}
-                onChange={() => setIntensity(o.value)}
-              />
-              {o.label}
-            </label>
-          ))}
-        </div>
-        <p className="lh-hint">{INTENSITY_OPTIONS.find((o) => o.value === intensity)?.hint}</p>
-      </fieldset>
-
-      <label className="lh-request-group lh-request-ask">
-        <span className="lh-legend">Anything in particular?</span>
+      <div className="lh-request-group lh-request-ask">
+        <span className="lh-legend" id={`${uid}-ask`}>
+          Anything in particular?
+        </span>
+        {editor && editor.questions.length > 0 && (
+          <div className="lh-questions" role="group" aria-labelledby={`${uid}-ask`}>
+            {editor.questions.map((q) => (
+              <button
+                key={q}
+                type="button"
+                className={`lh-chip lh-question-chip${canned === q ? ' is-on' : ''}`}
+                aria-pressed={canned === q}
+                onClick={() => setCanned(canned === q ? null : q)}
+              >
+                {q}
+              </button>
+            ))}
+          </div>
+        )}
         <textarea
           value={ask}
-          maxLength={TEXT_LIMITS.feedbackAskMaxChars}
+          aria-labelledby={`${uid}-ask`}
+          maxLength={askRoom}
           rows={2}
-          placeholder="Is the opening too slow?"
-          onChange={(e) => setAsk(e.target.value)}
+          placeholder={canned ? 'Add to that, if you like' : 'Your own question (optional)'}
+          onChange={(e) => setAsk(e.target.value.slice(0, askRoom))}
         />
         <span className="lh-hint">This goes to the editor only. It never enters your text.</span>
-      </label>
+      </div>
 
       {error && (
         <p className="lh-request-error" role="alert">
@@ -199,8 +237,8 @@ export function FeedbackRequestForm(props: FeedbackRequestFormProps): React.JSX.
             Cancel
           </button>
         )}
-        <button type="submit" className="lh-btn lh-btn-primary" disabled={lenses.length === 0}>
-          Ask the editor
+        <button type="submit" className="lh-btn lh-btn-primary" disabled={!editor}>
+          {editor ? `Ask ${editor.name}` : 'Ask'}
         </button>
       </div>
     </form>

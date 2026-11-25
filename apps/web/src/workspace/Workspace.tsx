@@ -42,6 +42,7 @@ import type { BinderRef, DocumentState, ProjectState } from '@longhand/schema';
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { onAuthError } from '../auth/session';
 import { getClient } from '../lib/client';
+import { editorsHref, useEditors, type EditorsState } from '../lib/editors';
 import { HumanEvents } from '../lib/drafts';
 import { deviceId, editorSessionId, newId } from '../lib/ids';
 import { ProjectStore, type ProjectSnapshot } from '../store/projectStore';
@@ -183,6 +184,7 @@ function WorkspaceReady(props: {
   projectId: string;
 }) {
   const { client, store, snap, state, actorId, projectId } = props;
+  const editors = useEditors();
 
   // ---------------------------------------------------------------- plumbing
   const [transport] = useState(
@@ -621,7 +623,15 @@ function WorkspaceReady(props: {
             </button>
           </div>
           <div className="ws-right-body">
-            {tab === 'feedback' && <FeedbackTab controller={ann} doc={doc} nonce={askNonce} />}
+            {tab === 'feedback' && (
+              <FeedbackTab
+                controller={ann}
+                doc={doc}
+                nonce={askNonce}
+                editors={editors}
+                projectId={projectId}
+              />
+            )}
             {tab === 'research' && (
               <ResearchPane
                 state={state}
@@ -656,6 +666,7 @@ function WorkspaceReady(props: {
             )}
             {tab === 'settings' && (
               <SettingsPane
+                editorsHref={editorsHref(projectId)}
                 settings={state.settings}
                 onDraft={onBinderDraft}
                 prefs={settings}
@@ -717,16 +728,30 @@ function FeedbackTab(props: {
   controller: AnnotationsController;
   doc: DocumentState | null;
   nonce: number;
+  editors: EditorsState;
+  projectId: string;
 }) {
   if (!props.doc || props.doc.kind === 'note')
-    return <p className="ws-note">Open a manuscript document to ask the editor about it.</p>;
+    return <p className="ws-note">Open a manuscript document to ask an editor about it.</p>;
   return (
-    <FeedbackPanel
-      key={props.nonce}
-      controller={props.controller}
-      documentTitle={props.doc.title}
-      {...(props.nonce > 0 ? { formOpen: true } : {})}
-    />
+    <>
+      {props.editors.error && !props.editors.editors && (
+        <p className="lh-error" role="alert">
+          Couldn’t load your editors. {props.editors.error}{' '}
+          <button type="button" className="lh-link-quiet" onClick={props.editors.reload}>
+            Try again
+          </button>
+        </p>
+      )}
+      <FeedbackPanel
+        key={props.nonce}
+        controller={props.controller}
+        documentTitle={props.doc.title}
+        editors={props.editors.editors}
+        manageEditorsHref={editorsHref(props.projectId)}
+        {...(props.nonce > 0 ? { formOpen: true } : {})}
+      />
+    </>
   );
 }
 

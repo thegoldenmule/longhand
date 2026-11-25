@@ -220,9 +220,15 @@ test.describe('reviews', () => {
       0,
     );
     await expect(page.getByTestId('annotation-margin').locator('[data-card-id]')).toHaveCount(0);
-    await page.getByTestId('feedback-form').getByText('Pacing', { exact: true }).click();
-    await page.getByPlaceholder('Is the opening too slow?').fill('Does it start too slowly?');
-    await page.getByRole('button', { name: 'Ask the editor' }).click();
+    const form = page.getByTestId('feedback-form');
+    // Editors, not lenses: a short list with a line of each brief.
+    await expect(form.locator('.lh-editor-option')).toHaveCount(4);
+    await expect(form.getByText('Word choice', { exact: true })).toHaveCount(0);
+    await form.locator('.lh-editor-option', { hasText: 'Sam' }).click();
+    await expect(form.getByRole('radio', { name: /^Sam/ })).toBeChecked();
+    await form.getByRole('button', { name: 'Where did you get confused?' }).click();
+    await form.getByRole('textbox').fill('Does it start too slowly?');
+    await form.getByRole('button', { name: 'Ask Sam' }).click();
     const session = page.getByTestId('review-session').first();
     await expect(session).toHaveAttribute('data-phase', 'reviewing');
     await expect(session).toContainText('Reviewing');
@@ -236,16 +242,29 @@ test.describe('reviews', () => {
     const req = await page.evaluate(
       () => window.__ann.transport.commits.find((c) => c.type === 'FeedbackRequested')!.payload,
     );
-    expect(req).toMatchObject({ lenses: ['clarity', 'pacing'], ask: 'Does it start too slowly?' });
+    expect(req).toMatchObject({
+      lenses: ['clarity', 'pacing', 'character-dialogue'],
+      intensity: 'light',
+      ask: 'Where did you get confused?\nDoes it start too slowly?',
+      editor: { id: 'editor-4', name: 'Sam' },
+    });
+    await expect(session.getByTestId('review-editor')).toHaveText('Sam');
   });
 
   test('a failed review is calm and can be retried', async ({ page }) => {
     await openDemo(page, 'seed=empty&step=100&fail=1');
-    await page.getByRole('button', { name: 'Ask the editor' }).click();
+    await page.getByRole('button', { name: 'Ask Margaret' }).click();
     const session = page.getByTestId('review-session').first();
     await expect(session).toHaveAttribute('data-phase', 'failed', { timeout: 10_000 });
     await expect(session).toContainText('Nothing in your text changed.');
     await session.getByRole('button', { name: 'Try again' }).click();
     await expect(page.getByTestId('review-session')).toHaveCount(2);
+    // The retry asks the same editor.
+    const reqs = await page.evaluate(() =>
+      window.__ann.transport.commits
+        .filter((c) => c.type === 'FeedbackRequested')
+        .map((c) => (c.payload as { editor?: { name: string } }).editor?.name),
+    );
+    expect(reqs).toEqual(['Margaret', 'Margaret']);
   });
 });

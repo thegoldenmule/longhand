@@ -96,15 +96,15 @@ export interface StarterEditor extends EditorProfileInput {
 
 /**
  * The starter roster, seeded for a writer with no editors (and restored by
- * "reset to starters"). Together they cover every lens the full-stack e2e mock
+ * "reset to starters"). Lenses are in display order (`LENSES`). Together they cover every lens the full-stack e2e mock
  * reviewer reacts to (`structure`, `word-choice`).
  */
 export const STARTER_EDITORS: readonly StarterEditor[] = Object.freeze([
   {
     name: 'Margaret',
     brief:
-      'A developmental editor who reads for the shape of the whole: what the piece is trying to do, where it sags, and what is out of order. Big-picture notes, few of them, never commas.',
-    lenses: ['structure', 'pacing', 'argument'],
+      'Developmental editor; big picture first. Reads for the shape of the whole: what the piece is trying to do, where it sags, and what is out of order. A few notes that matter, never commas.',
+    lenses: ['structure', 'argument', 'pacing'],
     intensity: 'light',
     questions: [
       'Is the opening too slow?',
@@ -115,8 +115,8 @@ export const STARTER_EDITORS: readonly StarterEditor[] = Object.freeze([
   {
     name: 'Theo',
     brief:
-      'A line editor who listens to every sentence: precise word choice, clear syntax and a steady voice. Cuts flab and cliché, and keeps your voice your own.',
-    lenses: ['word-choice', 'clarity', 'tone-voice'],
+      'Line editor; every sentence counts. Listens for precise word choice, clear syntax and a steady voice. Cuts flab and cliché, and keeps your voice your own.',
+    lenses: ['clarity', 'word-choice', 'tone-voice'],
     intensity: 'standard',
     questions: [
       'Which sentences are doing too little?',
@@ -127,16 +127,16 @@ export const STARTER_EDITORS: readonly StarterEditor[] = Object.freeze([
   {
     name: 'Ruth',
     brief:
-      'A meticulous copyeditor: grammar, punctuation, consistency, and every claim that needs a source. Small, exact notes with the rule behind each one.',
-    lenses: ['grammar-mechanics', 'claims-citations'],
+      'Copyeditor; exact and thorough. Grammar, punctuation, consistency, and every claim that needs a source. Small notes, each with the rule behind it.',
+    lenses: ['claims-citations', 'grammar-mechanics'],
     intensity: 'thorough',
     questions: ['Is anything grammatically wrong?', 'Which claims need a citation?'],
   },
   {
     name: 'Sam',
     brief:
-      'A first reader, not an editor: says honestly where they were gripped, confused or bored, and what they wanted more of. Plain reactions, no jargon.',
-    lenses: ['pacing', 'character-dialogue', 'clarity'],
+      'First reader; honest reactions. Says where they were gripped, confused or bored, and what they wanted more of. Plain words, no jargon.',
+    lenses: ['clarity', 'pacing', 'character-dialogue'],
     intensity: 'light',
     questions: [
       'Where did you get confused?',

@@ -66,7 +66,7 @@ for (const theme of ['light', 'dark'] as const) {
       await expect(page.getByTestId('annotation-margin').locator('[data-card-id]')).toHaveCount(0);
       await scrollToText(page);
       await page.screenshot({ path: `${SHOTS}/empty-${theme}.png` });
-      await page.getByRole('button', { name: 'Ask the editor' }).click();
+      await page.getByRole('button', { name: 'Ask Margaret' }).click();
       await expect(page.getByTestId('review-session').first()).toHaveAttribute(
         'data-phase',
         'reviewing',

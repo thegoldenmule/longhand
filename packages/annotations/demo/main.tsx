@@ -19,7 +19,7 @@
  */
 import { LonghandEditor, MemoryQueue, type EditorHandle } from '@longhand/editor';
 import '@longhand/editor/styles.css';
-import type { ProjectState } from '@longhand/schema';
+import { STARTER_EDITORS, type EditorProfile, type ProjectState } from '@longhand/schema';
 import { StrictMode, useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
@@ -36,6 +36,8 @@ import { MockReviewer } from '../test-support/mockReviewer';
 import './demo.css';
 
 const params = new URLSearchParams(location.search);
+/** The writer's editors: the starters, with fixed ids. */
+const EDITORS: EditorProfile[] = STARTER_EDITORS.map((e, i) => ({ ...e, id: `editor-${i + 1}` }));
 const seedName = params.get('seed') ?? 'suggestions';
 const theme = params.get('theme');
 if (theme === 'dark' || theme === 'light') document.documentElement.dataset.theme = theme;
@@ -166,7 +168,12 @@ function App(): React.JSX.Element {
         <AnnotationMargin controller={ann} className="demo-margin" />
       </main>
       <aside className="demo-panel">
-        <FeedbackPanel controller={ann} {...(docState ? { documentTitle: docState.title } : {})} />
+        <FeedbackPanel
+          controller={ann}
+          editors={EDITORS}
+          manageEditorsHref="#editors"
+          {...(docState ? { documentTitle: docState.title } : {})}
+        />
       </aside>
     </div>
   );

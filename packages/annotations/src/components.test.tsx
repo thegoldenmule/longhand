@@ -1,5 +1,11 @@
 import { foldCommits, projectState } from '@longhand/ledger';
-import { FeedbackRequestedSchema, LENSES, type ProjectState } from '@longhand/schema';
+import {
+  FeedbackRequestedSchema,
+  STARTER_EDITORS,
+  TEXT_LIMITS,
+  type EditorProfile,
+  type ProjectState,
+} from '@longhand/schema';
 import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
@@ -15,7 +21,7 @@ import { AnnotationsController } from './controller';
 import type { AnnotationEventOf } from './drafts';
 import { cardsFromState } from './model';
 import { AnnotationCard } from './react/cards';
-import { FeedbackRequestForm } from './react/form';
+import { FeedbackRequestForm, composeAsk } from './react/form';
 import { AnnotationMargin } from './react/margin';
 import { FeedbackPanel } from './react/panel';
 
@@ -30,77 +36,140 @@ function prefixState(name: Parameters<typeof fixtureCommits>[0]): ProjectState {
   return projectState(foldCommits(untilFirstReview(fixtureCommits(name))));
 }
 
+const EDITORS: EditorProfile[] = STARTER_EDITORS.map((e, i) => ({ ...e, id: `ed-${i + 1}` }));
+const [MARGARET, THEO] = EDITORS as [EditorProfile, EditorProfile];
+
 describe('<FeedbackRequestForm>', () => {
-  it('emits a FeedbackRequested event with scope, lenses, intensity and ask', () => {
+  it('asks the chosen editor: its lenses, intensity and a record of it, plus scope and ask', () => {
     const onRequest = vi.fn<(e: AnnotationEventOf<'FeedbackRequested'>) => void>();
     render(
       <FeedbackRequestForm
         documentId="doc-1"
         documentTitle="Chapter 1"
+        editors={EDITORS}
         onRequest={onRequest}
         newId={() => 'req-x'}
       />,
     );
     const form = screen.getByTestId('feedback-form');
-    // Selection is unavailable without a selection.
+    // A short list of editors: name plus a line of the brief; no lens or intensity pickers.
+    expect(within(form).getAllByRole('radio', { name: /./ }).length).toBeGreaterThan(0);
+    expect(form.querySelectorAll('.lh-editor-option')).toHaveLength(EDITORS.length);
+    expect(within(form).queryByText('Light touch')).toBeNull();
+    expect(within(form).queryByText('Word choice')).toBeNull();
+    expect(form.querySelector('[data-editor-id="ed-2"]')!.textContent).toContain(
+      'Line editor; every sentence counts.',
+    );
+    // Selection is unavailable without a selection; the document is the default.
     expect((within(form).getByLabelText('Selection') as HTMLInputElement).disabled).toBe(true);
-    fireEvent.click(within(form).getByLabelText('Pacing'));
-    fireEvent.click(within(form).getByLabelText('Clarity')); // default on → off
-    fireEvent.click(within(form).getByLabelText('Character and dialogue'));
-    fireEvent.click(within(form).getByLabelText('Light touch'));
-    fireEvent.change(within(form).getByPlaceholderText('Is the opening too slow?'), {
-      target: { value: '  Is the opening too slow? ' },
+    expect(within(form).getByRole('button', { name: 'Ask Margaret' })).toBeTruthy();
+    fireEvent.click(within(form).getByRole('radio', { name: /^Theo/ }));
+    fireEvent.click(within(form).getByRole('button', { name: THEO.questions[1]! }));
+    fireEvent.change(within(form).getByRole('textbox'), {
+      target: { value: '  Especially the dialogue. ' },
     });
-    fireEvent.click(within(form).getByRole('button', { name: 'Ask the editor' }));
+    fireEvent.click(within(form).getByRole('button', { name: 'Ask Theo' }));
     expect(onRequest).toHaveBeenCalledTimes(1);
     const event = onRequest.mock.calls[0]![0];
     expect(event.type).toBe('FeedbackRequested');
     expect(event.payload).toEqual({
       requestId: 'req-x',
       scope: { kind: 'document', documentId: 'doc-1' },
-      lenses: ['pacing', 'character-dialogue'],
-      intensity: 'light',
-      ask: 'Is the opening too slow?',
+      lenses: ['clarity', 'word-choice', 'tone-voice'],
+      intensity: 'standard',
+      ask: `${THEO.questions[1]}\nEspecially the dialogue.`,
+      editor: { id: 'ed-2', name: 'Theo', brief: THEO.brief },
     });
     expect(FeedbackRequestedSchema.safeParse(event.payload).success).toBe(true);
   });
 
-  it('offers every lens and the selection and project scopes', () => {
+  it('defaults to the selection, then the document; project on request; one canned question', () => {
     const onRequest = vi.fn<(e: AnnotationEventOf<'FeedbackRequested'>) => void>();
     const { rerender } = render(
       <FeedbackRequestForm
         documentId="doc-1"
         selection={{ documentId: 'doc-1', from: 3, to: 20, version: 42 }}
+        editors={EDITORS}
         onRequest={onRequest}
         newId={() => 'r1'}
       />,
     );
-    expect(screen.getAllByRole('checkbox')).toHaveLength(LENSES.length);
-    // A selection makes it the default scope.
-    fireEvent.click(screen.getByRole('button', { name: 'Ask the editor' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Ask Margaret' }));
     expect(onRequest.mock.calls[0]![0].payload).toMatchObject({
       scope: { kind: 'selection', documentId: 'doc-1', from: 3, to: 20, version: 42 },
-      lenses: ['clarity'],
-      intensity: 'standard',
+      lenses: MARGARET.lenses,
+      intensity: 'light',
       ask: null,
+      editor: { id: 'ed-1', name: 'Margaret' },
     });
-    rerender(<FeedbackRequestForm documentId="doc-1" onRequest={onRequest} newId={() => 'r2'} />);
+    rerender(
+      <FeedbackRequestForm
+        documentId="doc-1"
+        editors={EDITORS}
+        defaultEditorId="ed-3"
+        onRequest={onRequest}
+        newId={() => 'r2'}
+      />,
+    );
     fireEvent.click(screen.getByLabelText('Whole project'));
-    fireEvent.click(screen.getByLabelText('Thorough'));
-    fireEvent.click(screen.getByRole('button', { name: 'Ask the editor' }));
+    const [q1, q2] = EDITORS[2]!.questions as [string, string];
+    // Tapping a second question replaces the first; tapping it again clears it.
+    fireEvent.click(screen.getByRole('button', { name: q1 }));
+    fireEvent.click(screen.getByRole('button', { name: q2 }));
+    expect(screen.getByRole('button', { name: q1 }).getAttribute('aria-pressed')).toBe('false');
+    expect(screen.getByRole('button', { name: q2 }).getAttribute('aria-pressed')).toBe('true');
+    fireEvent.click(screen.getByRole('button', { name: 'Ask Ruth' }));
     expect(onRequest.mock.calls[1]![0].payload).toMatchObject({
       scope: { kind: 'project' },
       intensity: 'thorough',
+      ask: q2,
+      editor: { id: 'ed-3', name: 'Ruth' },
     });
   });
 
-  it('needs at least one lens', () => {
+  it('waits for editors, and points to setting one up when there are none', () => {
     const onRequest = vi.fn();
-    render(<FeedbackRequestForm documentId="d" onRequest={onRequest} />);
-    fireEvent.click(screen.getByLabelText('Clarity'));
-    expect(
-      (screen.getByRole('button', { name: 'Ask the editor' }) as HTMLButtonElement).disabled,
-    ).toBe(true);
+    const { rerender } = render(
+      <FeedbackRequestForm documentId="d" editors={null} onRequest={onRequest} />,
+    );
+    expect(screen.getByRole('status').textContent).toContain('Loading your editors');
+    expect((screen.getByRole('button', { name: 'Ask' }) as HTMLButtonElement).disabled).toBe(true);
+    rerender(
+      <FeedbackRequestForm
+        documentId="d"
+        editors={[]}
+        manageEditorsHref="/editors"
+        onRequest={onRequest}
+      />,
+    );
+    expect(screen.getByRole('link', { name: 'Set one up' }).getAttribute('href')).toBe('/editors');
+    expect((screen.getByRole('button', { name: 'Ask' }) as HTMLButtonElement).disabled).toBe(true);
+    rerender(
+      <FeedbackRequestForm
+        documentId="d"
+        editors={EDITORS}
+        manageEditorsHref="/editors"
+        onRequest={onRequest}
+      />,
+    );
+    expect(screen.getByRole('link', { name: 'Manage editors' }).getAttribute('href')).toBe(
+      '/editors',
+    );
+  });
+
+  it('keeps the ask within the limit', () => {
+    expect(composeAsk(null, '  ')).toBe('');
+    expect(composeAsk(' Too slow? ', '')).toBe('Too slow?');
+    expect(composeAsk('Too slow?', ' And long? ')).toBe('Too slow?\nAnd long?');
+    const onRequest = vi.fn<(e: AnnotationEventOf<'FeedbackRequested'>) => void>();
+    render(<FeedbackRequestForm documentId="d" editors={EDITORS} onRequest={onRequest} />);
+    const q = MARGARET.questions[0]!;
+    fireEvent.click(screen.getByRole('button', { name: q }));
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: { value: 'x'.repeat(TEXT_LIMITS.feedbackAskMaxChars) },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Ask Margaret' }));
+    expect(onRequest.mock.calls[0]![0].payload.ask!.length).toBe(TEXT_LIMITS.feedbackAskMaxChars);
   });
 });
 
@@ -150,7 +219,7 @@ describe('cards for every annotation kind', () => {
     const h = harness('research', { controller: { onCite } });
     harnesses.push(h);
     await settle();
-    render(<FeedbackPanel controller={h.controller} />);
+    render(<FeedbackPanel controller={h.controller} editors={EDITORS} />);
     const panel = screen.getByTestId('panel-cards');
     const flag = panel.querySelector('[data-card-id="flag-1"]') as HTMLElement;
     expect(flag.textContent).toContain('AI-surfaced — unverified');
@@ -251,7 +320,7 @@ describe('card actions emit events', () => {
     const h = harness('discuss', { prefix: 'all' });
     harnesses.push(h);
     await settle();
-    render(<FeedbackPanel controller={h.controller} />);
+    render(<FeedbackPanel controller={h.controller} editors={EDITORS} />);
     // sug-d was dismissed in the full fixture: show resolved cards.
     fireEvent.click(screen.getByRole('button', { name: 'Everything' }));
     const card = screen
@@ -311,10 +380,10 @@ describe('<FeedbackPanel>', () => {
       ),
     );
     const controller = new AnnotationsController({ documentId: 'doc-ch1', state: before });
-    render(<FeedbackPanel controller={controller} />);
+    render(<FeedbackPanel controller={controller} editors={EDITORS} />);
     expect(screen.getByTestId('feedback-form')).toBeTruthy();
     expect(screen.queryByTestId('review-session')).toBeNull();
-    expect(screen.getByText(/speaks only when you ask/)).toBeTruthy();
+    expect(screen.getByText(/speak only when you ask/)).toBeTruthy();
     const margin = render(<AnnotationMargin controller={controller} />);
     expect(margin.container.querySelector('[data-card-id]')).toBeNull();
   });
@@ -323,7 +392,7 @@ describe('<FeedbackPanel>', () => {
     const h = harness('feedback-session', { prefix: 'all' });
     harnesses.push(h);
     await settle();
-    render(<FeedbackPanel controller={h.controller} />);
+    render(<FeedbackPanel controller={h.controller} editors={EDITORS} />);
     const sessions = screen.getAllByTestId('review-session');
     expect(sessions.map((s) => s.dataset.phase)).toEqual(['failed', 'finished']);
     expect(sessions[0]!.textContent).toContain('This review didn’t finish (model timeout)');
@@ -344,7 +413,7 @@ describe('<FeedbackPanel>', () => {
     const h = harness('suggestions');
     harnesses.push(h);
     await settle();
-    render(<FeedbackPanel controller={h.controller} />);
+    render(<FeedbackPanel controller={h.controller} editors={EDITORS} />);
     const panel = screen.getByTestId('panel-cards');
     const groups = () =>
       [...panel.querySelectorAll('[data-group]')].map((g) => (g as HTMLElement).dataset.group);
@@ -363,7 +432,7 @@ describe('<FeedbackPanel>', () => {
       documentId: 'doc-ch1',
       state: projectState(foldCommits(commits.slice(0, started + 1))),
     });
-    render(<FeedbackPanel controller={controller} />);
+    render(<FeedbackPanel controller={controller} editors={EDITORS} />);
     const session = screen.getByTestId('review-session');
     expect(session.dataset.phase).toBe('reviewing');
     expect(session.textContent).toContain('Reviewing');
