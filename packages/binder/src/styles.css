@@ -1,0 +1,672 @@
+/*
+ * @longhand/binder styles. Import once from the app: `import '@longhand/binder/styles.css'`.
+ *
+ * Every colour and font is a CSS variable. Each `--lh-binder-*` token falls back from
+ * an app-wide `--lh-*` token, so an app theme can restyle the binder without touching
+ * these rules. Dark mode follows `prefers-color-scheme` unless the root carries
+ * `data-theme="light"`, and `data-theme="dark"` forces it.
+ */
+
+.lh-binder,
+.lh-cork,
+.lh-settings {
+  --lh-binder-bg: var(--lh-bg, #faf8f3);
+  --lh-binder-surface: var(--lh-surface, #ffffff);
+  --lh-binder-ink: var(--lh-ink, #26241f);
+  --lh-binder-muted: var(--lh-ink-muted, #6d685e);
+  --lh-binder-faint: var(--lh-ink-faint, #a29d92);
+  --lh-binder-rule: var(--lh-rule, #e5e1d7);
+  --lh-binder-hover: var(--lh-hover, rgba(38, 36, 31, 0.045));
+  --lh-binder-selected: var(--lh-selected, #ece8de);
+  --lh-binder-accent: var(--lh-accent, #3f5f7f);
+  --lh-binder-accent-soft: var(--lh-accent-soft, rgba(63, 95, 127, 0.12));
+  --lh-binder-focus: var(--lh-focus, #3f5f7f);
+  --lh-binder-card: var(--lh-card, #fffdf8);
+  --lh-binder-card-shadow: var(--lh-card-shadow, 0 1px 2px rgba(38, 36, 31, 0.06));
+  --lh-binder-danger: var(--lh-danger, #9a3b2e);
+  --lh-binder-font-ui: var(--lh-font-ui, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif);
+  --lh-binder-font-text: var(
+    --lh-font-text,
+    'Iowan Old Style',
+    'Palatino Linotype',
+    Palatino,
+    Georgia,
+    serif
+  );
+  --lh-binder-radius: 6px;
+  --lh-binder-indent: 14px;
+
+  color: var(--lh-binder-ink);
+  font-family: var(--lh-binder-font-ui);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) :is(.lh-binder, .lh-cork, .lh-settings) {
+    --lh-binder-bg: var(--lh-bg, #1b1a18);
+    --lh-binder-surface: var(--lh-surface, #23221f);
+    --lh-binder-ink: var(--lh-ink, #e7e3d9);
+    --lh-binder-muted: var(--lh-ink-muted, #a7a195);
+    --lh-binder-faint: var(--lh-ink-faint, #757067);
+    --lh-binder-rule: var(--lh-rule, #34322d);
+    --lh-binder-hover: var(--lh-hover, rgba(231, 227, 217, 0.05));
+    --lh-binder-selected: var(--lh-selected, #302e29);
+    --lh-binder-accent: var(--lh-accent, #9db6cf);
+    --lh-binder-accent-soft: var(--lh-accent-soft, rgba(157, 182, 207, 0.14));
+    --lh-binder-focus: var(--lh-focus, #9db6cf);
+    --lh-binder-card: var(--lh-card, #272622);
+    --lh-binder-card-shadow: var(--lh-card-shadow, 0 1px 2px rgba(0, 0, 0, 0.3));
+    --lh-binder-danger: var(--lh-danger, #e0907f);
+  }
+}
+
+:root[data-theme='dark'] :is(.lh-binder, .lh-cork, .lh-settings) {
+  --lh-binder-bg: var(--lh-bg, #1b1a18);
+  --lh-binder-surface: var(--lh-surface, #23221f);
+  --lh-binder-ink: var(--lh-ink, #e7e3d9);
+  --lh-binder-muted: var(--lh-ink-muted, #a7a195);
+  --lh-binder-faint: var(--lh-ink-faint, #757067);
+  --lh-binder-rule: var(--lh-rule, #34322d);
+  --lh-binder-hover: var(--lh-hover, rgba(231, 227, 217, 0.05));
+  --lh-binder-selected: var(--lh-selected, #302e29);
+  --lh-binder-accent: var(--lh-accent, #9db6cf);
+  --lh-binder-accent-soft: var(--lh-accent-soft, rgba(157, 182, 207, 0.14));
+  --lh-binder-focus: var(--lh-focus, #9db6cf);
+  --lh-binder-card: var(--lh-card, #272622);
+  --lh-binder-card-shadow: var(--lh-card-shadow, 0 1px 2px rgba(0, 0, 0, 0.3));
+  --lh-binder-danger: var(--lh-danger, #e0907f);
+}
+
+.lh-visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- Binder tree ------------------------------------------------------------ */
+
+.lh-binder {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 12px 8px;
+}
+
+.lh-binder-area-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 6px 4px;
+}
+
+.lh-binder-area-title {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lh-binder-muted);
+}
+
+.lh-binder-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  opacity: 0.55;
+  transition: opacity 120ms ease;
+}
+
+.lh-binder-area:hover .lh-binder-tools,
+.lh-binder-area:focus-within .lh-binder-tools {
+  opacity: 1;
+}
+
+.lh-binder-tool {
+  font: inherit;
+  font-size: 12px;
+  color: var(--lh-binder-muted);
+  background: none;
+  border: 0;
+  border-radius: 4px;
+  padding: 2px 6px;
+  cursor: pointer;
+}
+
+.lh-binder-tool:hover:not(:disabled) {
+  color: var(--lh-binder-ink);
+  background: var(--lh-binder-hover);
+}
+
+.lh-binder-tool:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.lh-binder-tool:focus-visible,
+.lh-binder-archive-toggle:focus-visible {
+  outline: 2px solid var(--lh-binder-focus);
+  outline-offset: 1px;
+}
+
+.lh-binder-tree,
+.lh-binder-group {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lh-binder-item {
+  outline: none;
+}
+
+.lh-binder-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 28px;
+  padding: 2px 8px 2px calc((var(--lh-binder-level, 1) - 1) * var(--lh-binder-indent) + 4px);
+  border-radius: var(--lh-binder-radius);
+  cursor: default;
+  user-select: none;
+}
+
+.lh-binder-row:hover {
+  background: var(--lh-binder-hover);
+}
+
+.lh-binder-item.is-selected > .lh-binder-row {
+  background: var(--lh-binder-selected);
+}
+
+.lh-binder-item:focus-visible > .lh-binder-row {
+  box-shadow: inset 0 0 0 2px var(--lh-binder-focus);
+}
+
+.lh-binder-item.is-moving > .lh-binder-row {
+  background: var(--lh-binder-accent-soft);
+  box-shadow: inset 0 0 0 1px var(--lh-binder-accent);
+}
+
+.lh-binder-item.is-dragging > .lh-binder-row {
+  opacity: 0.45;
+}
+
+.lh-binder-row.is-drop-before {
+  box-shadow: inset 0 2px 0 var(--lh-binder-accent);
+}
+
+.lh-binder-row.is-drop-after {
+  box-shadow: inset 0 -2px 0 var(--lh-binder-accent);
+}
+
+.lh-binder-row.is-drop-inside {
+  background: var(--lh-binder-accent-soft);
+  box-shadow: inset 0 0 0 1px var(--lh-binder-accent);
+}
+
+.lh-binder-twisty {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  position: relative;
+}
+
+.lh-binder-twisty.is-open::before,
+.lh-binder-twisty.is-closed::before {
+  content: '';
+  position: absolute;
+  inset: 3px 4px 3px 3px;
+  border-style: solid;
+  border-width: 3px 0 3px 5px;
+  border-color: transparent transparent transparent var(--lh-binder-faint);
+  transition: transform 120ms ease;
+  cursor: pointer;
+}
+
+.lh-binder-twisty.is-open::before {
+  transform: rotate(90deg);
+}
+
+.lh-binder-icon {
+  flex: none;
+  width: 10px;
+  height: 12px;
+  border: 1px solid var(--lh-binder-faint);
+  border-radius: 1.5px;
+}
+
+.lh-binder-icon.is-folder {
+  width: 13px;
+  height: 10px;
+  border-radius: 1px 2px 2px 2px;
+  background: var(--lh-binder-selected);
+}
+
+.lh-binder-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--lh-binder-font-text);
+  font-size: 15px;
+}
+
+.lh-binder-item--folder > .lh-binder-row .lh-binder-title {
+  color: var(--lh-binder-ink);
+}
+
+.lh-binder-count {
+  flex: none;
+  font-size: 11px;
+  color: var(--lh-binder-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.lh-binder-rename {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--lh-binder-font-text);
+  font-size: 15px;
+  color: var(--lh-binder-ink);
+  background: var(--lh-binder-surface);
+  border: 1px solid var(--lh-binder-accent);
+  border-radius: 4px;
+  padding: 1px 4px;
+  outline: none;
+}
+
+.lh-binder-empty {
+  margin: 4px 10px;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--lh-binder-faint);
+}
+
+.lh-binder-dropend {
+  min-height: 10px;
+  border-radius: var(--lh-binder-radius);
+}
+
+.lh-binder-dropend.is-armed {
+  min-height: 24px;
+}
+
+.lh-binder-dropend.is-drop-after {
+  box-shadow: inset 0 2px 0 var(--lh-binder-accent);
+}
+
+.lh-binder-archive {
+  border-top: 1px solid var(--lh-binder-rule);
+  padding: 10px 6px 0;
+}
+
+.lh-binder-archive-toggle {
+  font: inherit;
+  font-size: 12px;
+  color: var(--lh-binder-muted);
+  background: none;
+  border: 0;
+  padding: 2px 0;
+  cursor: pointer;
+}
+
+.lh-binder-archive-toggle::before {
+  content: '';
+  display: inline-block;
+  margin-right: 6px;
+  border-style: solid;
+  border-width: 3px 0 3px 5px;
+  border-color: transparent transparent transparent var(--lh-binder-faint);
+  transition: transform 120ms ease;
+}
+
+.lh-binder-archive-toggle[aria-expanded='true']::before {
+  transform: rotate(90deg);
+}
+
+.lh-binder-archive-count {
+  font-variant-numeric: tabular-nums;
+  color: var(--lh-binder-faint);
+}
+
+.lh-binder-archive-list {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+}
+
+.lh-binder-archive-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: 8px;
+  padding: 4px 4px 4px 8px;
+  border-radius: var(--lh-binder-radius);
+}
+
+.lh-binder-archive-item:hover {
+  background: var(--lh-binder-hover);
+}
+
+.lh-binder-archive-title {
+  font-family: var(--lh-binder-font-text);
+  font-size: 14px;
+  color: var(--lh-binder-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lh-binder-archive-where {
+  grid-column: 1;
+  font-size: 11px;
+  color: var(--lh-binder-faint);
+}
+
+.lh-binder-archive-item .lh-binder-tool {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+/* ---- Corkboard -------------------------------------------------------------- */
+
+.lh-cork {
+  padding: 16px;
+}
+
+.lh-cork-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr));
+  gap: 16px;
+}
+
+.lh-card {
+  position: relative;
+  border-radius: var(--lh-binder-radius);
+}
+
+.lh-card-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+  min-height: 150px;
+  box-sizing: border-box;
+  padding: 12px 14px 12px 16px;
+  background: var(--lh-binder-card);
+  border: 1px solid var(--lh-binder-rule);
+  border-radius: var(--lh-binder-radius);
+  box-shadow: var(--lh-binder-card-shadow);
+}
+
+.lh-card--folder .lh-card-inner {
+  box-shadow:
+    var(--lh-binder-card-shadow),
+    3px 3px 0 -1px var(--lh-binder-card),
+    3px 3px 0 0 var(--lh-binder-rule);
+}
+
+.lh-card.is-selected .lh-card-inner {
+  border-color: var(--lh-binder-accent);
+}
+
+.lh-card.is-moving .lh-card-inner {
+  border-color: var(--lh-binder-accent);
+  background: var(--lh-binder-accent-soft);
+}
+
+.lh-card.is-dragging {
+  opacity: 0.45;
+}
+
+.lh-card.is-drop-before::before,
+.lh-card.is-drop-after::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--lh-binder-accent);
+}
+
+.lh-card.is-drop-before::before {
+  left: -10px;
+}
+
+.lh-card.is-drop-after::after {
+  right: -10px;
+}
+
+.lh-card-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.lh-card-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  font-family: var(--lh-binder-font-text);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.lh-card-open {
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.lh-card-open:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--lh-binder-faint);
+  text-underline-offset: 3px;
+}
+
+.lh-card-handle {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  margin: -2px -6px 0 0;
+  background: none;
+  border: 0;
+  border-radius: 4px;
+  cursor: grab;
+  display: grid;
+  place-items: center;
+}
+
+.lh-card-handle:hover,
+.lh-card-handle[aria-pressed='true'] {
+  background: var(--lh-binder-hover);
+}
+
+.lh-card-grip {
+  width: 8px;
+  height: 12px;
+  background-image: radial-gradient(circle, var(--lh-binder-faint) 1.2px, transparent 1.4px);
+  background-size: 4px 4px;
+}
+
+.lh-card-synopsis {
+  flex: 1 1 auto;
+  margin: 0;
+  font-family: var(--lh-binder-font-text);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--lh-binder-muted);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  cursor: text;
+}
+
+.lh-card-synopsis.is-empty {
+  font-style: italic;
+  color: var(--lh-binder-faint);
+}
+
+.lh-card-action {
+  align-self: flex-start;
+  font: inherit;
+  font-size: 12px;
+  color: var(--lh-binder-faint);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.lh-card-action:hover {
+  color: var(--lh-binder-ink);
+}
+
+.lh-card-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1 1 auto;
+}
+
+.lh-card-textarea {
+  flex: 1 1 auto;
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  font-family: var(--lh-binder-font-text);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--lh-binder-ink);
+  background: var(--lh-binder-surface);
+  border: 1px solid var(--lh-binder-accent);
+  border-radius: 4px;
+  padding: 6px 8px;
+  outline: none;
+}
+
+.lh-card-hint,
+.lh-card-meta,
+.lh-card-count {
+  margin: 0;
+  font-size: 11px;
+  color: var(--lh-binder-faint);
+}
+
+.lh-card-count {
+  font-variant-numeric: tabular-nums;
+}
+
+.lh-card-open:focus-visible,
+.lh-card-handle:focus-visible,
+.lh-card-action:focus-visible {
+  outline: 2px solid var(--lh-binder-focus);
+  outline-offset: 1px;
+}
+
+.lh-cork-empty {
+  margin: 24px 0;
+  text-align: center;
+  font-style: italic;
+  color: var(--lh-binder-faint);
+}
+
+/* ---- Project settings ------------------------------------------------------- */
+
+.lh-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 40rem;
+  padding: 16px;
+}
+
+.lh-settings-heading {
+  margin: 0;
+  font-family: var(--lh-binder-font-text);
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.lh-settings-intro {
+  margin: -8px 0 4px;
+  color: var(--lh-binder-muted);
+}
+
+.lh-settings-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.lh-settings-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--lh-binder-muted);
+}
+
+.lh-settings-input {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: var(--lh-binder-font-text);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--lh-binder-ink);
+  background: var(--lh-binder-surface);
+  border: 1px solid var(--lh-binder-rule);
+  border-radius: 4px;
+  padding: 7px 10px;
+}
+
+textarea.lh-settings-input {
+  resize: vertical;
+}
+
+.lh-settings-input:focus {
+  outline: none;
+  border-color: var(--lh-binder-accent);
+  box-shadow: 0 0 0 3px var(--lh-binder-accent-soft);
+}
+
+.lh-settings-field.is-invalid .lh-settings-input {
+  border-color: var(--lh-binder-danger);
+}
+
+.lh-settings-hint {
+  margin: 0;
+  font-size: 12px;
+  color: var(--lh-binder-faint);
+}
+
+.lh-settings-error {
+  margin: 0;
+  font-size: 12px;
+  color: var(--lh-binder-danger);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lh-binder *,
+  .lh-cork *,
+  .lh-settings * {
+    transition: none !important;
+  }
+}

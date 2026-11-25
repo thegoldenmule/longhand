@@ -14,3 +14,4 @@ export * from './model';
 export * from './drafts';
 export * from './reducer';
 export * from './wordCount';
+export * from './components';
