@@ -10,7 +10,7 @@ The coordinator updates this file after every phase. A resumed session reads it 
 | 2b | Lanes needing contracts: editor, agent, binder, export, research | done | merged |
 | 2c | Contract revision pass (applied list below) | done (schema 273 tests, ledger 137, 13 fixtures + 6 tampered regenerated; SCHEMA_VERSION stays 1) | 2dd23fa |
 | 3 | Lanes needing ledger core: server (+ packages/client), provenance-ui, report + verifier | running | |
-| 4 | Annotations lane | running (started alongside phase 3) | |
+| 4 | Annotations lane | done | merged |
 | 5 | Integration: `apps/web`, dev orchestration, end-to-end in Chrome | pending | |
 
 ## Lane results
@@ -40,6 +40,7 @@ Each applied in `packages/schema` first, then in its consumers; fixtures regener
 
 | provenance-ui | merged (139 unit + 9 Playwright) | see git log |
 | report + verifier | merged (7 Playwright; verifier fails every tamper case) | see git log |
+| annotations | merged (55 unit + 19 Playwright) | see git log |
 
 Integration note (provenance-ui): the span inspector needs the folded `LedgerState`, so the web app keeps the project's commit array client-side and folds it (shared `Replay` for scrubber + inspector).
 
@@ -51,6 +52,10 @@ Integration note (provenance-ui): the span inspector needs the folded `LedgerSta
 - Server/web must implement the editor's `CommitTransport` (`packages/editor/src/sync/transport.ts`): submit → ack/duplicate/conflict/rejected/offline; subscribe in ledger order incl. own commits; `fetchSince` with fold-derived steps for ProposalAccepted. (editor → server)
 
 - Repo has no root LICENSE; verifier package declares MIT. Needs the owner's decision. (report/verifier)
+
+- Ledger: export the fold-derived steps for `ProposalAccepted` (e.g. `validateDraft` returns them / `derivedSteps`). Needed by server `fetchSince`/SSE and editor RemoteUpdate. (annotations → ledger, server)
+- Ledger fixtures: `loadFixture` breaks under jsdom (URL); use `fileURLToPath`. (annotations)
+- Agent progress events should carry `feedbackSessionId`. (annotations → agent)
 
 ## Notes
 
