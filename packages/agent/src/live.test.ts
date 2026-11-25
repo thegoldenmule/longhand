@@ -44,6 +44,9 @@ describe.skipIf(!live)('live claude CLI smoke test', () => {
             status: outcome.status,
             reason: outcome.reason,
             rejectedCalls: outcome.rejectedCalls,
+            rejected: outcome.run?.toolCalls
+              .filter((c) => c.result?.isError)
+              .map((c) => `${c.name}: ${c.result?.text}`),
             drafts: sink.drafts.map((d) => d.draft.type),
             costUsd: outcome.run?.costUsd,
             durationMs: outcome.run?.durationMs,

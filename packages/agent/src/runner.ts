@@ -72,6 +72,12 @@ export interface SessionRunOptions {
   tmpRoot?: string;
   /** Keep the temp dir for debugging. */
   keepTempFiles?: boolean;
+  /**
+   * After the finishing tool is accepted, how long the model may take to end its
+   * turn before the run is stopped (default 60000 ms). The session counts as
+   * finished either way.
+   */
+  finishGraceMs?: number;
 }
 
 /** Options for {@link runFeedbackSession}. */
@@ -255,8 +261,20 @@ async function runSession(o: SessionRunOptions, spec: SessionSpec): Promise<Sess
     sink: o.sink,
     search: o.search ?? null,
     initialCounts: context.snapshot.counts,
-    onAccepted: (draft, seq) => progress({ kind: 'annotation', seq, draft }),
+    onAccepted: (draft, seq) => {
+      progress({ kind: 'annotation', seq, draft });
+      if (draft.type === 'ReviewFinished' || draft.type === 'DiscussAnswered') {
+        graceTimer = setTimeout(() => runAbort.abort(), o.finishGraceMs ?? 60_000);
+        graceTimer.unref();
+      }
+    },
   });
+  // Aborts the model run on the caller's signal, or once the finish grace runs out.
+  const runAbort = new AbortController();
+  let graceTimer: NodeJS.Timeout | null = null;
+  const onCallerAbort = () => runAbort.abort();
+  if (o.signal?.aborted) runAbort.abort();
+  o.signal?.addEventListener('abort', onCallerAbort, { once: true });
   let dir: string | null = null;
   try {
     const relayAddr = await relay.start();
@@ -283,7 +301,7 @@ async function runSession(o: SessionRunOptions, spec: SessionSpec): Promise<Sess
       allowedTools: toolsForSession(spec.sessionKind).map((t) => `${MCP_TOOL_PREFIX}${t}`),
       cwd: dir,
       timeoutMs: o.timeoutMs ?? spec.defaultTimeout,
-      signal: o.signal,
+      signal: runAbort.signal,
       onEvent: (event) => progress({ kind: 'model', event }),
     });
     outcome.run = run;
@@ -291,6 +309,8 @@ async function runSession(o: SessionRunOptions, spec: SessionSpec): Promise<Sess
   } catch (e) {
     outcome.warnings.push(`session error: ${errMsg(e)}`);
   } finally {
+    if (graceTimer) clearTimeout(graceTimer);
+    o.signal?.removeEventListener('abort', onCallerAbort);
     relay.closeSession();
     await relay.close();
     if (dir && !o.keepTempFiles) await rm(dir, { recursive: true, force: true });

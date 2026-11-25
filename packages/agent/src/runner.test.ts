@@ -233,6 +233,42 @@ describe('runFeedbackSession with MockModelAdapter', () => {
     expect(outcome.status).toBe('finished');
   }, 30_000);
 
+  it('stops a model that lingers after finish_review once the grace period ends', async () => {
+    const adapter = new MockModelAdapter([finish, { hang: true }]);
+    const started = Date.now();
+    const outcome = await runFeedbackSession({
+      state,
+      request: docRequest(),
+      sink: new InMemoryAnnotationSink(),
+      adapter,
+      timeoutMs: 60_000,
+      finishGraceMs: 200,
+    });
+    expect(outcome.status).toBe('finished');
+    expect(outcome.run?.status).toBe('aborted');
+    expect(Date.now() - started).toBeLessThan(10_000);
+  }, 30_000);
+
+  it('the caller can cancel a running session', async () => {
+    const adapter = new MockModelAdapter([comment('p2.s1', 'sideways'), { hang: true }]);
+    const ac = new AbortController();
+    const sink = new InMemoryAnnotationSink();
+    const pending = runFeedbackSession({
+      state,
+      request: docRequest(),
+      sink,
+      adapter,
+      signal: ac.signal,
+      onProgress: (e) => {
+        if (e.kind === 'annotation') ac.abort();
+      },
+    });
+    const outcome = await pending;
+    expect(outcome.status).toBe('failed');
+    expect(outcome.reason).toBe('the session was cancelled');
+    expect(sink.ofType('FeedbackSessionFailed')).toHaveLength(1);
+  }, 30_000);
+
   it('records model errors as FeedbackSessionFailed', async () => {
     const adapter = new MockModelAdapter([{ fail: 'overloaded' }]);
     const sink = new InMemoryAnnotationSink();
