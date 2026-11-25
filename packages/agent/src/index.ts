@@ -38,6 +38,7 @@ export * from './adapters/types';
 export * from './adapters/stream-json';
 export {
   ClaudeCliAdapter,
+  ISOLATION_ARGS,
   buildClaudeArgs,
   defaultClaudeCommand,
   type ClaudeCliAdapterOptions,

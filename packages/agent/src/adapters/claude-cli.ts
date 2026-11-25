@@ -32,6 +32,8 @@ import type {
 export interface ClaudeCliAdapterOptions {
   /** CLI executable (default: `$LONGHAND_CLAUDE_BIN`, else `~/.local/bin/claude` if present, else `claude` on PATH). */
   command?: string;
+  /** Arguments placed before the CLI flags (e.g. a script path when `command` is `node`). */
+  commandArgs?: string[];
   /** Extra flags appended after the required ones (e.g. `['--max-budget-usd', '2']`). */
   extraArgs?: string[];
   /** Environment for the CLI (default: `process.env`). */
@@ -40,7 +42,16 @@ export interface ClaudeCliAdapterOptions {
   killGraceMs?: number;
   /** Sees every raw stdout line (for recording fixtures). */
   onRawLine?: (line: string) => void;
+  /**
+   * Skip the machine's user and local settings (hooks, plugins, permissions) by
+   * passing `--setting-sources project`; the run's cwd is a private temp dir, so no
+   * project settings exist either. Authentication is unaffected. Default true.
+   */
+  isolateSettings?: boolean;
 }
+
+/** Flags added when {@link ClaudeCliAdapterOptions.isolateSettings} is on. */
+export const ISOLATION_ARGS: readonly string[] = ['--setting-sources', 'project'];
 
 /** Default CLI location. */
 export function defaultClaudeCommand(env: NodeJS.ProcessEnv = process.env): string {
@@ -86,7 +97,10 @@ export class ClaudeCliAdapter implements ModelAdapter {
     const o = this.options;
     const started = Date.now();
     const command = o.command ?? defaultClaudeCommand(o.env ?? process.env);
-    const args = buildClaudeArgs(input, o.extraArgs);
+    const args = buildClaudeArgs(input, [
+      ...(o.isolateSettings === false ? [] : ISOLATION_ARGS),
+      ...(o.extraArgs ?? []),
+    ]);
     const toolCalls: ToolCallRecord[] = [];
     const byId = new Map<string, ToolCallRecord>();
     let finalText: string | null = null;
@@ -98,7 +112,7 @@ export class ClaudeCliAdapter implements ModelAdapter {
 
     return new Promise<ModelRunResult>((resolve) => {
       let settled = false;
-      const child = spawn(command, args, {
+      const child = spawn(command, [...(o.commandArgs ?? []), ...args], {
         cwd: input.cwd,
         env: o.env ?? process.env,
         stdio: ['pipe', 'pipe', 'pipe'],
