@@ -258,3 +258,52 @@ describe.skipIf(!DB())('session cancel and shutdown', () => {
     }
   });
 });
+
+describe.skipIf(!DB())('mock reviewer lenses', () => {
+  let t: TestServer;
+  afterAll(async () => {
+    await t?.close();
+  });
+
+  it('adds a word choice for word-choice and two moves for structure, all open', async () => {
+    t = await startTestServer({ adapters: adapterFactory('mock') });
+    const PL = 'proj-lens';
+    const b = new LedgerBuilder({ projectId: PL, title: 'Lenses' });
+    b.createDocument('doc-l', 'Chapter 1');
+    b.type('doc-l', 'The rain fell sideways over the harbour.');
+    b.enter('doc-l');
+    b.type('doc-l', 'Mara counted the boats twice. She waited for the signal.');
+    b.enter('doc-l');
+    b.type('doc-l', 'At dawn the bells began to ring.');
+    b.requestFeedback('req-l', {
+      scope: { kind: 'document', documentId: 'doc-l' },
+      intensity: 'standard',
+      lenses: ['structure', 'word-choice'],
+    });
+    const commits = b.commits;
+    for (const c of commits.slice(0, -1)) {
+      const r =
+        c.type === 'ProjectCreated'
+          ? await api(t, 'POST', '/v1/projects', { draft: draftOf(c) })
+          : await api(t, 'POST', `/v1/projects/${PL}/commits`, draftOf(c));
+      expect(r.status, JSON.stringify(r.body)).toBeLessThan(300);
+    }
+    const r = await api<{ sessionId: string }>(t, 'POST', `/v1/projects/${PL}/feedback`, {
+      draft: draftOf(commits.at(-1) as Commit),
+    });
+    expect(r.status).toBe(201);
+    const progress = await readSse(
+      `${t.url}/v1/projects/${PL}/sessions/${r.body.sessionId}/events`,
+      (es) => es.some((e) => e.event === 'ended'),
+    );
+    expect(progress.at(-1)?.data).toMatchObject({ status: 'finished' });
+    const s = (await api<{ state: ProjectState }>(t, 'GET', `/v1/projects/${PL}/state`)).body.state;
+    const suggestions = Object.values(s.annotations.suggestions);
+    expect(suggestions).toHaveLength(1);
+    expect(suggestions[0]).toMatchObject({ kind: 'word-choice', status: 'open' });
+    expect((suggestions[0] as { anchor: { quote: string } }).anchor.quote).toBe('sideways');
+    const proposals = Object.values(s.annotations.proposals);
+    expect(proposals.map((p) => p.kind).sort()).toEqual(['move', 'move']);
+    expect(proposals.every((p) => p.status === 'open')).toBe(true);
+  });
+});

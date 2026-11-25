@@ -97,6 +97,8 @@ export interface AgentSession {
 export type AdapterFactory = (ctx: {
   kind: SessionKind;
   lens?: string;
+  /** Every lens the writer asked for (review sessions). */
+  lenses?: readonly string[];
   threadId?: string;
 }) => ModelAdapter;
 
@@ -110,6 +112,7 @@ export function adapterFactory(
       mockAdapter({
         kind: ctx.kind,
         ...(ctx.lens ? { lens: ctx.lens } : {}),
+        ...(ctx.lenses ? { lenses: ctx.lenses } : {}),
         ...(ctx.threadId ? { threadId: ctx.threadId } : {}),
         ...(opts.mockStepDelayMs ? { stepDelayMs: opts.mockStepDelayMs } : {}),
       });
@@ -408,7 +411,11 @@ export class SessionManager {
     const folded = state.annotations.feedbackRequests[opts.request.requestId]?.scope;
     const selection =
       folded && folded.kind === 'selection' ? { from: folded.from, to: folded.to } : undefined;
-    const adapter = this.deps.adapters({ kind: 'review', lens: opts.request.lenses[0] });
+    const adapter = this.deps.adapters({
+      kind: 'review',
+      lens: opts.request.lenses[0],
+      lenses: opts.request.lenses,
+    });
     session.done = this.supervise(session, () =>
       runFeedbackSession({
         state,

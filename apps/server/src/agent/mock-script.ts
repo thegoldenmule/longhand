@@ -10,6 +10,12 @@ import { MockModelAdapter, type MockStep, type ModelRunInput } from '@longhand/a
 export interface MockScriptContext {
   kind: 'review' | 'discuss';
   lens?: string;
+  /**
+   * Every lens asked for. `word-choice` adds a word-choice suggestion and
+   * `structure` adds move proposals (a paragraph move and a sentence move), so the
+   * full-stack e2e suite can exercise trace-over, accept and reject.
+   */
+  lenses?: readonly string[];
   threadId?: string;
   /** Milliseconds between steps, so annotations visibly stream (default 0). */
   stepDelayMs?: number;
@@ -42,6 +48,105 @@ export function firstAnchor(
   const quote = words.slice(0, Math.min(3, words.length)).join(' ');
   if (!quote) return null;
   return { documentId: doc[1] as string, sentenceId: m[1] as string, quote };
+}
+
+/** A segmented block of the target document, as the prompt shows it. */
+export interface PromptBlock {
+  id: string;
+  /** The `· …` note after the id (`heading 1`, `in blockquote`, `context`, …), or null. */
+  note: string | null;
+  sentences: Array<{ id: string; text: string }>;
+}
+
+const BLOCK_LINE_RE = /^\[(p\d+)(?: · ([^\]]+))?\]\s+(.*)$/;
+const SENTENCE_ALL_RE = /\[(p\d+\.s\d+)\]\s+(.+?)(?=\s+\[p\d+\.s\d+\]|$)/g;
+
+/** The blocks of the first `<document>` in a prompt. */
+export function promptBlocks(prompt: string): { documentId: string; blocks: PromptBlock[] } | null {
+  const doc = DOC_RE.exec(prompt);
+  if (!doc) return null;
+  const body = prompt.slice(doc.index);
+  const end = body.indexOf('</document>');
+  const blocks: PromptBlock[] = [];
+  for (const line of (end >= 0 ? body.slice(0, end) : body).split('\n')) {
+    const m = BLOCK_LINE_RE.exec(line.trim());
+    if (!m) continue;
+    const sentences = [...(m[3] as string).matchAll(SENTENCE_ALL_RE)].map((x) => ({
+      id: x[1] as string,
+      text: x[2] as string,
+    }));
+    blocks.push({ id: m[1] as string, note: m[2] ?? null, sentences });
+  }
+  return { documentId: doc[1] as string, blocks };
+}
+
+function occurrences(haystack: string, needle: string): number {
+  let n = 0;
+  for (let i = haystack.indexOf(needle); i >= 0; i = haystack.indexOf(needle, i + 1)) n++;
+  return n;
+}
+
+/** The longest word (5+ letters) that occurs exactly once in the sentence. */
+function wordChoiceAnchor(text: string): string | null {
+  const words = (text.match(/[A-Za-z]{5,}/g) ?? []).filter((w) => occurrences(text, w) === 1);
+  words.sort((a, b) => b.length - a.length);
+  return words[0] ?? null;
+}
+
+const ALTERNATIVES = ['softly', 'steadily', 'quietly'];
+
+/** Lens-driven extras: a word-choice suggestion and move proposals. */
+function lensSteps(prompt: string, lenses: readonly string[], delay: MockStep[]): MockStep[] {
+  const parsed = promptBlocks(prompt);
+  if (!parsed) return [];
+  const { documentId, blocks } = parsed;
+  const plain = blocks.filter((b) => b.note === null && b.sentences.length > 0);
+  const steps: MockStep[] = [];
+  if (lenses.includes('word-choice')) {
+    const first = plain[0]?.sentences[0];
+    const word = first ? wordChoiceAnchor(first.text) : null;
+    if (first && word) {
+      steps.push(...delay, {
+        tool: 'suggest_word_choice',
+        input: {
+          anchor: { documentId, sentenceId: first.id, quote: word },
+          alternatives: ALTERNATIVES.filter((a) => a !== word.toLowerCase()).slice(0, 2),
+          rationale: 'A plainer word keeps the sentence moving.',
+        },
+      });
+    }
+  }
+  if (lenses.includes('structure')) {
+    const last = plain.length >= 3 ? plain[plain.length - 1] : undefined;
+    if (last && plain[0]) {
+      steps.push(...delay, {
+        tool: 'propose_move',
+        input: {
+          documentId,
+          unit: 'paragraph',
+          ids: [last.id],
+          destination: { position: 'before', id: plain[0].id },
+          rationale: 'Opening on this paragraph puts the stakes first.',
+        },
+      });
+    }
+    const inner =
+      plain.find((b) => b !== last && b.sentences.length >= 2 && b !== plain[0]) ??
+      plain.find((b) => b !== last && b.sentences.length >= 2);
+    if (inner) {
+      steps.push(...delay, {
+        tool: 'propose_move',
+        input: {
+          documentId,
+          unit: 'sentence',
+          ids: [(inner.sentences[1] as { id: string }).id],
+          destination: { position: 'before', id: (inner.sentences[0] as { id: string }).id },
+          rationale: 'Leading with the action sharpens this paragraph.',
+        },
+      });
+    }
+  }
+  return steps;
 }
 
 /** Builds the canned script for one run. */
@@ -77,6 +182,7 @@ export function mockScript(ctx: MockScriptContext): (input: ModelRunInput) => Mo
         input: { anchor, question: 'What do you want the reader to expect after this line?' },
       });
     }
+    if (ctx.lenses?.length) steps.push(...lensSteps(input.prompt, ctx.lenses, delay));
     steps.push(...delay, {
       tool: 'finish_review',
       input: {
