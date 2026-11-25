@@ -17,5 +17,6 @@
   },
   "devDependencies": {
     "prosemirror-transform": "^1.12.7"
-  }
+  },
+  "license": "MIT"
 }

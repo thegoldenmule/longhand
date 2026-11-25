@@ -17,5 +17,6 @@
     "prosemirror-model": "^1.25.13",
     "tsx": "^4.23.15",
     "zod": "^4.6.7"
-  }
+  },
+  "license": "MIT"
 }

@@ -101,4 +101,4 @@ The web app runs on AWS Amplify and the ledger service on EC2, with Cognito for 
 
 ## License
 
-The verifier is intended to be MIT; the repository does not have a top-level license yet.
+MIT. See [LICENSE](LICENSE).

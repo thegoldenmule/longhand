@@ -57,7 +57,7 @@ Integration note (provenance-ui): the span inspector needs the folded `LedgerSta
 - ~~Server lane implements the AnnotationSink HTTP contract in `packages/agent/README.md`.~~ Done (phase 3).
 - ~~Server/web must implement the editor's `CommitTransport` (`packages/editor/src/sync/transport.ts`): submit → ack/duplicate/conflict/rejected/offline; subscribe in ledger order incl. own commits; `fetchSince` with fold-derived steps for ProposalAccepted (now from ledger `validateDraft().derivedSteps` / `derivedStepsFor`). (editor → server)~~ Done: `HttpCommitTransport` (phase 3), used by the web app (phase 5).
 
-- Repo has no root LICENSE; verifier package declares MIT. Needs the owner's decision. (report/verifier)
+- ~~Repo license~~ — resolved: MIT for the whole repo (LICENSE).
 
 - ~~Research: citeproc wrapper crashes on numeric CSL fields (e.g. `volume: 12`); export works around by stringifying. (server)~~ Fixed in phase 5: the wrapper stringifies numeric fields on the copy it hands citeproc; the server's workaround is gone.
 - ~~Agent: `MockModelAdapter` ignores a signal aborted before run start. (server)~~ Fixed in phase 5: it returns `aborted` without starting the tool server; the server's cancel no longer defers the abort.

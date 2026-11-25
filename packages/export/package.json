@@ -27,5 +27,6 @@
     "markdown-it": "^15.0.3",
     "markdown-it-footnote": "^4.0.0",
     "pdfjs-dist": "^6.5.438"
-  }
+  },
+  "license": "MIT"
 }
