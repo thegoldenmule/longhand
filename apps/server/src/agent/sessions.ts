@@ -86,10 +86,6 @@ export interface AgentSession {
   phase: 'open' | 'cancelling' | 'closed';
   /** A model run was started for this session. */
   running: boolean;
-  /** The model run reported `init` (it is listening to the abort signal). */
-  modelReady: boolean;
-  /** Cancel arrived before the model run was ready; abort once it is. */
-  abortPending: boolean;
   abort: AbortController;
   done: Promise<SessionOutcome | null>;
   events: SessionStreamEvent[];
@@ -195,8 +191,6 @@ export class SessionManager {
       listeners: new Set(),
       ended: false,
       running: false,
-      modelReady: false,
-      abortPending: false,
     };
     this.sessions.set(id, session);
     await this.deps.readModel
@@ -374,10 +368,6 @@ export class SessionManager {
   // --------------------------------------------------------------- running
 
   private progress(session: AgentSession, e: SessionStreamEvent): void {
-    if (e.kind === 'model' && e.event.type === 'init') {
-      session.modelReady = true;
-      if (session.abortPending) session.abort.abort();
-    }
     session.events.push(e);
     if (session.events.length > MAX_EVENTS)
       session.events.splice(0, session.events.length - MAX_EVENTS);
@@ -548,13 +538,8 @@ export class SessionManager {
       this.close(session);
       return;
     }
-    // A model adapter that has not started yet may miss an already-aborted signal
-    // (MockModelAdapter does), so abort once it reports `init`, or after 5 s.
-    if (session.modelReady) session.abort.abort();
-    else {
-      session.abortPending = true;
-      setTimeout(() => session.abort.abort(), 5000).unref();
-    }
+    // Both adapters honour a signal that is already aborted when their run starts.
+    session.abort.abort();
     await session.done;
   }
 

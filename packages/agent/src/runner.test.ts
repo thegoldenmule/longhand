@@ -253,6 +253,46 @@ describe('runFeedbackSession with MockModelAdapter', () => {
     expect(Date.now() - started).toBeLessThan(10_000);
   }, 30_000);
 
+  it('a mock run whose signal was aborted before it started stops at once', async () => {
+    const adapter = new MockModelAdapter([{ hang: true }]);
+    const ac = new AbortController();
+    ac.abort();
+    const started = Date.now();
+    const run = await adapter.run({
+      sessionKind: 'review',
+      prompt: 'x',
+      systemPrompt: 'y',
+      model: 'sonnet',
+      mcp: { launch: { command: 'false', args: [] }, configPath: '/nonexistent' },
+      allowedTools: [],
+      cwd: process.cwd(),
+      timeoutMs: 60_000,
+      signal: ac.signal,
+    });
+    expect(run.status).toBe('aborted');
+    expect(run.toolCalls).toEqual([]);
+    expect(Date.now() - started).toBeLessThan(1000);
+  });
+
+  it('a session cancelled before it starts fails without running the model', async () => {
+    const adapter = new MockModelAdapter([{ hang: true }]);
+    const ac = new AbortController();
+    ac.abort();
+    const sink = new InMemoryAnnotationSink();
+    const started = Date.now();
+    const outcome = await runFeedbackSession({
+      state,
+      request: docRequest(),
+      sink,
+      adapter,
+      signal: ac.signal,
+      timeoutMs: 60_000,
+    });
+    expect(outcome.status).toBe('failed');
+    expect(sink.ofType('FeedbackSessionFailed')).toHaveLength(1);
+    expect(Date.now() - started).toBeLessThan(10_000);
+  }, 30_000);
+
   it('the caller can cancel a running session', async () => {
     const adapter = new MockModelAdapter([comment('p2.s1', 'sideways'), { hang: true }]);
     const ac = new AbortController();

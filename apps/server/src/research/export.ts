@@ -16,24 +16,12 @@ import {
 import { formatBibliography, formatCitation, resolveStyle } from '@longhand/research';
 import type { CslItem, ProjectState, ProvenanceSummary } from '@longhand/schema';
 
-/**
- * CSL-JSON allows numbers for fields such as `volume`, but citeproc-js throws on
- * them (`num.match is not a function`), so numbers become strings before formatting.
- */
-export function normalizeCslItem(item: CslItem): CslItem {
-  const out: Record<string, unknown> = { ...item };
-  for (const [k, v] of Object.entries(out)) {
-    if (typeof v === 'number' && k !== 'id') out[k] = String(v);
-  }
-  return out as CslItem;
-}
-
 /** The research lane's CSL formatters, adapted to export's injected-formatter signatures. */
 export function cslFormatters(
-  rawItems: readonly CslItem[],
+  items: readonly CslItem[],
   style: string,
 ): { formatCitation: CitationFormatter; formatBibliographyEntry: BibliographyFormatter } {
-  const items = rawItems.map(normalizeCslItem);
+  // Numeric CSL fields (`volume: 12`) are handled by the research lane's wrapper.
   const styleId = resolveStyle(style);
   return {
     formatCitation: (sourceId, locator) => formatCitation(items, sourceId, locator, styleId).text,

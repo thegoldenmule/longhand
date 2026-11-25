@@ -2,7 +2,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { loadFixture } from '@longhand/ledger/fixtures';
 import { formatBibliography, formatCitation } from '@longhand/research';
 import type { CslItem } from '@longhand/schema';
-import { cslFormatters, htmlToSpans, normalizeCslItem } from '../src/research/export';
+import { cslFormatters, htmlToSpans } from '../src/research/export';
 import { startTestServer, type TestServer } from '../src/testing';
 import { DB, fixtureHooks, replayFixture, replaySigner } from './helpers';
 
@@ -42,6 +42,14 @@ describe('CSL formatter adapter', () => {
     expect(cslFormatters(items, 'mla').formatCitation('src-1', null, ctx)).toMatch(/LeCun/);
   });
 
+  it('formats numeric CSL fields (volume: 521) without a workaround', () => {
+    const numeric = [{ ...items[0], volume: 521 } as unknown as CslItem];
+    const f = cslFormatters(numeric, 'apa');
+    const spans = f.formatBibliographyEntry(numeric[0]!, { number: null });
+    const text = (spans as Array<{ text: string }>).map((s) => s.text).join('');
+    expect(text).toContain('521');
+  });
+
   it('turns citeproc HTML into spans', () => {
     expect(htmlToSpans('<div class="csl-entry">A &amp; B. <i>Title</i>. <b>x</b></div>')).toEqual([
       { text: 'A & B. ' },
@@ -78,7 +86,7 @@ describe.skipIf(!DB())('export downloads', () => {
     expect(md).toContain(`# ${state.settings.title}`);
     // In-text citation and bibliography entry as citeproc (APA) renders them, not export's fallback.
     const okafor = state.sources['src-okafor']!;
-    const item = normalizeCslItem({ ...okafor.csl, id: okafor.id } as CslItem);
+    const item = { ...okafor.csl, id: okafor.id } as CslItem;
     expect(md).toContain(formatCitation([item], 'src-okafor', 'p. 114', 'apa').text);
     expect(md).toContain('(Okafor, 2014, p. 114)');
     expect(md).toContain('## Bibliography');

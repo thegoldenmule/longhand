@@ -194,6 +194,35 @@ describe('formatBibliography', () => {
   });
 });
 
+describe('numeric CSL fields', () => {
+  // CSL-JSON allows numbers (`volume: 12`); citeproc-js used to throw on them.
+  const numeric = {
+    ...lecun,
+    id: 'numeric',
+    volume: 521,
+    issue: 7553,
+    edition: 2,
+  } as unknown as CslItem;
+
+  it('formats citations and bibliographies with numeric fields like their string forms', () => {
+    const asStrings = { ...lecun, id: 'numeric', volume: '521', issue: '7553', edition: '2' };
+    for (const style of STYLES) {
+      expect(formatCitation([numeric], 'numeric', 'p. 437', style.id).text).toBe(
+        formatCitation([asStrings], 'numeric', 'p. 437', style.id).text,
+      );
+      expect(formatBibliography([numeric], style.id).text).toBe(
+        formatBibliography([asStrings], style.id).text,
+      );
+    }
+    expect(formatBibliography([numeric], 'apa').text).toContain('521(7553)');
+  });
+
+  it('leaves the caller’s item untouched', () => {
+    formatBibliography([numeric], 'apa');
+    expect((numeric as unknown as { volume: unknown }).volume).toBe(521);
+  });
+});
+
 describe('referencedSourceIds', () => {
   it('collects citation and quote_block sources in order, once each', () => {
     const doc = {

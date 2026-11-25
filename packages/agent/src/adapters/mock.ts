@@ -40,6 +40,20 @@ export class MockModelAdapter implements ModelAdapter {
   async run(input: ModelRunInput): Promise<ModelRunResult> {
     this.runs.push(input);
     const started = Date.now();
+    // A signal aborted before the run starts never fires 'abort' again: stop now,
+    // without starting the tool server.
+    if (input.signal?.aborted) {
+      return {
+        status: 'aborted',
+        error: 'model run aborted',
+        toolCalls: [],
+        usage: null,
+        costUsd: null,
+        durationMs: 0,
+        stderr: '',
+        finalText: null,
+      };
+    }
     const toolCalls: ToolCallRecord[] = [];
     const emit = (e: ModelEvent) => input.onEvent?.(e);
     let stderr = '';

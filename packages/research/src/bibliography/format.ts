@@ -116,6 +116,20 @@ export function parseLocator(
 // Engines
 // ---------------------------------------------------------------------------
 
+/**
+ * A copy of `item` that citeproc-js accepts. CSL-JSON allows numbers for
+ * number-like fields (`volume: 12`, `issue`, `page`, `edition`, …), but
+ * citeproc-js calls string methods on them and throws (`num.match is not a
+ * function`), so top-level numbers other than `id` become strings.
+ */
+export function citeprocItem(item: CslItem): Record<string, unknown> {
+  const out = JSON.parse(JSON.stringify(item)) as Record<string, unknown>;
+  for (const [k, v] of Object.entries(out)) {
+    if (typeof v === 'number' && k !== 'id') out[k] = String(v);
+  }
+  return out;
+}
+
 let current = new Map<string, CslItem>();
 
 const sys = {
@@ -123,7 +137,7 @@ const sys = {
   retrieveItem: (id: string): unknown => {
     const item = current.get(id);
     // citeproc mutates items it is given; hand it a copy.
-    return item ? (JSON.parse(JSON.stringify(item)) as unknown) : undefined;
+    return item ? citeprocItem(item) : undefined;
   },
 };
 

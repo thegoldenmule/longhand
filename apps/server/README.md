@@ -61,7 +61,7 @@ Clients send drafts with old `clientTime`s after an offline period. They are acc
 
 - `POST /feedback` (or any `FeedbackRequested` appended through `POST /commits`, since the editor's `submitEvent` sends it there) appends the writer's draft, mints a session id and a 256-bit token, and runs `runFeedbackSession` with `ClaudeCliAdapter` (or the mock) and an `HttpAnnotationSink` pointed at this service's own `/internal/sessions/:id/events`. A selection scope is passed as `selection` from `state.annotations.feedbackRequests[id].scope`, already mapped to the current version by the fold. `DiscussRequested` works the same way with `runDiscussSession`. One session per request id (per `DiscussRequested` commit for discuss).
 - Progress streams over `GET /sessions/:id/events` (the agent's `SessionProgressEvent`s as they are, replayed from the start, then `ended`).
-- **Cancel** (`POST /sessions/:id/cancel`) marks the session `cancelling`, so only `FeedbackSessionFailed` is accepted, then aborts the run. The abort is deferred until the model run reports `init`, because `MockModelAdapter` misses an already-aborted signal. If the runner could not record the end, the supervisor appends `FeedbackSessionFailed` itself.
+- **Cancel** (`POST /sessions/:id/cancel`) marks the session `cancelling`, so only `FeedbackSessionFailed` is accepted, then aborts the run at once (both model adapters honour a signal that is already aborted when their run starts). If the runner could not record the end, the supervisor appends `FeedbackSessionFailed` itself.
 - **Shutdown** cancels every running session and waits up to 15 s while the internal route stays up, so the runners' `FeedbackSessionFailed` lands. Public routes answer 503 meanwhile. A session left `running` by a crash is failed with a system `FeedbackSessionFailed` when its project is next loaded.
 - Models: `AGENT_MODEL_FULL` (default `opus`) for document and project reviews, `AGENT_MODEL_QUICK` (default `sonnet`) for selections and discuss.
 
@@ -162,6 +162,4 @@ Integration tests use the real Postgres on 5434 (one schema per test) and a real
 - If the service crashes between appending a `FeedbackRequested` and starting its session, the request stays `pending`. It is not retried.
 - `ChainHeadWitnessed` re-signs the head subject; it does not reuse the stored witness signature.
 - The SSRF guard allows ports 80, 443, 8080 and 8443 only.
-- The research lane's citeproc wrapper throws on numeric CSL fields (`volume: 12`). Export normalizes them, but the research lane should too.
-- `MockModelAdapter` (agent lane) never notices an already-aborted signal. Cancel works around it by deferring the abort.
 - Sessions are in-process. Running several service instances against one stream is prevented by `Stream-Seq`, but there is no failover.
