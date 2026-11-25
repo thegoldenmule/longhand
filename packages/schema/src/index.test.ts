@@ -30,6 +30,8 @@ describe('public API', () => {
       'PROVES_TABLE',
       'SESSION_GAP_MS',
       'INPUT_METHOD_META',
+      'provenanceSummaryFromReport',
+      'MatchedKindSchema',
       'DECLARABLE_INPUT_METHODS',
     ]) {
       expect(api, name).toHaveProperty(name);

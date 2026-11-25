@@ -3,11 +3,14 @@
  *
  * Every exporter takes one {@link ExportInput}: an ordered list of documents, the
  * project's metadata, optional sources for citations and the bibliography, and an
- * optional {@link ProvenanceSummary} to append. The summary is data computed
- * elsewhere (the report lane); this package never folds the ledger or attributes
+ * optional `ProvenanceSummary` (from `@longhand/schema`) to append. The summary is
+ * data computed elsewhere (the report lane); this package never folds the ledger or attributes
  * words itself.
  */
-import type { AuthorshipReport, CslItem, PMNodeJSON, ProvenanceClass } from '@longhand/schema';
+import type { CslItem, PMNodeJSON, ProvenanceSummary } from '@longhand/schema';
+
+/** Re-exported from `@longhand/schema`, where the report lane produces it. */
+export { provenanceSummaryFromReport, type ProvenanceSummary } from '@longhand/schema';
 
 /** One document to export, in reading order. */
 export interface ExportDocument {
@@ -28,26 +31,6 @@ export interface ExportProjectMeta {
   date?: string | null;
   /** BCP 47 language tag for file metadata, e.g. `en-GB`. Defaults to `en`. */
   language?: string | null;
-}
-
-/**
- * The provenance appendix, as data. Fill it from the authorship report
- * ({@link provenanceSummaryFromReport} does this), which counts words with the
- * shared least-trusted-class attribution rule (`attributeWords` in
- * `packages/ledger`). Export prints these numbers as given.
- */
-export interface ProvenanceSummary {
-  /** Words by provenance class, e.g. `report.words.byClass`. Missing classes count as 0. */
-  wordsByClass: Readonly<Partial<Record<ProvenanceClass, number>>>;
-  /** The template-generated disclosure statement (`report.disclosure`). */
-  disclosure: string;
-  /** What the record proves and doesn't (`report.provesTable`, i.e. `PROVES_TABLE`). */
-  provesTable: { readonly proves: readonly string[]; readonly doesNotProve: readonly string[] };
-  /**
-   * Optional verification pointer printed at the end of the appendix: a share link,
-   * the bundle's head hash, or how to run the verifier. `null` or absent to omit.
-   */
-  verificationNote?: string | null;
 }
 
 /** A styled span of text, for bibliography entries and attributions. */
@@ -176,23 +159,4 @@ export interface ExportInput {
   /** Optional provenance appendix. */
   provenance?: ProvenanceSummary | null;
   options?: ExportOptions;
-}
-
-/**
- * Builds a {@link ProvenanceSummary} from an authorship report. A convenience: it
- * only copies fields, it computes nothing.
- */
-export function provenanceSummaryFromReport(
-  report: Pick<AuthorshipReport, 'words' | 'disclosure' | 'provesTable'>,
-  verificationNote?: string | null,
-): ProvenanceSummary {
-  return {
-    wordsByClass: { ...report.words.byClass },
-    disclosure: report.disclosure,
-    provesTable: {
-      proves: [...report.provesTable.proves],
-      doesNotProve: [...report.provesTable.doesNotProve],
-    },
-    verificationNote: verificationNote ?? null,
-  };
 }

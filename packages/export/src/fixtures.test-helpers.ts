@@ -1,8 +1,8 @@
 // Test-only golden documents. Together they use every node and mark type in the
 // Longhand schema, nested lists, footnotes (with marks, breaks and citations
 // inside), citations with and without locators, quote blocks and several documents.
-import type { CslItem, PMNodeJSON } from '@longhand/schema';
-import type { ExportInput, ProvenanceSummary } from './types';
+import type { CslItem, PMNodeJSON, ProvenanceSummary } from '@longhand/schema';
+import type { ExportInput } from './types';
 
 const t = (text: string, ...marks: ('em' | 'strong')[]): PMNodeJSON =>
   marks.length > 0

@@ -46,6 +46,7 @@ interface ExportInput {
   options?: ExportOptions;
 }
 
+// From @longhand/schema (re-exported here), so the report lane can produce it.
 interface ProvenanceSummary {
   wordsByClass: Partial<Record<ProvenanceClass, number>>; // report.words.byClass
   disclosure: string; // report.disclosure
@@ -54,7 +55,7 @@ interface ProvenanceSummary {
 }
 ```
 
-**The provenance summary is data.** Export prints the numbers it is given and computes nothing. The report lane counts words with the shared least-trusted-class rule (`attributeWords` in `packages/ledger`), and `provenanceSummaryFromReport(report, note)` fills the summary from an `AuthorshipReport`. The appendix contains:
+**The provenance summary is data.** Export prints the numbers it is given and computes nothing. The report lane counts words with the shared least-trusted-class rule (`attributeWords` in `packages/ledger`), and `provenanceSummaryFromReport(report, note)` (also in `@longhand/schema`, re-exported here) fills the summary from an `AuthorshipReport`. The appendix contains:
 
 - the disclosure statement;
 - a words-by-origin table with every class in `PROVENANCE_CLASSES` order, a share of the total to one decimal place, and a total row. `pasted-internal` is shown only when it is non-zero, because internal pastes inherit their source's class;

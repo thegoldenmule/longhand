@@ -12,7 +12,7 @@
 import { z } from 'zod';
 import { IdSchema, IsoTimeSchema, SeqSchema, Sha256HexSchema } from './ids';
 import { CommitSchema, WitnessSchema } from './ledger';
-import { ProvenanceClassSchema } from './provenance';
+import { ProvenanceClassSchema, type ProvenanceClass } from './provenance';
 
 /** The bundle's `format` tag. */
 export const BUNDLE_FORMAT = 'longhand-bundle';
@@ -159,6 +159,46 @@ export const AuthorshipReportSchema = z.looseObject({
 });
 /** The authorship report. */
 export type AuthorshipReport = z.infer<typeof AuthorshipReportSchema>;
+
+/**
+ * The provenance appendix an export prints, as data (the `provenance` input of
+ * `@longhand/export`). The report lane produces it from an authorship report
+ * ({@link provenanceSummaryFromReport}); word counts use the shared
+ * least-trusted-class attribution rule (`attributeWords` in `packages/ledger`), and
+ * export prints them as given.
+ */
+export interface ProvenanceSummary {
+  /** Words by provenance class, e.g. `report.words.byClass`. Missing classes count as 0. */
+  wordsByClass: Readonly<Partial<Record<ProvenanceClass, number>>>;
+  /** The template-generated disclosure statement (`report.disclosure`). */
+  disclosure: string;
+  /** What the record proves and doesn't (`report.provesTable`, i.e. `PROVES_TABLE`). */
+  provesTable: { readonly proves: readonly string[]; readonly doesNotProve: readonly string[] };
+  /**
+   * Optional verification pointer printed at the end of the appendix: a share link,
+   * the bundle's head hash, or how to run the verifier. `null` or absent to omit.
+   */
+  verificationNote?: string | null;
+}
+
+/**
+ * Builds a {@link ProvenanceSummary} from an authorship report. It only copies
+ * fields; it computes nothing.
+ */
+export function provenanceSummaryFromReport(
+  report: Pick<AuthorshipReport, 'words' | 'disclosure' | 'provesTable'>,
+  verificationNote?: string | null,
+): ProvenanceSummary {
+  return {
+    wordsByClass: { ...report.words.byClass },
+    disclosure: report.disclosure,
+    provesTable: {
+      proves: [...report.provesTable.proves],
+      doesNotProve: [...report.provesTable.doesNotProve],
+    },
+    verificationNote: verificationNote ?? null,
+  };
+}
 
 /**
  * Zod schema for a verification bundle. Note for verifiers: compute hashes over
