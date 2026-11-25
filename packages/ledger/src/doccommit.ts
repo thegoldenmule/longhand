@@ -179,6 +179,8 @@ function evaluateSuggestion(dc: DocCommit, t: Tracker, sug: SuggestionState, upg
       upgrades.push({ positions: region.pos.slice(b.at, b.at + b.len), id: sug.id, afterSeq: sug.seq });
       return { status: 'adopted', alternative: b.i };
     }
+    // An insertion whose sentence was deleted is stale.
+    if (sug.kind === 'insertion' && s.refTouched.has(t.id)) return { status: 'stale' };
     // 2. Back to the original text: still open.
     if (region.text === original) return { status: 'open', resetTouched: true };
     // 3. Retyping in progress: a proper prefix of an alternative, typed only.
