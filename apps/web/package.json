@@ -30,6 +30,7 @@
     "react-dom": "^19.3.1"
   },
   "devDependencies": {
+    "@durable-streams/server": "0.3.9",
     "@longhand/server": "workspace:*",
     "@longhand/verifier": "workspace:*",
     "@playwright/test": "^1.65.1",
