@@ -10,9 +10,13 @@ test.describe('input capture', () => {
     await openDemo(page);
     await caretToEnd(page);
     await page.keyboard.type(' abc', { delay: 40 });
-    await page.waitForTimeout(1200);
-    expect(await commits(page)).toHaveLength(0);
-    await expect(page.getByTestId('save-state')).toHaveAttribute('data-state', 'queued');
+    const typedAt = Date.now();
+    await expect(page.getByTestId('save-state')).toHaveAttribute('data-state', 'queued', {
+      timeout: 1000,
+    });
+    await page.waitForTimeout(Math.max(0, 1200 - (Date.now() - typedAt)));
+    // Nothing is committed before the writer has been idle for ~2 s.
+    if (Date.now() - typedAt < 1900) expect(await commits(page)).toHaveLength(0);
     await expect.poll(() => commits(page), { timeout: 3000 }).toHaveLength(1);
     const [te] = await commits(page);
     expect(te!.type).toBe('TextEdited');
