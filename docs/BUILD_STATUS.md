@@ -38,6 +38,10 @@ Each applied in `packages/schema` first, then in its consumers; fixtures regener
 - `ProvenanceRun.matchedKind`, present exactly when `suggestionId` is: `suggestion | insertion | comment | question | proposal | citation-flag | surfaced-source | source-suggestion | discuss | review` (the three research kinds were added because the four-word matcher also matches those cards). `suggestionId` is documented as naming any annotation. Ledger fills it; `spanHistory().matched.group` derives from it; `suggestions` fixture regenerated. (b9c7302)
 - `ProvenanceSummary` and `provenanceSummaryFromReport` moved to schema `bundle`; export imports and re-exports them. (2dd23fa)
 
+| provenance-ui | merged (139 unit + 9 Playwright) | see git log |
+
+Integration note (provenance-ui): the span inspector needs the folded `LedgerState`, so the web app keeps the project's commit array client-side and folds it (shared `Replay` for scrubber + inspector).
+
 ## Pending contract changes
 
 - Research lane should ship `formatCitation`/`formatBibliographyEntry` adapters for export's injected formatters (CSL). (export → research)
