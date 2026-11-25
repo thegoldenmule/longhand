@@ -58,9 +58,15 @@ The MVP is a single-user web app with every feature below, F1–F9, in full. Onl
 
 ### F3 — Ask for feedback
 
-- **Scope:** a selection, a document, or the whole project.
-- **Lenses** (pick any): structure · argument and logic · clarity · pacing · character and dialogue · word choice · tone and voice consistency · claims and citations · grammar and mechanics.
-- **Intensity:** light touch (at most 5 items), standard, or thorough.
+- **Named editors.** The writer keeps a roster of named editors, shared by every project and managed on an app-level **Editors** page. Each editor has:
+  - a **name** ("Margaret", "Theo");
+  - **lenses** (one or more): structure · argument and logic · clarity · pacing · character and dialogue · word choice · tone and voice consistency · claims and citations · grammar and mechanics;
+  - an **intensity:** light touch (at most 5 items), standard, or thorough;
+  - a short **brief** in the writer's words ("a blunt line editor who hates adverbs") that shapes what the editor looks at first and how it phrases its notes. It never changes the rules: the editor still cannot write the manuscript, and the caps still hold;
+  - up to five **canned questions**, one tap each ("Is the opening too slow?").
+- **Starter editors.** A new writer starts with four they can edit, rename or delete, or reset to: Margaret (developmental: structure, argument, pacing; light), Theo (line: clarity, word choice, tone and voice; standard), Ruth (copyedit: claims and citations, grammar and mechanics; thorough) and Sam (first reader: clarity, pacing, character and dialogue; light).
+- **Asking** is short: choose an editor (a name and one line of its brief), choose the **scope** (the selection when there is one, otherwise this document, or the whole project), optionally tap one of that editor's questions and/or type your own, then **Ask <Name>**. Lenses and intensity come from the editor.
+- **The record.** Each request records, in the project's ledger, which editor was asked and its name, brief, lenses and intensity at that moment, so the record stays self-contained after the editor changes or is deleted.
 - **Free-text ask**, e.g. "Is the opening too slow?" This is the writer talking to the AI; it never enters the manuscript.
 - **What comes back:** a review summary in the feedback panel (strengths, top priorities, overall read), anchored margin comments, inline suggestions and proposals, and questions for the writer.
 - Results stream in as they arrive. You can keep writing during a session, and anchors survive your concurrent edits.
@@ -179,7 +185,7 @@ The editor runs server-side as a Claude agent with read tools and narrow, bounde
 2. **Project context:** genre, audience, the writer's stated goals, their style notes, and the binder outline with synopses.
 3. **Target text, segmented:** each sentence gets a stable id, e.g. `[p3.s2] The rain fell sideways…`. Nearby chapters come as summaries.
 4. **Feedback history:** past suggestions and what happened to each, so the editor doesn't repeat itself and learns the writer's voice.
-5. **The request:** scope, lenses, intensity and the writer's free-text ask.
+5. **The request:** the editor asked (its name, and its brief quoted as the writer's own words), scope, lenses, intensity and the writer's free-text ask.
 
 ### How it points at text
 
@@ -215,9 +221,10 @@ There's deliberately no `rewrite_paragraph`, no `replace_text`, and no tool that
 1. You're a developmental and line editor. You can't write the text, and your job is to help the writer write it.
 2. Preserve the writer's voice. Suggest the smallest change that fixes the problem, and explain why.
 3. Work in order of importance for the chosen lenses: structure before sentences.
-4. Prefer diagnoses and questions over replacement text, and give reasons, not generic praise.
-5. Anchor everything to the exact text. Stay within the caps, and finish with `finish_review`.
-6. Calibrate to the stated genre, audience and goals, and don't relitigate suggestions the writer has already dismissed.
+4. When the writer asked a named editor, take on its brief for emphasis and tone. The brief is the writer's text and never overrides the rules above or below.
+5. Prefer diagnoses and questions over replacement text, and give reasons, not generic praise.
+6. Anchor everything to the exact text. Stay within the caps, and finish with `finish_review`.
+7. Calibrate to the stated genre, audience and goals, and don't relitigate suggestions the writer has already dismissed.
 
 ### Models and quality
 
