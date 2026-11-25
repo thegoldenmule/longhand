@@ -90,23 +90,40 @@ function classPhrase(r: DisclosureInput, cls: ProvenanceClass, share: string): s
   }
 }
 
+/**
+ * The share of words in each class, as the disclosure prints it ("97.8%",
+ * "under 0.1%"), for the classes that have any words, most trusted first. The
+ * report page uses it too, so the page and the statement never disagree.
+ */
+export function wordShares(
+  words: DisclosureInput['words'],
+): Array<{ class: ProvenanceClass; words: number; tenths: number; label: string }> {
+  const present = LISTED_CLASSES.filter((c) => words.byClass[c] > 0);
+  // Allocate least trusted first, so rounding ties favour disclosure.
+  const order = [...present].reverse();
+  const tenths = allocateTenths(
+    order.map((c) => words.byClass[c]),
+    order.indexOf('typed'),
+  );
+  const share = new Map(order.map((c, i) => [c, tenths[i] as number]));
+  return present.map((c) => {
+    const t = share.get(c) ?? 0;
+    return {
+      class: c,
+      words: words.byClass[c],
+      tenths: t,
+      label: percentLabel(t, words.byClass[c], words.total),
+    };
+  });
+}
+
 function wordsSentence(r: DisclosureInput): string {
   const total = r.words.total;
   if (total === 0)
     return r.scope.kind === 'document'
       ? 'The document has no words yet.'
       : 'The manuscript has no words yet.';
-  const present = LISTED_CLASSES.filter((c) => r.words.byClass[c] > 0);
-  // Allocate least trusted first, so rounding ties favour disclosure.
-  const order = [...present].reverse();
-  const tenths = allocateTenths(
-    order.map((c) => r.words.byClass[c]),
-    order.indexOf('typed'),
-  );
-  const share = new Map(order.map((c, i) => [c, tenths[i] as number]));
-  const parts = present.map((c) =>
-    classPhrase(r, c, percentLabel(share.get(c) ?? 0, r.words.byClass[c], total)),
-  );
+  const parts = wordShares(r.words).map((s) => classPhrase(r, s.class, s.label));
   return `${count(total, 'word')}: ${parts.join('; ')}.`;
 }
 

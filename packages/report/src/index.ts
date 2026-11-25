@@ -4,7 +4,7 @@
  * `<AuthorshipReport>` page. See `packages/report/README.md`.
  */
 export { computeReport, normalizeScope, type ComputeReportOptions } from './compute';
-export { disclosureStatement, type DisclosureInput } from './disclosure';
+export { disclosureStatement, wordShares, type DisclosureInput } from './disclosure';
 export { buildBundle, provenanceSummaryForExport, type BuildBundleInput } from './bundle';
 export {
   UNWITNESSED_LAG_MS,
@@ -29,3 +29,4 @@ export {
   joinList,
   percentLabel,
 } from './format';
+export { AuthorshipReport, type AuthorshipReportProps } from './AuthorshipReport';

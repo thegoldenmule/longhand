@@ -1,0 +1,445 @@
+/*
+ * @longhand/report styles. Import once: `import '@longhand/report/styles.css'`.
+ *
+ * Every colour and font is a CSS variable. Each `--lh-report-*` token falls back
+ * from an app-wide `--lh-*` token, so an app theme can restyle the report. Dark
+ * mode follows `prefers-color-scheme` unless the root carries
+ * `data-theme="light"`; `data-theme="dark"` forces it. Printing always uses the
+ * light palette on white.
+ *
+ * The class colours are the first five slots of a colour-blind-validated
+ * categorical palette, in the bar's order (typed, from a suggestion, quoted,
+ * imported, pasted), with separate light and dark steps.
+ */
+
+.lh-report {
+  --lh-report-bg: var(--lh-bg, #faf8f3);
+  --lh-report-surface: var(--lh-surface, #ffffff);
+  --lh-report-ink: var(--lh-ink, #26241f);
+  --lh-report-muted: var(--lh-ink-muted, #6d685e);
+  --lh-report-rule: var(--lh-rule, #e5e1d7);
+  --lh-report-accent: var(--lh-accent, #3f5f7f);
+  --lh-report-focus: var(--lh-focus, #3f5f7f);
+  --lh-report-track: var(--lh-report-rule);
+  --lh-report-font-ui: var(--lh-font-ui, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif);
+  --lh-report-font-text: var(
+    --lh-font-text,
+    'Iowan Old Style',
+    'Palatino Linotype',
+    Palatino,
+    Georgia,
+    serif
+  );
+  --lh-report-font-mono: var(--lh-font-mono, ui-monospace, 'SF Mono', Menlo, Consolas, monospace);
+
+  --lh-report-typed: #2a78d6;
+  --lh-report-typed-from-suggestion: #eb6834;
+  --lh-report-quoted: #1baf7a;
+  --lh-report-imported: #eda100;
+  --lh-report-pasted-external: #e87ba4;
+  --lh-report-on-part: #ffffff;
+
+  color-scheme: light;
+  box-sizing: border-box;
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 4rem;
+  background: var(--lh-report-bg);
+  color: var(--lh-report-ink);
+  font-family: var(--lh-report-font-ui);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme='light'])) .lh-report {
+    --lh-report-bg: var(--lh-bg, #1a1a19);
+    --lh-report-surface: var(--lh-surface, #222220);
+    --lh-report-ink: var(--lh-ink, #f0efec);
+    --lh-report-muted: var(--lh-ink-muted, #b5b3a9);
+    --lh-report-rule: var(--lh-rule, #383835);
+    --lh-report-accent: var(--lh-accent, #9cb8d6);
+    --lh-report-focus: var(--lh-focus, #9cb8d6);
+    --lh-report-typed: #3987e5;
+    --lh-report-typed-from-suggestion: #d95926;
+    --lh-report-quoted: #199e70;
+    --lh-report-imported: #c98500;
+    --lh-report-pasted-external: #d55181;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme='dark'] .lh-report {
+  --lh-report-bg: var(--lh-bg, #1a1a19);
+  --lh-report-surface: var(--lh-surface, #222220);
+  --lh-report-ink: var(--lh-ink, #f0efec);
+  --lh-report-muted: var(--lh-ink-muted, #b5b3a9);
+  --lh-report-rule: var(--lh-rule, #383835);
+  --lh-report-accent: var(--lh-accent, #9cb8d6);
+  --lh-report-focus: var(--lh-focus, #9cb8d6);
+  --lh-report-typed: #3987e5;
+  --lh-report-typed-from-suggestion: #d95926;
+  --lh-report-quoted: #199e70;
+  --lh-report-imported: #c98500;
+  --lh-report-pasted-external: #d55181;
+  color-scheme: dark;
+}
+
+.lh-report *,
+.lh-report *::before,
+.lh-report *::after {
+  box-sizing: inherit;
+}
+
+.lh-report h1,
+.lh-report h2 {
+  font-family: var(--lh-report-font-text);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+
+.lh-report h1 {
+  margin: 0.15rem 0 0.4rem;
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+.lh-report h2 {
+  margin: 0 0 0.35rem;
+  font-size: 1.3rem;
+}
+
+.lh-report code {
+  font-family: var(--lh-report-font-mono);
+  font-size: 0.86em;
+}
+
+.lh-report-eyebrow {
+  margin: 0;
+  color: var(--lh-report-muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lh-report-meta,
+.lh-report-note {
+  margin: 0;
+  color: var(--lh-report-muted);
+  font-size: 0.86rem;
+}
+
+.lh-report-header {
+  margin-bottom: 2rem;
+}
+
+/* Disclosure statement */
+
+.lh-report-disclosure {
+  margin: 0 0 2rem;
+  padding: 1.25rem 1.4rem 1rem;
+  border: 1px solid var(--lh-report-rule);
+  border-radius: 8px;
+  background: var(--lh-report-surface);
+}
+
+.lh-report-disclosure-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.lh-report-disclosure-head h2 {
+  font-family: var(--lh-report-font-ui);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lh-report-muted);
+}
+
+.lh-report-disclosure-text {
+  margin: 0.4rem 0 0.75rem;
+  font-family: var(--lh-report-font-text);
+  font-size: 1.12rem;
+  line-height: 1.6;
+}
+
+.lh-report-copy {
+  padding: 0.3rem 0.85rem;
+  border: 1px solid var(--lh-report-rule);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--lh-report-ink);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.lh-report-copy:hover {
+  border-color: var(--lh-report-accent);
+}
+
+.lh-report-copy:focus-visible {
+  outline: 2px solid var(--lh-report-focus);
+  outline-offset: 2px;
+}
+
+/* Summary numbers */
+
+.lh-report-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  gap: 1rem 1.5rem;
+  margin: 0 0 2.5rem;
+}
+
+.lh-report-stat dt {
+  color: var(--lh-report-muted);
+  font-size: 0.8rem;
+}
+
+.lh-report-stat dd {
+  margin: 0;
+}
+
+.lh-report-stat-value {
+  display: block;
+  font-size: 1.6rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.25;
+}
+
+.lh-report-stat-detail {
+  color: var(--lh-report-muted);
+  font-size: 0.8rem;
+}
+
+.lh-report-stats-small {
+  margin: 0.75rem 0 1rem;
+}
+
+.lh-report-stats-small .lh-report-stat-value {
+  font-size: 1.15rem;
+}
+
+/* Sections */
+
+.lh-report-section {
+  margin: 0 0 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--lh-report-rule);
+}
+
+.lh-report-section > .lh-report-note {
+  margin-bottom: 1rem;
+}
+
+.lh-report-empty {
+  margin: 0;
+  color: var(--lh-report-muted);
+}
+
+/* Words by origin: one tall segmented bar with a 2px gap between parts */
+
+.lh-report-figure {
+  margin: 0;
+}
+
+.lh-report-bar {
+  display: flex;
+  gap: 2px;
+  height: 28px;
+  margin-bottom: 1rem;
+}
+
+.lh-report-bar-part {
+  display: flex;
+  align-items: center;
+  min-width: 2px;
+  padding: 0 0.5rem;
+  overflow: hidden;
+  border-radius: 4px;
+  color: var(--lh-report-on-part);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  flex-basis: 0;
+}
+
+.lh-report-bar-part[data-class='imported'],
+.lh-report-bar-part[data-class='quoted'],
+.lh-report-bar-part[data-class='pasted-external'] {
+  color: #0b0b0b;
+}
+
+.lh-report [data-class='typed'] {
+  background: var(--lh-report-typed);
+}
+.lh-report [data-class='typed-from-suggestion'] {
+  background: var(--lh-report-typed-from-suggestion);
+}
+.lh-report [data-class='quoted'] {
+  background: var(--lh-report-quoted);
+}
+.lh-report [data-class='imported'] {
+  background: var(--lh-report-imported);
+}
+.lh-report [data-class='pasted-external'] {
+  background: var(--lh-report-pasted-external);
+}
+
+.lh-report-swatch {
+  display: inline-block;
+  width: 0.7rem;
+  height: 0.7rem;
+  margin-right: 0.5rem;
+  border-radius: 3px;
+  vertical-align: -0.05rem;
+}
+
+/* Tables */
+
+.lh-report-table {
+  width: 100%;
+  margin: 0 0 1.25rem;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.lh-report-table caption {
+  padding-bottom: 0.4rem;
+  color: var(--lh-report-muted);
+  font-size: 0.8rem;
+  text-align: left;
+}
+
+.lh-report-table th,
+.lh-report-table td {
+  padding: 0.4rem 0.6rem 0.4rem 0;
+  border-bottom: 1px solid var(--lh-report-rule);
+  text-align: left;
+  vertical-align: top;
+}
+
+.lh-report-table thead th {
+  color: var(--lh-report-muted);
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.lh-report-table tbody th {
+  font-weight: 400;
+}
+
+.lh-report-table tfoot th,
+.lh-report-table tfoot td {
+  border-bottom: 0;
+  font-weight: 600;
+}
+
+.lh-report-table .lh-num {
+  padding-right: 0;
+  padding-left: 0.6rem;
+  text-align: right;
+}
+
+.lh-report-proves td {
+  width: 50%;
+  padding-right: 1.25rem;
+  font-family: var(--lh-report-font-text);
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+
+/* Sessions timeline */
+
+.lh-report-timeline {
+  margin-bottom: 1rem;
+}
+
+.lh-report-timeline-track {
+  position: relative;
+  height: 20px;
+  border-radius: 4px;
+  background: var(--lh-report-track);
+}
+
+.lh-report-timeline-mark {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  border-radius: 3px;
+  background: var(--lh-report-typed);
+}
+
+.lh-report-timeline-axis {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.3rem;
+  color: var(--lh-report-muted);
+  font-size: 0.78rem;
+}
+
+.lh-report-details summary {
+  margin-bottom: 0.5rem;
+  color: var(--lh-report-muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+@media (max-width: 34rem) {
+  .lh-report {
+    padding: 2rem 1rem 3rem;
+  }
+  .lh-report-table {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
+/* Print: black on white, no controls, sections kept whole where they fit. */
+
+@media print {
+  .lh-report,
+  :root .lh-report {
+    --lh-report-bg: #ffffff;
+    --lh-report-surface: #ffffff;
+    --lh-report-ink: #000000;
+    --lh-report-muted: #444444;
+    --lh-report-rule: #bbbbbb;
+    --lh-report-typed: #2a78d6;
+    --lh-report-typed-from-suggestion: #eb6834;
+    --lh-report-quoted: #1baf7a;
+    --lh-report-imported: #eda100;
+    --lh-report-pasted-external: #e87ba4;
+    color-scheme: light;
+    max-width: none;
+    padding: 0;
+    font-size: 10.5pt;
+  }
+  .lh-report-copy {
+    display: none;
+  }
+  .lh-report-disclosure,
+  .lh-report-section,
+  .lh-report-table tr,
+  .lh-report-figure {
+    break-inside: avoid;
+  }
+  .lh-report h2 {
+    break-after: avoid;
+  }
+  .lh-report-bar-part,
+  .lh-report-swatch,
+  .lh-report-timeline-mark,
+  .lh-report-timeline-track {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  .lh-report-details > summary {
+    display: none;
+  }
+}
