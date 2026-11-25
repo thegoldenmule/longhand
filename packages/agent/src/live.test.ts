@@ -51,7 +51,7 @@ const PROSE_KEYS = new Set([
 
 describe.skipIf(!live)('live claude CLI smoke test', () => {
   it(
-    'a light-touch sonnet review sends only valid annotation events to the sink',
+    'a light-touch sonnet review with a named editor sends only valid annotation events to the sink',
     async () => {
       const state = liveParagraphState();
       const before = structuredClone(state);

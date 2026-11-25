@@ -14,6 +14,13 @@ export const LIVE_PARAGRAPH_REQUEST: FeedbackRequest = {
   lenses: ['clarity', 'word-choice', 'grammar-mechanics'],
   intensity: 'light',
   ask: 'Is this paragraph clear and tight?',
+  // A named editor: the brief shapes emphasis and tone, never the rules.
+  editor: {
+    id: 'live-editor',
+    name: 'Theo',
+    brief:
+      'A blunt line editor who hates adverbs. Short, direct notes; no hedging and no praise for its own sake.',
+  },
 };
 
 /** A project holding only the paragraph. */
