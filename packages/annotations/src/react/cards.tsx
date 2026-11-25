@@ -40,7 +40,7 @@ export function GhostText(props: { text: string; className?: string }): React.JS
 
 /** The accessible description of a card (also referenced by its span in the editor). */
 export function cardDescription(card: Card, state: ProjectState | null): string {
-  const on = card.quote ? ` on “${card.quote}”` : '';
+  const on = card.quote ? ` on “${card.quote.trim()}”` : '';
   switch (card.kind) {
     case 'comment':
       return `Comment${on} (${LENS_LABELS[card.data.category]}, ${card.data.severity}): ${card.data.body}`;
@@ -54,7 +54,7 @@ export function cardDescription(card: Card, state: ProjectState | null): string 
       return `Rephrase${on}: ${s.guidance}`;
     }
     case 'proposal':
-      return `${proposalTitle(card.data)}. ${card.data.rationale}`;
+      return `${proposalTitle(card.data, state)}. ${card.data.rationale}`;
     case 'citation-flag':
       return `Citation needed${on}: ${card.data.claim}. ${AI_SURFACED_LABEL}.`;
     case 'surfaced-source':
@@ -411,7 +411,7 @@ function CardBody(props: {
     case 'proposal':
       return (
         <>
-          <p className="lh-card-title">{proposalTitle(card.data)}</p>
+          <p className="lh-card-title">{proposalTitle(card.data, snapshot.state)}</p>
           <p className="lh-card-text">{card.data.rationale}</p>
         </>
       );
@@ -487,7 +487,7 @@ export function AnnotationCard(props: AnnotationCardProps): React.JSX.Element {
       data-kind={card.kind}
       data-phase={card.phase}
       data-status={card.status}
-      aria-label={`${cardKindLabel(card)}${card.quote ? ` on “${card.quote}”` : ''}`}
+      aria-label={`${cardKindLabel(card)}${card.quote ? ` on “${card.quote.trim()}”` : ''}`}
       aria-describedby={ghostDescriptionId(card.id)}
       aria-current={active ? 'true' : undefined}
       onClick={onClick}
@@ -505,7 +505,7 @@ export function AnnotationCard(props: AnnotationCardProps): React.JSX.Element {
       </header>
       {card.aiSurfaced && <p className="lh-badge">{AI_SURFACED_LABEL}</p>}
       {card.quote && card.kind !== 'surfaced-source' && (
-        <p className="lh-card-quote">{card.quote}</p>
+        <p className="lh-card-quote">{card.quote.trim()}</p>
       )}
       <CardBody controller={controller} card={card} snapshot={snapshot} />
       {card.status === 'open' && (

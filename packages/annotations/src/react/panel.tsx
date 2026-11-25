@@ -140,7 +140,7 @@ function ReviewSession(props: {
                   onClick={() => card && controller.focus(card.id)}
                 >
                   {card ? cardKindLabel(card) : (label ?? 'Item')}
-                  {card?.quote && <span className="lh-muted"> · {card.quote}</span>}
+                  {card?.quote && <span className="lh-muted"> · {card.quote.trim()}</span>}
                   {card?.outcome && <span className="lh-muted"> · {card.outcome}</span>}
                 </button>
               </li>

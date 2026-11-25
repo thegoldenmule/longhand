@@ -197,7 +197,7 @@ describe('controller: events', () => {
     await h.commit();
     // A follow-up reuses the thread.
     h.controller.discuss('sug-d', 'And gone to seed?');
-    expect(ofType(h.drafts, 'DiscussRequested')[1]!.payload.threadId).toBe(thread);
+    expect(ofType(h.drafts, 'DiscussRequested')[1]!.payload).toMatchObject({ threadId: thread });
     await h.commit();
     const t = h.transport.projectState().annotations.discussions[thread!]!;
     expect(t.messages.map((m) => m.body)).toEqual(['Why not keep ruined?', 'And gone to seed?']);

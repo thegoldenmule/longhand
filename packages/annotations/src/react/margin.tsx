@@ -66,6 +66,8 @@ export function AnnotationMargin(props: AnnotationMarginProps): React.JSX.Elemen
   const cardEls = useRef(new Map<string, HTMLElement>());
   const [placed, setPlaced] = useState<Record<string, Placed>>({});
   const [tick, setTick] = useState(0);
+  // Cards already shown at a position glide when they move; new ones appear in place.
+  const shown = useRef(new Set<string>());
   const cards = snap.marginCards;
 
   const measure = useCallback(() => {
@@ -91,6 +93,9 @@ export function AnnotationMargin(props: AnnotationMarginProps): React.JSX.Elemen
   }, [cards, controller, gap, snap.activeId]);
 
   useLayoutEffect(measure, [measure, snap.layoutTick, tick]);
+  useEffect(() => {
+    shown.current = new Set(Object.keys(placed));
+  }, [placed]);
 
   useEffect(() => {
     const onResize = (): void => setTick((t) => t + 1);
@@ -137,6 +142,7 @@ export function AnnotationMargin(props: AnnotationMarginProps): React.JSX.Elemen
               position: 'absolute',
               top: p ? `${p.top}px` : '0px',
               visibility: p ? 'visible' : 'hidden',
+              ...(shown.current.has(card.id) ? {} : { transition: 'none' }),
             }}
           />
         );

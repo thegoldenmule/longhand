@@ -833,6 +833,39 @@
   flex-wrap: wrap;
   gap: 0.3rem;
 }
+/* Quiet cards: until a card is active, long text is clamped and older thread
+   messages fold away, so the margin stays close to the text it annotates. */
+.lh-card:not(.is-active) .lh-card-quote {
+  -webkit-line-clamp: 1;
+}
+.lh-card:not(.is-active) .lh-card-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.lh-card:not(.is-active) .lh-thread-messages > li:not(:last-child) {
+  display: none;
+}
+/* Panel list items are summaries: click one to open it (and its margin card). */
+.lh-card-list:not(.is-active) {
+  cursor: pointer;
+}
+.lh-card-list:not(.is-active) .lh-card-actions,
+.lh-card-list:not(.is-active) .lh-alts,
+.lh-card-list:not(.is-active) .lh-thread,
+.lh-card-list:not(.is-active) .lh-trace-status {
+  display: none;
+}
+.lh-card-list:not(.is-active) .lh-card-text {
+  -webkit-line-clamp: 2;
+}
+.lh-card-margin.is-resolved:not(.is-active) .lh-card-text,
+.lh-card-margin.is-resolved:not(.is-active) .lh-alts,
+.lh-card-margin.is-stale:not(.is-active) .lh-alts {
+  display: none;
+}
+
 .lh-segmented {
   display: inline-flex;
   flex-wrap: wrap;

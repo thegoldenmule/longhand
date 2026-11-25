@@ -181,7 +181,7 @@ function ghostWidget(
     (view) => createGhostElement(view.dom.ownerDocument, text, { className, annotationId: id }),
     {
       side: 1,
-      key: `ghost:${id}:${keySuffix}:${text}`,
+      key: `ghost:${id}:${keySuffix}:${className}:${text}`,
       ignoreSelection: true,
       marks: [],
       stopEvent: () => true,

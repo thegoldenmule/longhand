@@ -235,23 +235,52 @@ export function proposalRange(p: ProposalState): { from: number; to: number } | 
   }
 }
 
-/** Short description of a proposal ("Move this sentence"). */
-export function proposalTitle(p: ProposalState): string {
+function firstWords(text: string | null, n: number, fromEnd = false): string | null {
+  if (!text) return null;
+  const words = text.split(/\s+/).filter(Boolean);
+  if (words.length <= n) return text;
+  return fromEnd
+    ? `…${words.slice(-n).join(' ')}`
+    : `${words
+        .slice(0, n)
+        .join(' ')
+        .replace(/[.,;:!?]+$/, '')}…`;
+}
+
+/**
+ * Short description of a proposal ("Move this sentence before “The river…”").
+ * With `state`, destinations are described by the text around them.
+ */
+export function proposalTitle(p: ProposalState, state: ProjectState | null = null): string {
   switch (p.kind) {
     case 'move': {
       const unit = p.span.unit;
       const n = p.span.ids.length;
-      const what = n > 1 ? `${unit}s` : unit;
-      return `Move ${n > 1 ? 'these' : 'this'} ${what} ${p.destination.position} ${p.destination.id}`;
+      const base = `Move ${n > 1 ? 'these' : 'this'} ${n > 1 ? `${unit}s` : unit}`;
+      if (!state || p.insertAt === null) return base;
+      const before = p.destination.position === 'before';
+      const near = before
+        ? firstWords(snippet(state, p.documentId, p.insertAt, p.insertAt + 80), 5)
+        : firstWords(
+            snippet(state, p.documentId, Math.max(0, p.insertAt - 80), p.insertAt),
+            5,
+            true,
+          );
+      return near ? `${base} ${before ? 'before' : 'after'} “${near}”` : base;
     }
     case 'cut':
       return p.target.kind === 'span' && p.target.span.ids.length > 0
         ? `Cut ${p.target.span.ids.length > 1 ? 'these' : 'this'} ${p.target.span.unit}${p.target.span.ids.length > 1 ? 's' : ''}`
         : 'Cut these words';
-    case 'split':
-      return `Split the paragraph before ${p.sentenceId}`;
+    case 'split': {
+      const at =
+        state && p.pos !== null
+          ? firstWords(snippet(state, p.documentId, p.pos, p.pos + 80), 4)
+          : null;
+      return at ? `Start a new paragraph at “${at}”` : 'Start a new paragraph here';
+    }
     case 'merge':
-      return `Merge ${p.firstParagraphId} with ${p.secondParagraphId}`;
+      return 'Join these two paragraphs';
   }
 }
 
