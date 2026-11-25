@@ -6,7 +6,14 @@
  */
 
 // The fold
-export { applyCommit, emptyState, foldCommits } from './fold';
+export {
+  applyCommit,
+  applyCommitWithSteps,
+  derivedStepsFor,
+  emptyState,
+  foldCommits,
+  type DerivedSteps,
+} from './fold';
 export type { CommitInfo, LedgerState } from './state';
 export {
   commitInfo,

@@ -44,6 +44,10 @@ Each applied in `packages/schema` first, then in its consumers; fixtures regener
 
 Integration note (provenance-ui): the span inspector needs the folded `LedgerState`, so the web app keeps the project's commit array client-side and folds it (shared `Replay` for scrubber + inspector).
 
+## Applied contract changes (core fixes, after phase 4)
+
+- Ledger exports the steps the fold applies per commit: `validateDraft` success adds `derivedSteps: DerivedSteps` (`Record<documentId, StepJSON[]>`; a `TextEdited`'s own steps, the fold-derived move/cut/split/merge steps incl. joining whitespace for `ProposalAccepted`, `{}` otherwise), plus `derivedStepsFor(stateBefore, commit)` and `applyCommitWithSteps(state, commit)` for replay and `fetchSince` from history. Applying them gives exactly the fold's document, and their count is exactly the version delta (tested on every fixture commit, every `proposals` accept, and random proposals). Annotations' `FoldingTransport` sends them (the padded diff step is gone); the editor's sync needed no change. Server: `RemoteUpdate.steps = v.derivedSteps[documentId]`. (annotations → ledger, server)
+
 ## Pending contract changes
 
 - Research lane should ship `formatCitation`/`formatBibliographyEntry` adapters for export's injected formatters (CSL). (export → research)
@@ -53,7 +57,6 @@ Integration note (provenance-ui): the span inspector needs the folded `LedgerSta
 
 - Repo has no root LICENSE; verifier package declares MIT. Needs the owner's decision. (report/verifier)
 
-- Ledger: export the fold-derived steps for `ProposalAccepted` (e.g. `validateDraft` returns them / `derivedSteps`). Needed by server `fetchSince`/SSE and editor RemoteUpdate. (annotations → ledger, server)
 - Ledger fixtures: `loadFixture` breaks under jsdom (URL); use `fileURLToPath`. (annotations)
 - Agent progress events should carry `feedbackSessionId`. (annotations → agent)
 

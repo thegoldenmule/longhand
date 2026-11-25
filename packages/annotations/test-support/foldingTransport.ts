@@ -6,10 +6,9 @@
  * `SuggestionResolved` events the fold derives, fans step-bearing commits out to
  * subscribers (including the sender) and publishes the folded `ProjectState`.
  *
- * Accepted proposals: the fold derives its own steps but does not expose them, so
- * the transport sends the editor one diff step that turns the old document into
- * the new one, padded with no-op steps to the fold's version count. (See README,
- * "Needed changes".)
+ * Step-bearing commits carry the steps `validateDraft` reports in `derivedSteps`:
+ * a `TextEdited`'s own steps, or the steps the fold derived for an accepted
+ * proposal (as the ledger service sends them).
  */
 import type {
   CatchUp,
@@ -27,9 +26,7 @@ import {
   validateDraft,
   type LedgerState,
 } from '@longhand/ledger';
-import type { Actor, Commit, CommitDraft, ProjectState, StepJSON } from '@longhand/schema';
-import { Slice, type Node as PMNode } from 'prosemirror-model';
-import { ReplaceStep, type Step } from 'prosemirror-transform';
+import type { Actor, Commit, CommitDraft, ProjectState } from '@longhand/schema';
 
 /** Options for {@link FoldingTransport}. */
 export interface FoldingTransportOptions {
@@ -42,29 +39,6 @@ export interface FoldingTransportOptions {
 }
 
 type StateListener = (state: ProjectState, commit: Commit | null) => void;
-
-/** Steps that turn `before` into `after`, padded with no-op steps to `count`. */
-export function diffSteps(before: PMNode, after: PMNode, count: number): Step[] {
-  const steps: Step[] = [];
-  const start = before.content.findDiffStart(after.content);
-  if (start !== null && start !== undefined) {
-    const end = before.content.findDiffEnd(after.content);
-    let endA = end ? end.a : before.content.size;
-    let endB = end ? end.b : after.content.size;
-    const overlap = start - Math.min(endA, endB);
-    if (overlap > 0) {
-      endA += overlap;
-      endB += overlap;
-    }
-    let step: Step = new ReplaceStep(start, endA, after.slice(start, endB));
-    const r = step.apply(before);
-    if (r.failed || !r.doc || !r.doc.eq(after))
-      step = new ReplaceStep(0, before.content.size, new Slice(after.content, 0, 0));
-    steps.push(step);
-  }
-  while (steps.length < count) steps.push(new ReplaceStep(0, 0, Slice.empty));
-  return steps;
-}
 
 /** An in-memory ledger service backed by the real fold. */
 export class FoldingTransport implements CommitTransport {
@@ -162,14 +136,7 @@ export class FoldingTransport implements CommitTransport {
       const documentId = commit.payload.documentId;
       const baseVersion = documentVersion(before, documentId) ?? 0;
       version = documentVersion(this.state, documentId) ?? baseVersion;
-      let steps: StepJSON[];
-      if (commit.type === 'TextEdited') steps = commit.payload.steps;
-      else {
-        const a = documentNode(before, documentId);
-        const b = documentNode(this.state, documentId);
-        steps =
-          a && b ? diffSteps(a, b, version - baseVersion).map((s) => s.toJSON() as StepJSON) : [];
-      }
+      const steps = v.derivedSteps[documentId] ?? [];
       const update: RemoteUpdate = {
         documentId,
         commitId: commit.commitId,

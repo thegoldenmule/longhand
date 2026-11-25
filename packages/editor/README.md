@@ -154,7 +154,7 @@ interface RemoteUpdate {
 }
 ```
 
-`subscribe` must deliver every step-bearing commit of the document in ledger order, including this client's own; a matching `commitId` also counts as an acknowledgement. For `ProposalAccepted`, `steps` are the steps the fold derived. `MockTransport` implements all of this in memory. It validates with `CommitDraftSchema`, dedupes, checks versions, re-applies steps, can derive proposal steps, can go offline and add latency, can simulate another device with `remoteEdit`, and can persist to localStorage.
+`subscribe` must deliver every step-bearing commit of the document in ledger order, including this client's own; a matching `commitId` also counts as an acknowledgement. For `ProposalAccepted`, `steps` are the steps the fold derived: `@longhand/ledger`'s `validateDraft(...).derivedSteps[documentId]` at ingest, or `derivedStepsFor(stateBefore, commit)` from history. The engine applies them like any remote steps, so no padding or diffing is needed. `MockTransport` implements all of this in memory. It validates with `CommitDraftSchema`, dedupes, checks versions, re-applies steps, can derive proposal steps, can go offline and add latency, can simulate another device with `remoteEdit`, and can persist to localStorage.
 
 ## Typewriter scrolling and focus mode
 

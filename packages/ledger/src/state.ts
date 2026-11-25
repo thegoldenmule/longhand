@@ -25,6 +25,7 @@ import {
   type PMNode,
   type ProjectSettings,
   type SourceState,
+  type StepJSON,
   type WritingSession,
 } from '@longhand/schema';
 import type { MapNode, Tomb } from './engine';
@@ -269,12 +270,23 @@ export class Tx {
   readonly s: Mutable<Internal>;
   readonly seq: number;
   readonly serverTime: string;
+  /**
+   * When set, every step the fold applies in this commit is appended here, per
+   * document id, in application order (see `applyCommitWithSteps`).
+   */
+  readonly stepLog: Map<string, StepJSON[]> | null;
   private readonly owned = new Set<string>();
 
-  constructor(base: Internal, seq: number, serverTime: string) {
+  constructor(
+    base: Internal,
+    seq: number,
+    serverTime: string,
+    stepLog: Map<string, StepJSON[]> | null = null,
+  ) {
     this.s = { ...base };
     this.seq = seq;
     this.serverTime = serverTime;
+    this.stepLog = stepLog;
   }
 
   /** A writable copy of a top-level record (copied once per commit). */

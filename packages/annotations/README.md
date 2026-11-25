@@ -153,10 +153,10 @@ Import `@longhand/annotations/styles.css` once. Everything is themed with `--lh-
   - Cards for every annotation in the `feedback-session`, `suggestions`, `proposals`, `discuss` and `research` fixtures, both final and after their first review. Every card renders with the right kind, phase, outcome and AI-surfaced label.
   - Review views: running, waiting, finished and failed.
   - The request form emits schema-valid `FeedbackRequested` drafts for each scope, lens set and intensity.
-  - With the real editor over `FoldingTransport` (a transport that validates and folds every draft with `@longhand/ledger`):
+  - With the real editor over `FoldingTransport` (a transport that validates and folds every draft with `@longhand/ledger`, and sends the fold's `derivedSteps` as each `RemoteUpdate`'s steps):
     - dismiss emits `SuggestionDismissed`, and `dismiss` on a proposal emits `ProposalRejected`;
     - reject, accept and discuss emit the right drafts, and the ledger accepts them;
-    - an accepted move keeps its words' `originSeq` and class;
+    - an accepted move keeps its words' `originSeq` and class, and the editor ends on exactly the fold's document via the fold's own derived steps;
     - trace-over sets the hint, and the fold resolves the suggestion as adopted (with `typed-from-suggestion` runs) or adapted;
     - insertion trace-over works;
     - the margin and panel buttons emit the same events;
@@ -183,9 +183,8 @@ Import `@longhand/annotations/styles.css` once. Everything is themed with `--lh-
 
 None block this lane. Each item below is worked around in the test-support code only.
 
-1. **`@longhand/ledger`: expose the steps the fold derives for `ProposalAccepted`.** For example, `validateDraft` could return `steps` for step-bearing commits, or there could be an exported `derivedSteps(before, commit)`. A `RemoteUpdate` for an accepted proposal must carry those steps, and the ledger keeps them private. `FoldingTransport` sends one diff `ReplaceStep` that turns the old document into the new one, padded with no-op steps to the fold's version count. The server lane needs the same thing.
-2. **`@longhand/ledger/fixtures`: `loadFixture` fails under Vitest's jsdom environment.** It builds a `URL` that jsdom replaces, so `readFileSync` rejects it. Using `node:url`'s `URL`, or `fileURLToPath`, would fix it. Until then, `test-support/fixtureData.ts` imports the fixture JSON directly, and the browser demo uses the same module.
-3. **`@longhand/agent`: tag `model` progress events with their session.** `SessionProgressEvent`'s `model` events have no `feedbackSessionId`. Either the relay adds it, or the host passes it to `pushProgress(event, sessionId)` as the demo does.
+1. **`@longhand/ledger/fixtures`: `loadFixture` fails under Vitest's jsdom environment.** It builds a `URL` that jsdom replaces, so `readFileSync` rejects it. Using `node:url`'s `URL`, or `fileURLToPath`, would fix it. Until then, `test-support/fixtureData.ts` imports the fixture JSON directly, and the browser demo uses the same module.
+2. **`@longhand/agent`: tag `model` progress events with their session.** `SessionProgressEvent`'s `model` events have no `feedbackSessionId`. Either the relay adds it, or the host passes it to `pushProgress(event, sessionId)` as the demo does.
 
 ## Known gaps
 
@@ -194,5 +193,4 @@ None block this lane. Each item below is worked around in the test-support code 
 - **No virtualization.** The margin measures every card on each layout change. That is fine for chapters, but not tuned for hundreds of open cards.
 - **The accessible descriptions live in the margin.** Ghost-text descriptions are rendered by `<AnnotationMargin>`. A host that shows only the panel loses the `aria-describedby` targets.
 - **Discuss sessions have no streamed activity.** Only the fold's `awaiting-editor` state is shown.
-- **The demo's accepted-proposal update is a diff step** (see Needed changes 1). Rebasing concurrent local typing over an accepted proposal works, but maps less precisely than the fold's own steps would.
 - **Chrome only.** The e2e suite ran against installed Chrome. Safari and Firefox clipboard and selection behaviour are untested.

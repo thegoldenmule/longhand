@@ -175,6 +175,16 @@ describe('controller: events', () => {
     );
     const after = h.transport.projectState().documents['doc-p']!;
     expect(after.version).toBeGreaterThan(before.version);
+    // The editor applied the fold's own derived steps and holds the fold's document.
+    expect(h.handle.getState().doc.toJSON()).toEqual(after.content);
+    const catchUp = await h.transport.fetchSince('doc-p', before.version);
+    const update =
+      catchUp.kind === 'updates'
+        ? catchUp.updates.find((u) => u.type === 'ProposalAccepted')
+        : undefined;
+    expect(update).toMatchObject({ baseVersion: before.version, version: after.version });
+    expect(update!.steps).toHaveLength(after.version - before.version);
+    expect(update!.steps.every((s) => s.stepType === 'replace')).toBe(true);
     const moved = runAt(after, sentence)!;
     expect(moved.class).toBe('typed');
     expect(moved.originSeq).toBe(origin.originSeq);
