@@ -11,7 +11,7 @@ The coordinator updates this file after every phase. A resumed session reads it 
 | 2c | Contract revision pass (applied list below) | done (schema 273 tests, ledger 137, 13 fixtures + 6 tampered regenerated; SCHEMA_VERSION stays 1) | 2dd23fa |
 | 3 | Lanes needing ledger core: server (+ packages/client), provenance-ui, report + verifier | done | merged |
 | 4 | Annotations lane | done | merged |
-| 5 | Integration: `apps/web`, dev orchestration, end-to-end in Chrome | running | |
+| 5 | Integration: `apps/web`, dev orchestration, end-to-end in Chrome | done (web 18 e2e + live; `pnpm e2e` all suites green) | see git log |
 
 ## Lane results
 
@@ -52,16 +52,36 @@ Integration note (provenance-ui): the span inspector needs the folded `LedgerSta
 
 ## Pending contract changes
 
-- Research lane should ship `formatCitation`/`formatBibliographyEntry` adapters for export's injected formatters (CSL). (export → research)
+- ~~Research lane should ship `formatCitation`/`formatBibliographyEntry` adapters for export's injected formatters (CSL). (export → research)~~ Done by the server's `cslFormatters` (phase 3).
 - Optional: a CSL `source` convention or a `provider` field on library sources, so the origin provider survives `SourceAdded`. (research)
-- Server lane implements the AnnotationSink HTTP contract in `packages/agent/README.md`.
-- Server/web must implement the editor's `CommitTransport` (`packages/editor/src/sync/transport.ts`): submit → ack/duplicate/conflict/rejected/offline; subscribe in ledger order incl. own commits; `fetchSince` with fold-derived steps for ProposalAccepted (now from ledger `validateDraft().derivedSteps` / `derivedStepsFor`). (editor → server)
+- ~~Server lane implements the AnnotationSink HTTP contract in `packages/agent/README.md`.~~ Done (phase 3).
+- ~~Server/web must implement the editor's `CommitTransport` (`packages/editor/src/sync/transport.ts`): submit → ack/duplicate/conflict/rejected/offline; subscribe in ledger order incl. own commits; `fetchSince` with fold-derived steps for ProposalAccepted (now from ledger `validateDraft().derivedSteps` / `derivedStepsFor`). (editor → server)~~ Done: `HttpCommitTransport` (phase 3), used by the web app (phase 5).
 
 - Repo has no root LICENSE; verifier package declares MIT. Needs the owner's decision. (report/verifier)
 
-- Research: citeproc wrapper crashes on numeric CSL fields (e.g. `volume: 12`); export works around by stringifying. (server)
-- Agent: `MockModelAdapter` ignores a signal aborted before run start. (server)
+- ~~Research: citeproc wrapper crashes on numeric CSL fields (e.g. `volume: 12`); export works around by stringifying. (server)~~ Fixed in phase 5: the wrapper stringifies numeric fields on the copy it hands citeproc; the server's workaround is gone.
+- ~~Agent: `MockModelAdapter` ignores a signal aborted before run start. (server)~~ Fixed in phase 5: it returns `aborted` without starting the tool server; the server's cancel no longer defers the abort.
 - Optional: ledger fold-state serialize/restore for fast startup from Postgres snapshots. (server)
+
+## Phase 5: integration
+
+- `apps/web`: Next 16 App Router app composing every package (projects home with import, the workspace with binder/corkboard, editor, margin, feedback, research, provenance, replay, report, bundle, export, settings, shortcuts; `/verify`; dev and Cognito PKCE auth). See `apps/web/README.md`.
+- Root `pnpm dev` (Postgres check or compose, `dev:setup` when needed, server and web, clean Ctrl-C) and `pnpm e2e` (editor, provenance-ui, annotations, verifier, web, sequentially, never reusing a stale server).
+- Full-stack e2e (`apps/web/e2e`): fresh database per run, real Durable Streams and ledger service (lens-driven mock reviewer), production web build, Chrome. 16 numbered tests, light/dark screenshots, and the invariant checked from the API after every test. Live test (real `opus` review from the UI) passes.
+- Server mock reviewer: `word-choice` adds a word-choice suggestion and `structure` adds a paragraph move and a sentence move.
+- `README.md`, `docs/DEPLOY.md`, `amplify.yml`, `apps/server/Dockerfile`, `deploy/ec2/*`.
+
+## Known gaps after phase 5 (prioritized)
+
+1. **Not deployed.** Amplify (with Next 16), the EC2 image, KMS signing and Cognito sign-in are documented and unit-tested (KMS mocked, PKCE with a mocked token endpoint) but never run against AWS.
+2. **Single ledger instance, in-memory sessions** (server). No failover; a crash between appending a `FeedbackRequested` and starting its session leaves it pending. Each loaded project keeps its commits and step history in memory.
+3. **Client folds the whole ledger** on open (no fold-state snapshot API in `@longhand/ledger`). Fine for one book; slow for very long histories.
+4. **One annotation controller per open document.** A project-wide review shows items in other documents as labels until you open them.
+5. **Binder/research events with no document open** are retried in memory rather than queued in IndexedDB; with a document open they use the editor's durable queue.
+6. **The in-app report recolours the classes** to match the provenance tint; the downloadable/verifier report keeps the report lane's colour-blind-validated palette.
+7. **Footnote text is not tinted**, and the replay view is not inspectable (provenance-ui gaps).
+8. **Browser coverage:** every Playwright suite ran in Chrome only.
+9. **No root LICENSE**; the verifier declares MIT. Needs the owner's decision.
 
 ## Notes
 

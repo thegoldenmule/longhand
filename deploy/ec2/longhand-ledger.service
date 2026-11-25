@@ -1,0 +1,20 @@
+# systemd unit: runs deploy/ec2/docker-compose.yml.
+#   sudo cp deploy/ec2/longhand-ledger.service /etc/systemd/system/
+#   sudo systemctl daemon-reload && sudo systemctl enable --now longhand-ledger
+[Unit]
+Description=Longhand ledger service (Durable Streams + API)
+Requires=docker.service
+After=docker.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/opt/longhand
+Environment=LONGHAND_ENV_FILE=/etc/longhand/ledger.env
+ExecStart=/usr/bin/docker compose -f deploy/ec2/docker-compose.yml --env-file /etc/longhand/ledger.env up -d --remove-orphans
+ExecStop=/usr/bin/docker compose -f deploy/ec2/docker-compose.yml --env-file /etc/longhand/ledger.env down
+TimeoutStopSec=60
+
+[Install]
+WantedBy=multi-user.target

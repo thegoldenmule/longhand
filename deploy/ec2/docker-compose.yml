@@ -1,0 +1,52 @@
+# The ledger service on one EC2 instance: Durable Streams (the ledger itself,
+# file-backed on a volume) and the service in front of it. Postgres is RDS
+# (or the optional `postgres` profile for a single-box setup).
+#
+#   docker compose --env-file /etc/longhand/ledger.env up -d
+#
+# See docs/DEPLOY.md for every variable and for the reverse proxy (TLS, SSE).
+name: longhand
+
+services:
+  streams:
+    image: ${LONGHAND_IMAGE:-longhand-ledger:latest}
+    command: ['streams']
+    restart: unless-stopped
+    environment:
+      DURABLE_STREAMS_URL: http://0.0.0.0:3300
+      DURABLE_STREAMS_DATA_DIR: /data/streams
+    volumes:
+      - streams-data:/data/streams
+    # Only the ledger service talks to it: no published port.
+    expose: ['3300']
+
+  ledger:
+    image: ${LONGHAND_IMAGE:-longhand-ledger:latest}
+    command: ['start']
+    restart: unless-stopped
+    depends_on: [streams]
+    env_file: ${LONGHAND_ENV_FILE:-/etc/longhand/ledger.env}
+    environment:
+      LEDGER_HOST: 0.0.0.0
+      LEDGER_PORT: '3200'
+      LEDGER_INTERNAL_URL: http://127.0.0.1:3200
+      DURABLE_STREAMS_URL: http://streams:3300
+    # Bound to loopback: the reverse proxy on the host terminates TLS.
+    ports:
+      - '127.0.0.1:3200:3200'
+    stop_grace_period: 30s
+
+  postgres:
+    profiles: ['postgres']
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: longhand
+      POSTGRES_USER: longhand
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+
+volumes:
+  streams-data:
+  pg-data:
