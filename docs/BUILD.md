@@ -76,3 +76,11 @@ Made while writing `packages/schema` (phase 1). These are cross-cutting rules th
 - **Binder** has two areas, `manuscript` and `notes`. Notes are documents of kind `note`, edited through `TextEdited`. Documents and folders never move between areas. Ordering uses `{parentId, index}`, where `index` is counted after the node is removed and clamped.
 - **Canonical JSON** omits `undefined` properties and escapes lone surrogates rather than rejecting them, so a writer's commit is always hashable.
 - **Determinism.** The fold, the segmenter and the word counter must not use `Intl.*`, `\p{…}` regexes, `localeCompare`, `String#normalize`, `Date.now` or `Math.random`.
+
+## Coordinator decisions (after phase 1)
+
+- **Suggestion matcher scope.** The 4-consecutive-word rule matches against all AI-visible text, not only open suggestions: suggestion alternatives, insertion sentences, comment bodies, questions, discuss answers and review text. N-grams already present in the manuscript when the annotation arrived are excluded. The 0.15 edit-distance rule applies only to open suggestion and insertion text. Rationale: never under-disclose.
+- **Rephrase hints** resolve as `adapted` when the writer edits inside the span and `stale` otherwise. They never change provenance class.
+- **Joining whitespace** for merges and sentence moves: the fold inserts one U+0020 only when neither side has whitespace, attributed to the `ProposalAccepted` seq (class `typed`, since it carries no words).
+- **Word attribution** (report, provenance-ui and export share it; implemented in `packages/ledger` as `attributeWords`): a word whose characters span classes takes the *least trusted* class present, in the order `pasted-external` < `imported` < `quoted` < `typed-from-suggestion` < `typed`. Never overclaim.
+- **Merging lane work.** Lanes work in their own git worktree and commit there; the coordinator merges into `main`. Lanes may add dependencies to their own `package.json`; the coordinator regenerates `pnpm-lock.yaml` on merge.
