@@ -6,16 +6,24 @@
  * ({@link toPublicRuns}) is the canonical `ProvenanceRun[]` form from
  * `@longhand/schema`.
  */
-import type { ProvenanceClass, ProvenanceRun } from '@longhand/schema';
+import type { MatchedKind, ProvenanceClass, ProvenanceRun } from '@longhand/schema';
 
 /** Classes that can appear on a run (`pasted-internal` never does: internal pastes inherit). */
 export type RunClass = Exclude<ProvenanceClass, 'pasted-internal'>;
+
+/** The AI annotation a `typed-from-suggestion` unit matched. */
+export interface Match {
+  readonly id: string;
+  readonly kind: MatchedKind;
+}
 
 /** Provenance of one unit. Immutable; shared between runs. */
 export interface Prov {
   readonly class: RunClass;
   readonly originSeq: number;
+  /** Set together with `matchedKind`, only for `typed-from-suggestion`. */
   readonly suggestionId?: string;
+  readonly matchedKind?: MatchedKind;
   readonly moves?: readonly number[];
   /**
    * Internal only: marks units awaiting verification at the end of an input-method
@@ -44,19 +52,34 @@ export const TRUST_ORDER: Readonly<Record<RunClass, number>> = {
 export function prov(
   cls: RunClass,
   originSeq: number,
-  suggestionId?: string,
+  match?: Match,
   moves?: readonly number[],
 ): Prov {
   const p: { -readonly [K in keyof Prov]: Prov[K] } = { class: cls, originSeq };
-  if (suggestionId !== undefined && cls === 'typed-from-suggestion') p.suggestionId = suggestionId;
+  if (match !== undefined && cls === 'typed-from-suggestion') {
+    p.suggestionId = match.id;
+    p.matchedKind = match.kind;
+  }
   if (moves !== undefined && moves.length > 0) p.moves = moves;
   return p;
+}
+
+/** The match a Prov carries, if any. */
+export function matchOf(p: Prov): Match | undefined {
+  return p.suggestionId !== undefined && p.matchedKind !== undefined
+    ? { id: p.suggestionId, kind: p.matchedKind }
+    : undefined;
 }
 
 /** True if two provenances are equal (pending tokens compare by identity). */
 export function sameProv(a: Prov, b: Prov): boolean {
   if (a === b) return true;
-  if (a.class !== b.class || a.originSeq !== b.originSeq || a.suggestionId !== b.suggestionId) {
+  if (
+    a.class !== b.class ||
+    a.originSeq !== b.originSeq ||
+    a.suggestionId !== b.suggestionId ||
+    a.matchedKind !== b.matchedKind
+  ) {
     return false;
   }
   if (a.pend !== b.pend) return false;
@@ -72,13 +95,13 @@ export function withMove(p: Prov, seq: number): Prov {
   const moves = p.moves ?? [];
   if (moves.includes(seq)) return p;
   const next = [...moves, seq].sort((x, y) => x - y);
-  return prov(p.class, p.originSeq, p.suggestionId, next);
+  return prov(p.class, p.originSeq, matchOf(p), next);
 }
 
 /** The same provenance upgraded to `typed-from-suggestion` (only from `typed`). */
-export function asFromSuggestion(p: Prov, suggestionId: string): Prov {
+export function asFromSuggestion(p: Prov, match: Match): Prov {
   if (p.class !== 'typed') return p;
-  return prov('typed-from-suggestion', p.originSeq, suggestionId, p.moves);
+  return prov('typed-from-suggestion', p.originSeq, match, p.moves);
 }
 
 /** Merges adjacent runs with equal provenance. Input must be sorted and non-overlapping. */
@@ -193,6 +216,7 @@ export function toPublicRuns(runs: readonly IRun[]): ProvenanceRun[] {
       originSeq: r.p.originSeq,
     };
     if (r.p.suggestionId !== undefined) out.suggestionId = r.p.suggestionId;
+    if (r.p.matchedKind !== undefined) out.matchedKind = r.p.matchedKind;
     if (r.p.moves !== undefined && r.p.moves.length > 0) out.moves = [...r.p.moves];
     return out;
   });

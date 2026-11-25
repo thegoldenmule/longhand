@@ -31,6 +31,7 @@ import {
   type Anchor,
   type CommitOf,
   type Commit,
+  type MatchedKind,
   type ProposalState,
   type ResolvedAnchor,
   type SpanRef,
@@ -126,7 +127,12 @@ function countInSession(
 }
 
 /** Registers AI-visible text for the four-word matcher (minus 4-grams already in the project). */
-function addAiText(tx: Tx, id: string, texts: ReadonlyArray<string | undefined | null>): void {
+function addAiText(
+  tx: Tx,
+  id: string,
+  kind: MatchedKind,
+  texts: ReadonlyArray<string | undefined | null>,
+): void {
   const grams = new Set<string>();
   for (const t of texts) if (t) for (const g of ngramsOf(t)) grams.add(g);
   if (grams.size === 0) return;
@@ -135,7 +141,7 @@ function addAiText(tx: Tx, id: string, texts: ReadonlyArray<string | undefined |
     for (const g of [...grams]) if (existing.has(g)) grams.delete(g);
     if (grams.size === 0) return;
   }
-  tx.s.aiTexts = pvecPush(tx.s.aiTexts, { id, seq: tx.seq, ngrams: grams });
+  tx.s.aiTexts = pvecPush(tx.s.aiTexts, { id, kind, seq: tx.seq, ngrams: grams });
 }
 
 // ---------------------------------------------------------------------------
@@ -398,7 +404,7 @@ export function foldCommentAdded(tx: Tx, c: CommitOf<'CommentAdded'>): void {
     dismissal: null,
   };
   countInSession(tx, s, 'comment', p.commentId);
-  addAiText(tx, p.commentId, [p.body]);
+  addAiText(tx, p.commentId, 'comment', [p.body]);
 }
 
 /** Folds `QuestionAsked`. */
@@ -425,7 +431,7 @@ export function foldQuestionAsked(tx: Tx, c: CommitOf<'QuestionAsked'>): void {
     dismissal: null,
   };
   countInSession(tx, s, 'ask_question', p.questionId);
-  addAiText(tx, p.questionId, [p.question]);
+  addAiText(tx, p.questionId, 'question', [p.question]);
 }
 
 /** Folds `SuggestionProposed`. */
@@ -526,9 +532,11 @@ export function foldSuggestionProposed(tx: Tx, c: CommitOf<'SuggestionProposed'>
   tx.addTracker(tracker);
   tx.ann('suggestions')[p.suggestionId] = record;
   countInSession(tx, s, tool, p.suggestionId);
-  if (sg.kind === 'word-choice') addAiText(tx, p.suggestionId, [...sg.alternatives, sg.rationale]);
-  else if (sg.kind === 'insertion') addAiText(tx, p.suggestionId, [sg.sentence, sg.purpose]);
-  else addAiText(tx, p.suggestionId, [sg.guidance]);
+  if (sg.kind === 'word-choice')
+    addAiText(tx, p.suggestionId, 'suggestion', [...sg.alternatives, sg.rationale]);
+  else if (sg.kind === 'insertion')
+    addAiText(tx, p.suggestionId, 'insertion', [sg.sentence, sg.purpose]);
+  else addAiText(tx, p.suggestionId, 'suggestion', [sg.guidance]);
 }
 
 function proposalCommon(
@@ -597,7 +605,7 @@ export function foldMoveProposed(tx: Tx, c: CommitOf<'MoveProposed'>): void {
     insertAt: stale || !dest.range ? null : dest.range.from,
   };
   countInSession(tx, s, 'propose_move', p.proposalId);
-  addAiText(tx, p.proposalId, [p.rationale]);
+  addAiText(tx, p.proposalId, 'proposal', [p.rationale]);
 }
 
 /** Folds `CutProposed`. */
@@ -622,7 +630,7 @@ export function foldCutProposed(tx: Tx, c: CommitOf<'CutProposed'>): void {
     range: stale || !placed.range ? null : { ...placed.range },
   };
   countInSession(tx, s, 'propose_cut', p.proposalId);
-  addAiText(tx, p.proposalId, [p.rationale]);
+  addAiText(tx, p.proposalId, 'proposal', [p.rationale]);
 }
 
 /** Folds `SplitProposed`. */
@@ -667,7 +675,7 @@ export function foldSplitProposed(tx: Tx, c: CommitOf<'SplitProposed'>): void {
     pos: stale || !placed.range ? null : placed.range.from,
   };
   countInSession(tx, s, 'propose_split', p.proposalId);
-  addAiText(tx, p.proposalId, [p.rationale]);
+  addAiText(tx, p.proposalId, 'proposal', [p.rationale]);
 }
 
 /** Folds `MergeProposed`. */
@@ -711,7 +719,7 @@ export function foldMergeProposed(tx: Tx, c: CommitOf<'MergeProposed'>): void {
     range: stale || !placed.range ? null : { ...placed.range },
   };
   countInSession(tx, s, 'propose_merge', p.proposalId);
-  addAiText(tx, p.proposalId, [p.rationale]);
+  addAiText(tx, p.proposalId, 'proposal', [p.rationale]);
 }
 
 /** Folds `CitationNeededFlagged`. */
@@ -737,7 +745,7 @@ export function foldCitationFlagged(tx: Tx, c: CommitOf<'CitationNeededFlagged'>
     dismissal: null,
   };
   countInSession(tx, s, 'flag_citation_needed', p.flagId);
-  addAiText(tx, p.flagId, [p.claim]);
+  addAiText(tx, p.flagId, 'citation-flag', [p.claim]);
 }
 
 /** Folds `SourceSurfaced`. */
@@ -766,7 +774,10 @@ export function foldSourceSurfaced(tx: Tx, c: CommitOf<'SourceSurfaced'>): void 
     dismissal: null,
   };
   countInSession(tx, s, 'search_sources', p.surfacedId);
-  addAiText(tx, p.surfacedId, [p.query, ...p.candidates.map((x) => x.csl.title)]);
+  addAiText(tx, p.surfacedId, 'surfaced-source', [
+    p.query,
+    ...p.candidates.map((x) => x.csl.title),
+  ]);
 }
 
 /** Folds `SourceSuggested`. */
@@ -795,7 +806,7 @@ export function foldSourceSuggested(tx: Tx, c: CommitOf<'SourceSuggested'>): voi
     dismissal: null,
   };
   countInSession(tx, s, 'suggest_source', p.sourceSuggestionId);
-  addAiText(tx, p.sourceSuggestionId, [p.rationale]);
+  addAiText(tx, p.sourceSuggestionId, 'source-suggestion', [p.rationale]);
 }
 
 /** Folds `ReviewFinished`. */
@@ -813,7 +824,7 @@ export function foldReviewFinished(tx: Tx, c: CommitOf<'ReviewFinished'>): void 
     const req = tx.s.ann.feedbackRequests[s.requestId];
     if (req) tx.ann('feedbackRequests')[req.id] = { ...req, status: 'finished' };
   }
-  addAiText(tx, s.id, [p.summary, ...p.strengths, ...p.topPriorities]);
+  addAiText(tx, s.id, 'review', [p.summary, ...p.strengths, ...p.topPriorities]);
 }
 
 /** Folds `DiscussAnswered`. */
@@ -845,7 +856,7 @@ export function foldDiscussAnswered(tx: Tx, c: CommitOf<'DiscussAnswered'>): voi
     status: 'answered',
   };
   tx.ann('agentSessions')[s.id] = { ...s, status: 'finished', endedSeq: c.seq };
-  addAiText(tx, thr.id, [p.body]);
+  addAiText(tx, thr.id, 'discuss', [p.body]);
 }
 
 // ---------------------------------------------------------------------------

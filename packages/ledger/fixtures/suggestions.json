@@ -5708,7 +5708,8 @@
               "to": 31,
               "class": "typed-from-suggestion",
               "originSeq": 22,
-              "suggestionId": "sug-adopt"
+              "suggestionId": "sug-adopt",
+              "matchedKind": "suggestion"
             },
             {
               "from": 31,
@@ -5721,7 +5722,8 @@
               "to": 49,
               "class": "typed-from-suggestion",
               "originSeq": 24,
-              "suggestionId": "sug-adapt"
+              "suggestionId": "sug-adapt",
+              "matchedKind": "suggestion"
             },
             {
               "from": 49,
@@ -5746,7 +5748,8 @@
               "to": 87,
               "class": "typed-from-suggestion",
               "originSeq": 29,
-              "suggestionId": "sug-insert"
+              "suggestionId": "sug-insert",
+              "matchedKind": "insertion"
             },
             {
               "from": 87,
@@ -5801,7 +5804,8 @@
               "to": 229,
               "class": "typed-from-suggestion",
               "originSeq": 33,
-              "suggestionId": "com-s"
+              "suggestionId": "com-s",
+              "matchedKind": "comment"
             },
             {
               "from": 229,

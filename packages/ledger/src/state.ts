@@ -20,6 +20,7 @@ import {
   type FolderState,
   type ImportInfo,
   type InputMethod,
+  type MatchedKind,
   type PasteState,
   type PMNode,
   type ProjectSettings,
@@ -132,6 +133,8 @@ export interface MsEntry {
 /** AI-visible text and its 4-grams eligible for the matcher. */
 export interface AiText {
   id: string;
+  /** What `id` names (for `ProvenanceRun.matchedKind`). */
+  kind: MatchedKind;
   seq: number;
   ngrams: ReadonlySet<string>;
 }

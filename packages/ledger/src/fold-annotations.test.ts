@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { LedgerBuilder } from './builder';
 import { foldIssues } from './project';
-import { classOf, runsOf, textOf } from './test-helpers';
+import { classOf, matchAt, runsOf, textOf } from './test-helpers';
 
 function review(
   text: string,
@@ -165,6 +165,7 @@ describe('suggestion lifecycle', () => {
       resolvedSeq: seq,
     });
     expect(runsOf(b, 'd')[1]).toEqual(['weathered', 'typed-from-suggestion', seq, 'sug=w']);
+    expect(matchAt(b, 'd', 'weathered')).toBe('w:suggestion');
   });
 
   it('stays open while retyping is in progress across commits', () => {
@@ -287,6 +288,7 @@ describe('suggestion lifecycle', () => {
     b.type('d', ' The clock ticked.', { at: { after: 'waited.' } });
     expect(b.project.annotations.suggestions.i1!.status).toBe('adopted');
     expect(classOf(b, 'd', 'The clock')).toBe('typed-from-suggestion');
+    expect(matchAt(b, 'd', 'The clock')).toBe('i1:insertion');
     b.deleteText('d', ' Nothing happened.');
     expect(b.project.annotations.suggestions.i2!.status).toBe('stale');
   });
@@ -321,14 +323,19 @@ describe('suggestion lifecycle', () => {
       { kind: 'anchor', documentId: 'd', sentenceId: 'p1.s1', quote: 'storm' },
       'The storm broke over the harbour like a slammed door.',
     );
-    b.finishReview('s', 'ok');
+    b.finishReview('s', 'Keep the ending exactly as quiet as it is.');
     // "the storm broke over" is in the manuscript already: not a match.
     b.type('d', ' Then the storm broke over us.');
     expect(classOf(b, 'd', 'Then')).toBe('typed');
     // "like a slammed door" is new AI text.
     b.type('d', ' It hit like a slammed door.');
     expect(classOf(b, 'd', 'like a slammed door')).toBe('typed-from-suggestion');
+    expect(matchAt(b, 'd', 'like a slammed door')).toBe('c:comment');
     expect(classOf(b, 'd', 'It hit')).toBe('typed');
+    // finish_review text matches the feedback session.
+    b.type('d', ' Keep the ending exactly as quiet.');
+    expect(classOf(b, 'd', 'Keep the ending')).toBe('typed-from-suggestion');
+    expect(matchAt(b, 'd', 'Keep the ending')).toBe('s:review');
   });
 
   it('a trace-over hint marks typed text even without a match', () => {
@@ -342,6 +349,7 @@ describe('suggestion lifecycle', () => {
     );
     b.typeOver('d', 5, 8, 'tin', { traceSuggestionId: 'w' });
     expect(classOf(b, 'd', 'tin')).toBe('typed-from-suggestion');
+    expect(matchAt(b, 'd', 'tin')).toBe('w:suggestion');
     expect(b.project.annotations.suggestions.w!.status).toBe('adapted');
   });
 });

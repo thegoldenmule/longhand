@@ -27,7 +27,16 @@ import { beginDocCommit, buryAll, finishDocCommit, stepDoc, type DocCommit } fro
 import { quoteBlockText } from './doctext';
 import { findInTombs, type DeadUnit, type Tomb } from './engine';
 import { FoldError } from './issues';
-import { canonicalRuns, prov, provAt, remapUnits, withMove, type Prov } from './prov';
+import {
+  canonicalRuns,
+  matchOf,
+  prov,
+  provAt,
+  remapUnits,
+  withMove,
+  type Match,
+  type Prov,
+} from './prov';
 import type { Tx } from './state';
 import { isCitationKey, keyText, unitsBetween, type UnitRef } from './units';
 
@@ -138,7 +147,7 @@ function foldRun(dc: DocCommit, run: InputRun, steps: readonly Step[]): void {
   const method = run.method;
   const token = {};
   const typedLike = TYPED_METHODS.has(method);
-  let hint: string | null = null;
+  let hint: Match | null = null;
   if (run.traceSuggestionId !== undefined) {
     const sug = tx.s.ann.suggestions[run.traceSuggestionId];
     const docOf = sug ? (sug.kind === 'insertion' ? sug.documentId : sug.anchor.documentId) : null;
@@ -146,7 +155,7 @@ function foldRun(dc: DocCommit, run: InputRun, steps: readonly Step[]): void {
       tx.issue('unknown-hint', `traceSuggestionId ${run.traceSuggestionId} names no suggestion`);
     else if (docOf !== dc.base.id)
       tx.issue('document-mismatch', `suggestion ${sug.id} is in another document`);
-    else hint = sug.id;
+    else hint = { id: sug.id, kind: sug.kind === 'insertion' ? 'insertion' : 'suggestion' };
   }
   const typedProv = hint ? prov('typed-from-suggestion', seq, hint) : prov('typed', seq);
   const pasteProv: Prov = { class: 'pasted-external', originSeq: seq, pend: token };
@@ -230,7 +239,7 @@ function foldRun(dc: DocCommit, run: InputRun, steps: readonly Step[]): void {
         });
         return { assigned, buried, tombs, extra };
       },
-      { typed: typedLike, hint },
+      { typed: typedLike, hint: hint?.id ?? null },
     );
   }
 
@@ -332,7 +341,7 @@ export function foldTextEdited(tx: Tx, c: CommitOf<'TextEdited'>): number {
   }
   // No placeholder survives the commit (defensive: e.g. undo of a paste within one batch).
   const plain = (p: Prov): Prov =>
-    p.pend !== undefined ? prov(p.class, p.originSeq, p.suggestionId, p.moves) : p;
+    p.pend !== undefined ? prov(p.class, p.originSeq, matchOf(p), p.moves) : p;
   if (dc.runs.some((r) => r.p.pend !== undefined)) {
     dc.runs = canonicalRuns(
       dc.runs.map((r) => (r.p.pend !== undefined ? { ...r, p: plain(r.p) } : r)),

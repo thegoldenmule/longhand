@@ -35,6 +35,13 @@ export function classOf(b: LedgerBuilder, id: string, text: string): string | un
   return b.project.documents[id]!.provenance.find((r) => r.from <= pos && pos < r.to)?.class;
 }
 
+/** `suggestionId:matchedKind` of the run covering the start of `text`, if it has a match. */
+export function matchAt(b: LedgerBuilder, id: string, text: string): string | undefined {
+  const pos = b.pos(id, { before: text });
+  const r = b.project.documents[id]!.provenance.find((r) => r.from <= pos && pos < r.to);
+  return r?.suggestionId === undefined ? undefined : `${r.suggestionId}:${r.matchedKind}`;
+}
+
 /** Seq of the last commit. */
 export function lastSeq(b: LedgerBuilder): number {
   return b.head.seq;

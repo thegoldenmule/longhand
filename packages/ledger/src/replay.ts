@@ -4,8 +4,10 @@
  */
 import {
   SESSION_GAP_MS,
+  type AnnotationsState,
   type Commit,
   type InputMethod,
+  type MatchedKind,
   type ProvenanceRun,
   type SuggestionState,
 } from '@longhand/schema';
@@ -115,8 +117,11 @@ export interface SpanHistory {
     /** Writing session containing the origin commit, if any. */
     writingSessionIndex: number | null;
   };
-  /** The annotation a `typed-from-suggestion` run matched (suggestion, comment, …). */
-  matched: { id: string; group: string } | null;
+  /**
+   * The annotation a `typed-from-suggestion` run matched: its id and the
+   * `ProjectState.annotations` collection it lives in (from the run's `matchedKind`).
+   */
+  matched: { id: string; group: keyof AnnotationsState } | null;
   /** Suggestions open in this document when the text was typed. */
   visibleSuggestions: Array<{
     id: string;
@@ -126,6 +131,20 @@ export interface SpanHistory {
   }>;
   moves: SpanMove[];
 }
+
+/** The `ProjectState.annotations` collection each matched kind lives in. */
+const MATCHED_GROUP: Readonly<Record<MatchedKind, keyof AnnotationsState>> = {
+  suggestion: 'suggestions',
+  insertion: 'suggestions',
+  comment: 'comments',
+  question: 'questions',
+  proposal: 'proposals',
+  'citation-flag': 'citationFlags',
+  'surfaced-source': 'surfacedSources',
+  'source-suggestion': 'sourceSuggestions',
+  discuss: 'discussions',
+  review: 'agentSessions',
+};
 
 /** The history of the unit at `pos` (see {@link SpanHistory}), or null if there is none. */
 export function spanHistory(
@@ -157,22 +176,8 @@ export function spanHistory(
     }
   }
   let matched: SpanHistory['matched'] = null;
-  if (p.suggestionId) {
-    for (const g of [
-      'suggestions',
-      'comments',
-      'questions',
-      'citationFlags',
-      'surfacedSources',
-      'sourceSuggestions',
-      'proposals',
-    ] as const) {
-      if (pub.annotations[g][p.suggestionId]) matched = { id: p.suggestionId, group: g };
-    }
-    if (!matched && pub.annotations.discussions[p.suggestionId])
-      matched = { id: p.suggestionId, group: 'discussions' };
-    if (!matched && pub.annotations.agentSessions[p.suggestionId])
-      matched = { id: p.suggestionId, group: 'agentSessions' };
+  if (p.suggestionId !== undefined && p.matchedKind !== undefined) {
+    matched = { id: p.suggestionId, group: MATCHED_GROUP[p.matchedKind] };
   }
   const visible = Object.values(pub.annotations.suggestions)
     .filter((sg) => {

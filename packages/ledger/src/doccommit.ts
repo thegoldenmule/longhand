@@ -30,7 +30,7 @@ import {
   wordBoundedIndexes,
   withinEditDistance,
 } from './matcher';
-import { asFromSuggestion, provAt, remapUnits, type IRun, type Prov } from './prov';
+import { asFromSuggestion, provAt, remapUnits, type IRun, type Match, type Prov } from './prov';
 import { pvecToArray } from './pvec';
 import type { DocInternal, Tracker, Tx } from './state';
 import { cloneTracker, mapTracker, newScratch, type Scratch, type StepFacts } from './trackers';
@@ -135,7 +135,7 @@ export function buryAll(
 
 interface Upgrade {
   positions: number[];
-  id: string;
+  match: Match;
   afterSeq: number;
 }
 
@@ -143,7 +143,7 @@ function applyUpgrades(dc: DocCommit, upgrades: readonly Upgrade[]): void {
   for (const u of upgrades) {
     const positions = [...new Set(u.positions)].filter((p) => p >= 0).sort((a, b) => a - b);
     dc.runs = remapUnits(dc.runs, positions, (p) =>
-      p.class === 'typed' && p.originSeq > u.afterSeq ? asFromSuggestion(p, u.id) : p,
+      p.class === 'typed' && p.originSeq > u.afterSeq ? asFromSuggestion(p, u.match) : p,
     );
   }
 }
@@ -170,6 +170,7 @@ function evaluateSuggestion(
 ): Outcome {
   const s = dc.scratch;
   const range = t.range;
+  const match: Match = { id: sug.id, kind: sug.kind === 'insertion' ? 'insertion' : 'suggestion' };
   const region = range
     ? normalizePositioned(textBetween(dc.node, range.from, range.to))
     : { text: '', pos: [] };
@@ -184,7 +185,7 @@ function evaluateSuggestion(
   if (s.regionTouched.has(t.id)) {
     // Edit-distance rule (matcher): typed text in the region close to an alternative.
     if (typed && alts.some((a) => withinEditDistance(region.text, a))) {
-      upgrades.push({ positions: region.pos, id: sug.id, afterSeq: sug.seq });
+      upgrades.push({ positions: region.pos, match, afterSeq: sug.seq });
     }
     // 1. Adopted: an alternative retyped (word-bounded) inside the region.
     let best: { i: number; len: number; at: number } | null = null;
@@ -201,7 +202,7 @@ function evaluateSuggestion(
       const b = best as { i: number; len: number; at: number };
       upgrades.push({
         positions: region.pos.slice(b.at, b.at + b.len),
-        id: sug.id,
+        match,
         afterSeq: sug.seq,
       });
       return { status: 'adopted', alternative: b.i };
@@ -269,7 +270,11 @@ function fourWordUpgrades(dc: DocCommit, upgrades: Upgrade[]): void {
       if (!hit) continue;
       const start = (tokens[i] as { start: number }).start;
       const end = (tokens[i + 3] as { end: number }).end;
-      upgrades.push({ positions: bt.pos.slice(start, end), id: hit.id, afterSeq: hit.seq });
+      upgrades.push({
+        positions: bt.pos.slice(start, end),
+        match: { id: hit.id, kind: hit.kind },
+        afterSeq: hit.seq,
+      });
     }
   }
 }

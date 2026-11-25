@@ -11,10 +11,11 @@
  * - Runs are sorted by `from`, non-empty and non-overlapping.
  * - Every unit is covered by exactly one run; a run covers only units, so runs
  *   never span a block boundary or a footnote token.
- * - Two runs with `a.to === b.from` and equal `class`, `originSeq`, `suggestionId`
- *   and `moves` are merged.
- * - Optional fields are omitted when empty (`suggestionId` absent unless
- *   `typed-from-suggestion`; `moves` absent unless non-empty).
+ * - Two runs with `a.to === b.from` and equal `class`, `originSeq`, `suggestionId`,
+ *   `matchedKind` and `moves` are merged.
+ * - Optional fields are omitted when empty (`suggestionId` and `matchedKind` absent
+ *   unless `typed-from-suggestion`, where both are present; `moves` absent unless
+ *   non-empty).
  * {@link checkProvenanceRuns} checks all of this.
  */
 import type { Node as PMNode } from 'prosemirror-model';
@@ -65,6 +66,33 @@ export const PROVENANCE_CLASS_INFO: Readonly<
   quoted: { label: 'Quoted from a source', countsAsOwn: 'quoted' },
 };
 
+/**
+ * What kind of annotation a `typed-from-suggestion` run matched
+ * ({@link ProvenanceRun.suggestionId}):
+ * - `suggestion` — a word-choice or rephrase suggestion (`SuggestionProposed`);
+ * - `insertion` — an insertion suggestion;
+ * - `comment`, `question` — a margin comment or a question;
+ * - `proposal` — a structural proposal (its rationale);
+ * - `citation-flag`, `surfaced-source`, `source-suggestion` — research cards (the
+ *   flag's claim, the search query and candidate titles, the rationale);
+ * - `discuss` — a discuss answer; `suggestionId` is the **thread** id;
+ * - `review` — `finish_review` text; `suggestionId` is the **feedback session** id.
+ */
+export const MatchedKindSchema = z.enum([
+  'suggestion',
+  'insertion',
+  'comment',
+  'question',
+  'proposal',
+  'citation-flag',
+  'surfaced-source',
+  'source-suggestion',
+  'discuss',
+  'review',
+]);
+/** Kind of annotation a `typed-from-suggestion` run matched. */
+export type MatchedKind = z.infer<typeof MatchedKindSchema>;
+
 /** Zod schema for a {@link ProvenanceRun}. */
 export const ProvenanceRunSchema = z.object({
   /** First position covered (inclusive). */
@@ -74,8 +102,14 @@ export const ProvenanceRunSchema = z.object({
   class: ProvenanceClassSchema,
   /** Seq of the commit whose input put this text in the ledger (the TextEdited, DocumentImported…). */
   originSeq: SeqSchema,
-  /** For `typed-from-suggestion`: the matched suggestion. */
+  /**
+   * For `typed-from-suggestion`: the id of the AI annotation the text matched. Despite
+   * the name it may name any annotation (the four-word rule matches all AI-visible
+   * text), a discuss thread or a feedback session; {@link matchedKind} says which.
+   */
   suggestionId: IdSchema.optional(),
+  /** For `typed-from-suggestion`: what `suggestionId` names. Present exactly when `suggestionId` is. */
+  matchedKind: MatchedKindSchema.optional(),
   /** Seqs of commits that relocated or duplicated this text (accepted moves, internal pastes, drops), ascending. */
   moves: z.array(SeqSchema).min(1).optional(),
 });
@@ -101,6 +135,7 @@ function sameAttrs(a: ProvenanceRun, b: ProvenanceRun): boolean {
     a.class === b.class &&
     a.originSeq === b.originSeq &&
     a.suggestionId === b.suggestionId &&
+    a.matchedKind === b.matchedKind &&
     JSON.stringify(a.moves ?? []) === JSON.stringify(b.moves ?? [])
   );
 }
@@ -114,6 +149,9 @@ export function checkProvenanceRuns(doc: PMNode, runs: readonly ProvenanceRun[])
     if (r.to <= r.from) return `run ${i} is empty`;
     if ((r.class === 'typed-from-suggestion') !== (r.suggestionId !== undefined)) {
       return `run ${i}: suggestionId is required for, and only for, typed-from-suggestion`;
+    }
+    if ((r.suggestionId !== undefined) !== (r.matchedKind !== undefined)) {
+      return `run ${i}: matchedKind is present exactly when suggestionId is`;
     }
     if (r.class === 'pasted-internal') return `run ${i}: pasted-internal is never a run class`;
     if (r.moves) {

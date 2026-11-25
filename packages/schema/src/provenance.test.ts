@@ -86,19 +86,35 @@ describe('checkProvenanceRuns', () => {
     expect(checkProvenanceRuns(doc, [run(2, 3)])).toMatch(/expected the next unit/);
   });
 
-  it('enforces suggestionId and pasted-internal rules', () => {
+  it('enforces suggestionId, matchedKind and pasted-internal rules', () => {
     const base = [run(3, 4, 'quoted'), run(4, 5), run(8, 9), run(10, 12)];
     expect(checkProvenanceRuns(doc, [run(1, 3, 'typed-from-suggestion'), ...base])).toMatch(
       /suggestionId/,
     );
     expect(
       checkProvenanceRuns(doc, [
-        run(1, 3, 'typed-from-suggestion', 2, { suggestionId: 's1' }),
+        run(1, 3, 'typed-from-suggestion', 2, { suggestionId: 's1', matchedKind: 'comment' }),
         ...base,
       ]),
     ).toBeNull();
     expect(
-      checkProvenanceRuns(doc, [run(1, 3, 'typed', 2, { suggestionId: 's1' }), ...base]),
+      checkProvenanceRuns(doc, [
+        run(1, 3, 'typed-from-suggestion', 2, { suggestionId: 's1' }),
+        ...base,
+      ]),
+    ).toMatch(/matchedKind/);
+    expect(
+      checkProvenanceRuns(doc, [
+        run(1, 2, 'typed-from-suggestion', 2, { suggestionId: 's1', matchedKind: 'comment' }),
+        run(2, 3, 'typed-from-suggestion', 2, { suggestionId: 's1', matchedKind: 'discuss' }),
+        ...base,
+      ]),
+    ).toBeNull();
+    expect(
+      checkProvenanceRuns(doc, [
+        run(1, 3, 'typed', 2, { suggestionId: 's1', matchedKind: 'suggestion' }),
+        ...base,
+      ]),
     ).toMatch(/suggestionId/);
     expect(checkProvenanceRuns(doc, [run(1, 3, 'pasted-internal'), ...base])).toMatch(
       /never a run class/,
