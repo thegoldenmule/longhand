@@ -47,6 +47,7 @@ Integration note (provenance-ui): the span inspector needs the folded `LedgerSta
 ## Applied contract changes (core fixes, after phase 4)
 
 - Ledger exports the steps the fold applies per commit: `validateDraft` success adds `derivedSteps: DerivedSteps` (`Record<documentId, StepJSON[]>`; a `TextEdited`'s own steps, the fold-derived move/cut/split/merge steps incl. joining whitespace for `ProposalAccepted`, `{}` otherwise), plus `derivedStepsFor(stateBefore, commit)` and `applyCommitWithSteps(state, commit)` for replay and `fetchSince` from history. Applying them gives exactly the fold's document, and their count is exactly the version delta (tested on every fixture commit, every `proposals` accept, and random proposals). Annotations' `FoldingTransport` sends them (the padded diff step is gone); the editor's sync needed no change. Server: `RemoteUpdate.steps = v.derivedSteps[documentId]`. (annotations → ledger, server)
+- `@longhand/ledger/fixtures` loads under jsdom: paths come from `node:url` (`fileURLToPath`/`pathToFileURL`), never the global `URL`; new `fixturePath(name)`. Annotations keeps importing the JSON in `fixtureData.ts` (its browser demo shares the module) and a jsdom test checks it equals `loadFixture`. (annotations)
 
 ## Pending contract changes
 
@@ -57,7 +58,6 @@ Integration note (provenance-ui): the span inspector needs the folded `LedgerSta
 
 - Repo has no root LICENSE; verifier package declares MIT. Needs the owner's decision. (report/verifier)
 
-- Ledger fixtures: `loadFixture` breaks under jsdom (URL); use `fileURLToPath`. (annotations)
 - Agent progress events should carry `feedbackSessionId`. (annotations → agent)
 
 ## Notes

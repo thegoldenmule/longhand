@@ -1,8 +1,8 @@
 /**
  * The golden fixtures this package tests against, imported as JSON so the same
  * module works in Vitest (jsdom) and in the browser demo. (`loadFixture` from
- * `@longhand/ledger/fixtures` reads from disk with a `URL`, which jsdom's `URL`
- * breaks.)
+ * `@longhand/ledger/fixtures` works under jsdom too, but reads from disk, so the
+ * demo cannot use it; `fixtureData.test.ts` checks the two agree.)
  */
 import type { Commit, ProjectState } from '@longhand/schema';
 import discuss from '../../ledger/fixtures/discuss.json';

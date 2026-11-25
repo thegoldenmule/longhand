@@ -149,7 +149,7 @@ Import `@longhand/annotations/styles.css` once. Everything is themed with `--lh-
 
 ## Tests
 
-- **Vitest (jsdom), 55 tests.**
+- **Vitest (jsdom), 56 tests.**
   - Cards for every annotation in the `feedback-session`, `suggestions`, `proposals`, `discuss` and `research` fixtures, both final and after their first review. Every card renders with the right kind, phase, outcome and AI-surfaced label.
   - Review views: running, waiting, finished and failed.
   - The request form emits schema-valid `FeedbackRequested` drafts for each scope, lens set and intensity.
@@ -183,8 +183,7 @@ Import `@longhand/annotations/styles.css` once. Everything is themed with `--lh-
 
 None block this lane. Each item below is worked around in the test-support code only.
 
-1. **`@longhand/ledger/fixtures`: `loadFixture` fails under Vitest's jsdom environment.** It builds a `URL` that jsdom replaces, so `readFileSync` rejects it. Using `node:url`'s `URL`, or `fileURLToPath`, would fix it. Until then, `test-support/fixtureData.ts` imports the fixture JSON directly, and the browser demo uses the same module.
-2. **`@longhand/agent`: tag `model` progress events with their session.** `SessionProgressEvent`'s `model` events have no `feedbackSessionId`. Either the relay adds it, or the host passes it to `pushProgress(event, sessionId)` as the demo does.
+1. **`@longhand/agent`: tag `model` progress events with their session.** `SessionProgressEvent`'s `model` events have no `feedbackSessionId`. Either the relay adds it, or the host passes it to `pushProgress(event, sessionId)` as the demo does.
 
 ## Known gaps
 

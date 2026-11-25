@@ -71,7 +71,7 @@ Truncation (dropping the last commits) is invisible to the chain alone; witnesse
 
 ## Golden fixtures
 
-`import { loadFixture, FIXTURE_NAMES, loadTamperedFixture, TAMPERED_FIXTURE_NAMES } from '@longhand/ledger/fixtures'` (Node; or import the JSON files directly).
+`import { loadFixture, FIXTURE_NAMES, loadTamperedFixture, TAMPERED_FIXTURE_NAMES } from '@longhand/ledger/fixtures'` (reads from disk, so Node only, but in any Vitest environment including jsdom: paths come from `node:url`'s `fileURLToPath`, never the global `URL`; `fixturePath(name)` and `fixtureUrl(name)` give a file's location). In a browser, import the JSON files directly.
 
 A fixture file has `commits`, `witnesses` (signed with the test key in `fixtures/witness-test-key.json`, **test only**), `publicKeyPem`, `keyId` and `expected`: `headSeq`, `headHash`, the full `state` (`ProjectState`: document JSON, provenance runs, annotations…), per document `text`, `words` (attribution), `wordsByClass`, `charactersByClass`, plus `projectWords`, `projectCharacters` and `issues` (always empty).
 
