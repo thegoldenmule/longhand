@@ -1,0 +1,290 @@
+{
+  "project": {
+    "reportVersion": 1,
+    "scope": { "kind": "project" },
+    "throughSeq": 12,
+    "headHash": "cba77815ed968dc1298cc5bc0e8a4f76ce4ec3426882966e55c457ddc71942e7",
+    "words": {
+      "total": 15,
+      "byClass": {
+        "typed": 12,
+        "typed-from-suggestion": 0,
+        "pasted-external": 3,
+        "pasted-internal": 0,
+        "imported": 0,
+        "quoted": 0
+      }
+    },
+    "characters": {
+      "total": 75,
+      "byClass": {
+        "typed": 55,
+        "typed-from-suggestion": 0,
+        "pasted-external": 20,
+        "pasted-internal": 0,
+        "imported": 0,
+        "quoted": 0
+      }
+    },
+    "activeWritingMs": 8185,
+    "sessions": {
+      "count": 1,
+      "days": 1,
+      "firstAt": "2026-11-02T09:00:00.800Z",
+      "lastAt": "2026-11-02T09:00:25.385Z",
+      "list": [
+        {
+          "startTime": "2026-11-02T09:00:00.800Z",
+          "endTime": "2026-11-02T09:00:25.385Z",
+          "activeMs": 8185,
+          "charactersInserted": 146,
+          "startSeq": 3,
+          "endSeq": 12,
+          "commits": 9,
+          "documentIds": ["doc-u"]
+        }
+      ]
+    },
+    "ai": {
+      "feedbackRequests": 0,
+      "sessionsFinished": 0,
+      "sessionsFailed": 0,
+      "comments": 0,
+      "questions": 0,
+      "citationFlags": 0,
+      "surfacedSources": 0,
+      "sourceSuggestions": 0,
+      "discussThreads": 0,
+      "sessions": []
+    },
+    "suggestions": {
+      "total": 0,
+      "byKind": { "word-choice": 0, "insertion": 0, "rephrase": 0 },
+      "byOutcome": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 }
+    },
+    "proposals": {
+      "total": 0,
+      "byKind": {
+        "move": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+        "cut": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+        "split": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+        "merge": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 }
+      }
+    },
+    "pastes": {
+      "external": { "count": 1, "characters": 32, "words": 6 },
+      "internal": { "count": 0, "characters": 0, "words": 0 },
+      "events": [
+        {
+          "seq": 4,
+          "time": "2026-11-02T09:00:06.997Z",
+          "documentId": "doc-u",
+          "origin": "external",
+          "via": "clipboard",
+          "characters": 32,
+          "words": 6,
+          "id": "paste-0004",
+          "insertedSeq": 5,
+          "verifiedInternal": false
+        }
+      ]
+    },
+    "imports": { "documents": 0, "words": 0 },
+    "unwitnessed": [],
+    "provesTable": {
+      "proves": [
+        "The text came in through the editor's input channel, at these times and this cadence",
+        "Exactly which AI suggestions were visible, and which were retyped or used",
+        "The history hasn't been changed since the server witnessed it"
+      ],
+      "doesNotProve": [
+        "That the account holder was the one typing",
+        "That nothing was transcribed from another screen or another AI",
+        "That a modified client didn't misreport pastes as typing (the keystroke timeline makes this costly, not impossible)"
+      ]
+    },
+    "extensions": {
+      "unwitnessedThresholdMs": 60000,
+      "projectTitle": "Undo",
+      "documents": [{ "id": "doc-u", "title": "Draft", "kind": "manuscript", "words": 15 }],
+      "assisted": {
+        "annotations": 0,
+        "byKind": {
+          "word-choice": 0,
+          "rephrase": 0,
+          "insertion": 0,
+          "comment": 0,
+          "question": 0,
+          "proposal": 0,
+          "citation-flag": 0,
+          "surfaced-source": 0,
+          "source-suggestion": 0,
+          "discuss": 0,
+          "review": 0
+        }
+      },
+      "quoted": { "sources": 0 },
+      "suggestions": {
+        "byKind": {
+          "word-choice": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 },
+          "insertion": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 },
+          "rephrase": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 }
+        }
+      },
+      "proposals": {
+        "moves": {
+          "sentence": { "proposed": 0, "accepted": 0 },
+          "paragraph": { "proposed": 0, "accepted": 0 },
+          "section": { "proposed": 0, "accepted": 0 }
+        }
+      },
+      "imports": []
+    },
+    "disclosure": "Written in 1 session. 15 words: 80.0% typed directly; 20.0% pasted (1 external paste). No AI feedback was requested in Longhand."
+  },
+  "documents": {
+    "doc-u": {
+      "reportVersion": 1,
+      "scope": { "kind": "document", "documentId": "doc-u" },
+      "throughSeq": 12,
+      "headHash": "cba77815ed968dc1298cc5bc0e8a4f76ce4ec3426882966e55c457ddc71942e7",
+      "words": {
+        "total": 15,
+        "byClass": {
+          "typed": 12,
+          "typed-from-suggestion": 0,
+          "pasted-external": 3,
+          "pasted-internal": 0,
+          "imported": 0,
+          "quoted": 0
+        }
+      },
+      "characters": {
+        "total": 75,
+        "byClass": {
+          "typed": 55,
+          "typed-from-suggestion": 0,
+          "pasted-external": 20,
+          "pasted-internal": 0,
+          "imported": 0,
+          "quoted": 0
+        }
+      },
+      "activeWritingMs": 8185,
+      "sessions": {
+        "count": 1,
+        "days": 1,
+        "firstAt": "2026-11-02T09:00:00.800Z",
+        "lastAt": "2026-11-02T09:00:25.385Z",
+        "list": [
+          {
+            "startTime": "2026-11-02T09:00:00.800Z",
+            "endTime": "2026-11-02T09:00:25.385Z",
+            "activeMs": 8185,
+            "charactersInserted": 146,
+            "startSeq": 3,
+            "endSeq": 12,
+            "commits": 9,
+            "documentIds": ["doc-u"]
+          }
+        ]
+      },
+      "ai": {
+        "feedbackRequests": 0,
+        "sessionsFinished": 0,
+        "sessionsFailed": 0,
+        "comments": 0,
+        "questions": 0,
+        "citationFlags": 0,
+        "surfacedSources": 0,
+        "sourceSuggestions": 0,
+        "discussThreads": 0,
+        "sessions": []
+      },
+      "suggestions": {
+        "total": 0,
+        "byKind": { "word-choice": 0, "insertion": 0, "rephrase": 0 },
+        "byOutcome": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 }
+      },
+      "proposals": {
+        "total": 0,
+        "byKind": {
+          "move": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+          "cut": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+          "split": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+          "merge": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 }
+        }
+      },
+      "pastes": {
+        "external": { "count": 1, "characters": 32, "words": 6 },
+        "internal": { "count": 0, "characters": 0, "words": 0 },
+        "events": [
+          {
+            "seq": 4,
+            "time": "2026-11-02T09:00:06.997Z",
+            "documentId": "doc-u",
+            "origin": "external",
+            "via": "clipboard",
+            "characters": 32,
+            "words": 6,
+            "id": "paste-0004",
+            "insertedSeq": 5,
+            "verifiedInternal": false
+          }
+        ]
+      },
+      "imports": { "documents": 0, "words": 0 },
+      "unwitnessed": [],
+      "provesTable": {
+        "proves": [
+          "The text came in through the editor's input channel, at these times and this cadence",
+          "Exactly which AI suggestions were visible, and which were retyped or used",
+          "The history hasn't been changed since the server witnessed it"
+        ],
+        "doesNotProve": [
+          "That the account holder was the one typing",
+          "That nothing was transcribed from another screen or another AI",
+          "That a modified client didn't misreport pastes as typing (the keystroke timeline makes this costly, not impossible)"
+        ]
+      },
+      "extensions": {
+        "unwitnessedThresholdMs": 60000,
+        "projectTitle": "Undo",
+        "documents": [{ "id": "doc-u", "title": "Draft", "kind": "manuscript", "words": 15 }],
+        "assisted": {
+          "annotations": 0,
+          "byKind": {
+            "word-choice": 0,
+            "rephrase": 0,
+            "insertion": 0,
+            "comment": 0,
+            "question": 0,
+            "proposal": 0,
+            "citation-flag": 0,
+            "surfaced-source": 0,
+            "source-suggestion": 0,
+            "discuss": 0,
+            "review": 0
+          }
+        },
+        "quoted": { "sources": 0 },
+        "suggestions": {
+          "byKind": {
+            "word-choice": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 },
+            "insertion": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 },
+            "rephrase": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 }
+          }
+        },
+        "proposals": {
+          "moves": {
+            "sentence": { "proposed": 0, "accepted": 0 },
+            "paragraph": { "proposed": 0, "accepted": 0 },
+            "section": { "proposed": 0, "accepted": 0 }
+          }
+        },
+        "imports": []
+      },
+      "disclosure": "Written in 1 session. 15 words: 80.0% typed directly; 20.0% pasted (1 external paste). No AI feedback was requested in Longhand."
+    }
+  }
+}

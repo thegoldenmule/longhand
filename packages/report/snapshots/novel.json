@@ -1,0 +1,809 @@
+{
+  "project": {
+    "reportVersion": 1,
+    "scope": { "kind": "project" },
+    "throughSeq": 27,
+    "headHash": "5ce20208be1c67674ef1ae93d726d587cdae480a739a3d7f86f3c08a2a93b7bf",
+    "words": {
+      "total": 54,
+      "byClass": {
+        "typed": 54,
+        "typed-from-suggestion": 0,
+        "pasted-external": 0,
+        "pasted-internal": 0,
+        "imported": 0,
+        "quoted": 0
+      }
+    },
+    "characters": {
+      "total": 287,
+      "byClass": {
+        "typed": 287,
+        "typed-from-suggestion": 0,
+        "pasted-external": 0,
+        "pasted-internal": 0,
+        "imported": 0,
+        "quoted": 0
+      }
+    },
+    "activeWritingMs": 42078,
+    "sessions": {
+      "count": 3,
+      "days": 2,
+      "firstAt": "2026-11-05T20:00:02.400Z",
+      "lastAt": "2026-11-06T22:46:13.678Z",
+      "list": [
+        {
+          "startTime": "2026-11-05T20:00:02.400Z",
+          "endTime": "2026-11-05T20:00:37.104Z",
+          "activeMs": 24704,
+          "charactersInserted": 187,
+          "startSeq": 7,
+          "endSeq": 12,
+          "commits": 6,
+          "documentIds": ["note-style", "doc-1", "doc-2"]
+        },
+        {
+          "startTime": "2026-11-05T20:45:39.104Z",
+          "endTime": "2026-11-05T20:46:01.093Z",
+          "activeMs": 13189,
+          "charactersInserted": 126,
+          "startSeq": 13,
+          "endSeq": 19,
+          "commits": 5,
+          "documentIds": ["doc-3", "doc-1"]
+        },
+        {
+          "startTime": "2026-11-06T22:46:09.493Z",
+          "endTime": "2026-11-06T22:46:13.678Z",
+          "activeMs": 4185,
+          "charactersInserted": 32,
+          "startSeq": 25,
+          "endSeq": 25,
+          "commits": 1,
+          "documentIds": ["doc-2"]
+        }
+      ]
+    },
+    "ai": {
+      "feedbackRequests": 1,
+      "sessionsFinished": 1,
+      "sessionsFailed": 0,
+      "comments": 1,
+      "questions": 0,
+      "citationFlags": 0,
+      "surfacedSources": 0,
+      "sourceSuggestions": 0,
+      "discussThreads": 0,
+      "sessions": [
+        {
+          "id": "fs-n",
+          "kind": "review",
+          "model": "opus",
+          "systemPromptVersion": null,
+          "status": "finished",
+          "startedAt": "2026-11-05T20:46:05.043Z",
+          "startedSeq": 21,
+          "requestId": "req-n",
+          "threadId": null,
+          "lenses": ["structure", "pacing"],
+          "intensity": "light",
+          "scope": "project",
+          "annotations": 2,
+          "failureReason": null
+        }
+      ]
+    },
+    "suggestions": {
+      "total": 1,
+      "byKind": { "word-choice": 1, "insertion": 0, "rephrase": 0 },
+      "byOutcome": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 1 }
+    },
+    "proposals": {
+      "total": 0,
+      "byKind": {
+        "move": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+        "cut": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+        "split": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+        "merge": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 }
+      }
+    },
+    "pastes": {
+      "external": { "count": 0, "characters": 0, "words": 0 },
+      "internal": { "count": 1, "characters": 32, "words": 6 },
+      "events": [
+        {
+          "seq": 18,
+          "time": "2026-11-05T20:46:00.693Z",
+          "documentId": "doc-3",
+          "origin": "internal",
+          "via": "clipboard",
+          "characters": 32,
+          "words": 6,
+          "id": "paste-0019",
+          "insertedSeq": 19,
+          "verifiedInternal": true
+        }
+      ]
+    },
+    "imports": { "documents": 0, "words": 0 },
+    "unwitnessed": [],
+    "provesTable": {
+      "proves": [
+        "The text came in through the editor's input channel, at these times and this cadence",
+        "Exactly which AI suggestions were visible, and which were retyped or used",
+        "The history hasn't been changed since the server witnessed it"
+      ],
+      "doesNotProve": [
+        "That the account holder was the one typing",
+        "That nothing was transcribed from another screen or another AI",
+        "That a modified client didn't misreport pastes as typing (the keystroke timeline makes this costly, not impossible)"
+      ]
+    },
+    "extensions": {
+      "unwitnessedThresholdMs": 60000,
+      "projectTitle": "Salt and Iron",
+      "documents": [
+        { "id": "doc-1", "title": "The Harbour", "kind": "manuscript", "words": 20 },
+        { "id": "doc-2", "title": "The Foundry", "kind": "manuscript", "words": 16 },
+        { "id": "doc-3", "title": "The Storm", "kind": "manuscript", "words": 18 }
+      ],
+      "assisted": {
+        "annotations": 0,
+        "byKind": {
+          "word-choice": 0,
+          "rephrase": 0,
+          "insertion": 0,
+          "comment": 0,
+          "question": 0,
+          "proposal": 0,
+          "citation-flag": 0,
+          "surfaced-source": 0,
+          "source-suggestion": 0,
+          "discuss": 0,
+          "review": 0
+        }
+      },
+      "quoted": { "sources": 0 },
+      "suggestions": {
+        "byKind": {
+          "word-choice": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 1 },
+          "insertion": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 },
+          "rephrase": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 }
+        }
+      },
+      "proposals": {
+        "moves": {
+          "sentence": { "proposed": 0, "accepted": 0 },
+          "paragraph": { "proposed": 0, "accepted": 0 },
+          "section": { "proposed": 0, "accepted": 0 }
+        }
+      },
+      "imports": []
+    },
+    "disclosure": "Written in 3 sessions over 2 days. 54 words: 100% typed directly. AI feedback was requested once; the editor left 1 comment. AI made 1 wording suggestion: 1 dismissed."
+  },
+  "documents": {
+    "doc-1": {
+      "reportVersion": 1,
+      "scope": { "kind": "document", "documentId": "doc-1" },
+      "throughSeq": 27,
+      "headHash": "5ce20208be1c67674ef1ae93d726d587cdae480a739a3d7f86f3c08a2a93b7bf",
+      "words": {
+        "total": 20,
+        "byClass": {
+          "typed": 20,
+          "typed-from-suggestion": 0,
+          "pasted-external": 0,
+          "pasted-internal": 0,
+          "imported": 0,
+          "quoted": 0
+        }
+      },
+      "characters": {
+        "total": 107,
+        "byClass": {
+          "typed": 107,
+          "typed-from-suggestion": 0,
+          "pasted-external": 0,
+          "pasted-internal": 0,
+          "imported": 0,
+          "quoted": 0
+        }
+      },
+      "activeWritingMs": 14893,
+      "sessions": {
+        "count": 2,
+        "days": 1,
+        "firstAt": "2026-11-05T20:00:13.681Z",
+        "lastAt": "2026-11-05T20:45:56.293Z",
+        "list": [
+          {
+            "startTime": "2026-11-05T20:00:13.681Z",
+            "endTime": "2026-11-05T20:00:25.314Z",
+            "activeMs": 9633,
+            "charactersInserted": 70,
+            "startSeq": 9,
+            "endSeq": 10,
+            "commits": 2,
+            "documentIds": ["doc-1"]
+          },
+          {
+            "startTime": "2026-11-05T20:45:51.033Z",
+            "endTime": "2026-11-05T20:45:56.293Z",
+            "activeMs": 5260,
+            "charactersInserted": 37,
+            "startSeq": 15,
+            "endSeq": 15,
+            "commits": 1,
+            "documentIds": ["doc-1"]
+          }
+        ]
+      },
+      "ai": {
+        "feedbackRequests": 1,
+        "sessionsFinished": 1,
+        "sessionsFailed": 0,
+        "comments": 0,
+        "questions": 0,
+        "citationFlags": 0,
+        "surfacedSources": 0,
+        "sourceSuggestions": 0,
+        "discussThreads": 0,
+        "sessions": [
+          {
+            "id": "fs-n",
+            "kind": "review",
+            "model": "opus",
+            "systemPromptVersion": null,
+            "status": "finished",
+            "startedAt": "2026-11-05T20:46:05.043Z",
+            "startedSeq": 21,
+            "requestId": "req-n",
+            "threadId": null,
+            "lenses": ["structure", "pacing"],
+            "intensity": "light",
+            "scope": "project",
+            "annotations": 2,
+            "failureReason": null
+          }
+        ]
+      },
+      "suggestions": {
+        "total": 1,
+        "byKind": { "word-choice": 1, "insertion": 0, "rephrase": 0 },
+        "byOutcome": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 1 }
+      },
+      "proposals": {
+        "total": 0,
+        "byKind": {
+          "move": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+          "cut": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+          "split": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+          "merge": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 }
+        }
+      },
+      "pastes": {
+        "external": { "count": 0, "characters": 0, "words": 0 },
+        "internal": { "count": 0, "characters": 0, "words": 0 },
+        "events": []
+      },
+      "imports": { "documents": 0, "words": 0 },
+      "unwitnessed": [],
+      "provesTable": {
+        "proves": [
+          "The text came in through the editor's input channel, at these times and this cadence",
+          "Exactly which AI suggestions were visible, and which were retyped or used",
+          "The history hasn't been changed since the server witnessed it"
+        ],
+        "doesNotProve": [
+          "That the account holder was the one typing",
+          "That nothing was transcribed from another screen or another AI",
+          "That a modified client didn't misreport pastes as typing (the keystroke timeline makes this costly, not impossible)"
+        ]
+      },
+      "extensions": {
+        "unwitnessedThresholdMs": 60000,
+        "projectTitle": "Salt and Iron",
+        "documents": [{ "id": "doc-1", "title": "The Harbour", "kind": "manuscript", "words": 20 }],
+        "assisted": {
+          "annotations": 0,
+          "byKind": {
+            "word-choice": 0,
+            "rephrase": 0,
+            "insertion": 0,
+            "comment": 0,
+            "question": 0,
+            "proposal": 0,
+            "citation-flag": 0,
+            "surfaced-source": 0,
+            "source-suggestion": 0,
+            "discuss": 0,
+            "review": 0
+          }
+        },
+        "quoted": { "sources": 0 },
+        "suggestions": {
+          "byKind": {
+            "word-choice": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 1 },
+            "insertion": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 },
+            "rephrase": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 }
+          }
+        },
+        "proposals": {
+          "moves": {
+            "sentence": { "proposed": 0, "accepted": 0 },
+            "paragraph": { "proposed": 0, "accepted": 0 },
+            "section": { "proposed": 0, "accepted": 0 }
+          }
+        },
+        "imports": []
+      },
+      "disclosure": "Written in 2 sessions on 1 day. 20 words: 100% typed directly. AI feedback was requested once. AI made 1 wording suggestion: 1 dismissed."
+    },
+    "doc-2": {
+      "reportVersion": 1,
+      "scope": { "kind": "document", "documentId": "doc-2" },
+      "throughSeq": 27,
+      "headHash": "5ce20208be1c67674ef1ae93d726d587cdae480a739a3d7f86f3c08a2a93b7bf",
+      "words": {
+        "total": 16,
+        "byClass": {
+          "typed": 16,
+          "typed-from-suggestion": 0,
+          "pasted-external": 0,
+          "pasted-internal": 0,
+          "imported": 0,
+          "quoted": 0
+        }
+      },
+      "characters": {
+        "total": 91,
+        "byClass": {
+          "typed": 91,
+          "typed-from-suggestion": 0,
+          "pasted-external": 0,
+          "pasted-internal": 0,
+          "imported": 0,
+          "quoted": 0
+        }
+      },
+      "activeWritingMs": 11975,
+      "sessions": {
+        "count": 2,
+        "days": 2,
+        "firstAt": "2026-11-05T20:00:27.314Z",
+        "lastAt": "2026-11-06T22:46:13.678Z",
+        "list": [
+          {
+            "startTime": "2026-11-05T20:00:27.314Z",
+            "endTime": "2026-11-05T20:00:37.104Z",
+            "activeMs": 7790,
+            "charactersInserted": 59,
+            "startSeq": 11,
+            "endSeq": 12,
+            "commits": 2,
+            "documentIds": ["doc-2"]
+          },
+          {
+            "startTime": "2026-11-06T22:46:09.493Z",
+            "endTime": "2026-11-06T22:46:13.678Z",
+            "activeMs": 4185,
+            "charactersInserted": 32,
+            "startSeq": 25,
+            "endSeq": 25,
+            "commits": 1,
+            "documentIds": ["doc-2"]
+          }
+        ]
+      },
+      "ai": {
+        "feedbackRequests": 1,
+        "sessionsFinished": 1,
+        "sessionsFailed": 0,
+        "comments": 0,
+        "questions": 0,
+        "citationFlags": 0,
+        "surfacedSources": 0,
+        "sourceSuggestions": 0,
+        "discussThreads": 0,
+        "sessions": [
+          {
+            "id": "fs-n",
+            "kind": "review",
+            "model": "opus",
+            "systemPromptVersion": null,
+            "status": "finished",
+            "startedAt": "2026-11-05T20:46:05.043Z",
+            "startedSeq": 21,
+            "requestId": "req-n",
+            "threadId": null,
+            "lenses": ["structure", "pacing"],
+            "intensity": "light",
+            "scope": "project",
+            "annotations": 2,
+            "failureReason": null
+          }
+        ]
+      },
+      "suggestions": {
+        "total": 0,
+        "byKind": { "word-choice": 0, "insertion": 0, "rephrase": 0 },
+        "byOutcome": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 }
+      },
+      "proposals": {
+        "total": 0,
+        "byKind": {
+          "move": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+          "cut": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+          "split": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+          "merge": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 }
+        }
+      },
+      "pastes": {
+        "external": { "count": 0, "characters": 0, "words": 0 },
+        "internal": { "count": 0, "characters": 0, "words": 0 },
+        "events": []
+      },
+      "imports": { "documents": 0, "words": 0 },
+      "unwitnessed": [],
+      "provesTable": {
+        "proves": [
+          "The text came in through the editor's input channel, at these times and this cadence",
+          "Exactly which AI suggestions were visible, and which were retyped or used",
+          "The history hasn't been changed since the server witnessed it"
+        ],
+        "doesNotProve": [
+          "That the account holder was the one typing",
+          "That nothing was transcribed from another screen or another AI",
+          "That a modified client didn't misreport pastes as typing (the keystroke timeline makes this costly, not impossible)"
+        ]
+      },
+      "extensions": {
+        "unwitnessedThresholdMs": 60000,
+        "projectTitle": "Salt and Iron",
+        "documents": [{ "id": "doc-2", "title": "The Foundry", "kind": "manuscript", "words": 16 }],
+        "assisted": {
+          "annotations": 0,
+          "byKind": {
+            "word-choice": 0,
+            "rephrase": 0,
+            "insertion": 0,
+            "comment": 0,
+            "question": 0,
+            "proposal": 0,
+            "citation-flag": 0,
+            "surfaced-source": 0,
+            "source-suggestion": 0,
+            "discuss": 0,
+            "review": 0
+          }
+        },
+        "quoted": { "sources": 0 },
+        "suggestions": {
+          "byKind": {
+            "word-choice": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 },
+            "insertion": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 },
+            "rephrase": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 }
+          }
+        },
+        "proposals": {
+          "moves": {
+            "sentence": { "proposed": 0, "accepted": 0 },
+            "paragraph": { "proposed": 0, "accepted": 0 },
+            "section": { "proposed": 0, "accepted": 0 }
+          }
+        },
+        "imports": []
+      },
+      "disclosure": "Written in 2 sessions over 2 days. 16 words: 100% typed directly. AI feedback was requested once."
+    },
+    "doc-3": {
+      "reportVersion": 1,
+      "scope": { "kind": "document", "documentId": "doc-3" },
+      "throughSeq": 27,
+      "headHash": "5ce20208be1c67674ef1ae93d726d587cdae480a739a3d7f86f3c08a2a93b7bf",
+      "words": {
+        "total": 18,
+        "byClass": {
+          "typed": 18,
+          "typed-from-suggestion": 0,
+          "pasted-external": 0,
+          "pasted-internal": 0,
+          "imported": 0,
+          "quoted": 0
+        }
+      },
+      "characters": {
+        "total": 89,
+        "byClass": {
+          "typed": 89,
+          "typed-from-suggestion": 0,
+          "pasted-external": 0,
+          "pasted-internal": 0,
+          "imported": 0,
+          "quoted": 0
+        }
+      },
+      "activeWritingMs": 7929,
+      "sessions": {
+        "count": 1,
+        "days": 1,
+        "firstAt": "2026-11-05T20:45:39.104Z",
+        "lastAt": "2026-11-05T20:46:01.093Z",
+        "list": [
+          {
+            "startTime": "2026-11-05T20:45:39.104Z",
+            "endTime": "2026-11-05T20:46:01.093Z",
+            "activeMs": 7929,
+            "charactersInserted": 89,
+            "startSeq": 13,
+            "endSeq": 19,
+            "commits": 4,
+            "documentIds": ["doc-3"]
+          }
+        ]
+      },
+      "ai": {
+        "feedbackRequests": 1,
+        "sessionsFinished": 1,
+        "sessionsFailed": 0,
+        "comments": 1,
+        "questions": 0,
+        "citationFlags": 0,
+        "surfacedSources": 0,
+        "sourceSuggestions": 0,
+        "discussThreads": 0,
+        "sessions": [
+          {
+            "id": "fs-n",
+            "kind": "review",
+            "model": "opus",
+            "systemPromptVersion": null,
+            "status": "finished",
+            "startedAt": "2026-11-05T20:46:05.043Z",
+            "startedSeq": 21,
+            "requestId": "req-n",
+            "threadId": null,
+            "lenses": ["structure", "pacing"],
+            "intensity": "light",
+            "scope": "project",
+            "annotations": 2,
+            "failureReason": null
+          }
+        ]
+      },
+      "suggestions": {
+        "total": 0,
+        "byKind": { "word-choice": 0, "insertion": 0, "rephrase": 0 },
+        "byOutcome": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 }
+      },
+      "proposals": {
+        "total": 0,
+        "byKind": {
+          "move": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+          "cut": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+          "split": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+          "merge": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 }
+        }
+      },
+      "pastes": {
+        "external": { "count": 0, "characters": 0, "words": 0 },
+        "internal": { "count": 1, "characters": 32, "words": 6 },
+        "events": [
+          {
+            "seq": 18,
+            "time": "2026-11-05T20:46:00.693Z",
+            "documentId": "doc-3",
+            "origin": "internal",
+            "via": "clipboard",
+            "characters": 32,
+            "words": 6,
+            "id": "paste-0019",
+            "insertedSeq": 19,
+            "verifiedInternal": true
+          }
+        ]
+      },
+      "imports": { "documents": 0, "words": 0 },
+      "unwitnessed": [],
+      "provesTable": {
+        "proves": [
+          "The text came in through the editor's input channel, at these times and this cadence",
+          "Exactly which AI suggestions were visible, and which were retyped or used",
+          "The history hasn't been changed since the server witnessed it"
+        ],
+        "doesNotProve": [
+          "That the account holder was the one typing",
+          "That nothing was transcribed from another screen or another AI",
+          "That a modified client didn't misreport pastes as typing (the keystroke timeline makes this costly, not impossible)"
+        ]
+      },
+      "extensions": {
+        "unwitnessedThresholdMs": 60000,
+        "projectTitle": "Salt and Iron",
+        "documents": [{ "id": "doc-3", "title": "The Storm", "kind": "manuscript", "words": 18 }],
+        "assisted": {
+          "annotations": 0,
+          "byKind": {
+            "word-choice": 0,
+            "rephrase": 0,
+            "insertion": 0,
+            "comment": 0,
+            "question": 0,
+            "proposal": 0,
+            "citation-flag": 0,
+            "surfaced-source": 0,
+            "source-suggestion": 0,
+            "discuss": 0,
+            "review": 0
+          }
+        },
+        "quoted": { "sources": 0 },
+        "suggestions": {
+          "byKind": {
+            "word-choice": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 },
+            "insertion": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 },
+            "rephrase": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 }
+          }
+        },
+        "proposals": {
+          "moves": {
+            "sentence": { "proposed": 0, "accepted": 0 },
+            "paragraph": { "proposed": 0, "accepted": 0 },
+            "section": { "proposed": 0, "accepted": 0 }
+          }
+        },
+        "imports": []
+      },
+      "disclosure": "Written in 1 session. 18 words: 100% typed directly. AI feedback was requested once; the editor left 1 comment."
+    },
+    "note-style": {
+      "reportVersion": 1,
+      "scope": { "kind": "document", "documentId": "note-style" },
+      "throughSeq": 27,
+      "headHash": "5ce20208be1c67674ef1ae93d726d587cdae480a739a3d7f86f3c08a2a93b7bf",
+      "words": {
+        "total": 10,
+        "byClass": {
+          "typed": 10,
+          "typed-from-suggestion": 0,
+          "pasted-external": 0,
+          "pasted-internal": 0,
+          "imported": 0,
+          "quoted": 0
+        }
+      },
+      "characters": {
+        "total": 58,
+        "byClass": {
+          "typed": 58,
+          "typed-from-suggestion": 0,
+          "pasted-external": 0,
+          "pasted-internal": 0,
+          "imported": 0,
+          "quoted": 0
+        }
+      },
+      "activeWritingMs": 7281,
+      "sessions": {
+        "count": 1,
+        "days": 1,
+        "firstAt": "2026-11-05T20:00:02.400Z",
+        "lastAt": "2026-11-05T20:00:11.681Z",
+        "list": [
+          {
+            "startTime": "2026-11-05T20:00:02.400Z",
+            "endTime": "2026-11-05T20:00:11.681Z",
+            "activeMs": 7281,
+            "charactersInserted": 58,
+            "startSeq": 7,
+            "endSeq": 8,
+            "commits": 2,
+            "documentIds": ["note-style"]
+          }
+        ]
+      },
+      "ai": {
+        "feedbackRequests": 1,
+        "sessionsFinished": 1,
+        "sessionsFailed": 0,
+        "comments": 0,
+        "questions": 0,
+        "citationFlags": 0,
+        "surfacedSources": 0,
+        "sourceSuggestions": 0,
+        "discussThreads": 0,
+        "sessions": [
+          {
+            "id": "fs-n",
+            "kind": "review",
+            "model": "opus",
+            "systemPromptVersion": null,
+            "status": "finished",
+            "startedAt": "2026-11-05T20:46:05.043Z",
+            "startedSeq": 21,
+            "requestId": "req-n",
+            "threadId": null,
+            "lenses": ["structure", "pacing"],
+            "intensity": "light",
+            "scope": "project",
+            "annotations": 2,
+            "failureReason": null
+          }
+        ]
+      },
+      "suggestions": {
+        "total": 0,
+        "byKind": { "word-choice": 0, "insertion": 0, "rephrase": 0 },
+        "byOutcome": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 }
+      },
+      "proposals": {
+        "total": 0,
+        "byKind": {
+          "move": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+          "cut": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+          "split": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+          "merge": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 }
+        }
+      },
+      "pastes": {
+        "external": { "count": 0, "characters": 0, "words": 0 },
+        "internal": { "count": 0, "characters": 0, "words": 0 },
+        "events": []
+      },
+      "imports": { "documents": 0, "words": 0 },
+      "unwitnessed": [],
+      "provesTable": {
+        "proves": [
+          "The text came in through the editor's input channel, at these times and this cadence",
+          "Exactly which AI suggestions were visible, and which were retyped or used",
+          "The history hasn't been changed since the server witnessed it"
+        ],
+        "doesNotProve": [
+          "That the account holder was the one typing",
+          "That nothing was transcribed from another screen or another AI",
+          "That a modified client didn't misreport pastes as typing (the keystroke timeline makes this costly, not impossible)"
+        ]
+      },
+      "extensions": {
+        "unwitnessedThresholdMs": 60000,
+        "projectTitle": "Salt and Iron",
+        "documents": [{ "id": "note-style", "title": "Style guide", "kind": "note", "words": 10 }],
+        "assisted": {
+          "annotations": 0,
+          "byKind": {
+            "word-choice": 0,
+            "rephrase": 0,
+            "insertion": 0,
+            "comment": 0,
+            "question": 0,
+            "proposal": 0,
+            "citation-flag": 0,
+            "surfaced-source": 0,
+            "source-suggestion": 0,
+            "discuss": 0,
+            "review": 0
+          }
+        },
+        "quoted": { "sources": 0 },
+        "suggestions": {
+          "byKind": {
+            "word-choice": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 },
+            "insertion": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 },
+            "rephrase": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 }
+          }
+        },
+        "proposals": {
+          "moves": {
+            "sentence": { "proposed": 0, "accepted": 0 },
+            "paragraph": { "proposed": 0, "accepted": 0 },
+            "section": { "proposed": 0, "accepted": 0 }
+          }
+        },
+        "imports": []
+      },
+      "disclosure": "Written in 1 session. 10 words: 100% typed directly. AI feedback was requested once."
+    }
+  }
+}

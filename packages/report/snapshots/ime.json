@@ -1,0 +1,266 @@
+{
+  "project": {
+    "reportVersion": 1,
+    "scope": { "kind": "project" },
+    "throughSeq": 7,
+    "headHash": "2e8de0f569073ffa0a3057b43c6a306c109488581b38d15868196229660fb97c",
+    "words": {
+      "total": 13,
+      "byClass": {
+        "typed": 13,
+        "typed-from-suggestion": 0,
+        "pasted-external": 0,
+        "pasted-internal": 0,
+        "imported": 0,
+        "quoted": 0
+      }
+    },
+    "characters": {
+      "total": 69,
+      "byClass": {
+        "typed": 69,
+        "typed-from-suggestion": 0,
+        "pasted-external": 0,
+        "pasted-internal": 0,
+        "imported": 0,
+        "quoted": 0
+      }
+    },
+    "activeWritingMs": 10017,
+    "sessions": {
+      "count": 1,
+      "days": 1,
+      "firstAt": "2026-11-03T12:00:00.800Z",
+      "lastAt": "2026-11-03T12:00:18.817Z",
+      "list": [
+        {
+          "startTime": "2026-11-03T12:00:00.800Z",
+          "endTime": "2026-11-03T12:00:18.817Z",
+          "activeMs": 10017,
+          "charactersInserted": 82,
+          "startSeq": 3,
+          "endSeq": 7,
+          "commits": 5,
+          "documentIds": ["doc-ime"]
+        }
+      ]
+    },
+    "ai": {
+      "feedbackRequests": 0,
+      "sessionsFinished": 0,
+      "sessionsFailed": 0,
+      "comments": 0,
+      "questions": 0,
+      "citationFlags": 0,
+      "surfacedSources": 0,
+      "sourceSuggestions": 0,
+      "discussThreads": 0,
+      "sessions": []
+    },
+    "suggestions": {
+      "total": 0,
+      "byKind": { "word-choice": 0, "insertion": 0, "rephrase": 0 },
+      "byOutcome": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 }
+    },
+    "proposals": {
+      "total": 0,
+      "byKind": {
+        "move": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+        "cut": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+        "split": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+        "merge": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 }
+      }
+    },
+    "pastes": {
+      "external": { "count": 0, "characters": 0, "words": 0 },
+      "internal": { "count": 0, "characters": 0, "words": 0 },
+      "events": []
+    },
+    "imports": { "documents": 0, "words": 0 },
+    "unwitnessed": [],
+    "provesTable": {
+      "proves": [
+        "The text came in through the editor's input channel, at these times and this cadence",
+        "Exactly which AI suggestions were visible, and which were retyped or used",
+        "The history hasn't been changed since the server witnessed it"
+      ],
+      "doesNotProve": [
+        "That the account holder was the one typing",
+        "That nothing was transcribed from another screen or another AI",
+        "That a modified client didn't misreport pastes as typing (the keystroke timeline makes this costly, not impossible)"
+      ]
+    },
+    "extensions": {
+      "unwitnessedThresholdMs": 60000,
+      "projectTitle": "日記",
+      "documents": [{ "id": "doc-ime", "title": "Kyoto notes", "kind": "manuscript", "words": 13 }],
+      "assisted": {
+        "annotations": 0,
+        "byKind": {
+          "word-choice": 0,
+          "rephrase": 0,
+          "insertion": 0,
+          "comment": 0,
+          "question": 0,
+          "proposal": 0,
+          "citation-flag": 0,
+          "surfaced-source": 0,
+          "source-suggestion": 0,
+          "discuss": 0,
+          "review": 0
+        }
+      },
+      "quoted": { "sources": 0 },
+      "suggestions": {
+        "byKind": {
+          "word-choice": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 },
+          "insertion": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 },
+          "rephrase": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 }
+        }
+      },
+      "proposals": {
+        "moves": {
+          "sentence": { "proposed": 0, "accepted": 0 },
+          "paragraph": { "proposed": 0, "accepted": 0 },
+          "section": { "proposed": 0, "accepted": 0 }
+        }
+      },
+      "imports": []
+    },
+    "disclosure": "Written in 1 session. 13 words: 100% typed directly. No AI feedback was requested in Longhand."
+  },
+  "documents": {
+    "doc-ime": {
+      "reportVersion": 1,
+      "scope": { "kind": "document", "documentId": "doc-ime" },
+      "throughSeq": 7,
+      "headHash": "2e8de0f569073ffa0a3057b43c6a306c109488581b38d15868196229660fb97c",
+      "words": {
+        "total": 13,
+        "byClass": {
+          "typed": 13,
+          "typed-from-suggestion": 0,
+          "pasted-external": 0,
+          "pasted-internal": 0,
+          "imported": 0,
+          "quoted": 0
+        }
+      },
+      "characters": {
+        "total": 69,
+        "byClass": {
+          "typed": 69,
+          "typed-from-suggestion": 0,
+          "pasted-external": 0,
+          "pasted-internal": 0,
+          "imported": 0,
+          "quoted": 0
+        }
+      },
+      "activeWritingMs": 10017,
+      "sessions": {
+        "count": 1,
+        "days": 1,
+        "firstAt": "2026-11-03T12:00:00.800Z",
+        "lastAt": "2026-11-03T12:00:18.817Z",
+        "list": [
+          {
+            "startTime": "2026-11-03T12:00:00.800Z",
+            "endTime": "2026-11-03T12:00:18.817Z",
+            "activeMs": 10017,
+            "charactersInserted": 82,
+            "startSeq": 3,
+            "endSeq": 7,
+            "commits": 5,
+            "documentIds": ["doc-ime"]
+          }
+        ]
+      },
+      "ai": {
+        "feedbackRequests": 0,
+        "sessionsFinished": 0,
+        "sessionsFailed": 0,
+        "comments": 0,
+        "questions": 0,
+        "citationFlags": 0,
+        "surfacedSources": 0,
+        "sourceSuggestions": 0,
+        "discussThreads": 0,
+        "sessions": []
+      },
+      "suggestions": {
+        "total": 0,
+        "byKind": { "word-choice": 0, "insertion": 0, "rephrase": 0 },
+        "byOutcome": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 }
+      },
+      "proposals": {
+        "total": 0,
+        "byKind": {
+          "move": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+          "cut": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+          "split": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+          "merge": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 }
+        }
+      },
+      "pastes": {
+        "external": { "count": 0, "characters": 0, "words": 0 },
+        "internal": { "count": 0, "characters": 0, "words": 0 },
+        "events": []
+      },
+      "imports": { "documents": 0, "words": 0 },
+      "unwitnessed": [],
+      "provesTable": {
+        "proves": [
+          "The text came in through the editor's input channel, at these times and this cadence",
+          "Exactly which AI suggestions were visible, and which were retyped or used",
+          "The history hasn't been changed since the server witnessed it"
+        ],
+        "doesNotProve": [
+          "That the account holder was the one typing",
+          "That nothing was transcribed from another screen or another AI",
+          "That a modified client didn't misreport pastes as typing (the keystroke timeline makes this costly, not impossible)"
+        ]
+      },
+      "extensions": {
+        "unwitnessedThresholdMs": 60000,
+        "projectTitle": "日記",
+        "documents": [
+          { "id": "doc-ime", "title": "Kyoto notes", "kind": "manuscript", "words": 13 }
+        ],
+        "assisted": {
+          "annotations": 0,
+          "byKind": {
+            "word-choice": 0,
+            "rephrase": 0,
+            "insertion": 0,
+            "comment": 0,
+            "question": 0,
+            "proposal": 0,
+            "citation-flag": 0,
+            "surfaced-source": 0,
+            "source-suggestion": 0,
+            "discuss": 0,
+            "review": 0
+          }
+        },
+        "quoted": { "sources": 0 },
+        "suggestions": {
+          "byKind": {
+            "word-choice": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 },
+            "insertion": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 },
+            "rephrase": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 }
+          }
+        },
+        "proposals": {
+          "moves": {
+            "sentence": { "proposed": 0, "accepted": 0 },
+            "paragraph": { "proposed": 0, "accepted": 0 },
+            "section": { "proposed": 0, "accepted": 0 }
+          }
+        },
+        "imports": []
+      },
+      "disclosure": "Written in 1 session. 13 words: 100% typed directly. No AI feedback was requested in Longhand."
+    }
+  }
+}

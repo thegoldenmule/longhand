@@ -1,0 +1,342 @@
+{
+  "project": {
+    "reportVersion": 1,
+    "scope": { "kind": "project" },
+    "throughSeq": 13,
+    "headHash": "10ea5e10519db282b3bfbf7c788f7b7806f6a395cc4b16635b67174b52b3b520",
+    "words": {
+      "total": 30,
+      "byClass": {
+        "typed": 11,
+        "typed-from-suggestion": 0,
+        "pasted-external": 19,
+        "pasted-internal": 0,
+        "imported": 0,
+        "quoted": 0
+      }
+    },
+    "characters": {
+      "total": 177,
+      "byClass": {
+        "typed": 59,
+        "typed-from-suggestion": 0,
+        "pasted-external": 118,
+        "pasted-internal": 0,
+        "imported": 0,
+        "quoted": 0
+      }
+    },
+    "activeWritingMs": 9712,
+    "sessions": {
+      "count": 1,
+      "days": 1,
+      "firstAt": "2026-11-02T09:00:00.800Z",
+      "lastAt": "2026-11-02T09:00:25.712Z",
+      "list": [
+        {
+          "startTime": "2026-11-02T09:00:00.800Z",
+          "endTime": "2026-11-02T09:00:25.712Z",
+          "activeMs": 9712,
+          "charactersInserted": 187,
+          "startSeq": 3,
+          "endSeq": 13,
+          "commits": 8,
+          "documentIds": ["doc-essay"]
+        }
+      ]
+    },
+    "ai": {
+      "feedbackRequests": 0,
+      "sessionsFinished": 0,
+      "sessionsFailed": 0,
+      "comments": 0,
+      "questions": 0,
+      "citationFlags": 0,
+      "surfacedSources": 0,
+      "sourceSuggestions": 0,
+      "discussThreads": 0,
+      "sessions": []
+    },
+    "suggestions": {
+      "total": 0,
+      "byKind": { "word-choice": 0, "insertion": 0, "rephrase": 0 },
+      "byOutcome": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 }
+    },
+    "proposals": {
+      "total": 0,
+      "byKind": {
+        "move": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+        "cut": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+        "split": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+        "merge": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 }
+      }
+    },
+    "pastes": {
+      "external": { "count": 3, "characters": 118, "words": 19 },
+      "internal": { "count": 0, "characters": 0, "words": 0 },
+      "events": [
+        {
+          "seq": 4,
+          "time": "2026-11-02T09:00:05.981Z",
+          "documentId": "doc-essay",
+          "origin": "external",
+          "via": "clipboard",
+          "characters": 39,
+          "words": 6,
+          "id": "paste-0004",
+          "insertedSeq": 5,
+          "verifiedInternal": false
+        },
+        {
+          "seq": 8,
+          "time": "2026-11-02T09:00:18.684Z",
+          "documentId": "doc-essay",
+          "origin": "external",
+          "via": "clipboard",
+          "characters": 65,
+          "words": 10,
+          "id": "paste-0009",
+          "insertedSeq": 9,
+          "verifiedInternal": false
+        },
+        {
+          "seq": 10,
+          "time": "2026-11-02T09:00:21.084Z",
+          "documentId": "doc-essay",
+          "origin": "external",
+          "via": "clipboard",
+          "characters": 14,
+          "words": 3,
+          "id": "paste-0012",
+          "insertedSeq": 11,
+          "verifiedInternal": false
+        }
+      ]
+    },
+    "imports": { "documents": 0, "words": 0 },
+    "unwitnessed": [],
+    "provesTable": {
+      "proves": [
+        "The text came in through the editor's input channel, at these times and this cadence",
+        "Exactly which AI suggestions were visible, and which were retyped or used",
+        "The history hasn't been changed since the server witnessed it"
+      ],
+      "doesNotProve": [
+        "That the account holder was the one typing",
+        "That nothing was transcribed from another screen or another AI",
+        "That a modified client didn't misreport pastes as typing (the keystroke timeline makes this costly, not impossible)"
+      ]
+    },
+    "extensions": {
+      "unwitnessedThresholdMs": 60000,
+      "projectTitle": "Essay draft",
+      "documents": [
+        { "id": "doc-essay", "title": "On walking", "kind": "manuscript", "words": 30 }
+      ],
+      "assisted": {
+        "annotations": 0,
+        "byKind": {
+          "word-choice": 0,
+          "rephrase": 0,
+          "insertion": 0,
+          "comment": 0,
+          "question": 0,
+          "proposal": 0,
+          "citation-flag": 0,
+          "surfaced-source": 0,
+          "source-suggestion": 0,
+          "discuss": 0,
+          "review": 0
+        }
+      },
+      "quoted": { "sources": 0 },
+      "suggestions": {
+        "byKind": {
+          "word-choice": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 },
+          "insertion": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 },
+          "rephrase": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 }
+        }
+      },
+      "proposals": {
+        "moves": {
+          "sentence": { "proposed": 0, "accepted": 0 },
+          "paragraph": { "proposed": 0, "accepted": 0 },
+          "section": { "proposed": 0, "accepted": 0 }
+        }
+      },
+      "imports": []
+    },
+    "disclosure": "Written in 1 session. 30 words: 36.6% typed directly; 63.4% pasted (3 external pastes). No AI feedback was requested in Longhand."
+  },
+  "documents": {
+    "doc-essay": {
+      "reportVersion": 1,
+      "scope": { "kind": "document", "documentId": "doc-essay" },
+      "throughSeq": 13,
+      "headHash": "10ea5e10519db282b3bfbf7c788f7b7806f6a395cc4b16635b67174b52b3b520",
+      "words": {
+        "total": 30,
+        "byClass": {
+          "typed": 11,
+          "typed-from-suggestion": 0,
+          "pasted-external": 19,
+          "pasted-internal": 0,
+          "imported": 0,
+          "quoted": 0
+        }
+      },
+      "characters": {
+        "total": 177,
+        "byClass": {
+          "typed": 59,
+          "typed-from-suggestion": 0,
+          "pasted-external": 118,
+          "pasted-internal": 0,
+          "imported": 0,
+          "quoted": 0
+        }
+      },
+      "activeWritingMs": 9712,
+      "sessions": {
+        "count": 1,
+        "days": 1,
+        "firstAt": "2026-11-02T09:00:00.800Z",
+        "lastAt": "2026-11-02T09:00:25.712Z",
+        "list": [
+          {
+            "startTime": "2026-11-02T09:00:00.800Z",
+            "endTime": "2026-11-02T09:00:25.712Z",
+            "activeMs": 9712,
+            "charactersInserted": 187,
+            "startSeq": 3,
+            "endSeq": 13,
+            "commits": 8,
+            "documentIds": ["doc-essay"]
+          }
+        ]
+      },
+      "ai": {
+        "feedbackRequests": 0,
+        "sessionsFinished": 0,
+        "sessionsFailed": 0,
+        "comments": 0,
+        "questions": 0,
+        "citationFlags": 0,
+        "surfacedSources": 0,
+        "sourceSuggestions": 0,
+        "discussThreads": 0,
+        "sessions": []
+      },
+      "suggestions": {
+        "total": 0,
+        "byKind": { "word-choice": 0, "insertion": 0, "rephrase": 0 },
+        "byOutcome": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 }
+      },
+      "proposals": {
+        "total": 0,
+        "byKind": {
+          "move": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+          "cut": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+          "split": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+          "merge": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 }
+        }
+      },
+      "pastes": {
+        "external": { "count": 3, "characters": 118, "words": 19 },
+        "internal": { "count": 0, "characters": 0, "words": 0 },
+        "events": [
+          {
+            "seq": 4,
+            "time": "2026-11-02T09:00:05.981Z",
+            "documentId": "doc-essay",
+            "origin": "external",
+            "via": "clipboard",
+            "characters": 39,
+            "words": 6,
+            "id": "paste-0004",
+            "insertedSeq": 5,
+            "verifiedInternal": false
+          },
+          {
+            "seq": 8,
+            "time": "2026-11-02T09:00:18.684Z",
+            "documentId": "doc-essay",
+            "origin": "external",
+            "via": "clipboard",
+            "characters": 65,
+            "words": 10,
+            "id": "paste-0009",
+            "insertedSeq": 9,
+            "verifiedInternal": false
+          },
+          {
+            "seq": 10,
+            "time": "2026-11-02T09:00:21.084Z",
+            "documentId": "doc-essay",
+            "origin": "external",
+            "via": "clipboard",
+            "characters": 14,
+            "words": 3,
+            "id": "paste-0012",
+            "insertedSeq": 11,
+            "verifiedInternal": false
+          }
+        ]
+      },
+      "imports": { "documents": 0, "words": 0 },
+      "unwitnessed": [],
+      "provesTable": {
+        "proves": [
+          "The text came in through the editor's input channel, at these times and this cadence",
+          "Exactly which AI suggestions were visible, and which were retyped or used",
+          "The history hasn't been changed since the server witnessed it"
+        ],
+        "doesNotProve": [
+          "That the account holder was the one typing",
+          "That nothing was transcribed from another screen or another AI",
+          "That a modified client didn't misreport pastes as typing (the keystroke timeline makes this costly, not impossible)"
+        ]
+      },
+      "extensions": {
+        "unwitnessedThresholdMs": 60000,
+        "projectTitle": "Essay draft",
+        "documents": [
+          { "id": "doc-essay", "title": "On walking", "kind": "manuscript", "words": 30 }
+        ],
+        "assisted": {
+          "annotations": 0,
+          "byKind": {
+            "word-choice": 0,
+            "rephrase": 0,
+            "insertion": 0,
+            "comment": 0,
+            "question": 0,
+            "proposal": 0,
+            "citation-flag": 0,
+            "surfaced-source": 0,
+            "source-suggestion": 0,
+            "discuss": 0,
+            "review": 0
+          }
+        },
+        "quoted": { "sources": 0 },
+        "suggestions": {
+          "byKind": {
+            "word-choice": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 },
+            "insertion": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 },
+            "rephrase": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 }
+          }
+        },
+        "proposals": {
+          "moves": {
+            "sentence": { "proposed": 0, "accepted": 0 },
+            "paragraph": { "proposed": 0, "accepted": 0 },
+            "section": { "proposed": 0, "accepted": 0 }
+          }
+        },
+        "imports": []
+      },
+      "disclosure": "Written in 1 session. 30 words: 36.6% typed directly; 63.4% pasted (3 external pastes). No AI feedback was requested in Longhand."
+    }
+  }
+}
