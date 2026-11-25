@@ -20,6 +20,7 @@ The coordinator updates this file after every phase. A resumed session reads it 
 | export | merged (60 tests) | see git log |
 | research | merged (88 tests) | see git log |
 | agent | merged (92 tests + live smoke passing) | see git log |
+| editor | merged (77 unit + 13 Playwright in Chrome) | see git log |
 
 ## Pending contract changes (apply serially after ledger core merges)
 
@@ -37,6 +38,9 @@ The coordinator updates this file after every phase. A resumed session reads it 
 - Fold maps `FeedbackRequestState.scope` selection positions to current version. (agent → ledger)
 - Optional: `systemPromptVersion` on `FeedbackSessionStarted`. (agent)
 - Server lane implements the AnnotationSink HTTP contract in `packages/agent/README.md`.
+
+- Move `EDITOR_INPUT_META` / `DeclaredInput` into schema as `INPUT_METHOD_META`; keystroke kinds `cite`/`clip`. (editor, research)
+- Server/web must implement the editor's `CommitTransport` (`packages/editor/src/sync/transport.ts`): submit → ack/duplicate/conflict/rejected/offline; subscribe in ledger order incl. own commits; `fetchSince` with fold-derived steps for ProposalAccepted. (editor → server)
 
 ## Notes
 
