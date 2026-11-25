@@ -11,7 +11,7 @@
  * Reads `.env` at the repo root when present.
  */
 import { existsSync, mkdirSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 import { DurableStreamTestServer } from '@durable-streams/server';
 import { loadConfig, REPO_ROOT, type Config } from './config';
 import { signerFromConfig, startFromConfig } from './server';
@@ -26,7 +26,7 @@ if (existsSync(envFile)) process.loadEnvFile(envFile);
 
 async function startStreams(cfg: Config): Promise<DurableStreamTestServer> {
   const url = new URL(cfg.durableStreamsUrl);
-  const dataDir = process.env.DURABLE_STREAMS_DATA_DIR ?? join(REPO_ROOT, '.dev', 'streams');
+  const dataDir = resolve(REPO_ROOT, process.env.DURABLE_STREAMS_DATA_DIR || '.dev/streams');
   mkdirSync(dataDir, { recursive: true });
   const ds = new DurableStreamTestServer({
     port: Number(url.port || 3300),

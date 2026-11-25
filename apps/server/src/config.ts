@@ -88,7 +88,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
     claudeBin: env.CLAUDE_BIN || env.LONGHAND_CLAUDE_BIN || null,
     models: { full: env.AGENT_MODEL_FULL || 'opus', quick: env.AGENT_MODEL_QUICK || 'sonnet' },
     mockStepDelayMs: int(env, 'MOCK_STEP_DELAY_MS', 0),
-    corsOrigins: (env.CORS_ORIGINS ?? `http://localhost:${env.WEB_PORT ?? 3100}`)
+    corsOrigins: (env.CORS_ORIGINS || `http://localhost:${env.WEB_PORT || 3100}`)
       .split(',')
       .map((s) => s.trim())
       .filter(Boolean),
