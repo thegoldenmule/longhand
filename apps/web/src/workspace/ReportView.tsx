@@ -94,8 +94,7 @@ export function ReportView(props: {
 
   return (
     <div className="ws-view ws-report" data-testid="report-view">
-      <header className="ws-view-head">
-        <h2>Authorship report</h2>
+      <div className="ws-view-toolbar">
         <div className="ws-view-actions">
           <div className="ws-seg ws-seg-small" role="group" aria-label="Report scope">
             <button
@@ -138,7 +137,7 @@ export function ReportView(props: {
             Export…
           </button>
         </div>
-      </header>
+      </div>
       {notice && (
         <p className="ws-notice" role="status">
           {notice}{' '}

@@ -46,6 +46,7 @@ import { ProjectStore, type ProjectSnapshot } from '../store/projectStore';
 import { IconClose, IconSidebarLeft, IconSidebarRight } from '../ui/icons';
 import { ThemeToggle } from '../ui/ThemeToggle';
 import { BinderPane } from './BinderPane';
+import { createCitationLabels } from './citationLabels';
 import { EditorSurface } from './EditorSurface';
 import { ExportDialog } from './ExportDialog';
 import { ProvenancePane } from './ProvenancePane';
@@ -291,7 +292,14 @@ function WorkspaceReady(props: {
     [store, ann],
   );
   const annSnap = useAnnotationsSnapshot(ann);
-  const plugins = useMemo(() => [...ann.plugins, ...tint.plugins], [ann, tint]);
+  const [citeLabels] = useState(createCitationLabels);
+  const plugins = useMemo(
+    () => [...ann.plugins, ...tint.plugins, citeLabels.plugin],
+    [ann, tint, citeLabels],
+  );
+  useEffect(() => {
+    if (handle) citeLabels.refresh(handle.view, state.sources, state.settings.citationStyle);
+  }, [handle, citeLabels, state.sources, state.settings.citationStyle]);
 
   // --------------------------------------------------------------- binder
   const [pending, setPending] = useState<Array<{ commitId: string; draft: BinderDraft }>>([]);
@@ -346,6 +354,8 @@ function WorkspaceReady(props: {
     (corkFolder && state.folders[corkFolder]?.area) ||
     (doc?.kind === 'note' ? 'notes' : 'manuscript');
   const corkParent = corkFolder ?? doc?.parentId ?? null;
+  const corkShown =
+    corkParent && getNode(binderModel, { kind: 'folder', id: corkParent }) ? corkParent : null;
 
   // ------------------------------------------------------------- actions
   const askForFeedback = () => {
@@ -562,14 +572,16 @@ function WorkspaceReady(props: {
           )}
           {view === 'corkboard' && (
             <div className="ws-view ws-cork" data-testid="corkboard-view">
+              <CorkboardHead
+                model={binderModel}
+                area={corkArea}
+                folderId={corkShown}
+                onUp={(id) => setCorkFolder(id)}
+              />
               <Corkboard
                 model={binderModel}
                 area={corkArea}
-                folderId={
-                  corkParent && getNode(binderModel, { kind: 'folder', id: corkParent })
-                    ? corkParent
-                    : null
-                }
+                folderId={corkShown}
                 onDraft={onBinderDraft}
                 onOpen={(ref) => {
                   if (ref.kind === 'document') {
@@ -698,6 +710,30 @@ function WorkspaceReady(props: {
         </div>
       )}
     </div>
+  );
+}
+
+function CorkboardHead(props: {
+  model: BinderModel;
+  area: 'manuscript' | 'notes';
+  folderId: string | null;
+  onUp: (folderId: string | null) => void;
+}) {
+  const folder = props.folderId ? props.model.folders[props.folderId] : null;
+  return (
+    <header className="ws-cork-head">
+      <h2>{folder ? folder.title : props.area === 'notes' ? 'Notes' : 'Manuscript'}</h2>
+      {folder && (
+        <button type="button" className="ws-cork-up" onClick={() => props.onUp(folder.parentId)}>
+          ↑{' '}
+          {folder.parentId
+            ? (props.model.folders[folder.parentId]?.title ?? 'Up')
+            : props.area === 'notes'
+              ? 'Notes'
+              : 'Manuscript'}
+        </button>
+      )}
+    </header>
   );
 }
 

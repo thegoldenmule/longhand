@@ -100,6 +100,8 @@ export async function assertHumanManuscript(projectIds?: string[]): Promise<numb
 /** `test` with the invariant checked over every project after each test. */
 export const test = base.extend<{ invariant: void }>({
   invariant: [
+    // Playwright reads fixture dependencies from the destructuring pattern.
+    // eslint-disable-next-line no-empty-pattern
     async ({}, use) => {
       await use();
       await assertHumanManuscript();

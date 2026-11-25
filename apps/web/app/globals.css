@@ -679,13 +679,11 @@ kbd {
 .ws-page:not(.has-margin) .ws-margin {
   visibility: hidden;
 }
-@media (max-width: 1180px) {
-  .ws-page.has-margin {
-    grid-template-columns: minmax(0, 0.25fr) minmax(0, calc(66ch + 3rem)) minmax(250px, 1fr);
-  }
-}
-.ws[data-right='open'][data-left='open'] .ws-page.has-margin {
-  grid-template-columns: minmax(0, 0.15fr) minmax(0, calc(66ch + 3rem)) minmax(240px, 1fr);
+/* With cards, the page shifts left and the margin gets a readable column. */
+.ws-page.has-margin {
+  grid-template-columns:
+    minmax(12px, 1fr) minmax(0, calc(66ch + 3rem)) minmax(280px, 21rem)
+    minmax(0, 0.6fr);
 }
 
 .ws-empty {
@@ -1049,4 +1047,105 @@ kbd {
 }
 .ws-margin-inner {
   max-width: none;
+}
+
+/* The in-app report: one heading (the report's own), and the class colours of
+   the provenance tint, so the legend and the report agree. */
+.ws-report .lh-report {
+  padding-top: 0.5rem;
+}
+:root[data-theme] body.lh-app .ws-report .lh-report {
+  --lh-report-typed: var(--lh-prov-typed-line);
+  --lh-report-typed-from-suggestion: var(--lh-prov-suggestion-line);
+  --lh-report-quoted: var(--lh-prov-quoted-line);
+  --lh-report-imported: var(--lh-prov-imported-line);
+  --lh-report-pasted-external: var(--lh-prov-pasted-line);
+}
+:root[data-theme='light'] body.lh-app .ws-report .lh-report-bar-part {
+  color: #fff;
+}
+:root[data-theme='dark'] body.lh-app .ws-report .lh-report-bar-part {
+  color: #1c1b19;
+}
+.ws-view-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  max-width: 46rem;
+  margin: 0 auto 4px;
+  padding: 0 1.5rem;
+}
+.ws-view-toolbar .ws-view-actions {
+  margin-left: auto;
+}
+
+/* Corkboard */
+.ws-cork-head {
+  max-width: 980px;
+  margin: 0 auto 14px;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.ws-cork-head h2 {
+  margin: 0;
+  font-family: var(--app-font-text);
+  font-weight: 400;
+  font-size: 24px;
+}
+.ws-cork-up {
+  border: 0;
+  background: none;
+  color: var(--app-ink-muted);
+  cursor: pointer;
+  font-size: 13px;
+  padding: 0;
+}
+.ws-cork-up:hover {
+  color: var(--app-ink);
+}
+
+/* The feedback panel sits under its own tab: no second heading. */
+.ws-right .lh-panel-head h2 {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.ws-right .lh-panel-head {
+  justify-content: flex-end;
+}
+
+/* Quiet native controls */
+.ws-pref select,
+.ws-right select,
+.lh-home select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 6px 30px 6px 10px;
+  border: 1px solid var(--app-rule);
+  border-radius: 7px;
+  background-color: var(--app-card);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%238f897e' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  color: var(--app-ink);
+  font-size: 13px;
+}
+body.lh-app input[type='checkbox'],
+body.lh-app input[type='radio'],
+body.lh-app input[type='range'] {
+  accent-color: var(--app-accent);
+}
+
+/* Citations: the formatted in-text citation instead of a bare marker. */
+.lh-editor .lh-manuscript span[data-citation][data-cite-label]::before {
+  content: attr(data-cite-label);
+  font-size: 0.86em;
+  font-variant: normal;
+  color: var(--app-ink-muted);
+  margin-left: 0.15em;
 }
