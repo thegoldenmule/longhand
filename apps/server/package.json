@@ -4,10 +4,39 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./testing": "./src/testing.ts"
   },
   "scripts": {
+    "dev": "tsx src/cli.ts dev",
+    "start": "tsx src/cli.ts start",
+    "streams": "tsx src/cli.ts streams",
+    "migrate": "tsx src/cli.ts migrate",
+    "rebuild": "tsx src/cli.ts rebuild",
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "test": "vitest run --passWithNoTests"
+    "test": "vitest run --passWithNoTests",
+    "test:live": "LONGHAND_LIVE_CLAUDE=1 vitest run test/live.test.ts"
+  },
+  "dependencies": {
+    "@aws-sdk/client-kms": "^3.1176.0",
+    "@durable-streams/client": "0.2.7",
+    "@durable-streams/server": "0.3.9",
+    "@hono/node-server": "^2.1.11",
+    "@longhand/agent": "workspace:*",
+    "@longhand/export": "workspace:*",
+    "@longhand/ledger": "workspace:*",
+    "@longhand/research": "workspace:*",
+    "@longhand/schema": "workspace:*",
+    "aws-jwt-verify": "^5.2.1",
+    "hono": "^4.13.21",
+    "pg": "^8.23.1",
+    "prosemirror-model": "^1.25.13",
+    "prosemirror-transform": "^1.12.7",
+    "tsx": "^4.23.15",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2",
+    "@types/pg": "^8.23.1"
   }
 }
