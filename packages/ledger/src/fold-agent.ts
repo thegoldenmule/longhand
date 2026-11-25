@@ -974,6 +974,8 @@ export function foldFeedbackRequested(tx: Tx, c: CommitOf<'FeedbackRequested'>):
     lenses: p.lenses,
     intensity: p.intensity,
     ask: p.ask,
+    // Absent rather than null when the request named no editor, so older states are unchanged.
+    ...(p.editor ? { editor: p.editor } : {}),
     status: 'pending',
     feedbackSessionId: null,
   };

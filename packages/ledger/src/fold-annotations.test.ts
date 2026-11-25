@@ -538,3 +538,25 @@ describe('binder', () => {
     );
   });
 });
+
+describe('feedback requests and named editors', () => {
+  it('keeps the editor a request names, and omits it when none is named', () => {
+    const b = new LedgerBuilder({ seed: 3 });
+    b.createDocument('d', 'Doc');
+    b.type('d', 'One sentence here.');
+    const editor = { id: 'ed-1', name: 'Theo', brief: 'A blunt line editor who hates adverbs.' };
+    b.requestFeedback('r1', {
+      scope: { kind: 'document', documentId: 'd' },
+      lenses: ['word-choice'],
+      intensity: 'light',
+      editor,
+    });
+    b.requestFeedback('r2', { scope: { kind: 'document', documentId: 'd' } });
+    const reqs = b.project.annotations.feedbackRequests;
+    expect(reqs.r1).toMatchObject({ editor, lenses: ['word-choice'], intensity: 'light' });
+    expect(reqs.r2 && 'editor' in reqs.r2).toBe(false);
+    const commit = b.commits.find((c) => c.type === 'FeedbackRequested')!;
+    expect(commit.payload).toMatchObject({ editor });
+    expect(foldIssues(b.state)).toEqual([]);
+  });
+});

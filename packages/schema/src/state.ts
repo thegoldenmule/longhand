@@ -24,6 +24,7 @@ import type {
   Severity,
 } from './domain';
 import type { PMNodeJSON } from './document';
+import type { FeedbackEditor } from './editors';
 import type { FeedbackScope, SourceOrigin, SurfacedCandidate, Target } from './events';
 import type { ProvenanceRun } from './provenance';
 
@@ -261,6 +262,12 @@ export interface FeedbackRequestState {
   lenses: Lens[];
   intensity: Intensity;
   ask: string | null;
+  /**
+   * The named editor asked, as recorded in the `FeedbackRequested` payload.
+   * Absent (not null) for requests that named none, so older folded states are
+   * unchanged.
+   */
+  editor?: FeedbackEditor;
   status: 'pending' | 'running' | 'finished' | 'failed';
   /** The agent session serving it, once started. */
   feedbackSessionId: string | null;

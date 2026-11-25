@@ -30,6 +30,7 @@ import {
   type DismissReason,
   type EventPayload,
   type EventType,
+  type FeedbackEditor,
   type FeedbackScope,
   type InputRun,
   type Intensity,
@@ -907,6 +908,7 @@ export class LedgerBuilder {
       lenses?: Lens[];
       intensity?: Intensity;
       ask?: string | null;
+      editor?: FeedbackEditor;
     } = {},
   ): this {
     this.human('FeedbackRequested', {
@@ -915,6 +917,7 @@ export class LedgerBuilder {
       lenses: opts.lenses ?? ['structure', 'clarity'],
       intensity: opts.intensity ?? 'standard',
       ask: opts.ask ?? null,
+      ...(opts.editor ? { editor: opts.editor } : {}),
     });
     return this;
   }

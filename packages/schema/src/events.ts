@@ -16,6 +16,7 @@
  *   is the version the agent read when it chose its anchor.
  */
 import { z } from 'zod';
+import { FeedbackEditorSchema } from './editors';
 import {
   RelativePositionSchema,
   SentenceIdSchema,
@@ -460,6 +461,11 @@ export const FeedbackRequestedSchema = z.object({
   intensity: IntensitySchema,
   /** The writer's free-text ask ("Is the opening too slow?"). Never manuscript. */
   ask: z.string().max(TEXT_LIMITS.feedbackAskMaxChars).nullable(),
+  /**
+   * The named editor asked (optional, additive): its id, name and brief as they
+   * were at this moment. `lenses` and `intensity` above are its configuration.
+   */
+  editor: FeedbackEditorSchema.optional(),
 });
 
 /**
