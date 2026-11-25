@@ -1,0 +1,104 @@
+# plain-typing (project)
+Written in 1 session. 36 words: 100% typed directly. No AI feedback was requested in Longhand.
+
+# plain-typing / doc-pages
+Written in 1 session. 36 words: 100% typed directly. No AI feedback was requested in Longhand.
+
+# ime (project)
+Written in 1 session. 13 words: 100% typed directly. No AI feedback was requested in Longhand.
+
+# ime / doc-ime
+Written in 1 session. 13 words: 100% typed directly. No AI feedback was requested in Longhand.
+
+# external-paste (project)
+Written in 1 session. 30 words: 36.6% typed directly; 63.4% pasted (3 external pastes). No AI feedback was requested in Longhand.
+
+# external-paste / doc-essay
+Written in 1 session. 30 words: 36.6% typed directly; 63.4% pasted (3 external pastes). No AI feedback was requested in Longhand.
+
+# internal-paste (project)
+Written in 1 session. 24 words: 70.8% typed directly; 29.2% pasted (1 external paste). No AI feedback was requested in Longhand.
+
+# internal-paste / doc-a
+Written in 1 session. 11 words: 63.6% typed directly; 36.4% pasted (1 external paste). No AI feedback was requested in Longhand.
+
+# internal-paste / doc-b
+Written in 1 session. 13 words: 76.9% typed directly; 23.1% pasted or unverified. No AI feedback was requested in Longhand.
+
+# undo-paste (project)
+Written in 1 session. 15 words: 80.0% typed directly; 20.0% pasted (1 external paste). No AI feedback was requested in Longhand.
+
+# undo-paste / doc-u
+Written in 1 session. 15 words: 80.0% typed directly; 20.0% pasted (1 external paste). No AI feedback was requested in Longhand.
+
+# import (project)
+Written in 1 session. 23 words: 21.7% typed directly; 78.3% imported (unverified). No AI feedback was requested in Longhand. 1 document was imported from an existing draft (18 words at import); Longhand cannot verify who wrote imported text.
+
+# import / doc-old
+Written in 1 session. 23 words: 21.7% typed directly; 78.3% imported (unverified). No AI feedback was requested in Longhand. 1 document was imported from an existing draft (18 words at import); Longhand cannot verify who wrote imported text.
+
+# feedback-session (project)
+Written in 1 session. 51 words: 100% typed directly. AI feedback was requested twice; the editor left 2 comments and 2 questions.
+
+# feedback-session / doc-ch1
+Written in 1 session. 51 words: 100% typed directly. AI feedback was requested twice; the editor left 2 comments and 2 questions.
+
+# suggestions (project)
+Written in 1 session. 41 words: 73.1% typed directly; 26.9% retyped from AI text (2 word-choice suggestions, 1 suggested sentence and 1 comment). AI feedback was requested twice; the editor left 1 comment. AI made 7 wording suggestions: 2 adopted, 2 adapted, 1 dismissed and 2 stale.
+
+# suggestions / doc-s
+Written in 1 session. 41 words: 73.1% typed directly; 26.9% retyped from AI text (2 word-choice suggestions, 1 suggested sentence and 1 comment). AI feedback was requested twice; the editor left 1 comment. AI made 7 wording suggestions: 2 adopted, 2 adapted, 1 dismissed and 2 stale.
+
+# proposals (project)
+Written in 1 session. 43 words: 100% typed directly. AI feedback was requested twice. AI proposed 1 paragraph move, 1 sentence move, 2 cuts, 1 split and 3 merges; 5 accepted.
+
+# proposals / doc-p
+Written in 1 session. 43 words: 100% typed directly. AI feedback was requested twice. AI proposed 1 paragraph move, 1 sentence move, 2 cuts, 1 split and 3 merges; 5 accepted.
+
+# discuss (project)
+Written in 1 session. 18 words: 100% typed directly. AI feedback was requested once. AI made 1 wording suggestion: 1 dismissed.
+
+# discuss / doc-d
+Written in 1 session. 18 words: 100% typed directly. AI feedback was requested once. AI made 1 wording suggestion: 1 dismissed.
+
+# research (project)
+Written in 1 session. 45 words: 35.5% typed directly; 51.1% quoted from 1 source; 13.4% pasted or unverified. AI feedback was requested once; the editor left 2 citation-needed flags.
+
+# research / doc-r
+Written in 1 session. 45 words: 35.5% typed directly; 51.1% quoted from 1 source; 13.4% pasted or unverified. AI feedback was requested once; the editor left 2 citation-needed flags.
+
+# binder (project)
+Written in 1 session. 6 words: 100% typed directly. No AI feedback was requested in Longhand.
+
+# binder / doc-s1
+Written in 1 session. 6 words: 100% typed directly. No AI feedback was requested in Longhand.
+
+# binder / doc-s2
+No writing sessions were recorded in Longhand. The document has no words yet. No AI feedback was requested in Longhand.
+
+# binder / doc-s3
+No writing sessions were recorded in Longhand. The document has no words yet. No AI feedback was requested in Longhand.
+
+# binder / note-elena
+Written in 1 session. 9 words: 100% typed directly. No AI feedback was requested in Longhand.
+
+# binder / note-outline
+No writing sessions were recorded in Longhand. The document has no words yet. No AI feedback was requested in Longhand.
+
+# binder / shared-id
+No writing sessions were recorded in Longhand. The document has no words yet. No AI feedback was requested in Longhand.
+
+# novel (project)
+Written in 3 sessions over 2 days. 54 words: 100% typed directly. AI feedback was requested once; the editor left 1 comment. AI made 1 wording suggestion: 1 dismissed.
+
+# novel / doc-1
+Written in 2 sessions on 1 day. 20 words: 100% typed directly. AI feedback was requested once. AI made 1 wording suggestion: 1 dismissed.
+
+# novel / doc-2
+Written in 2 sessions over 2 days. 16 words: 100% typed directly. AI feedback was requested once.
+
+# novel / doc-3
+Written in 1 session. 18 words: 100% typed directly. AI feedback was requested once; the editor left 1 comment.
+
+# novel / note-style
+Written in 1 session. 10 words: 100% typed directly. AI feedback was requested once.
