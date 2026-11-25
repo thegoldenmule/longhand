@@ -47,7 +47,7 @@ for (const theme of ['light', 'dark'] as const) {
     await page.getByTestId('ask-feedback').click();
     await expect(page.getByRole('form', { name: 'Ask for feedback' })).toBeVisible();
     await shot('03a-feedback-form');
-    await askForFeedback(page, ['Structure', 'Word choice']);
+    await askForFeedback(page);
     await expect(marginCards(page).first()).toBeVisible();
     await shot('03-review-streaming');
     await waitForReview(page);
@@ -116,6 +116,17 @@ for (const theme of ['light', 'dark'] as const) {
       .getByRole('textbox', { name: 'Draft' })
       .fill('# On Harbours\n\nHarbours are where *cities* begin.');
     await shot('13-import');
+
+    await page.goto('/editors');
+    await themed(page);
+    await expect(page.getByTestId('editor-row').first()).toBeVisible();
+    await page.waitForTimeout(200);
+    await shot('15-editors');
+    // Open the form on the seeded test editor (never saved: tests share the roster).
+    await page.getByRole('button', { name: 'Edit Iris' }).click();
+    await page.waitForTimeout(200);
+    await shot('16-editor-edit');
+    await page.getByRole('button', { name: 'Cancel' }).click();
 
     await newProject(page, 'Blank page');
     await themed(page);

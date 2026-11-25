@@ -454,6 +454,182 @@ kbd {
   padding: 24px 0;
 }
 
+/* ------------------------------------------------------------------------ editors */
+
+.lh-wordmark-link {
+  color: inherit;
+  text-decoration: none;
+}
+.lh-editors-back {
+  margin: 0 0 18px;
+}
+.lh-editors-lede {
+  margin: 0;
+  max-width: 34em;
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+.lh-editors-confirm {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 13px;
+}
+.lh-editor-roster > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--app-rule);
+}
+.lh-editor-roster > ul > li {
+  border-bottom: 1px solid var(--app-rule-soft);
+}
+.lh-editor-roster > ul > li > .lh-editor-form {
+  margin: 14px 0;
+}
+.lh-editor-row {
+  display: grid;
+  gap: 6px;
+  padding: 18px 4px;
+}
+.lh-editor-row-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+.lh-editor-row-name {
+  margin: 0;
+  font-family: var(--app-font-text);
+  font-weight: 400;
+  font-size: 19px;
+}
+.lh-editor-row-brief {
+  margin: 0;
+  font-family: var(--app-font-text);
+  font-size: 15px;
+  line-height: 1.55;
+}
+.lh-editor-row-meta {
+  margin: 0;
+  font-size: 12.5px;
+}
+.lh-editor-row-questions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.lh-editor-row-questions li {
+  padding: 2px 10px;
+  border: 1px solid var(--app-rule);
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--app-ink-muted);
+}
+.lh-editor-fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+.lh-editor-fieldset legend {
+  padding: 0;
+  margin-bottom: 6px;
+  font-size: 12px;
+  color: var(--app-ink-muted);
+  letter-spacing: 0.02em;
+}
+.lh-editor-hint {
+  font-style: normal;
+  font-size: 12px;
+  color: var(--app-ink-faint);
+}
+.lh-editor-lenses {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.lh-editor-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 11px;
+  border: 1px solid var(--app-rule);
+  border-radius: 999px;
+  font-size: 12.5px;
+  color: var(--app-ink-muted);
+  cursor: pointer;
+}
+.lh-editor-chip.is-on {
+  border-color: var(--app-accent);
+  background: var(--app-accent-soft);
+  color: var(--app-ink);
+}
+.lh-editor-chip input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+.lh-editor-chip:has(input:focus-visible) {
+  outline: 2px solid var(--app-focus);
+  outline-offset: 1px;
+}
+.lh-editor-intensity {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+.lh-editor-intensity .lh-inline-choice {
+  color: var(--app-ink);
+}
+.lh-editor-questions {
+  display: grid;
+  gap: 6px;
+}
+.lh-editor-question {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.lh-editor-question input {
+  flex: 1;
+  min-width: 0;
+  padding: 7px 10px;
+  border: 1px solid var(--app-rule);
+  border-radius: 7px;
+  background: var(--app-paper);
+}
+.lh-editor-question input:focus {
+  outline: none;
+  border-color: var(--app-accent);
+  box-shadow: 0 0 0 3px var(--app-accent-soft);
+}
+.lh-editor-add {
+  justify-self: start;
+}
+.lh-editor-actions {
+  flex-wrap: wrap;
+}
+.lh-editor-actions .lh-editor-delete {
+  margin-right: auto;
+}
+.lh-button-danger {
+  border-color: var(--app-danger);
+  color: var(--app-danger);
+}
+.ws-editors-link p {
+  margin: 0;
+  font-size: 13px;
+}
+
 /* ---------------------------------------------------------------------- workspace */
 
 .ws {

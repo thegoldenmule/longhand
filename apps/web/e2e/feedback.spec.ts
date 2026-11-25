@@ -6,6 +6,7 @@
 import type { Page } from '@playwright/test';
 import {
   STORY,
+  TEST_EDITOR,
   askForFeedback,
   expect,
   getCommits,
@@ -24,7 +25,7 @@ import {
 
 async function reviewed(page: Page, title: string): Promise<string> {
   const pid = await storyProject(page, title);
-  await askForFeedback(page, ['Structure', 'Word choice']);
+  await askForFeedback(page);
   await waitForReview(page);
   await expect(marginCards(page)).toHaveCount(5);
   return pid;
@@ -38,7 +39,8 @@ test('4 · asking for feedback streams cards into the margin, then the summary',
   await expect(marginCards(page)).toHaveCount(0);
   await expect(page.getByTestId('side-panel')).toHaveCount(0);
 
-  await askForFeedback(page, ['Structure', 'Word choice']);
+  // Ask a named editor, with one of its canned questions.
+  await askForFeedback(page, TEST_EDITOR.name, { question: TEST_EDITOR.questions[0]! });
   // Cards arrive one at a time while the review is still running.
   await expect(marginCards(page).first()).toBeVisible({ timeout: 20_000 });
   const whileRunning = await marginCards(page).count();
@@ -55,7 +57,19 @@ test('4 · asking for feedback streams cards into the margin, then the summary',
     2,
   );
 
+  await expect(page.getByTestId('review-editor')).toHaveText(TEST_EDITOR.name);
+
   const commits = await getCommits(pid);
+  // The request records the editor and its configuration at this moment.
+  const request = commits.find((c) => c.type === 'FeedbackRequested')!;
+  expect(request.actor.kind).toBe('human');
+  expect(request.payload).toMatchObject({
+    scope: { kind: 'document' },
+    lenses: TEST_EDITOR.lenses,
+    intensity: TEST_EDITOR.intensity,
+    ask: TEST_EDITOR.questions[0],
+    editor: { name: TEST_EDITOR.name, brief: TEST_EDITOR.brief },
+  });
   const agent = commits.filter((c) => c.actor.kind === 'agent');
   expect(agent.map((c) => c.type)).toEqual([
     'FeedbackSessionStarted',

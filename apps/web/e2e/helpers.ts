@@ -6,12 +6,18 @@ import { expect, test as base, type Locator, type Page } from '@playwright/test'
 import { applyCommit, emptyState, projectState, type LedgerState } from '@longhand/ledger';
 import {
   MANUSCRIPT_EVENT_TYPES,
+  STARTER_EDITORS,
   docFromJSON,
   type Commit,
   type PMNodeJSON,
   type ProjectState,
 } from '@longhand/schema';
 import { E2E } from './ports';
+import { TEST_EDITOR } from './seed';
+
+export { TEST_EDITOR };
+/** Names of the starter editors the service seeds. */
+export const STARTER_NAMES = STARTER_EDITORS.map((e) => e.name);
 
 // ------------------------------------------------------------------- the API
 
@@ -168,21 +174,26 @@ export async function storyProject(page: Page, title = 'Harbour'): Promise<strin
   return pid;
 }
 
-/** Opens the feedback form, picks lenses, asks, and waits for the review summary. */
+/**
+ * Opens the feedback form, chooses an editor (default: the seeded test editor),
+ * optionally taps one of its questions and types one, and asks.
+ */
 export async function askForFeedback(
   page: Page,
-  lenses: readonly string[] = ['Structure', 'Word choice'],
-  intensity?: string,
+  editor: string = TEST_EDITOR.name,
+  opts: { question?: string; ask?: string } = {},
 ): Promise<void> {
   await page.getByTestId('ask-feedback').click();
   const form = page.getByRole('form', { name: 'Ask for feedback' });
   await expect(form).toBeVisible();
-  for (const l of lenses) {
-    const chip = form.locator('label.lh-chip', { hasText: l });
-    if (!(await chip.locator('input').isChecked())) await chip.click();
-  }
-  if (intensity) await form.locator('label', { hasText: intensity }).click();
-  await form.getByRole('button', { name: 'Ask the editor' }).click();
+  await form
+    .locator('.lh-editor-option', {
+      has: page.locator('.lh-editor-name', { hasText: new RegExp(`^${editor}$`) }),
+    })
+    .click();
+  if (opts.question) await form.getByRole('button', { name: opts.question }).click();
+  if (opts.ask) await form.getByRole('textbox').fill(opts.ask);
+  await form.getByRole('button', { name: `Ask ${editor}` }).click();
 }
 
 export async function waitForReview(page: Page): Promise<void> {

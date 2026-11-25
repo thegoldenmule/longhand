@@ -13,6 +13,7 @@ import { DurableStreamTestServer } from '@durable-streams/server';
 import { loadConfig, startFromConfig } from '@longhand/server';
 import pg from 'pg';
 import { E2E } from './ports';
+import { E2E_ACCOUNT, TEST_EDITOR } from './seed';
 
 const ADMIN_URL =
   process.env.E2E_DATABASE_ADMIN_URL ?? 'postgres://longhand:longhand@localhost:5434/longhand';
@@ -69,7 +70,7 @@ async function main(): Promise<void> {
     DURABLE_STREAMS_URL: streamsUrl,
     DURABLE_STREAMS_PREFIX: 'e2e',
     AUTH_MODE: 'dev',
-    DEV_ACCOUNT_ID: 'e2e-account',
+    DEV_ACCOUNT_ID: E2E_ACCOUNT,
     DEV_USER_ID: 'e2e-writer',
     WITNESS_SIGNER: 'file',
     WITNESS_KEY_PATH: keyPath,
@@ -80,6 +81,9 @@ async function main(): Promise<void> {
     WEB_PORT: String(E2E.webPort),
   });
   const handle = await startFromConfig(cfg);
+  // The starter editors, plus the one the tests ask (see ./seed.ts).
+  await handle.editors.list(E2E_ACCOUNT);
+  await handle.editors.create(E2E_ACCOUNT, TEST_EDITOR);
   log(
     `ledger service ${handle.url} · database ${dbName} · streams ${streamsUrl} · model ${cfg.modelAdapter}`,
   );

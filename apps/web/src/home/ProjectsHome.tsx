@@ -70,6 +70,9 @@ export function ProjectsHome() {
       <header className="lh-home-bar">
         <span className="lh-wordmark">Longhand</span>
         <span className="lh-home-bar-end">
+          <a className="lh-link-quiet" href="/editors">
+            Editors
+          </a>
           <a className="lh-link-quiet" href="/verify">
             Verify a bundle
           </a>
