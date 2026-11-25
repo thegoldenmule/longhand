@@ -40,6 +40,8 @@ Everything under `/` and `/p` renders client-side only (`next/dynamic` with `ssr
 
 Keyboard: ⌘\ binder · ⇧⌘\ side panel · ⌥⌘\ just the page · ⌥⌘P tint · ⌥⌘. focus mode · ⌘/ all shortcuts · Esc leaves replay, report and corkboard.
 
+Formatting comes from the editor: Markdown rules as you type (including `` `code` `` and `[text](url)`), and the bubble toolbar above a selection (Bold, Italic, Link, Heading, Subheading, Quote, Code). ⌘K adds a link, ⌥F10 moves into the toolbar. The toolbar hides while the span inspector (a `role="dialog"`) is open. Imported Markdown keeps links (http, https and mailto only) and inline code (`src/lib/importDraft.ts`).
+
 ## The full-stack e2e suite (`e2e/`)
 
 `playwright.config.ts` starts, never reusing a server already on a port:

@@ -65,6 +65,36 @@ describe('importing a draft', () => {
     expect(parseInline('a ** b')).toEqual([{ type: 'text', text: 'a ** b' }]);
   });
 
+  it('reads links and inline code, with emphasis inside link text', () => {
+    const link = (href: string) => ({ type: 'link', attrs: { href } });
+    expect(
+      parseInline('See [the **site**](example.com "Title") and run `make *book*` or `` a`b ``.'),
+    ).toEqual([
+      { type: 'text', text: 'See ' },
+      { type: 'text', text: 'the ', marks: [link('https://example.com')] },
+      { type: 'text', text: 'site', marks: [link('https://example.com'), { type: 'strong' }] },
+      { type: 'text', text: ' and run ' },
+      { type: 'text', text: 'make *book*', marks: [{ type: 'code' }] },
+      { type: 'text', text: ' or ' },
+      { type: 'text', text: 'a`b', marks: [{ type: 'code' }] },
+      { type: 'text', text: '.' },
+    ]);
+    expect(parseInline('[mail](<mailto:ada@example.com>) [`code`](https://x.org/a_b)')).toEqual([
+      { type: 'text', text: 'mail', marks: [link('mailto:ada@example.com')] },
+      { type: 'text', text: ' ' },
+      { type: 'text', text: 'code', marks: [link('https://x.org/a_b'), { type: 'code' }] },
+    ]);
+    const doc = docFromJSON(draftToDoc('# A [linked](https://example.com) title', 'markdown'));
+    expect(doc.firstChild!.child(1).marks[0]!.attrs.href).toBe('https://example.com');
+  });
+
+  it('keeps links the href policy refuses as literal text', () => {
+    for (const bad of ['[x](javascript:alert)', '[x](data:text/html,hi)', '[x](/relative)']) {
+      expect(parseInline(bad), bad).toEqual([{ type: 'text', text: bad }]);
+      expect(() => draftToDoc(bad, 'markdown')).not.toThrow();
+    }
+  });
+
   it('guesses the format from the file name and hashes the bytes', async () => {
     expect(formatForName('draft.md')).toBe('markdown');
     expect(formatForName('draft.TXT')).toBe('text');

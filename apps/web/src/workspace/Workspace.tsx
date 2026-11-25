@@ -786,7 +786,9 @@ function ShortcutSheet(props: { shortcuts: readonly Shortcut[]; onClose: () => v
         </div>
       </dl>
       <p className="ws-note">
-        Formatting: Markdown shortcuts as you type (#, &gt;, -, *em*, **strong**).
+        Formatting: Markdown shortcuts as you type (#, &gt;, -, *em*, **strong**, `code`,
+        [text](url)). Select text for the toolbar. <kbd>{keyLabel('Mod-KeyK')}</kbd> adds a link and{' '}
+        <kbd>{keyLabel('Alt-F10')}</kbd> moves into the toolbar.
       </p>
       <div className="lh-form-actions">
         <button type="button" className="lh-button" onClick={props.onClose}>

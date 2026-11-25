@@ -1,31 +1,65 @@
 /**
  * Turns an existing draft (Markdown or plain text) into ProseMirror JSON for
  * `DocumentImported`. Deliberately small: headings, paragraphs, block quotes,
- * lists, scene breaks, hard breaks, *emphasis* and **strong**. Anything else
- * stays as literal text. The fold labels the result `imported` (unverified).
+ * lists, scene breaks, hard breaks, *emphasis*, **strong**, `inline code` and
+ * [links](https://example.com). A link whose destination the schema's href
+ * policy refuses (anything but http, https and mailto) stays literal text, as
+ * does anything else. The fold labels the result `imported` (unverified).
  */
-import { docFromJSON, type PMNodeJSON } from '@longhand/schema';
+import { docFromJSON, normalizeHref, type PMMarkJSON, type PMNodeJSON } from '@longhand/schema';
 
 type Inline = PMNodeJSON;
 
-/** `**strong**`, `__strong__`, `*em*`, `_em_` → text nodes with marks. */
+/** Mark rank order in the schema: marks must be listed in it. */
+const MARK_ORDER = ['link', 'em', 'strong', 'code'];
+
+function sortMarks(marks: PMMarkJSON[]): PMMarkJSON[] {
+  return [...marks].sort((a, b) => MARK_ORDER.indexOf(a.type) - MARK_ORDER.indexOf(b.type));
+}
+
+/**
+ * One pass over inline Markdown. Groups: 1–2 a code span (content literal),
+ * 3–4 `[text](destination "optional title")`, 5–6 `**strong**` or `__strong__`,
+ * 7–8 `*em*` or `_em_`.
+ */
+const INLINE =
+  /(`+)([\s\S]*?[^`])\1(?!`)|\[([^\]\n]+)\]\(\s*<?([^()\s<>]+)>?(?:\s+"[^"\n]*")?\s*\)|(\*\*|__)(?=\S)([\s\S]*?\S)\5|(\*|_)(?=\S)([\s\S]*?\S)\7/g;
+
+/** `**strong**`, `*em*`, `` `code` `` and `[text](url)` → text nodes with marks. */
 export function parseInline(text: string): Inline[] {
   const out: Inline[] = [];
-  const re = /(\*\*|__)(?=\S)([\s\S]*?\S)\1|(\*|_)(?=\S)([\s\S]*?\S)\3/g;
   let last = 0;
-  const push = (t: string, marks?: string[]) => {
+  const push = (t: string, marks: PMMarkJSON[] = []) => {
     if (!t) return;
     const node: Inline = { type: 'text', text: t };
-    if (marks?.length) node.marks = marks.map((m) => ({ type: m }));
+    if (marks.length) node.marks = sortMarks(marks);
     out.push(node);
   };
-  for (const m of text.matchAll(re)) {
+  for (const m of text.matchAll(INLINE)) {
     const i = m.index;
     // `_` inside a word (snake_case) is not emphasis.
-    if (m[3] === '_' && i > 0 && /\w/.test(text[i - 1] as string)) continue;
+    if ((m[5] === '__' || m[7] === '_') && i > 0 && /\w/.test(text[i - 1] as string)) continue;
+    let nodes: Inline[];
+    if (m[1]) {
+      // CommonMark strips one space on each side when both are there.
+      let code = m[2] as string;
+      if (/^ [\s\S]* $/.test(code) && code.trim() !== '') code = code.slice(1, -1);
+      nodes = [{ type: 'text', text: code, marks: [{ type: 'code' }] }];
+    } else if (m[3] !== undefined) {
+      const href = normalizeHref(m[4] as string);
+      if (!href) continue;
+      const link: PMMarkJSON = { type: 'link', attrs: { href } };
+      nodes = parseInline(m[3]).map((n) => ({
+        ...n,
+        marks: sortMarks([link, ...(n.marks ?? [])]),
+      }));
+    } else if (m[5]) {
+      nodes = [{ type: 'text', text: m[6] as string, marks: [{ type: 'strong' }] }];
+    } else {
+      nodes = [{ type: 'text', text: m[8] as string, marks: [{ type: 'em' }] }];
+    }
     push(text.slice(last, i));
-    if (m[1]) push(m[2] as string, ['strong']);
-    else push(m[4] as string, ['em']);
+    out.push(...nodes.filter((n) => n.text));
     last = i + m[0].length;
   }
   push(text.slice(last));
