@@ -1014,9 +1014,12 @@ kbd {
 .ws-left .lh-binder {
   padding: 8px 2px;
 }
+/* The pane is too narrow for the title and three tools on one line, so the
+   tools sit on their own row under the title, aligned with it. */
 .ws-left .lh-binder-area-head {
-  flex-wrap: nowrap;
-  align-items: center;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2px;
 }
 .ws-left .lh-binder-tool {
   white-space: nowrap;
@@ -1024,7 +1027,9 @@ kbd {
   padding: 2px 5px;
 }
 .ws-left .lh-binder-tools {
-  opacity: 0;
+  flex-wrap: wrap;
+  margin-left: -5px;
+  opacity: 0.55;
 }
 .ws-left .lh-binder-area:hover .lh-binder-tools,
 .ws-left .lh-binder-area:focus-within .lh-binder-tools {
