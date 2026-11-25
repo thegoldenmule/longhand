@@ -222,7 +222,7 @@ Additive; `SCHEMA_VERSION` stays 1. Old ledgers fold and verify unchanged; the g
 
 ## Contract revisions (light formatting)
 
-Additive; `SCHEMA_VERSION` stays 1 and every golden fixture verifies byte-for-byte.
+Additive. `SCHEMA_VERSION` stays 1 and every golden fixture verifies byte-for-byte.
 
 - **Marks.** The schema's marks are, in rank order, `link`, `em`, `strong` and `code`. `em` and `strong` keep their relative order, so every existing document serializes exactly as before.
 - **`link`** has one attr, `href`, and is non-inclusive (typing at its end does not extend it). It renders as `<a href rel="noopener noreferrer" target="_blank">`. `href` must satisfy `isAllowedHref`: `http:`, `https:` or `mailto:` only, already normalized (`normalizeHref(href) === href`), at most 2048 characters, with no whitespace, control characters, backslashes or userinfo, and `"<>` and backticks percent-encoded. `normalizeHref` turns `example.com` into `https://example.com` and `ada@example.com` into `mailto:ada@example.com`, and returns null for anything else (`javascript:`, `data:`, relative paths). The validator runs whenever a mark is created, so document JSON, `TextEdited` steps and `DocumentImported` content with a bad href are rejected (the fold reports `invalid-step`), and HTML parsing drops the mark and keeps the text. Pure string rules, no `URL` parser, so the fold stays deterministic.

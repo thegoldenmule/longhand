@@ -57,7 +57,7 @@ Without React, use `createEditorView({ mount, ...sameOptions })`. It returns the
 | `attributes`                                                                |                                               | extra attributes on the editable element                                                               |
 | `onWordCount`, `onStatus`, `onVersion`, `onError`, `onViolation`, `onDraft` |                                               |                                                                                                        |
 | `placeholder`                                                               | `'Begin here.'`                               | hint in an empty document (one empty paragraph); `null` turns it off. See "Placeholder"                |
-| `bubble`                                                                    | on                                            | the bubble toolbar; `false` turns it off, `{ suppress }` says when it must hide. See "Bubble toolbar"  |
+| `bubble`                                                                    | on                                            | the bubble toolbar. `false` turns it off, `{ suppress }` says when it must hide. See "Bubble toolbar"  |
 | `trustSyntheticEvents`                                                      | `false`                                       | **tests only**: treat synthetic DOM events as user input                                               |
 
 ## Extension points (for annotations, provenance-ui, research, apps/web)
@@ -201,8 +201,8 @@ interface RemoteUpdate {
 
 The schema's `link` mark (attr `href`) and `code` mark. Both are formatting: zero input units, kind `format`, words keep their class. The href is a mark attribute, never document text, so it is not counted as words and never reaches the matcher or attribution.
 
-- **Href policy.** Every href goes through the schema's `normalizeHref`: only `http:`, `https:` and `mailto:`; `example.com` becomes `https://example.com` and `ada@example.com` becomes `mailto:ada@example.com`; `javascript:`, `data:`, relative paths and anything with whitespace or userinfo are refused. The mark's validator enforces the same rule, so pasted HTML with a bad href keeps its text and loses the link.
-- **Ways in.** Mod-K or the toolbar's Link button, the `[text](url)` input rule, and pasting a URL over a non-empty selection (as Medium does). That paste is handled by `linkPastePlugin`: it adds the mark instead of inserting text, so no `PasteOccurred` is queued, the run is `typed` and the timeline entry is `format` with length 0. Only text that plainly is a link (`http(s)://…`, `mailto:…`, `www.…`, one line) counts; anything else pastes normally.
+- **Href policy.** Every href goes through the schema's `normalizeHref`: only `http:`, `https:` and `mailto:`. `example.com` becomes `https://example.com` and `ada@example.com` becomes `mailto:ada@example.com`. `javascript:`, `data:`, relative paths and anything with whitespace or userinfo are refused. The mark's validator enforces the same rule, so pasted HTML with a bad href keeps its text and loses the link.
+- **Ways in.** Mod-K or the toolbar's Link button, the `[text](url)` input rule, and pasting a URL over a non-empty selection (as Medium does). That paste is handled by `linkPastePlugin`: it adds the mark instead of inserting text, so no `PasteOccurred` is queued, the run is `typed` and the timeline entry is `format` with length 0. Only text that plainly is a link (`http(s)://…`, `mailto:…`, `www.…`, one line) counts. Anything else pastes normally.
 - **Non-inclusive.** Typing at a link's end does not extend it.
 - **Clicks never navigate.** `linkClickPlugin` prevents the default on every click on a link in the editor. ⌘-click (Ctrl-click elsewhere) opens it in a new tab with `noopener,noreferrer`. Rendered links carry `rel="noopener noreferrer"` and `target="_blank"`.
 - **Inline code** excludes bold and italic. It may sit inside a link.
@@ -251,7 +251,7 @@ A quiet floating toolbar (`bubblePlugin`, on by default) placed above a non-empt
   - scripted inserts and pastes refused;
   - Markdown shortcuts;
   - the offline queue surviving a reload and flushing on reconnect;
-  - `e2e/formatting.spec.ts`: the bubble toolbar's placement and buttons, keyboard access, links (Mod-K, refusal, the caret popover, no navigation, Mod-click to a new tab, Remove), pasting a URL over a selection, the `` `code` `` and `[text](url)` rules, and light and dark screenshots. **Written but not run yet** (it needs Chrome); the jsdom tests cover the same behaviour without layout.
+  - `e2e/formatting.spec.ts`: the bubble toolbar's placement and buttons, keyboard access, links (Mod-K, refusal, the caret popover, no navigation, Mod-click to a new tab, Remove), pasting a URL over a selection, the `` `code` `` and `[text](url)` rules, and light and dark screenshots. **Written but not run yet** (it needs Chrome). The jsdom tests cover the same behaviour without layout.
 
 ## Known gaps
 

@@ -47,7 +47,10 @@ The MVP is a single-user web app with every feature below, F1–F9, in full. Onl
   - Clicking or scrolling elsewhere never jumps the view. The next keystroke re-centers over about 120 ms, and the jump is instant under `prefers-reduced-motion`.
 - **Focus mode** dims everything except the current sentence or paragraph.
 - Minimal chrome: a ~66ch writing column, with the sidebar and margin hideable.
-- Light formatting: headings, emphasis, block quotes, lists, scene breaks, footnotes, all with Markdown-style input shortcuts.
+- Light formatting, the basics Medium allows: bold, italic, links, inline code, headings, block quotes, lists, scene breaks and footnotes, all with Markdown-style input shortcuts.
+  - A quiet bubble toolbar above a text selection: Bold, Italic, Link, Heading, Subheading, Quote and Code. It never takes focus while you type. Alt+F10 (or Tab) moves into it and Esc returns. In a footnote it offers only the marks.
+  - Links: ⌘K or the toolbar's inline URL field, `[text](url)`, or paste a URL over a selection. Only http, https and mailto links, and a bare `example.com` becomes `https://`. A click never navigates, and ⌘-click opens a new tab. With the caret in a link, a small popover shows the URL with Edit and Remove.
+  - Formatting is never words: adding or removing a mark (or a link's address) leaves the text, its provenance and the word counts unchanged.
 - Word counts per document, selection and session, plus optional daily goals.
 - No save button. Every change is committed to the ledger within about 2 s.
 
@@ -110,7 +113,7 @@ The MVP is a single-user web app with every feature below, F1–F9, in full. Onl
 
 ### F9 — Export
 
-- Markdown, DOCX and PDF, with an optional provenance appendix or verification link.
+- Markdown, DOCX and PDF, with an optional provenance appendix or verification link. Links stay live (`[text](url)`, Word hyperlinks, PDF link annotations) and inline code is set in a monospaced face.
 
 ### Not in v1
 
