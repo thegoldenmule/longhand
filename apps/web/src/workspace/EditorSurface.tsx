@@ -32,6 +32,22 @@ export interface EditorSurfaceProps {
   hidden?: boolean;
 }
 
+/** True when the writer is typing in another field, which opening a document must not steal from. */
+function typingElsewhere(): boolean {
+  const el = globalThis.document.activeElement as HTMLElement | null;
+  if (!el || el === globalThis.document.body) return false;
+  return el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName);
+}
+
+/** Puts the caret in a newly opened document, unless the writer is typing somewhere else. */
+function focusOnOpen(h: EditorHandle): void {
+  requestAnimationFrame(() => {
+    if (!h.view.dom.isConnected || h.view.dom.closest('[hidden]')) return;
+    if (typingElsewhere()) return;
+    h.focus();
+  });
+}
+
 export function EditorSurface(props: EditorSurfaceProps) {
   const scroller = useRef<HTMLDivElement | null>(null);
   const { document: doc } = props;
@@ -58,7 +74,10 @@ export function EditorSurface(props: EditorSurfaceProps) {
               'data-testid': 'manuscript',
               spellcheck: 'true',
             }}
-            onReady={props.onReady}
+            onReady={(h) => {
+              props.onReady(h);
+              focusOnOpen(h);
+            }}
             onStatus={props.onStatus}
             onWordCount={props.onWordCount}
           />

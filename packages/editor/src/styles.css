@@ -77,6 +77,22 @@
 .lh-editor .lh-manuscript p {
   margin: 0;
 }
+
+/* "Begin here." in an empty document: a widget, never text. Absolutely placed at
+   its own static position, so it takes no room and the caret stays at the start. */
+.lh-editor .lh-placeholder {
+  position: absolute;
+  color: var(--lh-ink-soft);
+  opacity: 0.6;
+  font-style: italic;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.lh-editor .lh-manuscript[contenteditable='false'] .lh-placeholder {
+  display: none;
+}
 .lh-editor .lh-manuscript p + p {
   text-indent: 1.5em;
 }

@@ -53,6 +53,7 @@ import { nodes } from './nodes';
 import { focusKey, focusPlugin, type FocusMode } from './ui/focus';
 import { footnoteNodeView } from './ui/footnote';
 import { clampCaretRatio, typewriterKey, typewriterPlugin } from './ui/typewriter';
+import { DEFAULT_PLACEHOLDER, placeholderPlugin } from './ui/placeholder';
 import { Emitter, newId } from './util';
 import { WordCounter, type DailyStorage, type WordCounts } from './wordCount';
 
@@ -117,6 +118,11 @@ export interface CreateEditorOptions {
   dailyStorage?: DailyStorage | null;
   /** Extra attributes for the editable element (e.g. `aria-label`). */
   attributes?: Record<string, string>;
+  /**
+   * Hint shown in an empty document (never document text: an `aria-hidden`
+   * widget). Default "Begin here."; `null` turns it off.
+   */
+  placeholder?: string | null;
   onWordCount?: (counts: WordCounts) => void;
   onStatus?: (status: SyncStatus) => void;
   onVersion?: (change: VersionChange) => void;
@@ -309,6 +315,9 @@ export function createEditorView(opts: CreateEditorOptions): EditorHandle {
       ...(opts.scrollContainer ? { scrollContainer: opts.scrollContainer } : {}),
     }),
     focusPlugin(settings.focusMode),
+    ...(opts.placeholder === null
+      ? []
+      : [placeholderPlugin(opts.placeholder ?? DEFAULT_PLACEHOLDER)]),
   ];
   let extraPlugins: readonly Plugin[] = opts.extraPlugins ?? [];
 

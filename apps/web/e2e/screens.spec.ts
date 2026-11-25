@@ -10,6 +10,7 @@ import {
   expect,
   manuscript,
   marginCards,
+  newProject,
   storyProject,
   test,
   waitForReview,
@@ -113,6 +114,13 @@ for (const theme of ['light', 'dark'] as const) {
       .getByRole('textbox', { name: 'Draft' })
       .fill('# On Harbours\n\nHarbours are where *cities* begin.');
     await shot('13-import');
+
+    await newProject(page, 'Blank page');
+    await themed(page);
+    await expect(manuscript(page)).toBeFocused();
+    await expect(manuscript(page).locator('.lh-placeholder')).toBeVisible();
+    await page.waitForTimeout(300);
+    await shot('14-new-document');
     expect(pid).toBeTruthy();
   });
 }

@@ -368,6 +368,38 @@ describe('createEditorView: UI state', () => {
     expect(handle.setDecorations(layer, [], 99)).toBe(false);
   });
 
+  it('shows a placeholder in an empty document that is never document text', async () => {
+    const { view, typeText, at, text, handle, transport } = make({}, '');
+    const hint = view.dom.querySelector('.lh-placeholder');
+    expect(hint?.textContent).toBe('Begin here.');
+    expect(hint?.getAttribute('aria-hidden')).toBe('true');
+    expect(hint?.getAttribute('contenteditable')).toBe('false');
+    expect(text()).toBe('');
+    expect(view.state.doc.textContent).toBe('');
+    at(1);
+    typeText('O');
+    expect(view.dom.querySelector('.lh-placeholder')).toBeNull();
+    expect(text()).toBe('O');
+    await committed(handle);
+    const committedText = JSON.stringify(transport.log);
+    expect(committedText).not.toContain('Begin here');
+    // Back to empty: the hint returns. Read-only editors hide it with CSS.
+    view.dom.dispatchEvent(new KeyboardEvent('keydown', { key: 'Backspace' }));
+    view.dom.dispatchEvent(beforeInput('deleteContentBackward', null));
+    view.dispatch(view.state.tr.delete(1, 2));
+    expect(text()).toBe('');
+    expect(view.dom.querySelector('.lh-placeholder')?.textContent).toBe('Begin here.');
+  });
+
+  it('shows no placeholder in a document with text, and none when turned off', () => {
+    expect(make().view.dom.querySelector('.lh-placeholder')).toBeNull();
+    expect(make({ placeholder: null }, '').view.dom.querySelector('.lh-placeholder')).toBeNull();
+    expect(
+      make({ placeholder: 'Start the scene.' }, '').view.dom.querySelector('.lh-placeholder')
+        ?.textContent,
+    ).toBe('Start the scene.');
+  });
+
   it('clamps the caret ratio', () => {
     const { handle } = make();
     handle.setSettings({ caretRatio: 0.9 });

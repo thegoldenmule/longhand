@@ -17,8 +17,14 @@ import {
 
 test('1 · a typed paragraph is saved and survives a reload', async ({ page }) => {
   const pid = await newProject(page, 'Persistence');
+  // A new document shows a quiet hint and already has the caret: type without clicking.
+  const hint = manuscript(page).locator('.lh-placeholder');
+  await expect(hint).toHaveText('Begin here.');
+  await expect(hint).toHaveAttribute('aria-hidden', 'true');
+  await expect(manuscript(page)).toBeFocused();
   const text = 'The tide came in quietly while the town slept.';
-  await typeParagraphs(page, [text]);
+  await page.keyboard.type(text, { delay: 4 });
+  await expect(hint).toHaveCount(0);
   await expect(page.getByTestId('save-state')).toHaveAttribute('data-state', /queued|saved/);
   await waitSaved(page, pid, text);
   await expect(page.getByTestId('save-state')).toHaveText(/Saved/);

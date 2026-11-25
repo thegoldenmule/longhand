@@ -56,6 +56,7 @@ Without React, use `createEditorView({ mount, ...sameOptions })`. It returns the
 | `dailyBaseline`, `dailyStorage`                                             | localStorage                                  | words written today before this editor opened                                                          |
 | `attributes`                                                                |                                               | extra attributes on the editable element                                                               |
 | `onWordCount`, `onStatus`, `onVersion`, `onError`, `onViolation`, `onDraft` |                                               |                                                                                                        |
+| `placeholder`                                                               | `'Begin here.'`                               | hint in an empty document (one empty paragraph); `null` turns it off. See "Placeholder"                |
 | `trustSyntheticEvents`                                                      | `false`                                       | **tests only**: treat synthetic DOM events as user input                                               |
 
 ## Extension points (for annotations, provenance-ui, research, apps/web)
@@ -93,6 +94,7 @@ All of these live on `EditorHandle` or are exported from the package root.
 
 - **Other human events.** `handle.acceptProposal(proposalId)` flushes pending steps and queues `ProposalAccepted` at the local version. The steps the fold derives come back as a remote update, and local edits typed meanwhile are rebased over them. `handle.submitEvent(type, payload)` queues any other human event (`SuggestionDismissed`, `ProposalRejected`, `FeedbackRequested`, …) in order with the text drafts. `TextEdited`, `PasteOccurred`, `SliceCopied` and `CitationInserted` are excluded, because only the editor's own capture may produce them.
 - **Commands and keymaps.** These are exported for reuse: `editorKeymaps(guard)`, `editorInputRules(guard)`, `insertHardBreak`, `insertSceneBreak`, `insertFootnote`, `granted(guard, cmd, grant)`, `focusPlugin`/`focusKey`, `typewriterPlugin`/`typewriterKey`, and `createInputGuard`, for embedding the guard in another view.
+- **Placeholder.** An empty document (one empty paragraph) shows a faint italic hint, `placeholder` (default `DEFAULT_PLACEHOLDER`, "Begin here."). It is a widget decoration (`placeholderPlugin`), never document text: `aria-hidden`, `contenteditable="false"`, unselectable, absolutely placed so the caret stays at the start of the line, gone on the first keystroke and hidden when the editor is read-only. `isEmptyDocument(doc)` is the test it uses.
 - **Styling.** `styles.css` themes everything through CSS variables on `.lh-editor`, such as `--lh-ink`, `--lh-ink-dim`, `--lh-paper`, `--lh-accent`, `--lh-font`, `--lh-measure` (66ch) and `--lh-caret-ratio`. Dark mode follows `prefers-color-scheme` or an ancestor's `data-theme="dark|light"`.
 
 ## Input guard and capture

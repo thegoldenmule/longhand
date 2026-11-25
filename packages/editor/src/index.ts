@@ -69,6 +69,12 @@ export {
 } from './commands';
 export { focusKey, focusPlugin, currentSentence, type FocusMode } from './ui/focus';
 export {
+  DEFAULT_PLACEHOLDER,
+  isEmptyDocument,
+  placeholderKey,
+  placeholderPlugin,
+} from './ui/placeholder';
+export {
   clampCaretRatio,
   typewriterControllerOf,
   typewriterKey,
