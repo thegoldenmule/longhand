@@ -532,7 +532,11 @@ class BubbleView {
   private focusToolbar(v: EditorView): boolean {
     this.target = v === this.view ? this.context() : v;
     this.refresh();
-    if (this.dom.hidden || this.mode === 'link') return this.mode === 'link';
+    if (this.mode === 'link') {
+      this.input.focus();
+      return true;
+    }
+    if (this.dom.hidden) return false;
     const first = this.focusables()[0];
     if (!first) return false;
     this.rove(first);
@@ -652,7 +656,8 @@ class BubbleView {
         }
       }
     }
-    if (blocked && linkOpen) this.closeLink(false);
+    // Not from inside a view update: closing dispatches.
+    if (blocked && linkOpen) queueMicrotask(() => this.closeLink(false));
     const wasHidden = this.dom.hidden;
     this.mode = mode;
     this.dom.hidden = mode === null;
