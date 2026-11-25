@@ -1,0 +1,8 @@
+{
+  "url": "https://example.com/",
+  "status": 200,
+  "contentType": "text/html; charset=utf-8",
+  "recordedAt": "2026-11-25T00:59:09.870Z",
+  "trimmed": true,
+  "body": "<!doctype html><html lang=en><head><meta charset=utf-8><link rel=icon href=data:,><meta name=viewport content=\"width=device-width,initial-scale=1\"><title>Example Domain</title><style></style></head>\n<body>\n\n</body></html>\n"
+}

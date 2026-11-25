@@ -1,0 +1,261 @@
+/*
+ * Styles for the @longhand/research components. Import once from the app
+ * (e.g. `import '@longhand/research/research.css'`). Everything is scoped under
+ * `.lh-research-*` and themed with CSS variables the app may override.
+ */
+:root {
+  --lh-research-fg: #1f1d1a;
+  --lh-research-muted: #6b665e;
+  --lh-research-bg: #fbfaf7;
+  --lh-research-card: #ffffff;
+  --lh-research-border: #e4e0d8;
+  --lh-research-accent: #2f5d50;
+  --lh-research-ai: #6a4fb3;
+  --lh-research-ai-bg: #f3effb;
+  --lh-research-error: #a23b2a;
+  --lh-research-radius: 6px;
+  --lh-research-font: inherit;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --lh-research-fg: #ece8e1;
+    --lh-research-muted: #a39d93;
+    --lh-research-bg: #1b1a18;
+    --lh-research-card: #23211e;
+    --lh-research-border: #3a3732;
+    --lh-research-accent: #7fbfa9;
+    --lh-research-ai: #b9a3f0;
+    --lh-research-ai-bg: #2a2438;
+    --lh-research-error: #f08a76;
+  }
+}
+
+.lh-research-panel {
+  color: var(--lh-research-fg);
+  background: var(--lh-research-bg);
+  font-family: var(--lh-research-font);
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.lh-research-panel h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.lh-research-panel h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem;
+}
+
+.lh-research-panel ul,
+.lh-research-panel ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.lh-research-count {
+  color: var(--lh-research-muted);
+  font-weight: 400;
+}
+
+.lh-research-card {
+  background: var(--lh-research-card);
+  border: 1px solid var(--lh-research-border);
+  border-radius: var(--lh-research-radius);
+  padding: 0.625rem 0.75rem;
+}
+
+.lh-research-card[data-archived] {
+  opacity: 0.6;
+}
+
+.lh-research-ai {
+  border-color: var(--lh-research-ai);
+  border-style: dashed;
+  background: var(--lh-research-ai-bg);
+}
+
+.lh-research-ai-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  letter-spacing: 0.01em;
+  color: var(--lh-research-ai);
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 0 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.lh-research-summary {
+  display: flex;
+  flex-direction: column;
+}
+
+.lh-research-summary-title {
+  font-weight: 500;
+}
+
+.lh-research-summary-byline,
+.lh-research-summary-type,
+.lh-research-provider,
+.lh-research-origin,
+.lh-research-hint,
+.lh-research-query,
+.lh-research-cite-line {
+  color: var(--lh-research-muted);
+  font-size: 0.8125rem;
+}
+
+.lh-research-error {
+  color: var(--lh-research-error);
+  font-size: 0.8125rem;
+}
+
+.lh-research-form,
+.lh-research-lookup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.lh-research-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.lh-research-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.lh-research-lookup-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.lh-research-lookup-row input {
+  flex: 1;
+}
+
+.lh-research-panel input,
+.lh-research-panel select,
+.lh-research-panel textarea {
+  font: inherit;
+  color: inherit;
+  background: var(--lh-research-card);
+  border: 1px solid var(--lh-research-border);
+  border-radius: var(--lh-research-radius);
+  padding: 0.3125rem 0.5rem;
+}
+
+.lh-research-panel button {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid var(--lh-research-border);
+  border-radius: var(--lh-research-radius);
+  padding: 0.25rem 0.625rem;
+  cursor: pointer;
+}
+
+.lh-research-panel button.lh-research-primary {
+  background: var(--lh-research-accent);
+  border-color: var(--lh-research-accent);
+  color: var(--lh-research-bg);
+}
+
+.lh-research-panel button.lh-research-link {
+  border: none;
+  padding: 0;
+  text-decoration: underline;
+  align-self: flex-start;
+}
+
+.lh-research-panel button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.lh-research-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 0.375rem;
+}
+
+.lh-research-details {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.125rem 0.75rem;
+  margin: 0.25rem 0;
+  font-size: 0.8125rem;
+}
+
+.lh-research-details div {
+  display: contents;
+}
+
+.lh-research-details dt {
+  color: var(--lh-research-muted);
+}
+
+.lh-research-details dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.lh-research-clipping blockquote {
+  margin: 0;
+  padding-left: 0.75rem;
+  border-left: 3px solid var(--lh-research-border);
+}
+
+.lh-research-clipping blockquote p {
+  margin: 0;
+}
+
+.lh-research-choices {
+  border: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  max-height: 16rem;
+  overflow-y: auto;
+}
+
+.lh-research-choice {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.lh-research-bib-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lh-research-bib-header h2 {
+  flex: 1;
+}
+
+.lh-research-bib[data-hanging-indent] li {
+  padding-left: 2em;
+  text-indent: -2em;
+}
