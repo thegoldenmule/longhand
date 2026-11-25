@@ -101,9 +101,10 @@
 
 .lh-binder-area-head {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: 8px;
+  gap: 2px 8px;
   padding: 0 6px 4px;
 }
 
@@ -118,7 +119,8 @@
 
 .lh-binder-tools {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  margin-left: auto;
   gap: 2px;
   opacity: 0.55;
   transition: opacity 120ms ease;
