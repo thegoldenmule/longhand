@@ -2,6 +2,7 @@ import { documentNode, projectState, stateAtSeq } from '@longhand/ledger';
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 import { ReplayScrubber } from './react/ReplayScrubber';
+import { provenanceDecorations } from './tint';
 import { ReplayPlayer, type PlayerClock } from './replay/player';
 import {
   commitEndMs,
@@ -254,7 +255,9 @@ describe('<ReplayScrubber>', () => {
     fireEvent.click(screen.getByTestId('replay-tint'));
     expect(doc.classList.contains('lh-prov-on')).toBe(true);
     const runs = projectState(stateAtSeq(commits, commits.length)).documents['doc-r']!.provenance;
-    expect(doc.querySelectorAll('[data-prov]').length).toBe(runs.length);
+    // One span per decoration; touching runs that look the same share one.
+    expect(doc.querySelectorAll('[data-prov]').length).toBe(provenanceDecorations(runs).length);
+    expect(provenanceDecorations(runs).length).toBeLessThan(runs.length);
     expect(doc.querySelectorAll('[data-prov="quoted"]').length).toBeGreaterThan(0);
     // Scrubbing keeps the tint, with the runs of that seq.
     fireEvent.change(screen.getByTestId('replay-slider'), { target: { value: '1' } });

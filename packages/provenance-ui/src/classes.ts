@@ -43,7 +43,7 @@ export const CLASS_META: Readonly<Record<TintClass, ClassMeta>> = {
   typed: {
     label: PROVENANCE_CLASS_INFO.typed.label,
     short: 'Typed',
-    description: 'Typed in the editor.',
+    description: 'Typed in the editor. Left plain in the tint, so everything else stands out.',
     underline: 'none',
   },
   'typed-from-suggestion': {

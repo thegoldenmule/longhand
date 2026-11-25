@@ -2,6 +2,7 @@
  * Writing: saving and reloading, paste classification, offline queueing and
  * imported drafts, through the real ledger service.
  */
+import { join } from 'node:path';
 import {
   expect,
   getCommits,
@@ -38,32 +39,56 @@ test('1 · a typed paragraph is saved and survives a reload', async ({ page }) =
   expect(edits.every((c) => c.actor.kind === 'human')).toBe(true);
 });
 
-test('2 · external paste is flagged in the tint and the legend', async ({ page }) => {
+test('2 · external paste is flagged in the tint and the legend', async ({ page }, testInfo) => {
   const pid = await newProject(page, 'Paste');
   const typed = 'I wrote this sentence myself.';
   await typeParagraphs(page, [typed]);
   await waitSaved(page, pid, typed);
-  const outside = ' These words came from somewhere else entirely.';
-  await page.evaluate((t) => navigator.clipboard.writeText(t), outside);
-  await page.keyboard.press('ControlOrMeta+V');
-  await waitSaved(page, pid, outside.trim());
+  // Two pastes, the second finishing a word the first began: two runs, one word.
+  const outside = [' These words came from some', 'where else entirely.'];
+  for (const part of outside) {
+    await page.evaluate((t) => navigator.clipboard.writeText(t), part);
+    await page.keyboard.press('ControlOrMeta+V');
+    await waitSaved(page, pid, part.trim());
+  }
 
   const s = await getState(pid);
   const doc = Object.values(s.documents)[0]!;
-  expect(doc.provenance.some((r) => r.class === 'pasted-external')).toBe(true);
+  expect(doc.provenance.filter((r) => r.class === 'pasted-external')).toHaveLength(2);
   const pastes = Object.values(s.pastes);
-  expect(pastes).toHaveLength(1);
-  expect(pastes[0]!.origin).toBe('external');
+  expect(pastes).toHaveLength(2);
+  expect(pastes.every((p) => p.origin === 'external')).toBe(true);
 
   await page.getByTestId('toggle-tint').click();
   await expect
     .poll(() => tintClassesOf(page, 'came from somewhere else'))
     .toEqual(['pasted-external']);
+  // The two touching paste runs draw as one span, so no seam splits "somewhere".
+  await expect(manuscript(page).locator('[data-prov="pasted-external"]')).toHaveCount(1);
+  await expect(manuscript(page).locator('[data-prov="pasted-external"]')).toHaveText(
+    outside.join('').trim(),
+  );
+  // Typed text is in the tint but stays plain: no wash, no underline.
   await expect.poll(() => tintClassesOf(page, 'wrote this sentence')).toEqual(['typed']);
+  const typedLook = await manuscript(page)
+    .locator('[data-prov="typed"]')
+    .first()
+    .evaluate((el) => {
+      const cs = getComputedStyle(el);
+      return [cs.backgroundColor, cs.textDecorationLine];
+    });
+  expect(typedLook).toEqual(['rgba(0, 0, 0, 0)', 'none']);
   await page.getByTestId('toggle-panel').click();
   await page.getByTestId('tab-provenance').click();
   await expect(page.getByTestId('legend-count-pasted-external')).toHaveText('7');
   await expect(page.getByTestId('legend-count-typed')).toHaveText('5');
+  const shot = (name: string) =>
+    page.screenshot({ path: join(testInfo.project.outputDir, 'screens', name) });
+  await page.waitForTimeout(250);
+  await shot('tint-paste-light.png');
+  await page.evaluate(() => (document.documentElement.dataset.theme = 'dark'));
+  await page.waitForTimeout(250);
+  await shot('tint-paste-dark.png');
 });
 
 test('3 · an internal copy and paste inherits the copied text’s class', async ({ page }) => {

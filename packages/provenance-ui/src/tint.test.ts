@@ -12,23 +12,52 @@ afterEach(() => {
   document.body.innerHTML = '';
 });
 
+const tintClassOf = (r: ProvenanceRun) =>
+  r.class === 'pasted-internal' ? 'pasted-external' : r.class;
+
 function decoRanges(tint: ReturnType<typeof createProvenanceTint>, state: EditorState) {
   return tint.layer
     .get(state)
     .find()
     .map((d) => {
-      const run = (d.spec as { provenance: ProvenanceRun }).provenance;
-      return { from: d.from, to: d.to, class: run.class, originSeq: run.originSeq };
+      const spec = d.spec as { provenance: ProvenanceRun; runs: ProvenanceRun[] };
+      return {
+        from: d.from,
+        to: d.to,
+        class: tintClassOf(spec.provenance),
+        originSeqs: spec.runs.map((r) => r.originSeq),
+      };
     })
     .sort((a, b) => a.from - b.from);
 }
 
+/**
+ * Checks merged decorations against the runs: every run position is covered by
+ * one decoration of the run's class whose seqs include the run's, and no two
+ * touching decorations look the same (they would have been merged).
+ */
+function expectMergedCover(
+  decos: ReturnType<typeof decoRanges>,
+  runs: readonly ProvenanceRun[],
+): void {
+  for (const r of runs) {
+    for (let pos = r.from; pos < r.to; pos++) {
+      const covering = decos.filter((d) => d.from <= pos && pos < d.to);
+      expect(covering).toHaveLength(1);
+      expect(covering[0]!.class).toBe(tintClassOf(r));
+      expect(covering[0]!.originSeqs).toContain(r.originSeq);
+    }
+  }
+  const covered = decos.reduce((n, d) => n + d.to - d.from, 0);
+  expect(covered).toBe(runs.reduce((n, r) => n + r.to - r.from, 0));
+  expect(decos.length).toBeLessThanOrEqual(runs.length);
+}
+
 describe('provenance tint decorations', () => {
-  it('builds one inline decoration per run with class, seq and matched kind', () => {
+  it('builds inline decorations with class, seq and matched kind', () => {
     const { fixture: f } = fixture('suggestions');
     const runs = f.expected.state.documents['doc-s']!.provenance;
     const decos = provenanceDecorations(runs);
-    expect(decos).toHaveLength(runs.length);
     const comment = decos.find(
       (d) => d.kind === 'inline' && d.attrs['data-prov-matched'] === 'comment',
     );
@@ -45,6 +74,31 @@ describe('provenance tint decorations', () => {
     });
   });
 
+  it('merges touching runs that look the same, so a run boundary never shows', () => {
+    const run = (from: number, to: number, cls: ProvenanceRun['class'], seq: number) =>
+      ({ from, to, class: cls, originSeq: seq }) as ProvenanceRun;
+    const decos = provenanceDecorations([
+      run(1, 5, 'typed', 3),
+      run(5, 9, 'typed', 4), // a batch ended mid-word
+      run(9, 14, 'pasted-external', 5),
+      run(14, 20, 'pasted-internal', 6), // folds as pasted-external, a second paste
+      run(20, 24, 'pasted-external', 7),
+      run(26, 30, 'pasted-external', 8), // not touching
+      { ...run(30, 34, 'typed-from-suggestion', 9), matchedKind: 'comment' },
+      { ...run(34, 38, 'typed-from-suggestion', 10), matchedKind: 'suggestion' },
+    ]);
+    expect(
+      decos.map((d) => (d.kind === 'inline' ? [d.from, d.to, d.attrs['data-prov-seq']] : [])),
+    ).toEqual([
+      [1, 9, '3 4'],
+      [9, 24, '5 6 7'],
+      [26, 30, '8'],
+      [30, 34, '9'],
+      [34, 38, '10'],
+    ]);
+    expect((decos[1]!.spec as { runs: ProvenanceRun[] }).runs).toHaveLength(3);
+  });
+
   for (const { name, doc } of fixtureDocuments()) {
     it(`${name}/${doc.id}: decoration ranges match the fixture provenance`, () => {
       const tint = createProvenanceTint({ enabled: true });
@@ -53,14 +107,7 @@ describe('provenance tint decorations', () => {
       tint.attach(ed.handle);
       expect(tint.setRuns(doc.provenance, doc.version)).toBe(true);
       const view = ed.handle.view;
-      expect(decoRanges(tint, view.state)).toEqual(
-        doc.provenance.map((r) => ({
-          from: r.from,
-          to: r.to,
-          class: r.class,
-          originSeq: r.originSeq,
-        })),
-      );
+      expectMergedCover(decoRanges(tint, view.state), doc.provenance);
       // The DOM carries the class on exactly the run's text.
       const pmDoc = view.state.doc;
       for (const cls of new Set(doc.provenance.map((r) => r.class))) {

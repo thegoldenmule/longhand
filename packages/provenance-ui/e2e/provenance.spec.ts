@@ -2,7 +2,8 @@ import { expect, test, type Page } from '@playwright/test';
 import { charCenter, openDemo, SCREEN_DIR, tintStyles } from './helpers';
 
 const LIGHT = {
-  typed: { bg: 'rgba(111, 143, 98, 0.1)', line: 'none' },
+  // Typed, almost everything, stays plain so the other classes stand out.
+  typed: { bg: 'rgba(0, 0, 0, 0)', line: 'none' },
   'typed-from-suggestion': { bg: 'rgba(118, 86, 168, 0.13)', line: 'underline', style: 'dotted' },
   'pasted-external': { bg: 'rgba(194, 112, 42, 0.17)', line: 'underline', style: 'wavy' },
   imported: { bg: 'rgba(86, 112, 143, 0.13)', line: 'underline', style: 'dashed' },
@@ -10,36 +11,64 @@ const LIGHT = {
 } as const;
 
 const DARK_BG = {
-  typed: 'rgba(147, 179, 134, 0.1)',
+  typed: 'rgba(0, 0, 0, 0)',
   'typed-from-suggestion': 'rgba(181, 157, 224, 0.16)',
   'pasted-external': 'rgba(224, 154, 85, 0.18)',
   imported: 'rgba(154, 176, 204, 0.15)',
   quoted: 'rgba(118, 194, 187, 0.15)',
 } as const;
 
-/** Every run's text equals the text of the spans that carry its class and seq. */
+/**
+ * The spans of each class carry exactly that class's run text, in order, and
+ * each span's seqs belong to runs of its class. Touching runs that look the same
+ * share one span, so its `data-prov-seq` lists several seqs.
+ */
 async function expectSpansMatchRuns(page: Page): Promise<void> {
   const mismatches = await page.evaluate(() => {
     const { tint, handle } = window.__prov;
     const doc = handle!.view.state.doc;
     const out: string[] = [];
-    const byKey = new Map<string, string>();
+    const cls = (c: string) => (c === 'pasted-internal' ? 'pasted-external' : c);
+    const text = new Map<string, string>();
+    const seqs = new Map<string, Set<string>>();
+    for (const r of [...tint.getSnapshot().runs].sort((a, b) => a.from - b.from)) {
+      const k = cls(r.class);
+      text.set(k, (text.get(k) ?? '') + doc.textBetween(r.from, r.to, '', ''));
+      seqs.set(k, (seqs.get(k) ?? new Set()).add(String(r.originSeq)));
+    }
+    const shown = new Map<string, string>();
     for (const el of document.querySelectorAll<HTMLElement>(
       '[data-testid="manuscript"] [data-prov]',
     )) {
-      const k = `${el.dataset.prov}@${el.dataset.provSeq}`;
-      byKey.set(k, (byKey.get(k) ?? '') + (el.textContent ?? ''));
+      const k = el.dataset.prov as string;
+      shown.set(k, (shown.get(k) ?? '') + (el.textContent ?? ''));
+      for (const seq of (el.dataset.provSeq ?? '').split(' ')) {
+        if (!seqs.get(k)?.has(seq)) out.push(`${k}: seq ${seq} has no run of that class`);
+      }
     }
-    const want = new Map<string, string>();
-    for (const r of tint.getSnapshot().runs) {
-      const k = `${r.class}@${r.originSeq}`;
-      want.set(k, (want.get(k) ?? '') + doc.textBetween(r.from, r.to, '', ''));
-    }
-    for (const [k, v] of want) if (byKey.get(k) !== v) out.push(`${k}: ${byKey.get(k)} != ${v}`);
-    for (const k of byKey.keys()) if (!want.has(k)) out.push(`extra ${k}`);
+    for (const [k, v] of text) if (shown.get(k) !== v) out.push(`${k}: ${shown.get(k)} != ${v}`);
+    for (const k of shown.keys()) if (!text.has(k)) out.push(`extra ${k}`);
     return out;
   });
   expect(mismatches).toEqual([]);
+}
+
+/** Visible gaps: two touching tint spans of the same look would show a seam. */
+async function touchingTwins(page: Page): Promise<string[]> {
+  return page.evaluate(() => {
+    const out: string[] = [];
+    const look = (el: HTMLElement) =>
+      `${el.dataset.prov}|${el.dataset.provMatched ?? ''}|${el.dataset.provMoved ?? ''}`;
+    for (const el of document.querySelectorAll<HTMLElement>(
+      '[data-testid="manuscript"] [data-prov]',
+    )) {
+      const next = el.nextSibling;
+      if (next instanceof HTMLElement && next.dataset.prov && look(next) === look(el)) {
+        out.push(`${el.textContent}|${next.textContent}`);
+      }
+    }
+    return out;
+  });
 }
 
 test.describe('tint', () => {
@@ -52,6 +81,7 @@ test.describe('tint', () => {
     await toggle.click();
     await expect(toggle).toHaveAttribute('aria-checked', 'true');
     await expectSpansMatchRuns(page);
+    expect(await touchingTwins(page)).toEqual([]);
     const styles = await tintStyles(page);
     expect(styles.typed).toMatchObject({ bg: LIGHT.typed.bg, line: 'none' });
     expect(styles['typed-from-suggestion']).toMatchObject({
@@ -68,6 +98,10 @@ test.describe('tint', () => {
     expect(kinds).toEqual(['comment', 'insertion', 'suggestion']);
     await page.waitForTimeout(250); // let the 160 ms ease finish
     await page.screenshot({ path: `${SCREEN_DIR}/tint-light.png` });
+    await page.evaluate(() => document.documentElement.setAttribute('data-theme', 'dark'));
+    await page.waitForTimeout(250);
+    await page.screenshot({ path: `${SCREEN_DIR}/tint-dark.png` });
+    await page.evaluate(() => document.documentElement.setAttribute('data-theme', 'light'));
     await toggle.click();
     await expect(page.locator('[data-testid="manuscript"] [data-prov]')).toHaveCount(0);
   });
@@ -75,6 +109,7 @@ test.describe('tint', () => {
   test('pasted, imported and quoted classes', async ({ page }) => {
     await openDemo(page, { fixture: 'research', theme: 'light', tint: '1' });
     await expectSpansMatchRuns(page);
+    expect(await touchingTwins(page)).toEqual([]);
     const r = await tintStyles(page);
     expect(r.quoted).toMatchObject({ bg: LIGHT.quoted.bg, line: 'underline', style: 'double' });
     expect(r['pasted-external']).toMatchObject({

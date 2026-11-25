@@ -48,26 +48,26 @@ Keyboard: ⌘\ binder · ⇧⌘\ side panel · ⌥⌘\ just the page · ⌥⌘P 
 
 Every test ends with the invariant checked from the outside (`assertHumanManuscript` in `e2e/helpers.ts`): every project's ledger is fetched from `/commits` and replayed, and every commit that changed any document's text must have a human actor and a manuscript event type.
 
-| #   | Test                | Proves                                                                                                                                               |
-| --- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1   | save and reload     | a new document has the caret and the hint; typing reaches the ledger within the batch window, the status line says Saved, the text survives a reload |
-| 2   | external paste      | a clipboard paste folds as `pasted-external` with a `PasteOccurred`; the tint and the legend show it                                                 |
-| 3   | internal copy/paste | `SliceCopied → PasteOccurred → TextEdited(pasted-internal)` and the pasted text keeps the `typed` class                                              |
-| 4   | ask for feedback    | nothing appears until asked; cards stream into the margin while the review runs; the summary arrives; agent commits only; text unchanged             |
-| 5   | trace-over          | retyping a word-choice alternative resolves it **adopted** with `typed-from-suggestion` provenance and the trace hint on the run                     |
-| 6   | proposals           | accepting a paragraph move moves the text, keeps its `originSeq` and class and records the move; rejecting the other with a reason                   |
-| 7   | dismiss and discuss | dismiss with reason _Later_; Discuss gets the editor's reply, which never enters the text                                                            |
-| 8   | ghost text          | the inline ghost is `user-select: none` and `aria-hidden`; copying across it (and across a card's alternatives) never yields AI text                 |
-| 9   | binder              | nested folders, a keyboard move (M, ↓, Enter), a drag into a folder, a corkboard synopsis, a note written like any document                          |
-| 10  | research            | a source added by hand, cited (`CitationInserted`, quoted run), a clipping placed as a quote block, the bibliography                                 |
-| 11  | replay              | scrubbing back shows a strict earlier prefix of the text; End returns to the head                                                                    |
-| 12  | report              | the disclosure and numbers equal `computeReport` over the ledger (40 words: 90.0% typed, 10.0% pasted)                                               |
-| 13  | bundle              | the downloaded bundle passes all six verifier checks (also against the published key) and on `/verify`; one changed byte fails the chain             |
-| 14  | export              | Markdown, DOCX (unzipped) and PDF (pdfjs) downloads contain the text and the appendix                                                                |
-| 15  | offline             | offline typing shows _Offline · changes queued_, flushes on reconnect, and the report shows the unwitnessed interval                                 |
-| 16  | import              | an imported draft shows _imported (unverified)_ in the title, the tint and the report                                                                |
-| —   | screens             | every main view in light and dark, saved to `test-results/screens/`                                                                                  |
-| —   | live                | one real light-touch review from the UI (`LONGHAND_LIVE_CLAUDE=1`)                                                                                   |
+| #   | Test                | Proves                                                                                                                                                                                                |
+| --- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | save and reload     | a new document has the caret and the hint; typing reaches the ledger within the batch window, the status line says Saved, the text survives a reload                                                  |
+| 2   | external paste      | two clipboard pastes (the second finishing a word) fold as `pasted-external` runs with `PasteOccurred`s; the tint draws them as one seamless span, typed text stays plain, and the legend counts them |
+| 3   | internal copy/paste | `SliceCopied → PasteOccurred → TextEdited(pasted-internal)` and the pasted text keeps the `typed` class                                                                                               |
+| 4   | ask for feedback    | nothing appears until asked; cards stream into the margin while the review runs; the summary arrives; agent commits only; text unchanged                                                              |
+| 5   | trace-over          | retyping a word-choice alternative resolves it **adopted** with `typed-from-suggestion` provenance and the trace hint on the run                                                                      |
+| 6   | proposals           | accepting a paragraph move moves the text, keeps its `originSeq` and class and records the move; rejecting the other with a reason                                                                    |
+| 7   | dismiss and discuss | dismiss with reason _Later_; Discuss gets the editor's reply, which never enters the text                                                                                                             |
+| 8   | ghost text          | the inline ghost is `user-select: none` and `aria-hidden`; copying across it (and across a card's alternatives) never yields AI text                                                                  |
+| 9   | binder              | nested folders, a keyboard move (M, ↓, Enter), a drag into a folder, a corkboard synopsis, a note written like any document                                                                           |
+| 10  | research            | a source added by hand, cited (`CitationInserted`, quoted run), a clipping placed as a quote block, the bibliography                                                                                  |
+| 11  | replay              | scrubbing back shows a strict earlier prefix of the text; End returns to the head                                                                                                                     |
+| 12  | report              | the disclosure and numbers equal `computeReport` over the ledger (40 words: 90.0% typed, 10.0% pasted)                                                                                                |
+| 13  | bundle              | the downloaded bundle passes all six verifier checks (also against the published key) and on `/verify`; one changed byte fails the chain                                                              |
+| 14  | export              | Markdown, DOCX (unzipped) and PDF (pdfjs) downloads contain the text and the appendix                                                                                                                 |
+| 15  | offline             | offline typing shows _Offline · changes queued_, flushes on reconnect, and the report shows the unwitnessed interval                                                                                  |
+| 16  | import              | an imported draft shows _imported (unverified)_ in the title, the tint and the report                                                                                                                 |
+| —   | screens             | every main view in light and dark, saved to `test-results/screens/`                                                                                                                                   |
+| —   | live                | one real light-touch review from the UI (`LONGHAND_LIVE_CLAUDE=1`)                                                                                                                                    |
 
 Test 15 makes the page's clock read three minutes earlier while offline (Playwright `clock.setFixedTime`), because the report flags a commit as queued offline when it reaches the server more than 60 s (`UNWITNESSED_LAG_MS`) after it was written.
 

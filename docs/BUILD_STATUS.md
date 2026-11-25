@@ -83,6 +83,12 @@ Integration note (provenance-ui): the span inspector needs the folded `LedgerSta
 8. **Browser coverage:** every Playwright suite ran in Chrome only.
 9. **No root LICENSE**; the verifier declares MIT. Needs the owner's decision.
 
+## Polish after hand testing
+
+- Agent prompt v2 (`SYSTEM_PROMPT_VERSION = 'v2'`, v1 kept): ids such as `p1.s2`, `s3` and `fn1.s1` never appear in text the writer reads; the tool executor rejects them in every writer-facing field. Live sonnet check passed with no ids in the prose. (2a094d9)
+- An empty document shows a faint "Begin here." (an `aria-hidden` widget, never text), and opening a document puts the caret in it. (26b5132)
+- The provenance tint leaves typed text plain, so pasted, imported, quoted and from-a-suggestion text stand out; touching runs that look the same draw as one span, so run boundaries inside a word leave no seam.
+
 ## Notes
 
 - Commits go straight to `main` and are pushed after each phase.

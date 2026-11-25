@@ -147,15 +147,55 @@ export function runAttrs(run: ProvenanceRun): Record<string, string> {
   return attrs;
 }
 
-/** Inline decorations, one per run, at the runs' positions. */
+/** Attributes that decide how a run looks; runs that agree on them draw as one span. */
+function lookKey(attrs: Record<string, string>): string {
+  return [
+    attrs['data-prov'],
+    attrs['data-prov-matched'] ?? '',
+    attrs['data-prov-moved'] ?? '',
+  ].join('|');
+}
+
+/**
+ * Inline decorations for the runs. Adjacent runs that look the same (same class,
+ * matched kind and moved state) are merged into one decoration, so run
+ * boundaries (a batch ending mid-word, two pastes side by side) never show as a
+ * seam in the wash or a restart in the underline. A merged decoration's
+ * `data-prov-seq` lists every origin seq it covers, space-separated, and its
+ * `spec.runs` holds the runs (`spec.provenance` is the first).
+ */
 export function provenanceDecorations(runs: readonly ProvenanceRun[]): LayerDecoration[] {
-  return runs.map((run) => ({
-    kind: 'inline' as const,
-    from: run.from,
-    to: run.to,
-    attrs: runAttrs(run),
-    spec: { provenance: run },
-  }));
+  const sorted = [...runs].sort((a, b) => a.from - b.from || a.to - b.to);
+  const out: LayerDecoration[] = [];
+  let group: {
+    from: number;
+    to: number;
+    attrs: Record<string, string>;
+    runs: ProvenanceRun[];
+  } | null = null;
+  const flush = () => {
+    if (!group) return;
+    const seqs = [...new Set(group.runs.map((r) => String(r.originSeq)))];
+    out.push({
+      kind: 'inline',
+      from: group.from,
+      to: group.to,
+      attrs: { ...group.attrs, 'data-prov-seq': seqs.join(' ') },
+      spec: { provenance: group.runs[0], runs: group.runs },
+    });
+  };
+  for (const run of sorted) {
+    const attrs = runAttrs(run);
+    if (group && group.to === run.from && lookKey(group.attrs) === lookKey(attrs)) {
+      group.to = run.to;
+      group.runs.push(run);
+      continue;
+    }
+    flush();
+    group = { from: run.from, to: run.to, attrs, runs: [run] };
+  }
+  flush();
+  return out;
 }
 
 /** Default inspector key: Alt-Enter (Option-Return), no other modifiers. */

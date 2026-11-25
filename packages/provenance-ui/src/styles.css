@@ -5,9 +5,11 @@
  * them. Dark mode follows `prefers-color-scheme` unless an ancestor (or the root)
  * carries `data-theme="light"`; `data-theme="dark"` forces it.
  *
- * Each class has a quiet background wash and its own underline style, so the
- * tint never relies on colour alone: typed has none, typed from a suggestion is
- * dotted, pasted is wavy, imported is dashed, quoted is double.
+ * Typed text, almost everything, stays plain: no wash and no underline, so the
+ * page does not turn to stripes. Every other class has a quiet background wash
+ * and its own underline style, so the tint never relies on colour alone: typed
+ * from a suggestion is dotted, pasted is wavy, imported is dashed, quoted is
+ * double. (Highlighting Typed from the legend still washes it.)
  */
 
 :root {
@@ -41,7 +43,8 @@
   --lh-prov-shadow: 0 10px 30px rgb(35 33 30 / 0.1), 0 1px 3px rgb(35 33 30 / 0.08);
 
   /* Washes (composited on paper, ink keeps > 12:1) and underline colours (> 3.5:1). */
-  --lh-prov-typed-bg: rgb(111 143 98 / 0.1);
+  /* Typed stays plain; an app may set a wash here. */
+  --lh-prov-typed-bg: transparent;
   --lh-prov-typed-strong: rgb(111 143 98 / 0.24);
   --lh-prov-typed-line: #5f7f53;
   --lh-prov-suggestion-bg: rgb(118 86 168 / 0.13);
@@ -80,7 +83,6 @@
     --lh-prov-focus: #9db6cf;
     --lh-prov-shadow: 0 12px 32px rgb(0 0 0 / 0.45), 0 1px 3px rgb(0 0 0 / 0.4);
 
-    --lh-prov-typed-bg: rgb(147 179 134 / 0.1);
     --lh-prov-typed-strong: rgb(147 179 134 / 0.24);
     --lh-prov-typed-line: #93b386;
     --lh-prov-suggestion-bg: rgb(181 157 224 / 0.16);
@@ -118,7 +120,6 @@
   --lh-prov-focus: #9db6cf;
   --lh-prov-shadow: 0 12px 32px rgb(0 0 0 / 0.45), 0 1px 3px rgb(0 0 0 / 0.4);
 
-  --lh-prov-typed-bg: rgb(147 179 134 / 0.1);
   --lh-prov-typed-strong: rgb(147 179 134 / 0.24);
   --lh-prov-typed-line: #93b386;
   --lh-prov-suggestion-bg: rgb(181 157 224 / 0.16);
@@ -185,6 +186,11 @@
   text-decoration-style: double;
   text-decoration-color: var(--lh-prov-quoted-line);
   text-decoration-thickness: 1px;
+}
+
+/* The legend's sample for Typed: plain text in a hairline frame, read as "unmarked". */
+.lh-prov-sample.lh-prov--typed {
+  box-shadow: inset 0 0 0 1px var(--lh-prov-rule);
 }
 
 /* Highlighting one class (from the legend): it deepens, the others fade. */

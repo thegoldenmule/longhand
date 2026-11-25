@@ -95,7 +95,7 @@ function Manuscript({ commits, documentId, transport }) {
 | `toLedgerPos(localPos)`     | The character's position in the runs' version, or null.                                                                                       |
 | `markSpan(range \| null)`   | Outlines a span (ledger positions); the inspector uses it for the span it shows.                                                              |
 
-The plugin sets `class="lh-prov-on"` and `data-prov-highlight="<class>"` on the editable element. Each run becomes one inline decoration: `<span class="lh-prov lh-prov--<class>" data-prov="<class>" data-prov-seq="<originSeq>">`. A typed-from-suggestion run also gets `data-prov-matched="<matchedKind>"` and a `title` such as "Typed from a suggestion: matched a margin comment". A moved run gets `data-prov-moved="<count>"`. `provenanceDecorations(runs)` and `runAttrs(run)` expose this mapping.
+The plugin sets `class="lh-prov-on"` and `data-prov-highlight="<class>"` on the editable element. Each run becomes an inline decoration: `<span class="lh-prov lh-prov--<class>" data-prov="<class>" data-prov-seq="<originSeq>">`. Touching runs that look the same (same class, matched kind and moved state) are merged into one decoration, so a run boundary (a batch that ended mid-word, two pastes side by side) never shows as a seam in the wash or a restart in the underline; a merged span's `data-prov-seq` lists its seqs, space-separated, and its `spec.runs` holds the runs. A typed-from-suggestion run also gets `data-prov-matched="<matchedKind>"` and a `title` such as "Typed from a suggestion: matched a margin comment". A moved run gets `data-prov-moved="<count>"`. `provenanceDecorations(runs)` and `runAttrs(run)` expose this mapping.
 
 ### Legend
 
@@ -176,13 +176,13 @@ Import `@longhand/provenance-ui/styles.css` once. Every colour is a `--lh-prov-*
 
 | Class                   | Wash        | Underline (the non-colour cue) |
 | ----------------------- | ----------- | ------------------------------ |
-| Typed                   | faint sage  | none                           |
+| Typed                   | none        | none                           |
 | Typed from a suggestion | soft violet | dotted                         |
 | Pasted (external)       | warm amber  | wavy                           |
 | Imported (unverified)   | slate       | dashed                         |
 | Quoted from a source    | teal        | double                         |
 
-The washes are low alpha. Ink on every wash keeps a contrast above 12:1 in light mode and above 9:1 in dark mode. Underline colours are above 3.5:1 against their wash. Highlighting deepens one class and clears the others. Transitions are off under `prefers-reduced-motion`. The replay view reuses the editor's `.lh-editor .lh-manuscript` typography, with its own padding.
+Typed text is almost all of a manuscript, so it stays plain (`--lh-prov-typed-bg` is `transparent`; an app may set one): the page never turns to stripes, and pasted, imported, quoted and from-a-suggestion text stand out. Its legend sample is plain text in a hairline frame. Highlighting Typed from the legend still gives it a wash. The washes are low alpha. Ink on every wash keeps a contrast above 12:1 in light mode and above 9:1 in dark mode. Underline colours are above 3.5:1 against their wash. Highlighting deepens one class and clears the others. Transitions are off under `prefers-reduced-motion`. The replay view reuses the editor's `.lh-editor .lh-manuscript` typography, with its own padding.
 
 ## Demo
 
@@ -201,7 +201,7 @@ Typing in the demo editor works and the tint maps around new text, but the demo 
   - **Inspector:** chosen positions in `suggestions` (typed, adopted word choice, insertion, comment match), `internal-paste` (external paste size, internal paste with size, re-pasted paste, drop, unverified internal paste), `proposals` (sentence and paragraph moves, joining space) and `research` (citation and clipping sources, mismatched clipping). The popover's rows, Escape, and `ProvenanceInspector` with keyboard focus and return, click, unsynced text, and tint off.
   - **Replay:** frames, gap capping on the two-day `novel` ledger, markers against `agentSessions` and the commit types, player timing with a fake clock (speeds, speed change mid-play, pause, restart, frame skipping), and scrubbing to every seq of every fixture rendering `stateAtSeq` text. Also document scope, the tint, marker jumps, and playback in the component.
 - **Playwright** (Chrome, 9 tests):
-  - tint colours and underline styles on the expected spans (every run's text equals its spans'), light and dark;
+  - tint colours and underline styles on the expected spans (each class's run text equals its spans', and no two touching spans look the same), typed plain, light and dark;
   - legend counts and highlighting;
   - the inspector by click and by keyboard (focus moves in, Tab to Close, focus returns);
   - moves after an accepted proposal;
