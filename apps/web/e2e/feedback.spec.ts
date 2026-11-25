@@ -112,9 +112,7 @@ test('6 · accepting a move moves the text and keeps its provenance; rejecting a
   const before = await getState(pid);
   const doc0 = Object.values(before.documents)[0]!;
   const proposals = Object.values(before.annotations.proposals);
-  const paragraphMove = proposals.find(
-    (p) => p.kind === 'move' && p.span.unit === 'paragraph',
-  )!;
+  const paragraphMove = proposals.find((p) => p.kind === 'move' && p.span.unit === 'paragraph')!;
   const sentenceMove = proposals.find((p) => p.id !== paragraphMove.id)!;
   // Where "At dawn…" came from, before the move.
   const startOf = (text: string, d = doc0) => {
