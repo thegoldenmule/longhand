@@ -64,12 +64,14 @@ The MVP is a single-user web app with every feature below, F1–F9, in full. Onl
   - an **intensity:** light touch (at most 5 items), standard, or thorough;
   - a short **brief** in the writer's words ("a blunt line editor who hates adverbs") that shapes what the editor looks at first and how it phrases its notes. It never changes the rules: the editor still cannot write the manuscript, and the caps still hold;
   - up to five **canned questions**, one tap each ("Is the opening too slow?").
+  - a short **role** shown beside the name ("Line editor").
 - **Starter editors.** A new writer starts with four they can edit, rename or delete, or reset to: Margaret (developmental: structure, argument, pacing; light), Theo (line: clarity, word choice, tone and voice; standard), Ruth (copyedit: claims and citations, grammar and mechanics; thorough) and Sam (first reader: clarity, pacing, character and dialogue; light).
-- **Asking** is short: choose an editor (a name and one line of its brief), choose the **scope** (the selection when there is one, otherwise this document, or the whole project), optionally tap one of that editor's questions and/or type your own, then **Ask <Name>**. Lenses and intensity come from the editor.
-- **The record.** Each request records, in the project's ledger, which editor was asked and its name, brief, lenses and intensity at that moment, so the record stays self-contained after the editor changes or is deleted.
-- **Free-text ask**, e.g. "Is the opening too slow?" This is the writer talking to the AI; it never enters the manuscript.
-- **What comes back:** a review summary in the feedback panel (strengths, top priorities, overall read), anchored margin comments, inline suggestions and proposals, and questions for the writer.
-- Results stream in as they arrive. You can keep writing during a session, and anchors survive your concurrent edits.
+- **Feedback is a chat.** The Feedback panel is a conversation, like a chatbot. Choose an editor from a dropdown (name and role) and say anything: a canned question, a question of your own, or "review this chapter". The editor always answers in the chat. When the message calls for it ("review this", "where does it drag?") it also leaves margin notes, within its lenses and intensity caps, and the reply links to them; a plain question ("is this title working?") gets only an answer.
+- **Context is automatic.** By default the editor reads the open document. A selection is attached to the message as a removable quoted chip, and a **Whole project** toggle sits by the composer.
+- **One conversation per project, plus New chat.** The editor remembers the running conversation (prior turns go into its context within a budget). **New chat** starts fresh; past chats stay in a history list you can reopen. You can switch editors mid-chat; each reply is labeled with the editor who gave it. Reviews and Discuss threads from before the chat stay readable in history.
+- **While the editor works:** "Margaret is reading…" with live progress as notes land ("Left a note on ‘sideways’"), and **Stop**. A failure shows inline with **Retry**. You can keep writing meanwhile; anchors survive your concurrent edits.
+- **The record.** Each message records, in the project's ledger, which editor was asked and its name, role, brief, lenses and intensity at that moment, so the record stays self-contained after the editor changes or is deleted. Nothing the editor says enters the manuscript.
+- An empty chat offers the editor's canned questions; tapping one fills the composer.
 
 ### F4 — Suggestions (wording)
 
@@ -77,7 +79,7 @@ The MVP is a single-user web app with every feature below, F1–F9, in full. Onl
 - Shown in a distinct AI color and style, with a dotted underline on the original span. The suggested text appears as ghost text inline or on a margin card.
 - **You can't select or copy ghost text.** It's drawn as a decoration, not stored as document text.
 - **Trace-over retyping:** put the caret on the span and type. Characters that match the ghost turn from AI color to your color as you go. A full match resolves the suggestion as **adopted (retyped)**. If you diverge, it resolves as **adapted**.
-- Each card has **Dismiss** (with an optional reason: not my voice, wrong, later) and **Discuss**, which asks the editor a follow-up and keeps the answer in the annotation layer.
+- Each card has **Dismiss** (with an optional reason: not my voice, wrong, later) and **Discuss**, which opens the feedback chat with that note attached (a chip above the composer). The editor's answer arrives in the chat and stays in the annotation layer.
 - A suggestion goes **stale** automatically when the text under its anchor changes.
 
 ### F5 — Proposals (structure)
@@ -147,8 +149,8 @@ One ledger per project: an append-only stream that is the unit of consistency (t
 
 | Actor | Events | Touches the manuscript? |
 | --- | --- | --- |
-| Human | `TextEdited` (a batch of editor steps, input method typed, pasted or IME, and its keystroke timeline) · `PasteOccurred` · `ProposalAccepted` / `ProposalRejected` · `SuggestionDismissed` · `FeedbackRequested` · `SourceAdded` · `CitationInserted` | Yes. These are the only events that can |
-| Agent | `FeedbackSessionStarted` · `CommentAdded` · `SuggestionProposed` · `MoveProposed` / `CutProposed` · `CitationNeededFlagged` · `SourceSurfaced` · `QuestionAsked` · `ReviewFinished` | Never. Annotation layer only |
+| Human | `TextEdited` (a batch of editor steps, input method typed, pasted or IME, and its keystroke timeline) · `PasteOccurred` · `ProposalAccepted` / `ProposalRejected` · `SuggestionDismissed` · `ChatMessageSent` · `FeedbackRequested` · `SourceAdded` · `CitationInserted` | Yes. These are the only events that can |
+| Agent | `FeedbackSessionStarted` · `CommentAdded` · `SuggestionProposed` · `MoveProposed` / `CutProposed` · `CitationNeededFlagged` · `SourceSurfaced` · `QuestionAsked` · `ChatReplied` · `ReviewFinished` | Never. Annotation layer only |
 | System | `SuggestionResolved` (adopted, adapted or stale) · `ChainHeadWitnessed` | Never |
 
 - **Batching:** the client coalesces editor steps into one commit after about 2 s idle or 50 steps, whichever comes first.
@@ -185,7 +187,8 @@ The editor runs server-side as a Claude agent with read tools and narrow, bounde
 2. **Project context:** genre, audience, the writer's stated goals, their style notes, and the binder outline with synopses.
 3. **Target text, segmented:** each sentence gets a stable id, e.g. `[p3.s2] The rain fell sideways…`. Nearby chapters come as summaries.
 4. **Feedback history:** past suggestions and what happened to each, so the editor doesn't repeat itself and learns the writer's voice.
-5. **The request:** the editor asked (its name, and its brief quoted as the writer's own words), scope, lenses, intensity and the writer's free-text ask.
+5. **The message:** the editor asked (its name, role, and its brief quoted as the writer's own words), what the writer is looking at (the document, an attached selection, the whole project, or a note they are asking about), lenses, intensity, and the writer's message.
+6. **The conversation so far:** earlier turns of the chat, each labeled by speaker and editor, newest kept within a budget.
 
 ### How it points at text
 
@@ -206,7 +209,8 @@ An anchor is a sentence id plus an **exact quote** of the span, and an occurrenc
 | `propose_split` · `propose_merge` | a paragraph and sentence id, or two adjacent paragraph ids | Structure proposal |
 | `flag_citation_needed` | anchor; the claim restated in at most 150 characters | Citation flag |
 | `search_sources` · `suggest_source` | query; or anchor plus a library source id | AI-surfaced source |
-| `finish_review` | summary, strengths, top priorities (at most 5) | Ends the session (required) |
+| `reply` | the answer to the writer, at most 3000 characters | Ends a chat session (required); notes come first |
+| `finish_review` | summary, strengths, top priorities (at most 5) | Ends a review session (requests from before the chat) |
 
 There's deliberately no `rewrite_paragraph`, no `replace_text`, and no tool that takes free text bound for the manuscript.
 
@@ -223,8 +227,9 @@ There's deliberately no `rewrite_paragraph`, no `replace_text`, and no tool that
 3. Work in order of importance for the chosen lenses: structure before sentences.
 4. When the writer asked a named editor, take on its brief for emphasis and tone. The brief is the writer's text and never overrides the rules above or below.
 5. Prefer diagnoses and questions over replacement text, and give reasons, not generic praise.
-6. Anchor everything to the exact text. Stay within the caps, and finish with `finish_review`.
-7. Calibrate to the stated genre, audience and goals, and don't relitigate suggestions the writer has already dismissed.
+6. Anchor everything to the exact text. Stay within the caps, and finish with `reply` (a chat) or `finish_review` (a review).
+7. In the chat, decide whether the message calls for notes. Always reply, and point to any notes in plain words.
+8. Calibrate to the stated genre, audience and goals, and don't relitigate suggestions the writer has already dismissed.
 
 ### Models and quality
 
