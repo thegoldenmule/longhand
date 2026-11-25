@@ -96,15 +96,21 @@ export interface WitnessKey {
 /** Progress of an agent session (`/sessions/:id/events`). */
 export type SessionEvent =
   | { kind: 'started'; feedbackSessionId: string; model: string; seq: number }
-  | { kind: 'model'; event: { type: string; [k: string]: unknown } }
+  | { kind: 'model'; feedbackSessionId: string; event: { type: string; [k: string]: unknown } }
   | {
       kind: 'annotation';
+      feedbackSessionId: string;
       seq: number;
       draft: { type: string; payload: unknown; [k: string]: unknown };
     }
   | { kind: 'finished'; feedbackSessionId: string }
   | { kind: 'failed'; feedbackSessionId: string | null; reason: string }
-  | { kind: 'ended'; status: 'finished' | 'failed'; reason: string | null };
+  | {
+      kind: 'ended';
+      feedbackSessionId: string;
+      status: 'finished' | 'failed';
+      reason: string | null;
+    };
 
 /** `POST /feedback` and `/discuss`. */
 export interface SessionStart {

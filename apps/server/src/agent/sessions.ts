@@ -64,7 +64,13 @@ const CLOSING_TYPES = new Set<string>([
 
 /** A progress event as the session SSE sends it. */
 export type SessionStreamEvent =
-  SessionProgressEvent | { kind: 'ended'; status: 'finished' | 'failed'; reason: string | null };
+  | SessionProgressEvent
+  | {
+      kind: 'ended';
+      feedbackSessionId: string;
+      status: 'finished' | 'failed';
+      reason: string | null;
+    };
 
 /** One session the service minted. */
 export interface AgentSession {
@@ -527,6 +533,7 @@ export class SessionManager {
     session.ended = true;
     this.progress(session, {
       kind: 'ended',
+      feedbackSessionId: session.id,
       status,
       reason: status === 'finished' ? null : reason,
     });

@@ -19,7 +19,6 @@ export { ReadModel, READ_MODEL_TABLES } from './storage/readmodel';
 export { ProjectLedger, SYSTEM_ACTOR } from './ledger/project';
 export type { ClockHooks, IngestOutcome, AppendedCommit } from './ledger/project';
 export { DocHistory, ProjectHistory, type RemoteUpdate } from './ledger/history';
-export { deriveProposalSteps } from './ledger/proposal-steps';
 export { remapAgentDraft } from './ledger/positions';
 export { SessionManager, adapterFactory } from './agent/sessions';
 export type { AgentSession, AdapterFactory, SessionStreamEvent } from './agent/sessions';

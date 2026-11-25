@@ -10,10 +10,9 @@
  * ProseMirror nodes share structure, so keeping the node after every commit costs
  * little more than the steps themselves.
  */
-import { schema, type PMNodeJSON, type ProjectState, type StepJSON } from '@longhand/schema';
+import { schema, type PMNodeJSON, type StepJSON } from '@longhand/schema';
 import type { Node as PMNode } from 'prosemirror-model';
 import { Mapping, Step, type StepMap } from 'prosemirror-transform';
-import { deriveProposalSteps } from './proposal-steps';
 
 /** A step-bearing commit applied to a document (the editor's `RemoteUpdate`). */
 export interface RemoteUpdate {
@@ -136,11 +135,12 @@ export class ProjectHistory {
 
   /**
    * Observes one folded commit. `prevDoc`/`nextDoc` give the fold's document
-   * before and after; `prev` is the public state before (for proposals).
+   * before and after; `derived` are the steps the fold applied.
    */
   observe(
     commit: CommitLike,
-    prev: ProjectState,
+    /** The fold's derived steps for this commit (`applyCommitWithSteps` / `validateDraft`), by document. */
+    derived: Readonly<Record<string, readonly StepJSON[]>>,
     lookup: {
       prevDoc(documentId: string): PMNode | undefined;
       nextDoc(documentId: string): PMNode | undefined;
@@ -168,12 +168,14 @@ export class ProjectHistory {
       h = new DocHistory(id, baseVersion, before);
       this.docs.set(id, h);
     }
-    let steps: Step[];
-    if (commit.type === 'TextEdited') {
-      steps = (commit.payload as { steps: StepJSON[] }).steps.map((j) => Step.fromJSON(schema, j));
-    } else {
-      steps = foldDerivedSteps(commit, prev, before, after, version - baseVersion);
+    // TextEdited: the payload's own steps; ProposalAccepted: the steps the fold derived.
+    const json = derived[id] ?? [];
+    if (json.length !== version - baseVersion) {
+      throw new Error(
+        `seq ${commit.seq}: ${json.length} derived step(s) for ${id}, but the version moved by ${version - baseVersion}`,
+      );
     }
+    const steps = json.map((j) => Step.fromJSON(schema, j));
     const update: RemoteUpdate = {
       documentId: id,
       commitId: commit.commitId,
@@ -181,30 +183,11 @@ export class ProjectHistory {
       type: commit.type,
       baseVersion,
       version,
-      steps: steps.map((s) => s.toJSON() as StepJSON),
+      steps: [...json],
     };
     h.push(update, steps, after);
     return update;
   }
-}
-
-/**
- * The steps the fold derived for an accepted proposal.
- *
- * TODO(ledger derivedStepsFor): `@longhand/ledger` is gaining
- * `derivedStepsFor(stateBefore, commit)` (and `validateDraft(...).derivedSteps`).
- * Once it lands, return those steps here and drop the port in `proposal-steps.ts`;
- * this is the only call site.
- */
-export function foldDerivedSteps(
-  commit: CommitLike,
-  prev: ProjectState,
-  before: PMNode,
-  after: PMNode,
-  count: number,
-): Step[] {
-  const proposalId = (commit.payload as { proposalId: string }).proposalId;
-  return deriveProposalSteps(prev.annotations.proposals[proposalId], before, after, count).steps;
 }
 
 /** Plain JSON of a node. */

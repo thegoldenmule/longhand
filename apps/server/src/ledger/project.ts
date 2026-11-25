@@ -22,7 +22,7 @@ import { randomUUID } from 'node:crypto';
 import {
   ChainError,
   appendToChain,
-  applyCommit,
+  applyCommitWithSteps,
   documentNode,
   documentVersion,
   emptyState,
@@ -170,9 +170,10 @@ export class ProjectLedger {
     const history = new ProjectHistory();
     for (const c of commits) {
       const prev = state;
-      state = applyCommit(prev, c);
+      const folded = applyCommitWithSteps(prev, c);
+      state = folded.state;
       this.assertNoTextChange(prev, state, c);
-      history.observe(c, projectState(prev), this.docLookup(prev, state));
+      history.observe(c, folded.steps, this.docLookup(prev, state));
     }
     this.stateValue = state;
     this.commitsList.length = 0;
@@ -426,7 +427,7 @@ export class ProjectLedger {
     let next: LedgerState;
     try {
       if (!verifyCommitHash(stored)) throw new Error('stored commit does not hash');
-      next = applyCommit(prevState, stored);
+      next = applyCommitWithSteps(prevState, stored).state;
       this.assertNoTextChange(prevState, next, stored);
       if (headHash(next) !== headHash(v.state)) {
         throw new Error('re-folding the stored commit gives a different head');
@@ -439,11 +440,8 @@ export class ProjectLedger {
     this.commitsList.push(stored);
     this.seqByCommitId.set(stored.commitId, stored.seq);
     if (stored.type === 'ChainHeadWitnessed') this.lastEmbeddedSeq = stored.seq;
-    const update = this.history.observe(
-      stored,
-      projectState(prevState),
-      this.docLookup(prevState, next),
-    );
+    // RemoteUpdate steps: exactly what validateDraft says the fold applied.
+    const update = this.history.observe(stored, v.derivedSteps, this.docLookup(prevState, next));
 
     // 4. witness
     const witness = await signWitness(this.deps.signer, stored);
