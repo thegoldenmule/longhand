@@ -13,6 +13,7 @@ export * from './snapshot';
 export * from './format';
 export * from './context';
 export * from './executor';
+export * from './writer-text';
 export * from './relay';
 export * from './runner';
 export {
@@ -20,6 +21,8 @@ export {
   systemPrompt,
   REVIEW_SYSTEM_PROMPT_V1,
   DISCUSS_SYSTEM_PROMPT_V1,
+  REVIEW_SYSTEM_PROMPT_V2,
+  DISCUSS_SYSTEM_PROMPT_V2,
 } from './prompts';
 export {
   MCP_SERVER_NAME,

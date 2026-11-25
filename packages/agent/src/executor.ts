@@ -7,6 +7,7 @@
  * 1. the session is not finished;
  * 2. the tool exists and is offered for this session kind (`toolsForSession`);
  * 3. the zod input schema (`TOOLS[name].input`): lengths, word counts, one sentence;
+ *    then no writer-facing text mentions an id (`writerFacingIdViolation`);
  * 4. caps (`capViolation`);
  * 5. documents, anchors and spans resolve against the snapshot (`resolveAnchor`,
  *    `resolveSpan`, `resolveMove`, `resolveInsertionPoint`, `resolveSplit`,
@@ -48,6 +49,7 @@ import { docWordCount, renderOutline, renderPlain, renderSegmented } from './for
 import type { AnnotationSink } from './sink';
 import { toCandidates } from './search';
 import { DocumentCache, type LoadedDocument, type SessionSnapshot } from './snapshot';
+import { idTokens, writerFacingIdViolation, writerFacingTexts } from './writer-text';
 
 /** Result of one tool call. */
 export type ToolCallResult =
@@ -93,6 +95,7 @@ export class ToolExecutor {
   private readonly docs: DocumentCache;
   private readonly ctx: DraftContext;
   private queue: Promise<unknown> = Promise.resolve();
+  private manuscriptTokens: Set<string> | null = null;
 
   constructor(private readonly opts: ToolExecutorOptions) {
     const s = opts.snapshot;
@@ -163,6 +166,11 @@ export class ToolExecutor {
           .join('; ');
         return done(fail('invalid-arguments', `Invalid arguments: ${issues}. ${RETRY_HINT}`));
       }
+      const leak = writerFacingIdViolation(
+        writerFacingTexts(tool, parsed.data as ToolInputs[ToolName]),
+        this.idLikeWordsInText(),
+      );
+      if (leak) return done(fail('invalid-arguments', `${leak} ${RETRY_HINT}`));
       const cap = capViolation(tool, this.countsValue, this.opts.snapshot.intensity);
       if (cap) return done(fail('cap-reached', cap));
 
@@ -563,6 +571,18 @@ export class ToolExecutor {
   // -------------------------------------------------------------------------
   // Resolution and scope
   // -------------------------------------------------------------------------
+
+  /** Id-like words the writer actually wrote (a gene called p53), which prose may mention. */
+  private idLikeWordsInText(): Set<string> {
+    if (this.manuscriptTokens) return this.manuscriptTokens;
+    const tokens = new Set<string>();
+    for (const id of Object.keys(this.opts.snapshot.documents)) {
+      const doc = this.docs.get(id);
+      for (const b of doc?.seg.blocks ?? []) for (const t of idTokens(b.text)) tokens.add(t);
+    }
+    this.manuscriptTokens = tokens;
+    return tokens;
+  }
 
   private documentList(): string {
     const docs = this.opts.snapshot.outline.filter(

@@ -4,7 +4,7 @@ import {
   buildDiscussContext,
   buildReviewContext,
   modelForRequest,
-  REVIEW_SYSTEM_PROMPT_V1,
+  REVIEW_SYSTEM_PROMPT_V2,
   SYSTEM_PROMPT_VERSION,
 } from './index';
 import { docRequest, makeState } from './fixtures.test-helpers';
@@ -14,7 +14,7 @@ describe('buildReviewContext (document scope)', () => {
   const ctx = buildReviewContext({ state, request: docRequest(), feedbackSessionId: 'fs1' });
 
   it('uses the versioned review system prompt and the full-review model', () => {
-    expect(ctx.systemPrompt).toBe(REVIEW_SYSTEM_PROMPT_V1);
+    expect(ctx.systemPrompt).toBe(REVIEW_SYSTEM_PROMPT_V2);
     expect(ctx.systemPromptVersion).toBe(SYSTEM_PROMPT_VERSION);
     expect(ctx.model).toBe('opus');
     expect(ctx.sessionKind).toBe('review');

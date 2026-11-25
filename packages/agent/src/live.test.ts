@@ -13,12 +13,41 @@ import {
   AGENT_EVENT_TYPES,
   ClaudeCliAdapter,
   InMemoryAnnotationSink,
+  idTokens,
   runFeedbackSession,
   type SessionProgressEvent,
 } from './index';
 import { LIVE_PARAGRAPH, LIVE_PARAGRAPH_REQUEST, liveParagraphState } from './live-fixture';
 
 const live = process.env.LONGHAND_LIVE_CLAUDE === '1';
+
+/** The prose fields of a payload, for the log. */
+function writerText(payload: unknown): string[] {
+  const out: string[] = [];
+  const walk = (v: unknown, key: string) => {
+    if (typeof v === 'string') {
+      if (PROSE_KEYS.has(key)) out.push(v);
+    } else if (Array.isArray(v)) v.forEach((x) => walk(x, key));
+    else if (v && typeof v === 'object') {
+      for (const [k, x] of Object.entries(v)) if (k !== 'target') walk(x, k);
+    }
+  };
+  walk(payload, '');
+  return out;
+}
+const PROSE_KEYS = new Set([
+  'body',
+  'question',
+  'rationale',
+  'guidance',
+  'purpose',
+  'sentence',
+  'claim',
+  'alternatives',
+  'summary',
+  'strengths',
+  'topPriorities',
+]);
 
 describe.skipIf(!live)('live claude CLI smoke test', () => {
   it(
@@ -48,6 +77,7 @@ describe.skipIf(!live)('live claude CLI smoke test', () => {
               .filter((c) => c.result?.isError)
               .map((c) => `${c.name}: ${c.result?.text}`),
             drafts: sink.drafts.map((d) => d.draft.type),
+            writerText: sink.drafts.map((d) => writerText(d.draft.payload)),
             costUsd: outcome.run?.costUsd,
             durationMs: outcome.run?.durationMs,
           },
@@ -77,6 +107,8 @@ describe.skipIf(!live)('live claude CLI smoke test', () => {
           (d.payload as { suggestion?: { target?: unknown } }).suggestion?.target;
         const anchor = (target as { anchor?: Parameters<typeof resolveAnchor>[1] } | null)?.anchor;
         if (anchor) expect(resolveAnchor(seg, anchor).ok).toBe(true);
+        // No prose the writer reads mentions a sentence or block id.
+        for (const text of writerText(d.payload)) expect(idTokens(text)).toEqual([]);
       }
       const items = drafts.filter(
         (d) => d.type !== 'FeedbackSessionStarted' && d.type !== 'ReviewFinished',

@@ -13,6 +13,8 @@ import {
   ToolExecutor,
   buildDiscussContext,
   buildReviewContext,
+  idTokens,
+  writerFacingIdViolation,
   type FeedbackRequest,
   type ToolCallOutcome,
 } from './index';
@@ -764,5 +766,162 @@ describe('ToolExecutor: discuss sessions', () => {
       actor: { kind: 'agent', id: 'sonnet' },
       payload: { feedbackSessionId: 'fs2', threadId: 'th1', targetId: 'sg0' },
     });
+  });
+});
+
+describe('ToolExecutor: ids never reach the writer', () => {
+  const leaks = [
+    'My only word-choice notes are small: "do it" in p1.s2.',
+    'The ritual in s2 and the wrong wind in s3–s4 pull against each other.',
+    'See s3-4.',
+    'The footnote (fn1.s1) repeats the point.',
+    'Paragraph p3 runs long.',
+    'Compare [p2.s1] with the ending.',
+  ];
+
+  it.each(leaks)('rejects a comment body that mentions an id: %s', async (body) => {
+    const { ex, sink } = setup();
+    const o = await ex.call('comment', { ...comment(A('p2.s1', 'rain')), body });
+    expectError(o, 'invalid-arguments', /body mentions .*never sees sentence or paragraph ids/);
+    expect(sink.drafts).toHaveLength(0);
+  });
+
+  it('checks every writer-facing field, names the field, and lets the corrected call through', async () => {
+    const { ex, sink } = setup();
+    expectError(
+      await ex.call('ask_question', { anchor: A('p2.s1', 'rain'), question: 'Is s1 literal?' }),
+      'invalid-arguments',
+      /^question mentions "s1"/,
+    );
+    expectError(
+      await ex.call('suggest_rephrase', {
+        anchor: A('p2.s3', 'the endless rain'),
+        guidance: 'Echoes p2.s1 too closely.',
+      }),
+      'invalid-arguments',
+      /^guidance/,
+    );
+    expectError(
+      await ex.call('propose_cut', { anchor: A('p2.s2', 'Nobody'), rationale: 'Repeats p3.' }),
+      'invalid-arguments',
+      /^rationale/,
+    );
+    expectError(
+      await ex.call('suggest_word_choice', {
+        anchor: A('p2.s1', 'sideways'),
+        alternatives: ['slantwise'],
+        rationale: 'Sharper next to s2.',
+      }),
+      'invalid-arguments',
+      /^rationale/,
+    );
+    expectError(
+      await ex.call('flag_citation_needed', {
+        anchor: A('p2.s2', 'Nobody came'),
+        claim: 'The claim in p2.s2.',
+      }),
+      'invalid-arguments',
+      /^claim/,
+    );
+    expectError(
+      await ex.call('finish_review', {
+        summary: 'Clear and calm.',
+        strengths: ['Good rhythm.', 'The ending of p5 lands.'],
+        topPriorities: [],
+      }),
+      'invalid-arguments',
+      /^strengths\.1 mentions "p5"/,
+    );
+    expectError(
+      await ex.call('finish_review', {
+        summary: 'Clear and calm.',
+        strengths: [],
+        topPriorities: ['Tighten s2–s3.'],
+      }),
+      'invalid-arguments',
+      /^topPriorities\.0/,
+    );
+    expect(sink.drafts).toHaveLength(0);
+
+    const fixed = await ex.call('finish_review', {
+      summary: 'My only word-choice note is small: "sideways" in the first sentence.',
+      strengths: ['The start of paragraph 2 sets the mood.'],
+      topPriorities: [],
+    });
+    expect(fixed.result.ok).toBe(true);
+  });
+
+  it('does not reject ordinary prose that only looks a little like an id', async () => {
+    const { ex, sink } = setup();
+    const fine = [
+      'Add an s to the verb, since the subject is plural.',
+      'It reads like the 1990s, and the 80s before that.',
+      'The mp3 player and the S3 bucket are anachronisms; so is the P1 grade.',
+      'See p. 12 of the style guide, and the s-curve of the plot.',
+      'The second sentence of the paragraph is the strongest; its pace is right.',
+      "The rain's rhythm works. The fn key and the ps at the end are fine.",
+    ];
+    for (const body of fine) {
+      const o = await ex.call('comment', { ...comment(A('p2.s1', 'rain')), body });
+      expect(o.result.ok, body).toBe(true);
+    }
+    expect(sink.drafts).toHaveLength(fine.length);
+  });
+
+  it('allows an id-like word the writer wrote themselves', async () => {
+    const s = makeState({ ch1: ['The p53 gene guards the genome. It fails in s1 cells.'] });
+    const ctx = buildReviewContext({ state: s, request: docRequest(), feedbackSessionId: 'fs1' });
+    const ex = new ToolExecutor({
+      snapshot: ctx.snapshot,
+      sink: new InMemoryAnnotationSink(),
+      ...deterministic(),
+    });
+    const ok = await ex.call('comment', {
+      ...comment(A('p1.s1', 'p53 gene')),
+      body: 'Say what p53 does before naming s1 cells.',
+    });
+    expect(ok.result.ok).toBe(true);
+    expectError(
+      await ex.call('comment', { ...comment(A('p1.s1', 'p53 gene')), body: 'Merge p1.s2 here.' }),
+      'invalid-arguments',
+      /"p1\.s2"/,
+    );
+  });
+
+  it('rejects an id in a discuss answer', async () => {
+    const ctx = buildDiscussContext({
+      state,
+      request: { threadId: 'th1', targetId: 'sg0', message: 'Why slantwise?' },
+      feedbackSessionId: 'fs2',
+    });
+    const ex = new ToolExecutor({
+      snapshot: ctx.snapshot,
+      sink: new InMemoryAnnotationSink(),
+      ...deterministic(),
+    });
+    expectError(
+      await ex.call('answer_discussion', { threadId: 'th1', body: 'Because p2.s1 is about wind.' }),
+      'invalid-arguments',
+      /^body mentions "p2\.s1"/,
+    );
+  });
+});
+
+describe('writerFacingIdViolation', () => {
+  it('finds the id patterns and nothing else', () => {
+    expect(idTokens('p1.s2, p3, fn1, fn1.s1, s3–s4, s3-4, s12')).toEqual([
+      'p1.s2',
+      'p3',
+      'fn1',
+      'fn1.s1',
+      's3–s4',
+      's3-4',
+      's12',
+    ]);
+    expect(idTokens('s, its, 1990s, mp3, S3, P1, p., s-curve, ps, fn, sp1x, p1x')).toEqual([]);
+    expect(writerFacingIdViolation([{ field: 'body', text: 'All good.' }])).toBeNull();
+    expect(
+      writerFacingIdViolation([{ field: 'body', text: 'The p53 gene.' }], new Set(['p53'])),
+    ).toBeNull();
   });
 });
