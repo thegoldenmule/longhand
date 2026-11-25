@@ -55,3 +55,24 @@ A lane touches only its own paths. `packages/schema` and `packages/ledger` are c
 - Test against the golden fixtures in `packages/ledger/fixtures` and the mocks, not against other lanes.
 - Done = `pnpm --filter <your package> typecheck` and `test` pass, plus the repo-wide `pnpm typecheck`. Commit in small, logical commits with clear messages.
 - Write a short `README.md` in your package: what it exports, how to run its tests, known gaps.
+
+## Contract decisions
+
+Made while writing `packages/schema` (phase 1). These are cross-cutting rules that every lane relies on. `packages/schema/README.md` has the details.
+
+- **Commits.** Clients submit a `CommitDraft`. The ledger service assigns `seq` (1-based), `prevHash`, `serverTime` and `accountId`, computes `hash`, and witnesses the commit. Every commit carries a `commitId` (a UUID chosen by the emitter), and the service dedupes offline-queue resends by it. The service hashes and stores the parsed commit; verifiers hash the bundle's commits exactly as they appear.
+- **Timestamps** use `Date#toISOString()` form (UTC, milliseconds). For `TextEdited`, `clientTime` is the batch's first input event, and keystroke `t` values are ms offsets from it.
+- **Document version** is the cumulative number of steps applied to a document: `TextEdited` steps plus the steps the fold derives for an accepted proposal. Both `TextEdited` and `ProposalAccepted` carry `baseVersion`, and the service rejects a mismatch.
+- **Block ids.** There are no stable block ids. Ids such as `p3`, `p3.s2` and `fn1.s1` are positional and valid for one document version only. Durable references store ProseMirror positions, and the fold maps them through steps.
+- **Steps travel only in `TextEdited`.** Each batch is partitioned into input-method runs: `typed`, `ime`, `autocorrect`, `pasted-external`, `pasted-internal`, `drop-internal`, `history`, `citation` and `clipping`. The client reports a method and the fold derives the class. When the fold cannot verify a claim (an internal paste, undo/redo, a drop, a citation or a clipping), it folds the text as `pasted-external`; it never upgrades a claim. `history` exists so that undoing a deleted paste cannot launder it as typing.
+- **Companion events.** `PasteOccurred`, `CitationInserted` and the new `SliceCopied` (copy/cut) never change text. Each must have a lower seq than the `TextEdited` run that references it. Internal pastes inherit provenance through `PasteOccurred.copyId → SliceCopied`. The fold snapshots the copied span's provenance when it folds the `SliceCopied`, and the client flushes pending steps before it emits one.
+- **Manuscript events** are only `TextEdited`, `ProposalAccepted` and `DocumentImported`, all human-only. Each event type has exactly one permitted actor kind, and `CommitSchema` rejects a commit from any other actor.
+- **Agent event positions.** The ledger service resolves anchors and spans against the version the agent read (`readVersion`) and maps them, under the append lock, to the document version current at append (`version`). Annotations whose text changed in between are stale on arrival.
+- **`SuggestionResolved`** is written by the service after the triggering human commit. The fold derives outcomes itself and treats a disagreeing `SuggestionResolved` as an error, which is how the verifier catches a lying server.
+- **Witnesses** are stored out of band, one per commit, and travel in the bundle. The signature is base64 of the 64-byte IEEE P1363 `r‖s` form; convert KMS DER signatures to it. `keyId` is the hex SHA-256 of the SPKI DER. `ChainHeadWitnessed` periodically embeds a witness in the chain itself; the server lane picks the cadence.
+- **Discuss** (F4) is `DiscussRequested` (human) followed by an agent session of kind `discuss`. That session may use only the read tools and the new `answer_discussion` tool, which emits `DiscussAnswered`. A failed session emits the system event `FeedbackSessionFailed`.
+- **`SuggestionDismissed`** dismisses any card except proposals, which use `ProposalRejected`.
+- **Writing sessions** are derived from human manuscript commits whose `clientTime`s are less than `SESSION_GAP_MS` (30 min) apart. There are no `WritingSessionStarted`/`Ended` events.
+- **Binder** has two areas, `manuscript` and `notes`. Notes are documents of kind `note`, edited through `TextEdited`. Documents and folders never move between areas. Ordering uses `{parentId, index}`, where `index` is counted after the node is removed and clamped.
+- **Canonical JSON** omits `undefined` properties and escapes lone surrogates rather than rejecting them, so a writer's commit is always hashable.
+- **Determinism.** The fold, the segmenter and the word counter must not use `Intl.*`, `\p{…}` regexes, `localeCompare`, `String#normalize`, `Date.now` or `Math.random`.
