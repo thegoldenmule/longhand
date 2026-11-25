@@ -3,7 +3,7 @@
  * the binder outline and notes. Shared by the context builder and the read tools,
  * so the ids the model sees in its prompt are the ids the tools resolve.
  */
-import { countWords, type Block, type Segmentation } from '@longhand/schema';
+import { countWords, type Block, type PMNode, type Segmentation } from '@longhand/schema';
 import type { LoadedDocument, OutlineEntry } from './snapshot';
 
 /** Marks a hard line break inside a sentence. Never part of a quote. */
@@ -48,14 +48,71 @@ function blockLabel(b: Block, seg: Segmentation): string {
   return `[${parts.join(' · ')}]`;
 }
 
-/** One block as text: its label, then each sentence prefixed by its id. */
-export function renderBlock(b: Block, seg: Segmentation): string {
+/** Links and inline code in one block, in order: the linked or coded words, and a link's href. */
+export interface BlockFormatting {
+  links: Array<{ text: string; href: string }>;
+  code: string[];
+}
+
+/**
+ * The writer's links and inline code in a block. Only the block's own inline
+ * children count (a footnote is its own block). Adjacent text with the same link
+ * is one link.
+ */
+export function blockFormatting(doc: PMNode, b: Block): BlockFormatting {
+  const out: BlockFormatting = { links: [], code: [] };
+  const node = doc.nodeAt(b.pos);
+  if (!node) return out;
+  let lastLink: { text: string; href: string; mark: unknown } | null = null;
+  let lastCode: { i: number } | null = null;
+  node.forEach((child) => {
+    const link = child.marks.find((m) => m.type.name === 'link');
+    const text = child.isText ? (child.text as string) : '';
+    if (link && lastLink && link.eq(lastLink.mark as typeof link)) lastLink.text += text;
+    else if (link) {
+      lastLink = { text, href: link.attrs.href as string, mark: link };
+      out.links.push(lastLink);
+    } else lastLink = null;
+    const code = child.isText && child.marks.some((m) => m.type.name === 'code');
+    if (code && lastCode) out.code[lastCode.i] += text;
+    else if (code) {
+      lastCode = { i: out.code.length };
+      out.code.push(text);
+    } else lastCode = null;
+  });
+  out.links = out.links
+    .map((l) => ({ text: l.text.trim(), href: l.href }))
+    .filter((l) => l.text !== '');
+  out.code = out.code.map((c) => c.trim()).filter((c) => c !== '');
+  return out;
+}
+
+/**
+ * The formatting note after a block: `[links: "words" <href>, …]` and
+ * `[inline code: "words", …]`, or '' when the block has neither. Links stay
+ * readable: the sentences carry the linked words as plain text (so quotes and
+ * anchors match the manuscript), and the hrefs follow the block.
+ */
+export function formattingNote(f: BlockFormatting): string {
+  const parts: string[] = [];
+  if (f.links.length > 0)
+    parts.push(
+      `[links: ${f.links.map((l) => `${JSON.stringify(l.text)} <${l.href}>`).join(', ')}]`,
+    );
+  if (f.code.length > 0)
+    parts.push(`[inline code: ${f.code.map((c) => JSON.stringify(c)).join(', ')}]`);
+  return parts.join(' ');
+}
+
+/** One block as text: its label, then each sentence prefixed by its id, then its links and code. */
+export function renderBlock(b: Block, seg: Segmentation, doc?: PMNode): string {
   const label = blockLabel(b, seg);
   if (b.sentences.length === 0) return `${label} (empty)`;
   const body = b.sentences
     .map((s) => `[${s.id}] ${s.text.replace(/\n/g, ` ${LINE_BREAK_MARK} `)}`)
     .join(' ');
-  return `${label} ${body}`;
+  const note = doc ? formattingNote(blockFormatting(doc, b)) : '';
+  return note ? `${label} ${body} ${note}` : `${label} ${body}`;
 }
 
 /** Word count of a segmented document (textblocks and footnotes). */
@@ -92,7 +149,7 @@ export function renderSegmented(doc: LoadedDocument, options: RenderOptions = {}
       return true;
     }
     skipping = false;
-    const text = renderBlock(b, seg);
+    const text = renderBlock(b, seg, doc.node);
     return push(m === 'context' ? `(context) ${text}` : text);
   };
   outer: for (let top = 0; top < doc.node.childCount; top++) {
@@ -117,7 +174,11 @@ export function renderSegmented(doc: LoadedDocument, options: RenderOptions = {}
 /** Renders a document as plain paragraphs (notes; not annotatable). */
 export function renderPlain(doc: LoadedDocument): string {
   const body = [...doc.seg.blocks, ...doc.seg.footnotes]
-    .map((b) => (b.nodeType === 'heading' ? `# ${b.text}` : b.text))
+    .map((b) => {
+      const text = b.nodeType === 'heading' ? `# ${b.text}` : b.text;
+      const note = text.trim() ? formattingNote(blockFormatting(doc.node, b)) : '';
+      return note ? `${text} ${note}` : text;
+    })
     .filter((t) => t.trim().length > 0)
     .join('\n\n');
   return `<note id="${doc.id}" title=${JSON.stringify(doc.title)}>\n${body}\n</note>`;

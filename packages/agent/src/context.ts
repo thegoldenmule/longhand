@@ -771,7 +771,7 @@ function renderAnnotationFocus(
       out.push(
         '',
         `Where it points now, in "${doc.title}" (document ${doc.id}, version ${doc.version}):`,
-        ...blocks.slice(0, 6).map((b) => renderBlock(b, doc.seg)),
+        ...blocks.slice(0, 6).map((b) => renderBlock(b, doc.seg, doc.node)),
       );
     }
   } else if (found.documentId) {
