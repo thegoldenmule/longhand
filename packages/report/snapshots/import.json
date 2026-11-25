@@ -1,0 +1,288 @@
+{
+  "project": {
+    "reportVersion": 1,
+    "scope": { "kind": "project" },
+    "throughSeq": 6,
+    "headHash": "6104ae50b93b47e955f8d937482ab31f7ce3768c39e76ec125bf5ce2938ef962",
+    "words": {
+      "total": 23,
+      "byClass": {
+        "typed": 5,
+        "typed-from-suggestion": 0,
+        "pasted-external": 0,
+        "pasted-internal": 0,
+        "imported": 18,
+        "quoted": 0
+      }
+    },
+    "characters": {
+      "total": 121,
+      "byClass": {
+        "typed": 30,
+        "typed-from-suggestion": 0,
+        "pasted-external": 0,
+        "pasted-internal": 0,
+        "imported": 91,
+        "quoted": 0
+      }
+    },
+    "activeWritingMs": 3941,
+    "sessions": {
+      "count": 1,
+      "days": 1,
+      "firstAt": "2026-11-02T09:00:00.800Z",
+      "lastAt": "2026-11-02T09:00:10.741Z",
+      "list": [
+        {
+          "startTime": "2026-11-02T09:00:00.800Z",
+          "endTime": "2026-11-02T09:00:10.741Z",
+          "activeMs": 3941,
+          "charactersInserted": 30,
+          "startSeq": 3,
+          "endSeq": 6,
+          "commits": 4,
+          "documentIds": ["doc-old"]
+        }
+      ]
+    },
+    "ai": {
+      "feedbackRequests": 0,
+      "sessionsFinished": 0,
+      "sessionsFailed": 0,
+      "comments": 0,
+      "questions": 0,
+      "citationFlags": 0,
+      "surfacedSources": 0,
+      "sourceSuggestions": 0,
+      "discussThreads": 0,
+      "sessions": []
+    },
+    "suggestions": {
+      "total": 0,
+      "byKind": { "word-choice": 0, "insertion": 0, "rephrase": 0 },
+      "byOutcome": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 }
+    },
+    "proposals": {
+      "total": 0,
+      "byKind": {
+        "move": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+        "cut": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+        "split": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+        "merge": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 }
+      }
+    },
+    "pastes": {
+      "external": { "count": 0, "characters": 0, "words": 0 },
+      "internal": { "count": 0, "characters": 0, "words": 0 },
+      "events": []
+    },
+    "imports": { "documents": 1, "words": 18 },
+    "unwitnessed": [],
+    "provesTable": {
+      "proves": [
+        "The text came in through the editor's input channel, at these times and this cadence",
+        "Exactly which AI suggestions were visible, and which were retyped or used",
+        "The history hasn't been changed since the server witnessed it"
+      ],
+      "doesNotProve": [
+        "That the account holder was the one typing",
+        "That nothing was transcribed from another screen or another AI",
+        "That a modified client didn't misreport pastes as typing (the keystroke timeline makes this costly, not impossible)"
+      ]
+    },
+    "extensions": {
+      "unwitnessedThresholdMs": 60000,
+      "projectTitle": "Imported novel",
+      "documents": [
+        { "id": "doc-old", "title": "Chapter one (old draft)", "kind": "manuscript", "words": 23 }
+      ],
+      "assisted": {
+        "annotations": 0,
+        "byKind": {
+          "word-choice": 0,
+          "rephrase": 0,
+          "insertion": 0,
+          "comment": 0,
+          "question": 0,
+          "proposal": 0,
+          "citation-flag": 0,
+          "surfaced-source": 0,
+          "source-suggestion": 0,
+          "discuss": 0,
+          "review": 0
+        }
+      },
+      "quoted": { "sources": 0 },
+      "suggestions": {
+        "byKind": {
+          "word-choice": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 },
+          "insertion": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 },
+          "rephrase": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 }
+        }
+      },
+      "proposals": {
+        "moves": {
+          "sentence": { "proposed": 0, "accepted": 0 },
+          "paragraph": { "proposed": 0, "accepted": 0 },
+          "section": { "proposed": 0, "accepted": 0 }
+        }
+      },
+      "imports": [
+        {
+          "seq": 2,
+          "documentId": "doc-old",
+          "title": "Chapter one (old draft)",
+          "sourceFormat": "markdown",
+          "sourceName": "chapter-one.md",
+          "words": 18,
+          "clientTime": "2026-11-02T09:00:00.400Z"
+        }
+      ]
+    },
+    "disclosure": "Written in 1 session. 23 words: 21.7% typed directly; 78.3% imported (unverified). No AI feedback was requested in Longhand. 1 document was imported from an existing draft (18 words at import); Longhand cannot verify who wrote imported text."
+  },
+  "documents": {
+    "doc-old": {
+      "reportVersion": 1,
+      "scope": { "kind": "document", "documentId": "doc-old" },
+      "throughSeq": 6,
+      "headHash": "6104ae50b93b47e955f8d937482ab31f7ce3768c39e76ec125bf5ce2938ef962",
+      "words": {
+        "total": 23,
+        "byClass": {
+          "typed": 5,
+          "typed-from-suggestion": 0,
+          "pasted-external": 0,
+          "pasted-internal": 0,
+          "imported": 18,
+          "quoted": 0
+        }
+      },
+      "characters": {
+        "total": 121,
+        "byClass": {
+          "typed": 30,
+          "typed-from-suggestion": 0,
+          "pasted-external": 0,
+          "pasted-internal": 0,
+          "imported": 91,
+          "quoted": 0
+        }
+      },
+      "activeWritingMs": 3941,
+      "sessions": {
+        "count": 1,
+        "days": 1,
+        "firstAt": "2026-11-02T09:00:00.800Z",
+        "lastAt": "2026-11-02T09:00:10.741Z",
+        "list": [
+          {
+            "startTime": "2026-11-02T09:00:00.800Z",
+            "endTime": "2026-11-02T09:00:10.741Z",
+            "activeMs": 3941,
+            "charactersInserted": 30,
+            "startSeq": 3,
+            "endSeq": 6,
+            "commits": 4,
+            "documentIds": ["doc-old"]
+          }
+        ]
+      },
+      "ai": {
+        "feedbackRequests": 0,
+        "sessionsFinished": 0,
+        "sessionsFailed": 0,
+        "comments": 0,
+        "questions": 0,
+        "citationFlags": 0,
+        "surfacedSources": 0,
+        "sourceSuggestions": 0,
+        "discussThreads": 0,
+        "sessions": []
+      },
+      "suggestions": {
+        "total": 0,
+        "byKind": { "word-choice": 0, "insertion": 0, "rephrase": 0 },
+        "byOutcome": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 }
+      },
+      "proposals": {
+        "total": 0,
+        "byKind": {
+          "move": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+          "cut": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+          "split": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+          "merge": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 }
+        }
+      },
+      "pastes": {
+        "external": { "count": 0, "characters": 0, "words": 0 },
+        "internal": { "count": 0, "characters": 0, "words": 0 },
+        "events": []
+      },
+      "imports": { "documents": 1, "words": 18 },
+      "unwitnessed": [],
+      "provesTable": {
+        "proves": [
+          "The text came in through the editor's input channel, at these times and this cadence",
+          "Exactly which AI suggestions were visible, and which were retyped or used",
+          "The history hasn't been changed since the server witnessed it"
+        ],
+        "doesNotProve": [
+          "That the account holder was the one typing",
+          "That nothing was transcribed from another screen or another AI",
+          "That a modified client didn't misreport pastes as typing (the keystroke timeline makes this costly, not impossible)"
+        ]
+      },
+      "extensions": {
+        "unwitnessedThresholdMs": 60000,
+        "projectTitle": "Imported novel",
+        "documents": [
+          { "id": "doc-old", "title": "Chapter one (old draft)", "kind": "manuscript", "words": 23 }
+        ],
+        "assisted": {
+          "annotations": 0,
+          "byKind": {
+            "word-choice": 0,
+            "rephrase": 0,
+            "insertion": 0,
+            "comment": 0,
+            "question": 0,
+            "proposal": 0,
+            "citation-flag": 0,
+            "surfaced-source": 0,
+            "source-suggestion": 0,
+            "discuss": 0,
+            "review": 0
+          }
+        },
+        "quoted": { "sources": 0 },
+        "suggestions": {
+          "byKind": {
+            "word-choice": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 },
+            "insertion": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 },
+            "rephrase": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 }
+          }
+        },
+        "proposals": {
+          "moves": {
+            "sentence": { "proposed": 0, "accepted": 0 },
+            "paragraph": { "proposed": 0, "accepted": 0 },
+            "section": { "proposed": 0, "accepted": 0 }
+          }
+        },
+        "imports": [
+          {
+            "seq": 2,
+            "documentId": "doc-old",
+            "title": "Chapter one (old draft)",
+            "sourceFormat": "markdown",
+            "sourceName": "chapter-one.md",
+            "words": 18,
+            "clientTime": "2026-11-02T09:00:00.400Z"
+          }
+        ]
+      },
+      "disclosure": "Written in 1 session. 23 words: 21.7% typed directly; 78.3% imported (unverified). No AI feedback was requested in Longhand. 1 document was imported from an existing draft (18 words at import); Longhand cannot verify who wrote imported text."
+    }
+  }
+}

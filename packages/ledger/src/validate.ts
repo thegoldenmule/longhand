@@ -36,7 +36,7 @@ import {
   type CommitDraft,
   type EventPayload,
 } from '@longhand/schema';
-import { applyCommit } from './fold';
+import { applyCommitWithSteps, type DerivedSteps } from './fold';
 import { FoldError, type LedgerErrorCode } from './issues';
 import { pvecGet } from './pvec';
 import { internal, type LedgerState } from './state';
@@ -59,6 +59,12 @@ export type ValidationResult =
       state: LedgerState;
       /** `SuggestionResolved` payloads to append after it, in id order. */
       resolutions: Array<EventPayload<'SuggestionResolved'>>;
+      /**
+       * The steps the commit applied, per document id: a `TextEdited`'s own steps,
+       * or the steps the fold derived for a `ProposalAccepted`. `{}` for commits
+       * that change no text. A `RemoteUpdate`'s `steps` are `derivedSteps[documentId]`.
+       */
+      derivedSteps: DerivedSteps;
     }
   | { ok: false; errors: ValidationError[] };
 
@@ -235,8 +241,9 @@ export function validateDraft(
   } as unknown as Commit;
   const commit = { ...unhashed, hash: computeCommitHash(unhashed) } as Commit;
   let next: LedgerState;
+  let derivedSteps: DerivedSteps;
   try {
-    next = applyCommit(state, commit);
+    ({ state: next, steps: derivedSteps } = applyCommitWithSteps(state, commit));
   } catch (e) {
     if (e instanceof FoldError) {
       const code: LedgerErrorCode =
@@ -262,5 +269,6 @@ export function validateDraft(
     commit,
     state: next,
     resolutions: resolutionsBetween(state, next, commit.seq),
+    derivedSteps,
   };
 }

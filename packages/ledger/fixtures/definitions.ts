@@ -6,10 +6,17 @@
  */
 import { computeCommitHash, schema, type Commit } from '@longhand/schema';
 import { existsSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { LedgerBuilder } from '../src/builder';
 
-/** Signatures for embedded `ChainHeadWitnessed` events, written by the build script. */
-export const EMBEDDED_WITNESSES_URL = new URL('./embedded-witnesses.json', import.meta.url);
+/**
+ * Signatures for embedded `ChainHeadWitnessed` events, written by the build script.
+ * Built with `node:url` so it works where the global `URL` is replaced (jsdom).
+ */
+export const EMBEDDED_WITNESSES_URL = pathToFileURL(
+  join(fileURLToPath(import.meta.url), '..', 'embedded-witnesses.json'),
+);
 
 /** Key of an embedded witness subject. */
 export function embeddedKey(s: {

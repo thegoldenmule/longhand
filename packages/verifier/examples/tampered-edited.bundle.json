@@ -1,0 +1,2006 @@
+{
+  "format": "longhand-bundle",
+  "version": 1,
+  "projectId": "proj-1",
+  "createdAt": "2026-11-02T07:30:52.754Z",
+  "commits": [
+    {
+      "commitId": "c-0001",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 1,
+      "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "a6181309a6caedd77d8fec69f7cacb2cc141501b854650db46585dee6ad0dae9",
+      "clientTime": "2026-11-02T07:30:00.000Z",
+      "serverTime": "2026-11-02T07:30:00.250Z",
+      "actor": { "kind": "human", "id": "writer-1" },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "ProjectCreated",
+      "payload": { "title": "Morning Pages" }
+    },
+    {
+      "commitId": "c-0002",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 2,
+      "prevHash": "a6181309a6caedd77d8fec69f7cacb2cc141501b854650db46585dee6ad0dae9",
+      "hash": "fd65e10903c9e148d100116273fc6095d807823b9fe82667b9a54df675ae9912",
+      "clientTime": "2026-11-02T07:30:00.400Z",
+      "serverTime": "2026-11-02T07:30:00.650Z",
+      "actor": { "kind": "human", "id": "writer-1" },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "DocumentCreated",
+      "payload": {
+        "documentId": "doc-pages",
+        "kind": "manuscript",
+        "title": "November 2",
+        "parentId": null,
+        "index": 0
+      }
+    },
+    {
+      "commitId": "c-0003",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 3,
+      "prevHash": "fd65e10903c9e148d100116273fc6095d807823b9fe82667b9a54df675ae9912",
+      "hash": "e6393f18c29d44743f1de1d65e160294c83a01ea953d34de49c2a8f1832715f7",
+      "clientTime": "2026-11-02T07:30:00.800Z",
+      "serverTime": "2026-11-02T07:30:01.050Z",
+      "actor": { "kind": "human", "id": "writer-1" },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-pages",
+        "baseVersion": 0,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 1,
+            "to": 1,
+            "slice": { "content": [{ "type": "text", "text": "T" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 2,
+            "to": 2,
+            "slice": { "content": [{ "type": "text", "text": "h" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 3,
+            "to": 3,
+            "slice": { "content": [{ "type": "text", "text": "e" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 4,
+            "to": 4,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 5,
+            "to": 5,
+            "slice": { "content": [{ "type": "text", "text": "k" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 6,
+            "to": 6,
+            "slice": { "content": [{ "type": "text", "text": "e" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 7,
+            "to": 7,
+            "slice": { "content": [{ "type": "text", "text": "t" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 8,
+            "to": 8,
+            "slice": { "content": [{ "type": "text", "text": "t" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 9,
+            "to": 9,
+            "slice": { "content": [{ "type": "text", "text": "l" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 10,
+            "to": 10,
+            "slice": { "content": [{ "type": "text", "text": "e" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 11,
+            "to": 11,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 12,
+            "to": 12,
+            "slice": { "content": [{ "type": "text", "text": "t" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 13,
+            "to": 13,
+            "slice": { "content": [{ "type": "text", "text": "o" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 14,
+            "to": 14,
+            "slice": { "content": [{ "type": "text", "text": "o" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 15,
+            "to": 15,
+            "slice": { "content": [{ "type": "text", "text": "k" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 16,
+            "to": 16,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 17,
+            "to": 17,
+            "slice": { "content": [{ "type": "text", "text": "f" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 18,
+            "to": 18,
+            "slice": { "content": [{ "type": "text", "text": "o" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 19,
+            "to": 19,
+            "slice": { "content": [{ "type": "text", "text": "r" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 20,
+            "to": 20,
+            "slice": { "content": [{ "type": "text", "text": "e" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 21,
+            "to": 21,
+            "slice": { "content": [{ "type": "text", "text": "v" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 22,
+            "to": 22,
+            "slice": { "content": [{ "type": "text", "text": "e" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 23,
+            "to": 23,
+            "slice": { "content": [{ "type": "text", "text": "r" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 24,
+            "to": 24,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 25,
+            "to": 25,
+            "slice": { "content": [{ "type": "text", "text": "t" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 26,
+            "to": 26,
+            "slice": { "content": [{ "type": "text", "text": "h" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 27,
+            "to": 27,
+            "slice": { "content": [{ "type": "text", "text": "i" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 28,
+            "to": 28,
+            "slice": { "content": [{ "type": "text", "text": "s" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 29,
+            "to": 29,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 30,
+            "to": 30,
+            "slice": { "content": [{ "type": "text", "text": "m" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 31,
+            "to": 31,
+            "slice": { "content": [{ "type": "text", "text": "o" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 32,
+            "to": 32,
+            "slice": { "content": [{ "type": "text", "text": "r" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 33,
+            "to": 33,
+            "slice": { "content": [{ "type": "text", "text": "n" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 34,
+            "to": 34,
+            "slice": { "content": [{ "type": "text", "text": "i" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 35,
+            "to": 35,
+            "slice": { "content": [{ "type": "text", "text": "n" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 36,
+            "to": 36,
+            "slice": { "content": [{ "type": "text", "text": "g" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 37,
+            "to": 37,
+            "slice": { "content": [{ "type": "text", "text": "." }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 38,
+            "to": 38,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 39,
+            "to": 39,
+            "slice": { "content": [{ "type": "text", "text": "I" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 40,
+            "to": 40,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 41,
+            "to": 41,
+            "slice": { "content": [{ "type": "text", "text": "s" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 42,
+            "to": 42,
+            "slice": { "content": [{ "type": "text", "text": "t" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 43,
+            "to": 43,
+            "slice": { "content": [{ "type": "text", "text": "o" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 44,
+            "to": 44,
+            "slice": { "content": [{ "type": "text", "text": "o" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 45,
+            "to": 45,
+            "slice": { "content": [{ "type": "text", "text": "d" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 46,
+            "to": 46,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 47,
+            "to": 47,
+            "slice": { "content": [{ "type": "text", "text": "a" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 48,
+            "to": 48,
+            "slice": { "content": [{ "type": "text", "text": "t" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 49,
+            "to": 49,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 50,
+            "to": 50,
+            "slice": { "content": [{ "type": "text", "text": "t" }] }
+          }
+        ],
+        "runs": [{ "steps": 50, "method": "typed" }],
+        "timeline": [
+          { "t": 0, "kind": "insert", "len": 1 },
+          { "t": 72, "kind": "insert", "len": 1 },
+          { "t": 199, "kind": "insert", "len": 1 },
+          { "t": 270, "kind": "insert", "len": 1 },
+          { "t": 401, "kind": "insert", "len": 1 },
+          { "t": 570, "kind": "insert", "len": 1 },
+          { "t": 677, "kind": "insert", "len": 1 },
+          { "t": 822, "kind": "insert", "len": 1 },
+          { "t": 1007, "kind": "insert", "len": 1 },
+          { "t": 1129, "kind": "insert", "len": 1 },
+          { "t": 1336, "kind": "insert", "len": 1 },
+          { "t": 1520, "kind": "insert", "len": 1 },
+          { "t": 1676, "kind": "insert", "len": 1 },
+          { "t": 1779, "kind": "insert", "len": 1 },
+          { "t": 1951, "kind": "insert", "len": 1 },
+          { "t": 2083, "kind": "insert", "len": 1 },
+          { "t": 2153, "kind": "insert", "len": 1 },
+          { "t": 2238, "kind": "insert", "len": 1 },
+          { "t": 2423, "kind": "insert", "len": 1 },
+          { "t": 2568, "kind": "insert", "len": 1 },
+          { "t": 2772, "kind": "insert", "len": 1 },
+          { "t": 2876, "kind": "insert", "len": 1 },
+          { "t": 3042, "kind": "insert", "len": 1 },
+          { "t": 3240, "kind": "insert", "len": 1 },
+          { "t": 3323, "kind": "insert", "len": 1 },
+          { "t": 3428, "kind": "insert", "len": 1 },
+          { "t": 3593, "kind": "insert", "len": 1 },
+          { "t": 3687, "kind": "insert", "len": 1 },
+          { "t": 3874, "kind": "insert", "len": 1 },
+          { "t": 4036, "kind": "insert", "len": 1 },
+          { "t": 4169, "kind": "insert", "len": 1 },
+          { "t": 4368, "kind": "insert", "len": 1 },
+          { "t": 4494, "kind": "insert", "len": 1 },
+          { "t": 4702, "kind": "insert", "len": 1 },
+          { "t": 4780, "kind": "insert", "len": 1 },
+          { "t": 4937, "kind": "insert", "len": 1 },
+          { "t": 5121, "kind": "insert", "len": 1 },
+          { "t": 5251, "kind": "insert", "len": 1 },
+          { "t": 5407, "kind": "insert", "len": 1 },
+          { "t": 5534, "kind": "insert", "len": 1 },
+          { "t": 5634, "kind": "insert", "len": 1 },
+          { "t": 5837, "kind": "insert", "len": 1 },
+          { "t": 5970, "kind": "insert", "len": 1 },
+          { "t": 6059, "kind": "insert", "len": 1 },
+          { "t": 6175, "kind": "insert", "len": 1 },
+          { "t": 6359, "kind": "insert", "len": 1 },
+          { "t": 6472, "kind": "insert", "len": 1 },
+          { "t": 6654, "kind": "insert", "len": 1 },
+          { "t": 6724, "kind": "insert", "len": 1 },
+          { "t": 6820, "kind": "insert", "len": 1 }
+        ],
+        "characters": 50,
+        "durationMs": 6820
+      }
+    },
+    {
+      "commitId": "c-0004",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 4,
+      "prevHash": "e6393f18c29d44743f1de1d65e160294c83a01ea953d34de49c2a8f1832715f7",
+      "hash": "ecdcef6fc6986f22c9db6bc0fcce15247bf0f8743f91797e92caaeece2cb5e80",
+      "clientTime": "2026-11-02T07:30:09.620Z",
+      "serverTime": "2026-11-02T07:30:09.870Z",
+      "actor": { "kind": "human", "id": "writer-1" },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-pages",
+        "baseVersion": 50,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 51,
+            "to": 51,
+            "slice": { "content": [{ "type": "text", "text": "X" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 52,
+            "to": 52,
+            "slice": { "content": [{ "type": "text", "text": "e" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 53,
+            "to": 53,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 54,
+            "to": 54,
+            "slice": { "content": [{ "type": "text", "text": "c" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 55,
+            "to": 55,
+            "slice": { "content": [{ "type": "text", "text": "o" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 56,
+            "to": 56,
+            "slice": { "content": [{ "type": "text", "text": "u" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 57,
+            "to": 57,
+            "slice": { "content": [{ "type": "text", "text": "n" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 58,
+            "to": 58,
+            "slice": { "content": [{ "type": "text", "text": "t" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 59,
+            "to": 59,
+            "slice": { "content": [{ "type": "text", "text": "e" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 60,
+            "to": 60,
+            "slice": { "content": [{ "type": "text", "text": "r" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 61,
+            "to": 61,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 62,
+            "to": 62,
+            "slice": { "content": [{ "type": "text", "text": "a" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 63,
+            "to": 63,
+            "slice": { "content": [{ "type": "text", "text": "n" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 64,
+            "to": 64,
+            "slice": { "content": [{ "type": "text", "text": "d" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 65,
+            "to": 65,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 66,
+            "to": 66,
+            "slice": { "content": [{ "type": "text", "text": "w" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 67,
+            "to": 67,
+            "slice": { "content": [{ "type": "text", "text": "a" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 68,
+            "to": 68,
+            "slice": { "content": [{ "type": "text", "text": "t" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 69,
+            "to": 69,
+            "slice": { "content": [{ "type": "text", "text": "c" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 70,
+            "to": 70,
+            "slice": { "content": [{ "type": "text", "text": "h" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 71,
+            "to": 71,
+            "slice": { "content": [{ "type": "text", "text": "e" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 72,
+            "to": 72,
+            "slice": { "content": [{ "type": "text", "text": "d" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 73,
+            "to": 73,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 74,
+            "to": 74,
+            "slice": { "content": [{ "type": "text", "text": "t" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 75,
+            "to": 75,
+            "slice": { "content": [{ "type": "text", "text": "h" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 76,
+            "to": 76,
+            "slice": { "content": [{ "type": "text", "text": "e" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 77,
+            "to": 77,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 78,
+            "to": 78,
+            "slice": { "content": [{ "type": "text", "text": "s" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 79,
+            "to": 79,
+            "slice": { "content": [{ "type": "text", "text": "t" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 80,
+            "to": 80,
+            "slice": { "content": [{ "type": "text", "text": "e" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 81,
+            "to": 81,
+            "slice": { "content": [{ "type": "text", "text": "a" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 82,
+            "to": 82,
+            "slice": { "content": [{ "type": "text", "text": "m" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 83,
+            "to": 83,
+            "slice": { "content": [{ "type": "text", "text": "." }] }
+          }
+        ],
+        "runs": [{ "steps": 33, "method": "typed" }],
+        "timeline": [
+          { "t": 0, "kind": "insert", "len": 1 },
+          { "t": 192, "kind": "insert", "len": 1 },
+          { "t": 309, "kind": "insert", "len": 1 },
+          { "t": 497, "kind": "insert", "len": 1 },
+          { "t": 685, "kind": "insert", "len": 1 },
+          { "t": 813, "kind": "insert", "len": 1 },
+          { "t": 996, "kind": "insert", "len": 1 },
+          { "t": 1181, "kind": "insert", "len": 1 },
+          { "t": 1360, "kind": "insert", "len": 1 },
+          { "t": 1528, "kind": "insert", "len": 1 },
+          { "t": 1622, "kind": "insert", "len": 1 },
+          { "t": 1800, "kind": "insert", "len": 1 },
+          { "t": 1914, "kind": "insert", "len": 1 },
+          { "t": 1988, "kind": "insert", "len": 1 },
+          { "t": 2160, "kind": "insert", "len": 1 },
+          { "t": 2370, "kind": "insert", "len": 1 },
+          { "t": 2571, "kind": "insert", "len": 1 },
+          { "t": 2776, "kind": "insert", "len": 1 },
+          { "t": 2961, "kind": "insert", "len": 1 },
+          { "t": 3133, "kind": "insert", "len": 1 },
+          { "t": 3266, "kind": "insert", "len": 1 },
+          { "t": 3364, "kind": "insert", "len": 1 },
+          { "t": 3476, "kind": "insert", "len": 1 },
+          { "t": 3618, "kind": "insert", "len": 1 },
+          { "t": 3700, "kind": "insert", "len": 1 },
+          { "t": 3770, "kind": "insert", "len": 1 },
+          { "t": 3959, "kind": "insert", "len": 1 },
+          { "t": 4048, "kind": "insert", "len": 1 },
+          { "t": 4216, "kind": "insert", "len": 1 },
+          { "t": 4317, "kind": "insert", "len": 1 },
+          { "t": 4483, "kind": "insert", "len": 1 },
+          { "t": 4598, "kind": "insert", "len": 1 },
+          { "t": 4693, "kind": "insert", "len": 1 }
+        ],
+        "characters": 33,
+        "durationMs": 4693
+      }
+    },
+    {
+      "commitId": "c-0005",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 5,
+      "prevHash": "ecdcef6fc6986f22c9db6bc0fcce15247bf0f8743f91797e92caaeece2cb5e80",
+      "hash": "015f5d5ef18e5bd0da05e8c0b1d7d329699b85fed49c0f5cb9aa3802b1dadca5",
+      "clientTime": "2026-11-02T07:30:16.313Z",
+      "serverTime": "2026-11-02T07:30:16.563Z",
+      "actor": { "kind": "human", "id": "writer-1" },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-pages",
+        "baseVersion": 83,
+        "steps": [
+          { "stepType": "replace", "from": 83, "to": 84 },
+          { "stepType": "replace", "from": 82, "to": 83 },
+          { "stepType": "replace", "from": 81, "to": 82 },
+          { "stepType": "replace", "from": 80, "to": 81 },
+          { "stepType": "replace", "from": 79, "to": 80 },
+          { "stepType": "replace", "from": 78, "to": 79 }
+        ],
+        "runs": [{ "steps": 6, "method": "typed" }],
+        "timeline": [
+          { "t": 0, "kind": "delete", "len": 1 },
+          { "t": 68, "kind": "delete", "len": 1 },
+          { "t": 192, "kind": "delete", "len": 1 },
+          { "t": 322, "kind": "delete", "len": 1 },
+          { "t": 458, "kind": "delete", "len": 1 },
+          { "t": 578, "kind": "delete", "len": 1 }
+        ],
+        "characters": 0,
+        "durationMs": 578
+      }
+    },
+    {
+      "commitId": "c-0006",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 6,
+      "prevHash": "015f5d5ef18e5bd0da05e8c0b1d7d329699b85fed49c0f5cb9aa3802b1dadca5",
+      "hash": "4fefbaf3bb8f32d982d70f6fd7260a76f8492d8bf2c6992477c7e7bb3620f6d9",
+      "clientTime": "2026-11-02T07:30:18.891Z",
+      "serverTime": "2026-11-02T07:30:19.141Z",
+      "actor": { "kind": "human", "id": "writer-1" },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-pages",
+        "baseVersion": 89,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 78,
+            "to": 78,
+            "slice": { "content": [{ "type": "text", "text": "w" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 79,
+            "to": 79,
+            "slice": { "content": [{ "type": "text", "text": "i" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 80,
+            "to": 80,
+            "slice": { "content": [{ "type": "text", "text": "n" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 81,
+            "to": 81,
+            "slice": { "content": [{ "type": "text", "text": "d" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 82,
+            "to": 82,
+            "slice": { "content": [{ "type": "text", "text": "o" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 83,
+            "to": 83,
+            "slice": { "content": [{ "type": "text", "text": "w" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 84,
+            "to": 84,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 85,
+            "to": 85,
+            "slice": { "content": [{ "type": "text", "text": "f" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 86,
+            "to": 86,
+            "slice": { "content": [{ "type": "text", "text": "o" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 87,
+            "to": 87,
+            "slice": { "content": [{ "type": "text", "text": "g" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 88,
+            "to": 88,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 89,
+            "to": 89,
+            "slice": { "content": [{ "type": "text", "text": "o" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 90,
+            "to": 90,
+            "slice": { "content": [{ "type": "text", "text": "v" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 91,
+            "to": 91,
+            "slice": { "content": [{ "type": "text", "text": "e" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 92,
+            "to": 92,
+            "slice": { "content": [{ "type": "text", "text": "r" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 93,
+            "to": 93,
+            "slice": { "content": [{ "type": "text", "text": "." }] }
+          }
+        ],
+        "runs": [{ "steps": 16, "method": "typed" }],
+        "timeline": [
+          { "t": 0, "kind": "insert", "len": 1 },
+          { "t": 167, "kind": "insert", "len": 1 },
+          { "t": 364, "kind": "insert", "len": 1 },
+          { "t": 534, "kind": "insert", "len": 1 },
+          { "t": 664, "kind": "insert", "len": 1 },
+          { "t": 798, "kind": "insert", "len": 1 },
+          { "t": 939, "kind": "insert", "len": 1 },
+          { "t": 1064, "kind": "insert", "len": 1 },
+          { "t": 1184, "kind": "insert", "len": 1 },
+          { "t": 1265, "kind": "insert", "len": 1 },
+          { "t": 1452, "kind": "insert", "len": 1 },
+          { "t": 1611, "kind": "insert", "len": 1 },
+          { "t": 1726, "kind": "insert", "len": 1 },
+          { "t": 1900, "kind": "insert", "len": 1 },
+          { "t": 2008, "kind": "insert", "len": 1 },
+          { "t": 2128, "kind": "insert", "len": 1 }
+        ],
+        "characters": 16,
+        "durationMs": 2128
+      }
+    },
+    {
+      "commitId": "c-0007",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 7,
+      "prevHash": "4fefbaf3bb8f32d982d70f6fd7260a76f8492d8bf2c6992477c7e7bb3620f6d9",
+      "hash": "35330eec39bc7c9626f8ea177b9a83916fd112a3385030d775f522e67342f351",
+      "clientTime": "2026-11-02T07:30:23.019Z",
+      "serverTime": "2026-11-02T07:30:23.269Z",
+      "actor": { "kind": "human", "id": "writer-1" },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-pages",
+        "baseVersion": 105,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 94,
+            "to": 94,
+            "slice": {
+              "content": [{ "type": "paragraph" }, { "type": "paragraph" }],
+              "openStart": 1,
+              "openEnd": 1
+            },
+            "structure": true
+          }
+        ],
+        "runs": [{ "steps": 1, "method": "typed" }],
+        "timeline": [{ "t": 0, "kind": "break", "len": 0 }],
+        "characters": 0,
+        "durationMs": 0
+      }
+    },
+    {
+      "commitId": "c-0008",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 8,
+      "prevHash": "35330eec39bc7c9626f8ea177b9a83916fd112a3385030d775f522e67342f351",
+      "hash": "82151eb97ccb5c8d46327369e781cfe14351d3be7815714053ed1c1a69a1bee5",
+      "clientTime": "2026-11-02T07:30:25.019Z",
+      "serverTime": "2026-11-02T07:30:25.269Z",
+      "actor": { "kind": "human", "id": "writer-1" },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-pages",
+        "baseVersion": 106,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 96,
+            "to": 96,
+            "slice": { "content": [{ "type": "text", "text": "T" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 97,
+            "to": 97,
+            "slice": { "content": [{ "type": "text", "text": "o" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 98,
+            "to": 98,
+            "slice": { "content": [{ "type": "text", "text": "d" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 99,
+            "to": 99,
+            "slice": { "content": [{ "type": "text", "text": "a" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 100,
+            "to": 100,
+            "slice": { "content": [{ "type": "text", "text": "y" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 101,
+            "to": 101,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 102,
+            "to": 102,
+            "slice": { "content": [{ "type": "text", "text": "I" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 103,
+            "to": 103,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 104,
+            "to": 104,
+            "slice": { "content": [{ "type": "text", "text": "w" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 105,
+            "to": 105,
+            "slice": { "content": [{ "type": "text", "text": "a" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 106,
+            "to": 106,
+            "slice": { "content": [{ "type": "text", "text": "n" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 107,
+            "to": 107,
+            "slice": { "content": [{ "type": "text", "text": "t" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 108,
+            "to": 108,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 109,
+            "to": 109,
+            "slice": { "content": [{ "type": "text", "text": "t" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 110,
+            "to": 110,
+            "slice": { "content": [{ "type": "text", "text": "o" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 111,
+            "to": 111,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 112,
+            "to": 112,
+            "slice": { "content": [{ "type": "text", "text": "f" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 113,
+            "to": 113,
+            "slice": { "content": [{ "type": "text", "text": "i" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 114,
+            "to": 114,
+            "slice": { "content": [{ "type": "text", "text": "n" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 115,
+            "to": 115,
+            "slice": { "content": [{ "type": "text", "text": "i" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 116,
+            "to": 116,
+            "slice": { "content": [{ "type": "text", "text": "s" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 117,
+            "to": 117,
+            "slice": { "content": [{ "type": "text", "text": "h" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 118,
+            "to": 118,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 119,
+            "to": 119,
+            "slice": { "content": [{ "type": "text", "text": "t" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 120,
+            "to": 120,
+            "slice": { "content": [{ "type": "text", "text": "h" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 121,
+            "to": 121,
+            "slice": { "content": [{ "type": "text", "text": "e" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 122,
+            "to": 122,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 123,
+            "to": 123,
+            "slice": { "content": [{ "type": "text", "text": "c" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 124,
+            "to": 124,
+            "slice": { "content": [{ "type": "text", "text": "h" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 125,
+            "to": 125,
+            "slice": { "content": [{ "type": "text", "text": "a" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 126,
+            "to": 126,
+            "slice": { "content": [{ "type": "text", "text": "p" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 127,
+            "to": 127,
+            "slice": { "content": [{ "type": "text", "text": "t" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 128,
+            "to": 128,
+            "slice": { "content": [{ "type": "text", "text": "e" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 129,
+            "to": 129,
+            "slice": { "content": [{ "type": "text", "text": "r" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 130,
+            "to": 130,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 131,
+            "to": 131,
+            "slice": { "content": [{ "type": "text", "text": "a" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 132,
+            "to": 132,
+            "slice": { "content": [{ "type": "text", "text": "b" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 133,
+            "to": 133,
+            "slice": { "content": [{ "type": "text", "text": "o" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 134,
+            "to": 134,
+            "slice": { "content": [{ "type": "text", "text": "u" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 135,
+            "to": 135,
+            "slice": { "content": [{ "type": "text", "text": "t" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 136,
+            "to": 136,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 137,
+            "to": 137,
+            "slice": { "content": [{ "type": "text", "text": "t" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 138,
+            "to": 138,
+            "slice": { "content": [{ "type": "text", "text": "h" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 139,
+            "to": 139,
+            "slice": { "content": [{ "type": "text", "text": "e" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 140,
+            "to": 140,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 141,
+            "to": 141,
+            "slice": { "content": [{ "type": "text", "text": "f" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 142,
+            "to": 142,
+            "slice": { "content": [{ "type": "text", "text": "l" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 143,
+            "to": 143,
+            "slice": { "content": [{ "type": "text", "text": "o" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 144,
+            "to": 144,
+            "slice": { "content": [{ "type": "text", "text": "o" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 145,
+            "to": 145,
+            "slice": { "content": [{ "type": "text", "text": "d" }] }
+          }
+        ],
+        "runs": [{ "steps": 50, "method": "typed" }],
+        "timeline": [
+          { "t": 0, "kind": "insert", "len": 1 },
+          { "t": 102, "kind": "insert", "len": 1 },
+          { "t": 233, "kind": "insert", "len": 1 },
+          { "t": 315, "kind": "insert", "len": 1 },
+          { "t": 428, "kind": "insert", "len": 1 },
+          { "t": 511, "kind": "insert", "len": 1 },
+          { "t": 711, "kind": "insert", "len": 1 },
+          { "t": 857, "kind": "insert", "len": 1 },
+          { "t": 1003, "kind": "insert", "len": 1 },
+          { "t": 1146, "kind": "insert", "len": 1 },
+          { "t": 1241, "kind": "insert", "len": 1 },
+          { "t": 1437, "kind": "insert", "len": 1 },
+          { "t": 1629, "kind": "insert", "len": 1 },
+          { "t": 1834, "kind": "insert", "len": 1 },
+          { "t": 1983, "kind": "insert", "len": 1 },
+          { "t": 2111, "kind": "insert", "len": 1 },
+          { "t": 2208, "kind": "insert", "len": 1 },
+          { "t": 2335, "kind": "insert", "len": 1 },
+          { "t": 2448, "kind": "insert", "len": 1 },
+          { "t": 2614, "kind": "insert", "len": 1 },
+          { "t": 2769, "kind": "insert", "len": 1 },
+          { "t": 2878, "kind": "insert", "len": 1 },
+          { "t": 2970, "kind": "insert", "len": 1 },
+          { "t": 3166, "kind": "insert", "len": 1 },
+          { "t": 3317, "kind": "insert", "len": 1 },
+          { "t": 3491, "kind": "insert", "len": 1 },
+          { "t": 3639, "kind": "insert", "len": 1 },
+          { "t": 3752, "kind": "insert", "len": 1 },
+          { "t": 3953, "kind": "insert", "len": 1 },
+          { "t": 4096, "kind": "insert", "len": 1 },
+          { "t": 4209, "kind": "insert", "len": 1 },
+          { "t": 4414, "kind": "insert", "len": 1 },
+          { "t": 4589, "kind": "insert", "len": 1 },
+          { "t": 4693, "kind": "insert", "len": 1 },
+          { "t": 4813, "kind": "insert", "len": 1 },
+          { "t": 4886, "kind": "insert", "len": 1 },
+          { "t": 5082, "kind": "insert", "len": 1 },
+          { "t": 5182, "kind": "insert", "len": 1 },
+          { "t": 5362, "kind": "insert", "len": 1 },
+          { "t": 5432, "kind": "insert", "len": 1 },
+          { "t": 5626, "kind": "insert", "len": 1 },
+          { "t": 5712, "kind": "insert", "len": 1 },
+          { "t": 5885, "kind": "insert", "len": 1 },
+          { "t": 5992, "kind": "insert", "len": 1 },
+          { "t": 6083, "kind": "insert", "len": 1 },
+          { "t": 6201, "kind": "insert", "len": 1 },
+          { "t": 6367, "kind": "insert", "len": 1 },
+          { "t": 6469, "kind": "insert", "len": 1 },
+          { "t": 6556, "kind": "insert", "len": 1 },
+          { "t": 6673, "kind": "insert", "len": 1 }
+        ],
+        "characters": 50,
+        "durationMs": 6673
+      }
+    },
+    {
+      "commitId": "c-0009",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 9,
+      "prevHash": "82151eb97ccb5c8d46327369e781cfe14351d3be7815714053ed1c1a69a1bee5",
+      "hash": "4558838f2146d0fcd95ebb9e5537b07550c21d63e11be6942a4ef55135c64205",
+      "clientTime": "2026-11-02T07:30:33.692Z",
+      "serverTime": "2026-11-02T07:30:33.942Z",
+      "actor": { "kind": "human", "id": "writer-1" },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-pages",
+        "baseVersion": 156,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 146,
+            "to": 146,
+            "slice": { "content": [{ "type": "text", "text": "." }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 147,
+            "to": 147,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 148,
+            "to": 148,
+            "slice": { "content": [{ "type": "text", "text": "I" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 149,
+            "to": 149,
+            "slice": { "content": [{ "type": "text", "text": "t" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 150,
+            "to": 150,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 151,
+            "to": 151,
+            "slice": { "content": [{ "type": "text", "text": "h" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 152,
+            "to": 152,
+            "slice": { "content": [{ "type": "text", "text": "a" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 153,
+            "to": 153,
+            "slice": { "content": [{ "type": "text", "text": "s" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 154,
+            "to": 154,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 155,
+            "to": 155,
+            "slice": { "content": [{ "type": "text", "text": "b" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 156,
+            "to": 156,
+            "slice": { "content": [{ "type": "text", "text": "e" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 157,
+            "to": 157,
+            "slice": { "content": [{ "type": "text", "text": "e" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 158,
+            "to": 158,
+            "slice": { "content": [{ "type": "text", "text": "n" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 159,
+            "to": 159,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 160,
+            "to": 160,
+            "slice": { "content": [{ "type": "text", "text": "s" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 161,
+            "to": 161,
+            "slice": { "content": [{ "type": "text", "text": "i" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 162,
+            "to": 162,
+            "slice": { "content": [{ "type": "text", "text": "t" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 163,
+            "to": 163,
+            "slice": { "content": [{ "type": "text", "text": "t" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 164,
+            "to": 164,
+            "slice": { "content": [{ "type": "text", "text": "i" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 165,
+            "to": 165,
+            "slice": { "content": [{ "type": "text", "text": "n" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 166,
+            "to": 166,
+            "slice": { "content": [{ "type": "text", "text": "g" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 167,
+            "to": 167,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 168,
+            "to": 168,
+            "slice": { "content": [{ "type": "text", "text": "t" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 169,
+            "to": 169,
+            "slice": { "content": [{ "type": "text", "text": "h" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 170,
+            "to": 170,
+            "slice": { "content": [{ "type": "text", "text": "e" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 171,
+            "to": 171,
+            "slice": { "content": [{ "type": "text", "text": "r" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 172,
+            "to": 172,
+            "slice": { "content": [{ "type": "text", "text": "e" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 173,
+            "to": 173,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 174,
+            "to": 174,
+            "slice": { "content": [{ "type": "text", "text": "f" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 175,
+            "to": 175,
+            "slice": { "content": [{ "type": "text", "text": "o" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 176,
+            "to": 176,
+            "slice": { "content": [{ "type": "text", "text": "r" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 177,
+            "to": 177,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 178,
+            "to": 178,
+            "slice": { "content": [{ "type": "text", "text": "a" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 179,
+            "to": 179,
+            "slice": { "content": [{ "type": "text", "text": " " }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 180,
+            "to": 180,
+            "slice": { "content": [{ "type": "text", "text": "w" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 181,
+            "to": 181,
+            "slice": { "content": [{ "type": "text", "text": "e" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 182,
+            "to": 182,
+            "slice": { "content": [{ "type": "text", "text": "e" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 183,
+            "to": 183,
+            "slice": { "content": [{ "type": "text", "text": "k" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 184,
+            "to": 184,
+            "slice": { "content": [{ "type": "text", "text": "." }] }
+          }
+        ],
+        "runs": [{ "steps": 39, "method": "typed" }],
+        "timeline": [
+          { "t": 0, "kind": "insert", "len": 1 },
+          { "t": 164, "kind": "insert", "len": 1 },
+          { "t": 248, "kind": "insert", "len": 1 },
+          { "t": 351, "kind": "insert", "len": 1 },
+          { "t": 429, "kind": "insert", "len": 1 },
+          { "t": 621, "kind": "insert", "len": 1 },
+          { "t": 740, "kind": "insert", "len": 1 },
+          { "t": 941, "kind": "insert", "len": 1 },
+          { "t": 1138, "kind": "insert", "len": 1 },
+          { "t": 1347, "kind": "insert", "len": 1 },
+          { "t": 1487, "kind": "insert", "len": 1 },
+          { "t": 1569, "kind": "insert", "len": 1 },
+          { "t": 1744, "kind": "insert", "len": 1 },
+          { "t": 1885, "kind": "insert", "len": 1 },
+          { "t": 2075, "kind": "insert", "len": 1 },
+          { "t": 2242, "kind": "insert", "len": 1 },
+          { "t": 2322, "kind": "insert", "len": 1 },
+          { "t": 2474, "kind": "insert", "len": 1 },
+          { "t": 2582, "kind": "insert", "len": 1 },
+          { "t": 2670, "kind": "insert", "len": 1 },
+          { "t": 2846, "kind": "insert", "len": 1 },
+          { "t": 2998, "kind": "insert", "len": 1 },
+          { "t": 3198, "kind": "insert", "len": 1 },
+          { "t": 3364, "kind": "insert", "len": 1 },
+          { "t": 3486, "kind": "insert", "len": 1 },
+          { "t": 3605, "kind": "insert", "len": 1 },
+          { "t": 3774, "kind": "insert", "len": 1 },
+          { "t": 3866, "kind": "insert", "len": 1 },
+          { "t": 4026, "kind": "insert", "len": 1 },
+          { "t": 4235, "kind": "insert", "len": 1 },
+          { "t": 4341, "kind": "insert", "len": 1 },
+          { "t": 4424, "kind": "insert", "len": 1 },
+          { "t": 4517, "kind": "insert", "len": 1 },
+          { "t": 4678, "kind": "insert", "len": 1 },
+          { "t": 4846, "kind": "insert", "len": 1 },
+          { "t": 5011, "kind": "insert", "len": 1 },
+          { "t": 5191, "kind": "insert", "len": 1 },
+          { "t": 5354, "kind": "insert", "len": 1 },
+          { "t": 5491, "kind": "insert", "len": 1 }
+        ],
+        "characters": 39,
+        "durationMs": 5491
+      }
+    },
+    {
+      "commitId": "c-0010",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 10,
+      "prevHash": "4558838f2146d0fcd95ebb9e5537b07550c21d63e11be6942a4ef55135c64205",
+      "hash": "05b527356b4839f7f24d3523cb58c17f792755f212a16005e11e87969c0e4e65",
+      "clientTime": "2026-11-02T07:30:41.183Z",
+      "serverTime": "2026-11-02T07:30:41.433Z",
+      "actor": { "kind": "human", "id": "writer-1" },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-pages",
+        "baseVersion": 195,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 17,
+            "to": 24,
+            "slice": { "content": [{ "type": "text", "text": "a" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 18,
+            "to": 18,
+            "slice": { "content": [{ "type": "text", "text": "g" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 19,
+            "to": 19,
+            "slice": { "content": [{ "type": "text", "text": "e" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 20,
+            "to": 20,
+            "slice": { "content": [{ "type": "text", "text": "s" }] }
+          }
+        ],
+        "runs": [{ "steps": 4, "method": "typed" }],
+        "timeline": [
+          { "t": 0, "kind": "insert", "len": 1 },
+          { "t": 80, "kind": "insert", "len": 1 },
+          { "t": 157, "kind": "insert", "len": 1 },
+          { "t": 336, "kind": "insert", "len": 1 }
+        ],
+        "characters": 4,
+        "durationMs": 336
+      }
+    },
+    {
+      "commitId": "c-0011",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 11,
+      "prevHash": "05b527356b4839f7f24d3523cb58c17f792755f212a16005e11e87969c0e4e65",
+      "hash": "cca0f20c1b41c630f62a6cbfc6c12aa0069682950387fb8daaf43363aa0d3260",
+      "clientTime": "2026-11-02T07:30:43.519Z",
+      "serverTime": "2026-11-02T07:30:43.769Z",
+      "actor": { "kind": "human", "id": "writer-1" },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-pages",
+        "baseVersion": 199,
+        "steps": [{ "stepType": "addMark", "mark": { "type": "em" }, "from": 109, "to": 115 }],
+        "runs": [{ "steps": 1, "method": "typed" }],
+        "timeline": [{ "t": 0, "kind": "format", "len": 0 }],
+        "characters": 0,
+        "durationMs": 0
+      }
+    },
+    {
+      "commitId": "c-0012",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 12,
+      "prevHash": "cca0f20c1b41c630f62a6cbfc6c12aa0069682950387fb8daaf43363aa0d3260",
+      "hash": "9ec7d05c4e33601924d93411f340bb947bfeb2bc3a3187337a7edc0751346a1e",
+      "clientTime": "2026-11-02T07:30:49.519Z",
+      "serverTime": "2026-11-02T07:30:49.769Z",
+      "actor": { "kind": "human", "id": "writer-1" },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-pages",
+        "baseVersion": 200,
+        "steps": [
+          {
+            "stepType": "replace",
+            "from": 1,
+            "to": 1,
+            "slice": { "content": [{ "type": "text", "text": "M" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 2,
+            "to": 2,
+            "slice": { "content": [{ "type": "text", "text": "o" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 3,
+            "to": 3,
+            "slice": { "content": [{ "type": "text", "text": "r" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 4,
+            "to": 4,
+            "slice": { "content": [{ "type": "text", "text": "n" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 5,
+            "to": 5,
+            "slice": { "content": [{ "type": "text", "text": "i" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 6,
+            "to": 6,
+            "slice": { "content": [{ "type": "text", "text": "n" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 7,
+            "to": 7,
+            "slice": { "content": [{ "type": "text", "text": "g" }] }
+          },
+          {
+            "stepType": "replace",
+            "from": 8,
+            "to": 8,
+            "slice": {
+              "content": [{ "type": "paragraph" }, { "type": "paragraph" }],
+              "openStart": 1,
+              "openEnd": 1
+            },
+            "structure": true
+          }
+        ],
+        "runs": [{ "steps": 8, "method": "typed" }],
+        "timeline": [
+          { "t": 0, "kind": "insert", "len": 1 },
+          { "t": 158, "kind": "insert", "len": 1 },
+          { "t": 308, "kind": "insert", "len": 1 },
+          { "t": 517, "kind": "insert", "len": 1 },
+          { "t": 620, "kind": "insert", "len": 1 },
+          { "t": 694, "kind": "insert", "len": 1 },
+          { "t": 773, "kind": "insert", "len": 1 },
+          { "t": 985, "kind": "break", "len": 0 }
+        ],
+        "characters": 7,
+        "durationMs": 985
+      }
+    },
+    {
+      "commitId": "c-0013",
+      "projectId": "proj-1",
+      "accountId": "acct-1",
+      "seq": 13,
+      "prevHash": "9ec7d05c4e33601924d93411f340bb947bfeb2bc3a3187337a7edc0751346a1e",
+      "hash": "49c4a79629440d735c7bb1ac1d0141b084edd4cfd6d55b7abcfc3c9ae82b6a9c",
+      "clientTime": "2026-11-02T07:30:52.504Z",
+      "serverTime": "2026-11-02T07:30:52.754Z",
+      "actor": { "kind": "human", "id": "writer-1" },
+      "deviceId": "device-1",
+      "sessionId": "editor-1",
+      "schemaVersion": 1,
+      "type": "TextEdited",
+      "payload": {
+        "documentId": "doc-pages",
+        "baseVersion": 208,
+        "steps": [
+          {
+            "stepType": "replaceAround",
+            "from": 0,
+            "to": 9,
+            "gapFrom": 1,
+            "gapTo": 8,
+            "insert": 1,
+            "slice": { "content": [{ "type": "heading", "attrs": { "level": 2 } }] },
+            "structure": true
+          }
+        ],
+        "runs": [{ "steps": 1, "method": "typed" }],
+        "timeline": [{ "t": 0, "kind": "format", "len": 0 }],
+        "characters": 0,
+        "durationMs": 0
+      }
+    }
+  ],
+  "witnesses": [
+    {
+      "projectId": "proj-1",
+      "seq": 1,
+      "hash": "a6181309a6caedd77d8fec69f7cacb2cc141501b854650db46585dee6ad0dae9",
+      "serverTime": "2026-11-02T07:30:00.250Z",
+      "signature": "5cZpMZRLRP3CO4QA4Vix9hvccrfAH3FGH9IdYdcfKiGIIFmhfEVJAoMDs2EYfji/1peB5zqEKFAqQa+z4/4EZQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 2,
+      "hash": "fd65e10903c9e148d100116273fc6095d807823b9fe82667b9a54df675ae9912",
+      "serverTime": "2026-11-02T07:30:00.650Z",
+      "signature": "TV0WLmqBjigGeB89DerItIFR2eqAqRtGpogS5sD4KwDTvbY5ilkmle57h8/fqw4kSPYoKO3gpoQyz0yv16ukkQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 3,
+      "hash": "e6393f18c29d44743f1de1d65e160294c83a01ea953d34de49c2a8f1832715f7",
+      "serverTime": "2026-11-02T07:30:01.050Z",
+      "signature": "06+HIOMg5WwgH5gVGnf3cQAB4qdAHnvRjmMlFWKFHtUbnKhWJapJmVbWmnO70qQERRzlbtX2W0ih9QNL8EhDSA==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 4,
+      "hash": "ecdcef6fc6986f22c9db6bc0fcce15247bf0f8743f91797e92caaeece2cb5e80",
+      "serverTime": "2026-11-02T07:30:09.870Z",
+      "signature": "3/f94tvgn5z+R2lsx8FPiPCgnfD/YmgZrJk/fVY0UIZNBqtuivlLIHsdAnvUTNxspD+lnAs20mXyLQXfg1P1xg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 5,
+      "hash": "015f5d5ef18e5bd0da05e8c0b1d7d329699b85fed49c0f5cb9aa3802b1dadca5",
+      "serverTime": "2026-11-02T07:30:16.563Z",
+      "signature": "Yf91Apkqw+zcZnq4fMc94lL2W2NG+e9IMmrML39B0SR5Nqf42YYV8N2NusOtTAcI8pmkatZq8y5KK3CnH/dhfQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 6,
+      "hash": "4fefbaf3bb8f32d982d70f6fd7260a76f8492d8bf2c6992477c7e7bb3620f6d9",
+      "serverTime": "2026-11-02T07:30:19.141Z",
+      "signature": "dk+qtOmcoN+M57+7s6IhjxjryFoEEuZHLcpY4ECzf7nsPG9zid8i+qREdVn4k1U9a1v5BABGWQaBx3ObHpVqsQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 7,
+      "hash": "35330eec39bc7c9626f8ea177b9a83916fd112a3385030d775f522e67342f351",
+      "serverTime": "2026-11-02T07:30:23.269Z",
+      "signature": "P3JE1IfDjvFYGYxnqlV6vCHeqByKvFabb48VO8K0qjeIku9WC8xxwB48Sd6J62EZZqDYvNOHI8V/opOELjmYtg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 8,
+      "hash": "82151eb97ccb5c8d46327369e781cfe14351d3be7815714053ed1c1a69a1bee5",
+      "serverTime": "2026-11-02T07:30:25.269Z",
+      "signature": "FLMU8T8QcHc8ifxea3xVOWn+UJnQwkaJkhTwndrn5enSLvnAkkHKgTvnWQdmTyZ+E8/u0+2SuJF8oV8mJNoteg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 9,
+      "hash": "4558838f2146d0fcd95ebb9e5537b07550c21d63e11be6942a4ef55135c64205",
+      "serverTime": "2026-11-02T07:30:33.942Z",
+      "signature": "WmZCbk93UxJRZ9STBk65W5j1HRvuEEByr13kDH6sO2o/IfQzlo2W+UzxlYR4EUdRQKeNyUDuXvYEztYpAWHZmw==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 10,
+      "hash": "05b527356b4839f7f24d3523cb58c17f792755f212a16005e11e87969c0e4e65",
+      "serverTime": "2026-11-02T07:30:41.433Z",
+      "signature": "d3cwj5isktaRzudOhZScAqc++6huKXNRT+umqdHwnvy6rN2glaZQyKh7WB+QNt4878GeSsWIrFFO/BRyU1AA+A==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 11,
+      "hash": "cca0f20c1b41c630f62a6cbfc6c12aa0069682950387fb8daaf43363aa0d3260",
+      "serverTime": "2026-11-02T07:30:43.769Z",
+      "signature": "5ZrAOuTG/SGFL+CFF4LoCQ4Tt9gmMWcyaqHo3wKby2e+jU2LNnITzmgKT2clU+LgpN+jIdfhi7aZCaR7GOqKeQ==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 12,
+      "hash": "9ec7d05c4e33601924d93411f340bb947bfeb2bc3a3187337a7edc0751346a1e",
+      "serverTime": "2026-11-02T07:30:49.769Z",
+      "signature": "LJmm5c68CoO7GCdqkyijrKtBKiG7nm25r2LQKkZfoSz8LoohDqYf/Sj4KxsLFVXTO/ZahV05edYahmHxgFWZYg==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    },
+    {
+      "projectId": "proj-1",
+      "seq": 13,
+      "hash": "49c4a79629440d735c7bb1ac1d0141b084edd4cfd6d55b7abcfc3c9ae82b6a9c",
+      "serverTime": "2026-11-02T07:30:52.754Z",
+      "signature": "CZNhuXwEvYwT0L08xtZ68l7uC+C37SFuxjQjWF5Urf5xzMREkHSwaWNIP0LmZ1M523W8M6IEwNlPm9BJ3yh4Gw==",
+      "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a"
+    }
+  ],
+  "publicKeyPem": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEoInrdRkLs5lWE+qtD8cpCVp0gkEn\n0tllAdSMj9iVyF0MaAHny/cdaByyk3aWbk6dqMaXuaekIuWmvEJCsgbJBg==\n-----END PUBLIC KEY-----\n",
+  "keyId": "183d770612f8ec86bc8637001b03e74648777ae2d59be01b570cd56609fd148a",
+  "report": {
+    "reportVersion": 1,
+    "scope": { "kind": "project" },
+    "throughSeq": 13,
+    "headHash": "49c4a79629440d735c7bb1ac1d0141b084edd4cfd6d55b7abcfc3c9ae82b6a9c",
+    "words": {
+      "total": 36,
+      "byClass": {
+        "typed": 36,
+        "typed-from-suggestion": 0,
+        "pasted-external": 0,
+        "pasted-internal": 0,
+        "imported": 0,
+        "quoted": 0
+      }
+    },
+    "characters": {
+      "total": 186,
+      "byClass": {
+        "typed": 186,
+        "typed-from-suggestion": 0,
+        "pasted-external": 0,
+        "pasted-internal": 0,
+        "imported": 0,
+        "quoted": 0
+      }
+    },
+    "activeWritingMs": 27704,
+    "sessions": {
+      "count": 1,
+      "days": 1,
+      "firstAt": "2026-11-02T07:30:00.800Z",
+      "lastAt": "2026-11-02T07:30:52.504Z",
+      "list": [
+        {
+          "startTime": "2026-11-02T07:30:00.800Z",
+          "endTime": "2026-11-02T07:30:52.504Z",
+          "activeMs": 27704,
+          "charactersInserted": 199,
+          "startSeq": 3,
+          "endSeq": 13,
+          "commits": 11,
+          "documentIds": ["doc-pages"]
+        }
+      ]
+    },
+    "ai": {
+      "feedbackRequests": 0,
+      "sessionsFinished": 0,
+      "sessionsFailed": 0,
+      "comments": 0,
+      "questions": 0,
+      "citationFlags": 0,
+      "surfacedSources": 0,
+      "sourceSuggestions": 0,
+      "discussThreads": 0,
+      "sessions": []
+    },
+    "suggestions": {
+      "total": 0,
+      "byKind": { "word-choice": 0, "insertion": 0, "rephrase": 0 },
+      "byOutcome": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 }
+    },
+    "proposals": {
+      "total": 0,
+      "byKind": {
+        "move": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+        "cut": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+        "split": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 },
+        "merge": { "proposed": 0, "accepted": 0, "rejected": 0, "stale": 0, "open": 0 }
+      }
+    },
+    "pastes": {
+      "external": { "count": 0, "characters": 0, "words": 0 },
+      "internal": { "count": 0, "characters": 0, "words": 0 },
+      "events": []
+    },
+    "imports": { "documents": 0, "words": 0 },
+    "unwitnessed": [],
+    "provesTable": {
+      "proves": [
+        "The text came in through the editor's input channel, at these times and this cadence",
+        "Exactly which AI suggestions were visible, and which were retyped or used",
+        "The history hasn't been changed since the server witnessed it"
+      ],
+      "doesNotProve": [
+        "That the account holder was the one typing",
+        "That nothing was transcribed from another screen or another AI",
+        "That a modified client didn't misreport pastes as typing (the keystroke timeline makes this costly, not impossible)"
+      ]
+    },
+    "extensions": {
+      "unwitnessedThresholdMs": 60000,
+      "projectTitle": "Morning Pages",
+      "documents": [
+        { "id": "doc-pages", "title": "November 2", "kind": "manuscript", "words": 36 }
+      ],
+      "assisted": {
+        "annotations": 0,
+        "byKind": {
+          "word-choice": 0,
+          "rephrase": 0,
+          "insertion": 0,
+          "comment": 0,
+          "question": 0,
+          "proposal": 0,
+          "citation-flag": 0,
+          "surfaced-source": 0,
+          "source-suggestion": 0,
+          "discuss": 0,
+          "review": 0
+        }
+      },
+      "quoted": { "sources": 0 },
+      "suggestions": {
+        "byKind": {
+          "word-choice": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 },
+          "insertion": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 },
+          "rephrase": { "open": 0, "adopted": 0, "adapted": 0, "stale": 0, "dismissed": 0 }
+        }
+      },
+      "proposals": {
+        "moves": {
+          "sentence": { "proposed": 0, "accepted": 0 },
+          "paragraph": { "proposed": 0, "accepted": 0 },
+          "section": { "proposed": 0, "accepted": 0 }
+        }
+      },
+      "imports": []
+    },
+    "disclosure": "Written in 1 session. 36 words: 100% typed directly. No AI feedback was requested in Longhand."
+  }
+}

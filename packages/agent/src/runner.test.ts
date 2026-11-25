@@ -130,6 +130,8 @@ describe('runFeedbackSession with MockModelAdapter', () => {
     expect(events.filter((e) => e.kind === 'annotation')).toHaveLength(4);
     const toolCalls = events.filter((e) => e.kind === 'model' && e.event.type === 'tool-call');
     expect(toolCalls).toHaveLength(7);
+    // Every event names the session, from the first one on.
+    expect(events.every((e) => e.feedbackSessionId === 'fs-run')).toBe(true);
   }, 30_000);
 
   it('enforces caps across the session (light touch: 5 items)', async () => {
@@ -283,16 +285,20 @@ describe('runFeedbackSession with MockModelAdapter', () => {
   it('an unservable request fails before starting a session', async () => {
     const adapter = new MockModelAdapter([finish]);
     const sink = new InMemoryAnnotationSink();
+    const events: SessionProgressEvent[] = [];
     const outcome = await runFeedbackSession({
       state,
       request: docRequest({ scope: { kind: 'document', documentId: 'style' } }),
       sink,
       adapter,
+      onProgress: (e) => events.push(e),
     });
     expect(outcome.status).toBe('failed');
     expect(adapter.runs).toHaveLength(0);
     expect(sink.drafts.map((d) => d.draft.type)).toEqual(['FeedbackSessionFailed']);
     expect(sink.ofType('FeedbackSessionFailed')[0]!.payload.feedbackSessionId).toBeNull();
+    // No session started, so the one progress event names none (like the ledger event).
+    expect(events).toEqual([{ kind: 'failed', feedbackSessionId: null, reason: outcome.reason }]);
   });
 
   it('does not run the model if the sink refuses FeedbackSessionStarted', async () => {

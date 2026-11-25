@@ -43,11 +43,17 @@ export const DEFAULT_TIMEOUTS = Object.freeze({
   discuss: 3 * 60_000,
 });
 
-/** Progress reported while a session runs (for streaming items into the UI). */
+/**
+ * Progress reported while a session runs (for streaming items into the UI).
+ * Every event names its session: `feedbackSessionId` is the id the runner was
+ * given (or picked) and is set on every event from `started` on. Only a `failed`
+ * reported before `FeedbackSessionStarted` was appended has `null`, matching that
+ * `FeedbackSessionFailed` payload (no such session exists in the ledger).
+ */
 export type SessionProgressEvent =
   | { kind: 'started'; feedbackSessionId: string; model: string; seq: number }
-  | { kind: 'model'; event: ModelEvent }
-  | { kind: 'annotation'; seq: number; draft: ToolEventDraft }
+  | { kind: 'model'; feedbackSessionId: string; event: ModelEvent }
+  | { kind: 'annotation'; feedbackSessionId: string; seq: number; draft: ToolEventDraft }
   | { kind: 'finished'; feedbackSessionId: string }
   | { kind: 'failed'; feedbackSessionId: string | null; reason: string };
 
@@ -263,7 +269,7 @@ async function runSession(o: SessionRunOptions, spec: SessionSpec): Promise<Sess
     search: o.search ?? null,
     initialCounts: context.snapshot.counts,
     onAccepted: (draft, seq) => {
-      progress({ kind: 'annotation', seq, draft });
+      progress({ kind: 'annotation', feedbackSessionId, seq, draft });
       if (draft.type === 'ReviewFinished' || draft.type === 'DiscussAnswered') {
         graceTimer = setTimeout(() => runAbort.abort(), o.finishGraceMs ?? 60_000);
         graceTimer.unref();
@@ -303,7 +309,7 @@ async function runSession(o: SessionRunOptions, spec: SessionSpec): Promise<Sess
       cwd: dir,
       timeoutMs: o.timeoutMs ?? spec.defaultTimeout,
       signal: runAbort.signal,
-      onEvent: (event) => progress({ kind: 'model', event }),
+      onEvent: (event) => progress({ kind: 'model', feedbackSessionId, event }),
     });
     outcome.run = run;
     outcome.rejectedCalls = run.toolCalls.filter((c) => c.result?.isError).length;

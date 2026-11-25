@@ -10,6 +10,7 @@ import {
   SESSION_GAP_MS,
   type Commit,
   type CommitOf,
+  type StepJSON,
   type WritingSession,
 } from '@longhand/schema';
 import * as agent from './fold-agent';
@@ -235,6 +236,51 @@ const MANUSCRIPT = new Set(['TextEdited', 'ProposalAccepted', 'DocumentImported'
 
 /** Folds one commit. Pure: `state` is not modified. Throws {@link FoldError} on an unfoldable commit. */
 export function applyCommit(state: LedgerState, commit: Commit): LedgerState {
+  return fold(state, commit, null);
+}
+
+/**
+ * The steps one commit applies, per document id, in application order. For
+ * `TextEdited` they are the commit's own `payload.steps`; for `ProposalAccepted`
+ * they are the steps the fold derives (the move, cut, split or merge, plus any
+ * joining or clean-up whitespace). Applying them in order to the document before
+ * the commit gives exactly the document after it, and each document's version
+ * grows by exactly their count. Commits that change no text have none (`{}`).
+ */
+export type DerivedSteps = Record<string, StepJSON[]>;
+
+/** {@link applyCommit}, also returning the steps the commit applied ({@link DerivedSteps}). */
+export function applyCommitWithSteps(
+  state: LedgerState,
+  commit: Commit,
+): { state: LedgerState; steps: DerivedSteps } {
+  const log = new Map<string, StepJSON[]>();
+  const next = fold(state, commit, log);
+  const steps: DerivedSteps = {};
+  if (commit.type === 'TextEdited') {
+    // The fold applies the payload's steps one to one; hand them back verbatim.
+    if (log.size > 0) steps[commit.payload.documentId] = commit.payload.steps;
+  } else {
+    for (const id of [...log.keys()].sort()) steps[id] = log.get(id) as StepJSON[];
+  }
+  return { state: next, steps };
+}
+
+/**
+ * The steps a committed commit applied when folded onto `stateBefore` (the state
+ * at `commit.seq - 1`): for a `ProposalAccepted`, the fold-derived steps. Use it
+ * for replay and catch-up from history. Throws {@link FoldError} like
+ * {@link applyCommit}.
+ */
+export function derivedStepsFor(stateBefore: LedgerState, commit: Commit): DerivedSteps {
+  return applyCommitWithSteps(stateBefore, commit).steps;
+}
+
+function fold(
+  state: LedgerState,
+  commit: Commit,
+  stepLog: Map<string, StepJSON[]> | null,
+): LedgerState {
   const s: Internal = internal(state);
   if (commit.seq !== s.headSeq + 1) {
     throw new FoldError(commit.seq, 'seq-gap', `expected seq ${s.headSeq + 1}, got ${commit.seq}`);
@@ -267,7 +313,7 @@ export function applyCommit(state: LedgerState, commit: Commit): LedgerState {
       `commit belongs to project ${commit.projectId}`,
     );
   }
-  const tx = new Tx(s, commit.seq, commit.serverTime);
+  const tx = new Tx(s, commit.seq, commit.serverTime, stepLog);
   dispatch(tx, commit);
   // The invariant, enforced again at the fold: only manuscript events change text.
   if (!MANUSCRIPT.has(commit.type)) {

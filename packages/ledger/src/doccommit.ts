@@ -7,6 +7,7 @@ import {
   splitSentences,
   tokenizeWords,
   type ProposalState,
+  type StepJSON,
   type SuggestionState,
 } from '@longhand/schema';
 import type { Step } from 'prosemirror-transform';
@@ -105,6 +106,12 @@ export function stepDoc(
     );
   }
   const p = plan(applied);
+  const log = dc.tx.stepLog;
+  if (log) {
+    let list = log.get(dc.base.id);
+    if (!list) log.set(dc.base.id, (list = []));
+    list.push(step.toJSON() as StepJSON);
+  }
   dc.runs = carryRuns(dc.runs, applied.map, applied.changes, p.assigned);
   dc.tombs = carryTombs(p.tombs ?? dc.tombs, applied.map, applied.changes, p.buried, p.extra);
   const sf: StepFacts = { ...facts, map: applied.map, changes: applied.changes };
