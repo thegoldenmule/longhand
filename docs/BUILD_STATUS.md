@@ -19,6 +19,7 @@ The coordinator updates this file after every phase. A resumed session reads it 
 | binder | merged (91 tests) | see git log |
 | export | merged (60 tests) | see git log |
 | research | merged (88 tests) | see git log |
+| agent | merged (92 tests + live smoke passing) | see git log |
 
 ## Pending contract changes (apply serially after ledger core merges)
 
@@ -30,6 +31,12 @@ The coordinator updates this file after every phase. A resumed session reads it 
 - Shared input-method transaction meta key in schema (research uses `RESEARCH_INPUT_META = 'longhand/research-input'`); keystroke kinds `cite`/`clip`. (research)
 - Clipping blank lines: `ClippingSavedSchema` rejects empty lines, or fold collapses them before comparing. (research)
 - Move `SourceSearch` interface into schema. (research)
+
+- `ToolErrorCode` add `out-of-scope`, `search-unavailable`, `sink-rejected`, `internal-error`. (agent)
+- `SourceSearch` returns `SurfacedCandidate[]` (csl, provider, url) — merge with research's request to move it into schema. (agent, research)
+- Fold maps `FeedbackRequestState.scope` selection positions to current version. (agent → ledger)
+- Optional: `systemPromptVersion` on `FeedbackSessionStarted`. (agent)
+- Server lane implements the AnnotationSink HTTP contract in `packages/agent/README.md`.
 
 ## Notes
 
