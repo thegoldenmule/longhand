@@ -1,7 +1,8 @@
 /**
- * The AI editor through the real service (mock reviewer): a review streaming
- * into the margin, trace-over retyping, proposals, dismiss and discuss, and
- * ghost text that can't be copied.
+ * The AI editor through the real service (mock reviewer), as a chat: a reply
+ * with notes streaming into the margin, a reply alone, trace-over retyping,
+ * proposals, dismiss, Discuss in the chat, the selection as context, history,
+ * and ghost text that can't be copied.
  */
 import type { Page } from '@playwright/test';
 import {
@@ -18,7 +19,10 @@ import {
   storyProject,
   test,
   tintClassesOf,
-  waitForReview,
+  chatMessages,
+  chatPanel,
+  chooseEditor,
+  waitForReply,
   openProvenance,
   tintSwitch,
 } from './helpers';
@@ -26,12 +30,12 @@ import {
 async function reviewed(page: Page, title: string): Promise<string> {
   const pid = await storyProject(page, title);
   await askForFeedback(page);
-  await waitForReview(page);
+  await waitForReply(page);
   await expect(marginCards(page)).toHaveCount(5);
   return pid;
 }
 
-test('4 · asking for feedback streams cards into the margin, then the summary', async ({
+test('4 · asking an editor: notes stream into the margin, then the reply; a plain question gets a reply only', async ({
   page,
 }) => {
   const pid = await storyProject(page, 'Review');
@@ -39,37 +43,53 @@ test('4 · asking for feedback streams cards into the margin, then the summary',
   await expect(marginCards(page)).toHaveCount(0);
   await expect(page.getByTestId('side-panel')).toHaveCount(0);
 
-  // Ask a named editor, with one of its canned questions.
-  await askForFeedback(page, TEST_EDITOR.name, { question: TEST_EDITOR.questions[0]! });
-  // Cards arrive one at a time while the review is still running.
+  // "review" asks for notes (the mock's rule); the editor reads, then leaves them.
+  await askForFeedback(page, TEST_EDITOR.name, { message: 'Please review this chapter.' });
+  await expect(chatPanel(page).getByTestId('chat-working')).toContainText(`${TEST_EDITOR.name} is`);
   await expect(marginCards(page).first()).toBeVisible({ timeout: 20_000 });
   const whileRunning = await marginCards(page).count();
-  await waitForReview(page);
+  await waitForReply(page);
   await expect(marginCards(page)).toHaveCount(5);
   expect(whileRunning).toBeLessThan(5);
-  const summary = page.getByTestId('review-summary');
-  await expect(summary).toContainText('A clear start');
-  await expect(summary).toContainText('A confident opening line');
+  const reply = chatMessages(page).last();
+  await expect(reply).toContainText(TEST_EDITOR.name);
+  await expect(reply).toContainText('I left notes on the opening');
   await expect(marginCard(page, 'comment')).toContainText('This opening carries the scene');
   await expect(marginCard(page, 'question')).toContainText('What do you want the reader');
   await expect(marginCard(page, 'suggestion')).toContainText('softly');
   await expect(page.getByTestId('annotation-margin').locator('[data-kind="proposal"]')).toHaveCount(
     2,
   );
+  // The reply links to its notes; a chip focuses its card.
+  const chips = reply.getByTestId('chat-reply-notes').getByRole('button');
+  await expect(chips).toHaveCount(5);
+  await chips.nth(1).click();
+  await expect(page.locator('.lh-margin [data-card-id].is-active')).toHaveCount(1);
 
-  await expect(page.getByTestId('review-editor')).toHaveText(TEST_EDITOR.name);
+  // A plain question: a reply, and no new notes.
+  const box = chatPanel(page).getByRole('textbox', { name: `Message ${TEST_EDITOR.name}` });
+  await box.fill('Is the title working?');
+  await box.press('Enter');
+  await expect(chatMessages(page)).toHaveCount(4, { timeout: 20_000 });
+  await waitForReply(page);
+  await expect(chatMessages(page).last()).toContainText('Short answer: yes');
+  await expect(chatMessages(page).last().getByTestId('chat-reply-notes')).toHaveCount(0);
+  await expect(marginCards(page)).toHaveCount(5);
 
   const commits = await getCommits(pid);
-  // The request records the editor and its configuration at this moment.
-  const request = commits.find((c) => c.type === 'FeedbackRequested')!;
-  expect(request.actor.kind).toBe('human');
-  expect(request.payload).toMatchObject({
-    scope: { kind: 'document' },
+  // Each message records the editor and its configuration at that moment.
+  const sent = commits.filter((c) => c.type === 'ChatMessageSent');
+  expect(sent.map((c) => c.actor.kind)).toEqual(['human', 'human']);
+  expect(sent[0]!.payload).toMatchObject({
+    text: 'Please review this chapter.',
     lenses: TEST_EDITOR.lenses,
     intensity: TEST_EDITOR.intensity,
-    ask: TEST_EDITOR.questions[0],
     editor: { name: TEST_EDITOR.name, brief: TEST_EDITOR.brief },
+    context: { scope: { kind: 'document' }, aboutId: null },
   });
+  expect((sent[1]!.payload as { chatId: string }).chatId).toBe(
+    (sent[0]!.payload as { chatId: string }).chatId,
+  );
   const agent = commits.filter((c) => c.actor.kind === 'agent');
   expect(agent.map((c) => c.type)).toEqual([
     'FeedbackSessionStarted',
@@ -78,9 +98,11 @@ test('4 · asking for feedback streams cards into the margin, then the summary',
     'SuggestionProposed',
     'MoveProposed',
     'MoveProposed',
-    'ReviewFinished',
+    'ChatReplied',
+    'FeedbackSessionStarted',
+    'ChatReplied',
   ]);
-  // The review left the text exactly as the writer typed it.
+  // The replies left the text exactly as the writer typed it.
   expect(await ledgerText(pid)).toBe(STORY.join('\n'));
 });
 
@@ -181,7 +203,7 @@ test('6 · accepting a move moves the text and keeps its provenance; rejecting a
   expect((await ledgerText(pid)).split('\n')[2]).toBe(STORY[1]);
 });
 
-test('7 · dismissing with a reason, and Discuss gets a reply', async ({ page }) => {
+test('7 · dismissing with a reason, and Discuss asks in the chat', async ({ page }) => {
   const pid = await reviewed(page, 'Dismiss and discuss');
   const comment = marginCard(page, 'comment');
   const commentId = (await comment.getAttribute('data-card-id'))!;
@@ -193,19 +215,74 @@ test('7 · dismissing with a reason, and Discuss gets a reply', async ({ page })
   const dismissed = (await getCommits(pid)).find((c) => c.type === 'SuggestionDismissed')!;
   expect(dismissed.payload).toMatchObject({ targetId: commentId, reason: 'later' });
 
+  // Discuss goes to the chat, with the note attached.
   const question = marginCard(page, 'question');
+  const questionId = (await question.getAttribute('data-card-id'))!;
   await question.getByRole('button', { name: 'Discuss' }).click();
-  await question.getByLabel('Ask the editor about this').fill('Should the stakes come sooner?');
-  await question.getByRole('button', { name: 'Ask' }).click();
-  await expect(question.locator('[data-role="editor"]')).toContainText(
-    'the reader needs the stakes earlier',
-    { timeout: 20_000 },
-  );
+  await expect(chatPanel(page).getByTestId('chat-attach-note')).toContainText('About: Question');
+  await expect(question.locator('.lh-thread')).toHaveCount(0);
+  await page.keyboard.type('Should the stakes come sooner?');
+  await page.keyboard.press('Enter');
+  await expect(chatMessages(page).last()).toContainText('the reader needs the stakes earlier', {
+    timeout: 20_000,
+  });
   const commits = await getCommits(pid);
-  expect(commits.find((c) => c.type === 'DiscussRequested')!.actor.kind).toBe('human');
-  expect(commits.find((c) => c.type === 'DiscussAnswered')!.actor.kind).toBe('agent');
+  const ask = commits.filter((c) => c.type === 'ChatMessageSent').at(-1)!;
+  expect(ask.actor.kind).toBe('human');
+  expect(ask.payload).toMatchObject({ context: { aboutId: questionId } });
+  expect(commits.filter((c) => c.type === 'ChatReplied').at(-1)!.actor.kind).toBe('agent');
+  expect(commits.some((c) => c.type === 'DiscussRequested')).toBe(false);
   // The answer lives in the annotation layer only.
   expect(await ledgerText(pid)).not.toContain('stakes');
+});
+
+test('18 · the chat: the selection as context, a new chat from a canned question, history', async ({
+  page,
+}) => {
+  const pid = await storyProject(page, 'Chat');
+  // Select the first paragraph, then ask: the selection is attached as a quoted chip.
+  await manuscript(page).getByText('nobody came to the door').click();
+  await page.keyboard.press(process.platform === 'darwin' ? 'Meta+ArrowUp' : 'Control+Home');
+  await page.keyboard.press(process.platform === 'darwin' ? 'Shift+Meta+ArrowRight' : 'Shift+End');
+  await page.getByTestId('ask-feedback').click();
+  const chip = chatPanel(page).getByTestId('chat-attach-selection');
+  await expect(chip).toContainText('The rain fell sideways');
+  const box = chatPanel(page).getByRole('textbox', { name: /^Message/ });
+  await expect(box).toBeFocused();
+  await page.keyboard.type('Is this line too long?');
+  await page.keyboard.press('Enter');
+  await waitForReply(page);
+  await expect(chatMessages(page).first()).toContainText('“The rain fell sideways');
+  const first = (await getCommits(pid)).find((c) => c.type === 'ChatMessageSent')!;
+  expect(first.payload).toMatchObject({ context: { scope: { kind: 'selection' } } });
+
+  // New chat: an empty chat offers the editor's questions; one tap fills the composer.
+  await chatPanel(page).getByRole('button', { name: 'New chat' }).click();
+  await expect(chatMessages(page)).toHaveCount(0);
+  await chooseEditor(page, TEST_EDITOR.name);
+  await chatPanel(page)
+    .getByTestId('chat-starters')
+    .getByRole('button', { name: TEST_EDITOR.questions[0]! })
+    .click();
+  await expect(box).toHaveValue(TEST_EDITOR.questions[0]!);
+  await box.press('Enter');
+  await waitForReply(page);
+  const chats = (await getCommits(pid))
+    .filter((c) => c.type === 'ChatMessageSent')
+    .map((c) => (c.payload as { chatId: string }).chatId);
+  expect(new Set(chats).size).toBe(2);
+
+  // History lists both; reopening the first shows its conversation.
+  await chatPanel(page).getByRole('button', { name: 'History' }).click();
+  const history = chatPanel(page).getByRole('navigation', { name: 'Chat history' });
+  await expect(history.getByRole('button')).toHaveCount(2);
+  await history.getByRole('button', { name: /Is this line too long/ }).click();
+  await expect(chatMessages(page).first()).toContainText('Is this line too long?');
+  // The chat panel is locked to the viewport: only the messages scroll.
+  const panelBox = await page.getByTestId('side-panel').boundingBox();
+  const vh = page.viewportSize()!.height;
+  expect(panelBox!.y + panelBox!.height).toBeLessThanOrEqual(vh + 1);
+  await expect(chatPanel(page).getByTestId('chat-composer')).toBeInViewport();
 });
 
 test('8 · ghost text cannot be selected or copied', async ({ page }) => {

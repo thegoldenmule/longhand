@@ -132,14 +132,17 @@ export function FeedbackChat(props: FeedbackChatProps): React.JSX.Element {
 
   // --- The editor --------------------------------------------------------
   const [editorId, setEditorId] = useState<string | null>(null);
+  // The editor asked last in this chat, else in the latest chat (a new chat keeps it).
   const lastAsked = useMemo(() => {
-    const msgs = chat?.messages ?? [];
-    for (let i = msgs.length - 1; i >= 0; i--) {
-      const m = msgs[i]!;
-      if (m.role === 'writer') return m.editor.id;
+    for (const c of [chat, latest]) {
+      const msgs = c?.messages ?? [];
+      for (let i = msgs.length - 1; i >= 0; i--) {
+        const m = msgs[i]!;
+        if (m.role === 'writer') return m.editor.id;
+      }
     }
     return null;
-  }, [chat]);
+  }, [chat, latest]);
   const editor =
     editors?.find((e) => e.id === editorId) ??
     editors?.find((e) => e.id === lastAsked) ??

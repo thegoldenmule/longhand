@@ -4,9 +4,9 @@
  *
  *   LONGHAND_LIVE_CLAUDE=1 pnpm --filter @longhand/web e2e
  *
- * A light-touch pass by the starter editor Sam (a first reader: clarity, pacing,
- * character and dialogue) over one short document (opus for a document review,
- * AGENT_MODEL_FULL to change it), with one of Sam's canned questions. It checks what must hold for any real
+ * A chat with the starter editor Sam (a first reader: clarity, pacing,
+ * character and dialogue, light touch) asking for a review of one short
+ * document (sonnet, AGENT_MODEL_QUICK to change it). It checks what must hold for any real
  * model: the review finishes, its items are agent annotations of this session,
  * the text is exactly what the writer typed, and the invariant holds.
  */
@@ -53,30 +53,32 @@ const PROSE = new Set([
 
 test.skip(process.env.LONGHAND_LIVE_CLAUDE !== '1', 'set LONGHAND_LIVE_CLAUDE=1 to run');
 
-test('live · a real light-touch review from the UI', async ({ page }) => {
+test('live · a real chat review from the UI', async ({ page }) => {
   test.setTimeout(15 * 60_000);
   const pid = await storyProject(page, 'Live review');
-  await askForFeedback(page, 'Sam', { question: 'Where did you get confused?' });
-  await expect(page.getByTestId('review-summary').first()).toBeVisible({ timeout: 14 * 60_000 });
+  await askForFeedback(page, 'Sam', { message: 'Please review this. Where did you get confused?' });
+  await expect(page.getByTestId('chat-message').last()).toHaveAttribute('data-role', 'editor', {
+    timeout: 14 * 60_000,
+  });
 
   const commits = await getCommits(pid);
   const started = commits.find((c) => c.type === 'FeedbackSessionStarted')!;
   const session = (started.payload as { feedbackSessionId: string }).feedbackSessionId;
   const agent = commits.filter((c) => c.actor.kind === 'agent');
-  expect(agent.at(-1)!.type).toBe('ReviewFinished');
+  expect(agent.at(-1)!.type).toBe('ChatReplied');
   for (const c of agent) expect(c.sessionId).toBe(session);
   // Light touch: at most 5 items.
   expect(
-    agent.filter((c) => !['FeedbackSessionStarted', 'ReviewFinished'].includes(c.type)).length,
+    agent.filter((c) => !['FeedbackSessionStarted', 'ChatReplied'].includes(c.type)).length,
   ).toBeLessThanOrEqual(5);
   expect(await ledgerText(pid)).toBe(STORY.join('\n'));
   // The request names Sam, and no text the writer reads contains a sentence id.
-  const req = commits.find((c) => c.type === 'FeedbackRequested')!;
+  const req = commits.find((c) => c.type === 'ChatMessageSent')!;
   expect(req.payload).toMatchObject({ editor: { name: 'Sam' }, intensity: 'light' });
   for (const c of agent) expect(JSON.stringify(writerFacing(c.payload))).not.toMatch(ID_RE);
   const cards = await marginCards(page).count();
   console.log(
     `[live] model ${(started.payload as { model: string }).model}: ${agent.length - 2} items, ${cards} margin cards`,
   );
-  console.log(`[live] summary: ${await page.getByTestId('review-summary').first().innerText()}`);
+  console.log(`[live] reply: ${await page.getByTestId('chat-message').last().innerText()}`);
 });

@@ -13,7 +13,7 @@ import {
   newProject,
   storyProject,
   test,
-  waitForReview,
+  waitForReply,
   openProvenance,
   tintSwitch,
 } from './helpers';
@@ -45,14 +45,14 @@ for (const theme of ['light', 'dark'] as const) {
     await page.keyboard.press('ControlOrMeta+Alt+Backslash');
 
     await page.getByTestId('ask-feedback').click();
-    await expect(page.getByRole('form', { name: 'Ask for feedback' })).toBeVisible();
-    await shot('03a-feedback-form');
+    await expect(page.getByTestId('feedback-chat')).toBeVisible();
+    await shot('03a-chat-empty');
     await askForFeedback(page);
     await expect(marginCards(page).first()).toBeVisible();
-    await shot('03-review-streaming');
-    await waitForReview(page);
+    await shot('03-chat-working');
+    await waitForReply(page);
     await page.waitForTimeout(400);
-    await shot('04-review-finished');
+    await shot('04-chat-replied');
 
     await page.getByTestId('toggle-panel').click();
     await expect(page.getByTestId('side-panel')).toHaveCount(0);

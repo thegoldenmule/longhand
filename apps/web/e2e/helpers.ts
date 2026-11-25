@@ -174,30 +174,51 @@ export async function storyProject(page: Page, title = 'Harbour'): Promise<strin
   return pid;
 }
 
+/** The feedback chat in the side panel. */
+export function chatPanel(page: Page): Locator {
+  return page.getByTestId('feedback-chat');
+}
+
+/** The chat's messages, in order (`data-role` writer or editor). */
+export function chatMessages(page: Page): Locator {
+  return chatPanel(page).getByTestId('chat-message');
+}
+
+/** Chooses an editor in the chat's dropdown by name. */
+export async function chooseEditor(page: Page, editor: string): Promise<void> {
+  const select = chatPanel(page).getByRole('combobox', { name: 'Editor' });
+  const option = select.locator('option', { hasText: new RegExp(`^${editor}( ·|$)`) });
+  await select.selectOption((await option.getAttribute('value'))!);
+}
+
 /**
- * Opens the feedback form, chooses an editor (default: the seeded test editor),
- * optionally taps one of its questions and types one, and asks.
+ * Opens the chat (Ask for feedback), chooses an editor (default: the seeded test
+ * editor) and sends a message. "review" in it makes the mock leave notes; a
+ * `question` taps one of the editor's canned questions in an empty chat.
  */
 export async function askForFeedback(
   page: Page,
   editor: string = TEST_EDITOR.name,
-  opts: { question?: string; ask?: string } = {},
+  opts: { message?: string; question?: string } = {},
 ): Promise<void> {
   await page.getByTestId('ask-feedback').click();
-  const form = page.getByRole('form', { name: 'Ask for feedback' });
-  await expect(form).toBeVisible();
-  await form
-    .locator('.lh-editor-option', {
-      has: page.locator('.lh-editor-name', { hasText: new RegExp(`^${editor}$`) }),
-    })
-    .click();
-  if (opts.question) await form.getByRole('button', { name: opts.question }).click();
-  if (opts.ask) await form.getByRole('textbox').fill(opts.ask);
-  await form.getByRole('button', { name: `Ask ${editor}` }).click();
+  await expect(chatPanel(page)).toBeVisible();
+  await chooseEditor(page, editor);
+  const box = chatPanel(page).getByRole('textbox', { name: `Message ${editor}` });
+  if (opts.question)
+    await chatPanel(page)
+      .getByTestId('chat-starters')
+      .getByRole('button', { name: opts.question })
+      .click();
+  else await box.fill(opts.message ?? 'Please review this.');
+  await box.press('Enter');
 }
 
-export async function waitForReview(page: Page): Promise<void> {
-  await expect(page.getByTestId('review-summary').first()).toBeVisible({ timeout: 30_000 });
+/** Waits until the newest message is an editor's reply. */
+export async function waitForReply(page: Page): Promise<void> {
+  await expect(chatMessages(page).last()).toHaveAttribute('data-role', 'editor', {
+    timeout: 30_000,
+  });
 }
 
 export function marginCards(page: Page): Locator {

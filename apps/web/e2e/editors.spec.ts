@@ -17,7 +17,9 @@ import {
   newProject,
   test,
   typeParagraphs,
-  waitForReview,
+  chatMessages,
+  chatPanel,
+  waitForReply,
   waitSaved,
 } from './helpers';
 
@@ -86,21 +88,20 @@ test('17 · editors: add, edit, ask from a project, delete; the record keeps the
   const pid = await newProject(page, 'Editors');
   await typeParagraphs(page, ['The tide came in slowly. Nobody noticed the boat.']);
   await waitSaved(page, pid, 'Nobody noticed the boat.');
-  await askForFeedback(page, 'Quincy', { question: 'Is the ending earned?', ask: 'Be gentle.' });
-  await waitForReview(page);
-  await expect(page.getByTestId('review-editor')).toHaveText('Quincy');
-  const request = (await getCommits(pid)).find((c) => c.type === 'FeedbackRequested')!;
+  await askForFeedback(page, 'Quincy', { message: 'Is the ending earned? Be gentle.' });
+  await waitForReply(page);
+  await expect(chatMessages(page).last().locator('.lh-chat-who')).toHaveText('Quincy');
+  const request = (await getCommits(pid)).find((c) => c.type === 'ChatMessageSent')!;
   expect(request.payload).toMatchObject({
     lenses: ['clarity', 'pacing'],
     intensity: 'thorough',
-    ask: 'Is the ending earned?\nBe gentle.',
+    text: 'Is the ending earned? Be gentle.',
     editor: { id: quinn.id, name: 'Quincy', role: 'Structural editor', brief: quinn.brief },
   });
 
-  // The request form links to the Editors page, with a way back.
-  await page.getByTestId('ask-feedback').click();
-  const ask = page.getByRole('form', { name: 'Ask for feedback' });
-  await ask.getByRole('link', { name: 'Manage editors' }).click();
+  // The chat links to the Editors page (in its history), with a way back.
+  await chatPanel(page).getByRole('button', { name: 'History' }).click();
+  await chatPanel(page).getByRole('link', { name: 'Manage editors' }).click();
   await page.waitForURL(/\/editors\?back=/);
 
   // Delete it.
@@ -110,14 +111,14 @@ test('17 · editors: add, edit, ask from a project, delete; the record keeps the
   await expect(rows.filter({ hasText: 'Quincy' })).toHaveCount(0);
   expect((await editorsFromApi()).some((e) => e.id === quinn.id)).toBe(false);
 
-  // Back in the project, the past review still names the editor it asked.
+  // Back in the project, the past reply still names the editor who gave it.
   await page.getByRole('link', { name: '← Back to your project' }).click();
   await page.waitForURL(new RegExp(`/p/${pid}`));
-  const req = Object.values((await getState(pid)).annotations.feedbackRequests)[0]!;
-  expect(req.editor).toMatchObject({ name: 'Quincy' });
+  const chat = Object.values((await getState(pid)).annotations.chats)[0]!;
+  expect(chat.messages[0]).toMatchObject({ role: 'writer', editor: { name: 'Quincy' } });
   await page.getByTestId('ask-feedback').click();
-  await expect(page.getByTestId('review-editor')).toHaveText('Quincy');
-  const options = page.getByRole('form', { name: 'Ask for feedback' }).locator('.lh-editor-option');
+  await expect(chatMessages(page).last().locator('.lh-chat-who')).toHaveText('Quincy');
+  const options = chatPanel(page).getByRole('combobox', { name: 'Editor' }).locator('option');
   await expect(options.filter({ hasText: TEST_EDITOR.name })).toHaveCount(1);
   await expect(options.filter({ hasText: 'Quincy' })).toHaveCount(0);
 });
