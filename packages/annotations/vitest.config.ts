@@ -5,5 +5,6 @@ export default defineProject({
     name: '@longhand/annotations',
     environment: 'jsdom',
     include: ['src/**/*.test.ts', 'src/**/*.test.tsx', 'test-support/**/*.test.ts'],
+    setupFiles: ['./test-support/setup.ts'],
   },
 });

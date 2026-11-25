@@ -490,7 +490,21 @@ export function AnnotationCard(props: AnnotationCardProps): React.JSX.Element {
       aria-label={`${cardKindLabel(card)}${card.quote ? ` on “${card.quote.trim()}”` : ''}`}
       aria-describedby={ghostDescriptionId(card.id)}
       aria-current={active ? 'true' : undefined}
+      tabIndex={0}
       onClick={onClick}
+      onKeyDown={(e) => {
+        if (e.target !== e.currentTarget) return;
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          controller.focus(card.id);
+        } else if (e.key === 'Escape') controller.focus(null, { scroll: false });
+      }}
+      onFocus={(e) => {
+        if (e.target === e.currentTarget) controller.hover(card.id);
+      }}
+      onBlur={(e) => {
+        if (e.target === e.currentTarget) controller.hover(null);
+      }}
       onMouseEnter={() => controller.hover(card.id)}
       onMouseLeave={() => controller.hover(null)}
     >

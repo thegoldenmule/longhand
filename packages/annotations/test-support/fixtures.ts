@@ -1,6 +1,6 @@
 /**
- * Fixture helpers for the jsdom tests (Node only: reads the golden fixtures from
- * disk) and a harness that mounts a real editor over a {@link FoldingTransport}.
+ * Test helpers for the jsdom suite: the golden fixtures, and a harness that
+ * mounts a real editor and a controller over a {@link FoldingTransport}.
  */
 import { createEditorView, MemoryQueue, type EditorHandle } from '@longhand/editor';
 import type { CommitDraft } from '@longhand/schema';
