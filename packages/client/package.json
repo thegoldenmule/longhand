@@ -1,0 +1,24 @@
+{
+  "name": "@longhand/client",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@longhand/schema": "workspace:*"
+  },
+  "devDependencies": {
+    "@longhand/editor": "workspace:*",
+    "@longhand/ledger": "workspace:*",
+    "@longhand/server": "workspace:*",
+    "@types/node": "^24.19.2",
+    "prosemirror-model": "^1.25.13",
+    "prosemirror-transform": "^1.12.7"
+  }
+}
