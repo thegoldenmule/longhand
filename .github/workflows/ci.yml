@@ -8,6 +8,22 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: longhand
+          POSTGRES_PASSWORD: longhand
+          POSTGRES_DB: longhand
+        ports:
+          - 5434:5432
+        options: >-
+          --health-cmd "pg_isready -U longhand"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      LONGHAND_REQUIRE_DB: '1'
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -18,4 +34,5 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm typecheck
       - run: pnpm lint
+      - run: pnpm dev:setup
       - run: pnpm test

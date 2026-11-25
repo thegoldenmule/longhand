@@ -9,9 +9,9 @@ The coordinator updates this file after every phase. A resumed session reads it 
 | 2a | Ledger core + golden fixtures (`packages/ledger`) | done (136 tests, 13 fixtures + 6 tampered) | merged |
 | 2b | Lanes needing contracts: editor, agent, binder, export, research | done | merged |
 | 2c | Contract revision pass (applied list below) | done (schema 273 tests, ledger 137, 13 fixtures + 6 tampered regenerated; SCHEMA_VERSION stays 1) | 2dd23fa |
-| 3 | Lanes needing ledger core: server (+ packages/client), provenance-ui, report + verifier | running | |
+| 3 | Lanes needing ledger core: server (+ packages/client), provenance-ui, report + verifier | done | merged |
 | 4 | Annotations lane | done | merged |
-| 5 | Integration: `apps/web`, dev orchestration, end-to-end in Chrome | pending | |
+| 5 | Integration: `apps/web`, dev orchestration, end-to-end in Chrome | running | |
 
 ## Lane results
 
@@ -58,6 +58,10 @@ Integration note (provenance-ui): the span inspector needs the folded `LedgerSta
 - Server/web must implement the editor's `CommitTransport` (`packages/editor/src/sync/transport.ts`): submit → ack/duplicate/conflict/rejected/offline; subscribe in ledger order incl. own commits; `fetchSince` with fold-derived steps for ProposalAccepted (now from ledger `validateDraft().derivedSteps` / `derivedStepsFor`). (editor → server)
 
 - Repo has no root LICENSE; verifier package declares MIT. Needs the owner's decision. (report/verifier)
+
+- Research: citeproc wrapper crashes on numeric CSL fields (e.g. `volume: 12`); export works around by stringifying. (server)
+- Agent: `MockModelAdapter` ignores a signal aborted before run start. (server)
+- Optional: ledger fold-state serialize/restore for fast startup from Postgres snapshots. (server)
 
 ## Notes
 
