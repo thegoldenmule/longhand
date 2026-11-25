@@ -371,6 +371,7 @@ describe('<FeedbackPanel>', () => {
       controller.pushProgress({ kind: 'started', feedbackSessionId: 'fs-1', model: 'opus' });
       controller.pushProgress({
         kind: 'model',
+        feedbackSessionId: 'fs-1',
         event: { type: 'tool-call', id: 't1', name: 'mcp__longhand__comment', input: {} },
       });
     });

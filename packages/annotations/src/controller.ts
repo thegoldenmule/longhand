@@ -149,7 +149,6 @@ export class AnnotationsController {
   private everOpen = new Set<string>();
   private recent = new Set<string>();
   private progress: Record<string, SessionProgress> = {};
-  private lastSessionId: string | null = null;
   private activeId: string | null = null;
   private hoverId: string | null = null;
   private tracingId: string | null = null;
@@ -340,12 +339,11 @@ export class AnnotationsController {
 
   /**
    * Feeds one live progress event (`SessionProgressEvent` from the agent runner,
-   * relayed by the server). `feedbackSessionId` names the session when the event
-   * does not (model events).
+   * relayed by the server). Agent events name their session; `feedbackSessionId`
+   * is only a fallback for events that do not.
    */
-  pushProgress(event: ReviewProgressEvent, feedbackSessionId?: string | null): void {
-    if (event.kind === 'started') this.lastSessionId = event.feedbackSessionId;
-    const next = reduceProgress(this.progress, event, feedbackSessionId ?? this.lastSessionId);
+  pushProgress(event: ReviewProgressEvent, feedbackSessionId?: string): void {
+    const next = reduceProgress(this.progress, event, feedbackSessionId ?? null);
     if (next === this.progress) return;
     this.progress = next;
     this.emit();

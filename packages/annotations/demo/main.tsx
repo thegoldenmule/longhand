@@ -76,7 +76,7 @@ let controllerRef: AnnotationsController | null = null;
 const reviewer = new MockReviewer(transport, {
   stepMs: Number(params.get('step') ?? 450),
   fail: () => params.get('fail') === '1',
-  onProgress: (event, sessionId) => controllerRef?.pushProgress(event, sessionId),
+  onProgress: (event) => controllerRef?.pushProgress(event),
 });
 
 window.__ann = {

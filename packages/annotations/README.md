@@ -34,7 +34,7 @@ function Writing({ projectState, transport, documentId, progress }) {
     onAddSource: (req) => openSourceCheck(req), // verify, then SourceAdded (fromSurfacedId)
   });
   // Live progress from the agent runner, relayed by the server (optional):
-  useEffect(() => progress.subscribe((e, sessionId) => ann.pushProgress(e, sessionId)), [ann]);
+  useEffect(() => progress.subscribe((e) => ann.pushProgress(e)), [ann]);
 
   return (
     <>
@@ -63,15 +63,15 @@ Layout: put `<AnnotationMargin>` next to the editor in the **same scrolling cont
 
 ### What the host provides
 
-| Input                      | From                                                                                                                                                                                   |
-| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `editor`                   | `<LonghandEditor onReady>`. The controller re-attaches if the editor is recreated.                                                                                                     |
-| `state`                    | The folded `ProjectState` for the project, updated as commits arrive. Ranges are read at `state.documents[documentId].version` and mapped onto the editor's local document.            |
-| `pushProgress(e, session)` | Optional. `SessionProgressEvent`s from `@longhand/agent`'s `onProgress`, relayed over SSE. Model events don't name their session, so pass the session id with them.                    |
-| `onCite(req)`              | Opens the citation picker for a citation-needed flag or a source suggestion. `req` has `cardId`, `kind`, `documentId`, `sourceId` (source suggestions), `claim` and the local `range`. |
-| `onAddSource(req)`         | Lets the writer check an AI-surfaced candidate and add it. Use the research lane's `surfacedSourceAddedDraft`.                                                                         |
-| `onSubmit(event)`          | Optional observer for every event the controller submits.                                                                                                                              |
-| `onError(error)`           | Optional. Default: `console.error`.                                                                                                                                                    |
+| Input              | From                                                                                                                                                                                   |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `editor`           | `<LonghandEditor onReady>`. The controller re-attaches if the editor is recreated.                                                                                                     |
+| `state`            | The folded `ProjectState` for the project, updated as commits arrive. Ranges are read at `state.documents[documentId].version` and mapped onto the editor's local document.            |
+| `pushProgress(e)`  | Optional. `SessionProgressEvent`s from `@longhand/agent`'s `onProgress`, relayed over SSE. Every agent event names its session (`feedbackSessionId`).                                  |
+| `onCite(req)`      | Opens the citation picker for a citation-needed flag or a source suggestion. `req` has `cardId`, `kind`, `documentId`, `sourceId` (source suggestions), `claim` and the local `range`. |
+| `onAddSource(req)` | Lets the writer check an AI-surfaced candidate and add it. Use the research lane's `surfacedSourceAddedDraft`.                                                                         |
+| `onSubmit(event)`  | Optional observer for every event the controller submits.                                                                                                                              |
+| `onError(error)`   | Optional. Default: `console.error`.                                                                                                                                                    |
 
 The server starts a review session when it sees `FeedbackRequested`, and a discuss session when it sees `DiscussRequested`.
 
@@ -87,7 +87,7 @@ Without React: `new AnnotationsController({ documentId, editor?, state?, … })`
 | ---------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `plugins`                                                  | The decoration layer (`createDecorationLayer('annotations')`) and the trace-over plugin. Stable.                                                                                                                                                          |
 | `attach(handle \| null)`, `setState(state)`, `setOptions`  | Inputs.                                                                                                                                                                                                                                                   |
-| `pushProgress(event, sessionId?)`                          | Live review progress.                                                                                                                                                                                                                                     |
+| `pushProgress(event, sessionId?)`                          | Live review progress. The session is the event's `feedbackSessionId`; `sessionId` is only a fallback for events that name none (events naming no session are ignored).                                                                                    |
 | `subscribe`, `getSnapshot`                                 | Store for `useSyncExternalStore`. The snapshot has `cards` (this document's cards plus unanchored ones, in document order), `marginCards`, `reviews`, `progress`, `activeId`, `hoverId`, `tracingId`, `trace`, `preferred`, `selection` and `layoutTick`. |
 | `requestFeedback(input)`                                   | `FeedbackRequested`. Returns the request id.                                                                                                                                                                                                              |
 | `retryReview(requestId)`                                   | A new `FeedbackRequested` with the failed request's scope, lenses, intensity and ask. (The fold maps the scope to the current version.)                                                                                                                   |
@@ -181,9 +181,7 @@ Import `@longhand/annotations/styles.css` once. Everything is themed with `--lh-
 
 ## Needed changes in other packages
 
-None block this lane. Each item below is worked around in the test-support code only.
-
-1. **`@longhand/agent`: tag `model` progress events with their session.** `SessionProgressEvent`'s `model` events have no `feedbackSessionId`. Either the relay adds it, or the host passes it to `pushProgress(event, sessionId)` as the demo does.
+None. (The fold-derived proposal steps, `loadFixture` under jsdom and session ids on agent progress events have landed.)
 
 ## Known gaps
 

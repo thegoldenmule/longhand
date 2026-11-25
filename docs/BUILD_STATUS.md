@@ -40,7 +40,7 @@ Each applied in `packages/schema` first, then in its consumers; fixtures regener
 
 | provenance-ui | merged (139 unit + 9 Playwright) | see git log |
 | report + verifier | merged (7 Playwright; verifier fails every tamper case) | see git log |
-| annotations | merged (55 unit + 19 Playwright) | see git log |
+| annotations | merged (56 unit + 19 Playwright) | see git log |
 
 Integration note (provenance-ui): the span inspector needs the folded `LedgerState`, so the web app keeps the project's commit array client-side and folds it (shared `Replay` for scrubber + inspector).
 
@@ -48,17 +48,16 @@ Integration note (provenance-ui): the span inspector needs the folded `LedgerSta
 
 - Ledger exports the steps the fold applies per commit: `validateDraft` success adds `derivedSteps: DerivedSteps` (`Record<documentId, StepJSON[]>`; a `TextEdited`'s own steps, the fold-derived move/cut/split/merge steps incl. joining whitespace for `ProposalAccepted`, `{}` otherwise), plus `derivedStepsFor(stateBefore, commit)` and `applyCommitWithSteps(state, commit)` for replay and `fetchSince` from history. Applying them gives exactly the fold's document, and their count is exactly the version delta (tested on every fixture commit, every `proposals` accept, and random proposals). Annotations' `FoldingTransport` sends them (the padded diff step is gone); the editor's sync needed no change. Server: `RemoteUpdate.steps = v.derivedSteps[documentId]`. (annotations → ledger, server)
 - `@longhand/ledger/fixtures` loads under jsdom: paths come from `node:url` (`fileURLToPath`/`pathToFileURL`), never the global `URL`; new `fixturePath(name)`. Annotations keeps importing the JSON in `fixtureData.ts` (its browser demo shares the module) and a jsdom test checks it equals `loadFixture`. (annotations)
+- Agent `SessionProgressEvent`: `model` and `annotation` events now carry `feedbackSessionId` too, so every event names the runner's session from `started` on (only a `failed` before `FeedbackSessionStarted` was appended has `null`, as in that `FeedbackSessionFailed`). Annotations' `pushProgress(event, sessionId?)` uses the event's id; `sessionId` is only a fallback, and the controller no longer guesses from the last `started`. Server: relay events as-is. (annotations → agent)
 
 ## Pending contract changes
 
 - Research lane should ship `formatCitation`/`formatBibliographyEntry` adapters for export's injected formatters (CSL). (export → research)
 - Optional: a CSL `source` convention or a `provider` field on library sources, so the origin provider survives `SourceAdded`. (research)
 - Server lane implements the AnnotationSink HTTP contract in `packages/agent/README.md`.
-- Server/web must implement the editor's `CommitTransport` (`packages/editor/src/sync/transport.ts`): submit → ack/duplicate/conflict/rejected/offline; subscribe in ledger order incl. own commits; `fetchSince` with fold-derived steps for ProposalAccepted. (editor → server)
+- Server/web must implement the editor's `CommitTransport` (`packages/editor/src/sync/transport.ts`): submit → ack/duplicate/conflict/rejected/offline; subscribe in ledger order incl. own commits; `fetchSince` with fold-derived steps for ProposalAccepted (now from ledger `validateDraft().derivedSteps` / `derivedStepsFor`). (editor → server)
 
 - Repo has no root LICENSE; verifier package declares MIT. Needs the owner's decision. (report/verifier)
-
-- Agent progress events should carry `feedbackSessionId`. (annotations → agent)
 
 ## Notes
 

@@ -27,7 +27,8 @@ export interface MockReviewerOptions {
   model?: string;
   /** Fail reviews (with a calm reason) instead of finishing them. */
   fail?: () => boolean;
-  onProgress?: (event: ReviewProgressEvent, feedbackSessionId: string) => void;
+  /** Agent-shaped progress: every event names its session, like the runner's. */
+  onProgress?: (event: ReviewProgressEvent) => void;
   newId?: () => string;
 }
 
@@ -79,8 +80,8 @@ export class MockReviewer {
     } as unknown as CommitDraft;
   }
 
-  private progress(event: ReviewProgressEvent, sessionId: string): void {
-    this.opts.onProgress?.(event, sessionId);
+  private progress(event: ReviewProgressEvent): void {
+    this.opts.onProgress?.(event);
   }
 
   private emit<K extends EventType>(
@@ -93,21 +94,21 @@ export class MockReviewer {
       console.warn('[mock reviewer] rejected', type, r);
       return false;
     }
-    this.progress(
-      { kind: 'annotation', seq: r.seq, draft: { type, sessionId, payload } },
-      sessionId,
-    );
+    this.progress({
+      kind: 'annotation',
+      feedbackSessionId: sessionId,
+      seq: r.seq,
+      draft: { type, sessionId, payload },
+    });
     return true;
   }
 
   private tool(name: string, sessionId: string): void {
-    this.progress(
-      {
-        kind: 'model',
-        event: { type: 'tool-call', id: this.id('t'), name: `mcp__longhand__${name}`, input: {} },
-      },
-      sessionId,
-    );
+    this.progress({
+      kind: 'model',
+      feedbackSessionId: sessionId,
+      event: { type: 'tool-call', id: this.id('t'), name: `mcp__longhand__${name}`, input: {} },
+    });
   }
 
   private target(
@@ -146,10 +147,7 @@ export class MockReviewer {
       ),
     );
     if (started.status !== 'ack') return;
-    this.progress(
-      { kind: 'started', feedbackSessionId: sessionId, model, seq: started.seq },
-      sessionId,
-    );
+    this.progress({ kind: 'started', feedbackSessionId: sessionId, model, seq: started.seq });
     await sleep(step);
     this.tool('read_document', sessionId);
     await sleep(step);
@@ -163,7 +161,7 @@ export class MockReviewer {
           'system',
         ),
       );
-      this.progress({ kind: 'failed', feedbackSessionId: sessionId, reason }, sessionId);
+      this.progress({ kind: 'failed', feedbackSessionId: sessionId, reason });
       return;
     }
     const doc = documentId ? documentNode(this.transport.state, documentId) : undefined;
@@ -228,7 +226,7 @@ export class MockReviewer {
       },
       sessionId,
     );
-    this.progress({ kind: 'finished', feedbackSessionId: sessionId }, sessionId);
+    this.progress({ kind: 'finished', feedbackSessionId: sessionId });
   }
 
   private async answer(c: Extract<Commit, { type: 'DiscussRequested' }>): Promise<void> {
@@ -245,10 +243,7 @@ export class MockReviewer {
       ),
     );
     if (started.status !== 'ack') return;
-    this.progress(
-      { kind: 'started', feedbackSessionId: sessionId, model, seq: started.seq },
-      sessionId,
-    );
+    this.progress({ kind: 'started', feedbackSessionId: sessionId, model, seq: started.seq });
     await sleep(step * 2);
     if (message.toLowerCase().includes('fail')) {
       this.transport.append(

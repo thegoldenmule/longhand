@@ -133,6 +133,29 @@ describe('progress', () => {
     ]);
     const same = reduceProgress(p, { kind: 'model', event: { type: 'text', text: 'hi' } }, 'fs');
     expect(same).toBe(p);
+    // Agent events name their session; the fallback is only for events that do not.
+    p = reduceProgress(
+      p,
+      {
+        kind: 'model',
+        feedbackSessionId: 'fs',
+        event: { type: 'tool-call', name: 'mcp__longhand__comment' },
+      },
+      'other',
+    );
+    expect(p.fs!.activity).toBe('Writing a margin note');
+    expect(p.other).toBeUndefined();
+    p = reduceProgress(p, {
+      kind: 'annotation',
+      feedbackSessionId: 'fs',
+      seq: 10,
+      draft: { type: 'CommentAdded', payload: { commentId: 'c1' } },
+    });
+    expect(p.fs!.arrived.map((a) => a.id)).toEqual(['s1', 'c1']);
+    // An event naming no session, with no fallback, is ignored.
+    expect(reduceProgress(p, { kind: 'model', event: { type: 'tool-call', name: 'x' } })).toBe(p);
+    // A failure before any session started (null) without a fallback names nothing.
+    expect(reduceProgress(p, { kind: 'failed', feedbackSessionId: null, reason: 'x' })).toBe(p);
     p = reduceProgress(p, { kind: 'failed', feedbackSessionId: 'fs', reason: 'timeout' });
     expect(p.fs).toMatchObject({ state: 'failed', failureReason: 'timeout', activity: null });
     expect(toolActivity('finish_review')).toBe('Writing the summary');

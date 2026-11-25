@@ -6,17 +6,22 @@
  * now, and which items have arrived before the ledger state catches up.
  */
 
-/** A progress event, structurally compatible with `@longhand/agent`'s `SessionProgressEvent`. */
+/**
+ * A progress event, structurally compatible with `@longhand/agent`'s
+ * `SessionProgressEvent`. The agent sets `feedbackSessionId` on every event; it is
+ * optional here so a host can relay events from elsewhere and name the session
+ * with `pushProgress(event, sessionId)` instead.
+ */
 export type ReviewProgressEvent =
   | { kind: 'started'; feedbackSessionId: string; model: string; seq?: number }
   | {
       kind: 'model';
-      /** Not in the agent's event; the relay may add it. */
       feedbackSessionId?: string;
       event: { type: string; name?: string; [key: string]: unknown };
     }
   | {
       kind: 'annotation';
+      feedbackSessionId?: string;
       seq: number;
       draft: { type: string; sessionId?: string; payload: unknown };
     }
@@ -111,7 +116,12 @@ function itemLabel(type: string, payload: unknown): string {
   return TYPE_LABEL[type] ?? type;
 }
 
-/** Folds progress events into per-session views. Pure; returns a new record when anything changed. */
+/**
+ * Folds progress events into per-session views. Pure; returns a new record when
+ * anything changed. The session is the event's `feedbackSessionId`, else (for an
+ * annotation) the draft's, else `fallbackSessionId`; events naming no session
+ * are ignored.
+ */
 export function reduceProgress(
   prev: Readonly<Record<string, SessionProgress>>,
   event: ReviewProgressEvent,
@@ -123,10 +133,10 @@ export function reduceProgress(
       case 'finished':
         return event.feedbackSessionId;
       case 'failed':
-        return event.feedbackSessionId ?? fallbackSessionId;
       case 'model':
         return event.feedbackSessionId ?? fallbackSessionId;
       case 'annotation': {
+        if (event.feedbackSessionId) return event.feedbackSessionId;
         const fromPayload = (event.draft.payload as { feedbackSessionId?: unknown } | null)
           ?.feedbackSessionId;
         if (typeof fromPayload === 'string') return fromPayload;
