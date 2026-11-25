@@ -133,6 +133,7 @@ export function createInputGuard(opts: InputGuardOptions): InputGuard {
   const violations = new Emitter<GuardViolation>();
   const grants = new WeakMap<Transaction, InputGrant>();
   let traceSuggestionId: string | null = null;
+  let lastGood: EditorState | null = null;
 
   const report = (v: GuardViolation): void => {
     if (!v.flagged) console.error(`[longhand/editor] refused a transaction: ${v.reason}`);
@@ -176,17 +177,20 @@ export function createInputGuard(opts: InputGuardOptions): InputGuard {
     view(view) {
       viewRef = view;
       const detach = tracker.attach(view.dom as HTMLElement);
+      const verified = (state: EditorState): boolean => guardKey.getState(state)?.doc === state.doc;
+      const revert = (v: EditorView, good: EditorState): void => {
+        report({ reason: 'document replaced outside the transaction pipeline', flagged: false, steps: 0 });
+        queueMicrotask(() => {
+          if (!v.isDestroyed && !verified(v.state)) v.updateState(good);
+        });
+      };
+      // Plugin views are recreated when a state with a new plugin array is swapped in.
+      if (!verified(view.state) && lastGood && lastGood.doc !== view.state.doc) revert(view, lastGood);
+      else if (verified(view.state)) lastGood = view.state;
       return {
         update(v, prevState) {
-          const st = guardKey.getState(v.state);
-          if (v.state.doc !== prevState.doc && st?.doc !== v.state.doc) {
-            report({ reason: 'document replaced outside the transaction pipeline', flagged: false, steps: 0 });
-            queueMicrotask(() => {
-              if (v.isDestroyed) return;
-              const current = guardKey.getState(v.state);
-              if (current?.doc !== v.state.doc) v.updateState(prevState);
-            });
-          }
+          if (verified(v.state)) lastGood = v.state;
+          else if (v.state.doc !== prevState.doc) revert(v, verified(prevState) ? prevState : (lastGood ?? prevState));
         },
         destroy() {
           detach();
