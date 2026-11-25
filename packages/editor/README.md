@@ -57,6 +57,7 @@ Without React, use `createEditorView({ mount, ...sameOptions })`. It returns the
 | `attributes`                                                                |                                               | extra attributes on the editable element                                                               |
 | `onWordCount`, `onStatus`, `onVersion`, `onError`, `onViolation`, `onDraft` |                                               |                                                                                                        |
 | `placeholder`                                                               | `'Begin here.'`                               | hint in an empty document (one empty paragraph); `null` turns it off. See "Placeholder"                |
+| `bubble`                                                                    | on                                            | the bubble toolbar; `false` turns it off, `{ suppress }` says when it must hide. See "Bubble toolbar"  |
 | `trustSyntheticEvents`                                                      | `false`                                       | **tests only**: treat synthetic DOM events as user input                                               |
 
 ## Extension points (for annotations, provenance-ui, research, apps/web)
@@ -93,7 +94,7 @@ All of these live on `EditorHandle` or are exported from the package root.
   `characters` is informational. The batch total is computed from the steps with the same rule (text plus hard breaks). `handle.insertCitation({ sourceId, locator })` and `handle.insertClipping({ clippingId, sourceId, locator, text })` are built-in versions of the same commands.
 
 - **Other human events.** `handle.acceptProposal(proposalId)` flushes pending steps and queues `ProposalAccepted` at the local version. The steps the fold derives come back as a remote update, and local edits typed meanwhile are rebased over them. `handle.submitEvent(type, payload)` queues any other human event (`SuggestionDismissed`, `ProposalRejected`, `FeedbackRequested`, …) in order with the text drafts. `TextEdited`, `PasteOccurred`, `SliceCopied` and `CitationInserted` are excluded, because only the editor's own capture may produce them.
-- **Commands and keymaps.** These are exported for reuse: `editorKeymaps(guard)`, `editorInputRules(guard)`, `insertHardBreak`, `insertSceneBreak`, `insertFootnote`, `granted(guard, cmd, grant)`, `focusPlugin`/`focusKey`, `typewriterPlugin`/`typewriterKey`, and `createInputGuard`, for embedding the guard in another view.
+- **Commands and keymaps.** These are exported for reuse: `editorKeymaps(guard)`, `editorInputRules(guard)`, `insertHardBreak`, `insertSceneBreak`, `insertFootnote`, `granted(guard, cmd, grant)`, the link helpers and bubble commands (see "Links and inline code" and "Bubble toolbar"), `focusPlugin`/`focusKey`, `typewriterPlugin`/`typewriterKey`, and `createInputGuard`, for embedding the guard in another view.
 - **Placeholder.** An empty document (one empty paragraph) shows a faint italic hint, `placeholder` (default `DEFAULT_PLACEHOLDER`, "Begin here."). It is a widget decoration (`placeholderPlugin`), never document text: `aria-hidden`, `contenteditable="false"`, unselectable, absolutely placed so the caret stays at the start of the line, gone on the first keystroke and hidden when the editor is read-only. `isEmptyDocument(doc)` is the test it uses.
 - **Styling.** `styles.css` themes everything through CSS variables on `.lh-editor`, such as `--lh-ink`, `--lh-ink-dim`, `--lh-paper`, `--lh-accent`, `--lh-font`, `--lh-measure` (66ch) and `--lh-caret-ratio`. Dark mode follows `prefers-color-scheme` or an ancestor's `data-theme="dark|light"`.
 
@@ -176,9 +177,13 @@ interface RemoteUpdate {
 | `***` or `---` on an empty top-level line | scene break                            |
 | `*em*`, `_em_`                            | emphasis                               |
 | `**strong**`, `__strong__`                | strong                                 |
+| `` `code` ``                              | inline code                            |
+| `[text](url)`                             | link (only an allowed url)             |
 | `^[`                                      | footnote (Pandoc's inline note syntax) |
 | Backspace right after any of these        | undoes it                              |
-| Mod-B / Mod-I                             | strong / emphasis                      |
+| Mod-B / Mod-I / Mod-E                     | strong / emphasis / inline code        |
+| Mod-K                                     | add or edit a link                     |
+| Alt-F10                                   | focus the bubble toolbar               |
 | Mod-Alt-1/2/3, Mod-Alt-0                  | heading 1–3, paragraph                 |
 | Mod-Shift-8 / Mod-Shift-7                 | bullet / ordered list                  |
 | Mod-Shift-. (or Ctrl->)                   | block quote                            |
@@ -188,8 +193,33 @@ interface RemoteUpdate {
 | Tab / Shift-Tab                           | indent / outdent list item             |
 | Mod-Z, Mod-Shift-Z, Mod-Y                 | undo, redo                             |
 
+- **Mark rules** never fire inside inline code, so `**` typed in code stays literal.
 - **Footnotes** open a small nested editor when selected. Its edits are forwarded to the main editor as offset steps, so they pass through the same guard.
 - **Gap cursor.** `prosemirror-gapcursor` is enabled. A `quote_block` (or scene break) that ends the document gets a gap cursor after it, reached with arrow keys or by clicking below. Typing there inserts a new paragraph as `typed` input. No trailing paragraph is added automatically.
+
+## Links and inline code
+
+The schema's `link` mark (attr `href`) and `code` mark. Both are formatting: zero input units, kind `format`, words keep their class. The href is a mark attribute, never document text, so it is not counted as words and never reaches the matcher or attribution.
+
+- **Href policy.** Every href goes through the schema's `normalizeHref`: only `http:`, `https:` and `mailto:`; `example.com` becomes `https://example.com` and `ada@example.com` becomes `mailto:ada@example.com`; `javascript:`, `data:`, relative paths and anything with whitespace or userinfo are refused. The mark's validator enforces the same rule, so pasted HTML with a bad href keeps its text and loses the link.
+- **Ways in.** Mod-K or the toolbar's Link button, the `[text](url)` input rule, and pasting a URL over a non-empty selection (as Medium does). That paste is handled by `linkPastePlugin`: it adds the mark instead of inserting text, so no `PasteOccurred` is queued, the run is `typed` and the timeline entry is `format` with length 0. Only text that plainly is a link (`http(s)://…`, `mailto:…`, `www.…`, one line) counts; anything else pastes normally.
+- **Non-inclusive.** Typing at a link's end does not extend it.
+- **Clicks never navigate.** `linkClickPlugin` prevents the default on every click on a link in the editor. ⌘-click (Ctrl-click elsewhere) opens it in a new tab with `noopener,noreferrer`. Rendered links carry `rel="noopener noreferrer"` and `target="_blank"`.
+- **Inline code** excludes bold and italic. It may sit inside a link.
+- Helpers: `linkAt($pos, side?)`, `firstLinkIn(doc, from, to)`, `setLinkTr`, `removeLinkTr`, `linkPasteTr`, `openLink`.
+
+## Bubble toolbar
+
+A quiet floating toolbar (`bubblePlugin`, on by default) placed above a non-empty text selection, inside the editor root, so the demo and the web app both get it. It is plain DOM, themed by `--lh-bubble-*` variables, in light and dark.
+
+- **Buttons:** Bold, Italic, Link, Heading (heading 1), Subheading (heading 2), Quote and Code. Each is a `<button>` with an `aria-label`, an `aria-pressed` state (pressed when the whole selection has it) and a title naming its shortcut. Buttons that cannot apply are disabled. Bold, Italic and Code add the mark unless the whole selection already has it.
+- **Link field.** The Link button or Mod-K turns the toolbar into a URL field (`aria-label` "Link address"), pre-filled when the selection is already a link, with Remove then. Enter applies, Esc cancels, an empty value removes the link, and a refused href shows "Use an http, https or mailto link" (`role="alert"`) and keeps the field open. Leaving the field cancels it.
+- **Link popover.** With the caret inside a link, the same element shows the URL (a real link that opens in a new tab) with Edit and Remove.
+- **Footnotes.** In a footnote's nested editor only the mark buttons show. The nested editor also has Mod-B, Mod-I, Mod-E, Mod-K and Alt-F10, and pasting a URL over a selection links it.
+- **Hidden** when the selection is collapsed (outside a link), while the mouse is still dragging a selection, during IME composition, when the editor is read-only or has lost focus, and while a dialog is open: any `role="dialog"` element or open `<dialog>` in the page, which covers the provenance inspector and annotation popovers. Pass `bubble: { suppress }` to decide yourself, or `bubble: false` to turn it off.
+- **Keyboard (the pattern chosen).** The toolbar never takes focus on its own, so typing is never interrupted. Alt-F10 (the WAI-ARIA toolbar convention) moves focus into it, and Tab also reaches it from the editor outside lists, because it follows the editor in tab order and is a tab stop only while it shows. Inside, it is one tab stop with a roving tabindex: ←/→ move between buttons, Home and End jump to the ends, Enter or Space activates and keeps focus there, and Esc returns focus to the text with the selection intact. Mouse presses on the toolbar keep focus and the selection in the editor.
+- **Provenance.** Every button dispatches with the guard's `format` grant: marks and block types only, no text in or out.
+- Commands for hosts: `openLinkEditor` (Mod-K), `focusToolbar` (Alt-F10), `toggleHeading(level)`, `toggleBlockquote`, `toggleMarkAll(type)`, `isHeading`, `inBlockquote`.
 
 ## Word counts
 
@@ -208,7 +238,8 @@ interface RemoteUpdate {
   - rebase (on doc, headless, dropped steps);
   - `DocumentSync` with fake timers and `MockTransport`: idle and 50-step batching, companion order, `SliceCopied` flush, offline then reconnect, dedupe, restore after reload, remote rebase, submit conflict, `SliceCopied` remapping, proposal steps, `mappingFrom`;
   - word counts;
-  - the core in jsdom: guard refusals, plugin append, `updateState` revert, internal and external paste, cut, programmatic paste, input rules, shortcuts, citation and clipping commands, the research meta alias, trace hint, focus decorations, decoration layers.
+  - the core in jsdom: guard refusals, plugin append, `updateState` revert, internal and external paste, cut, programmatic paste, input rules, shortcuts, citation and clipping commands, the research meta alias, trace hint, focus decorations, decoration layers;
+  - formatting (`src/formatting.test.ts`): the `` `code` `` and `[text](url)` rules (a `javascript:` url stays text), no mark rules inside code, links not extending at their end, Mod-E and code excluding bold, pasting a URL over a selection (formatting only: no `PasteOccurred`, zero characters), pasted HTML links filtered by the policy, internal paste of linked text, clicks never navigating and Mod-click opening a new tab, hrefs never counted, and the bubble toolbar: when it shows and hides, every button with its pressed state and `format` timeline entries, the link field (Enter, Esc, refusal, pre-fill, Remove), Mod-K, the caret popover, Alt-F10 with arrows and Esc, and mark-only buttons in a footnote.
 - **Playwright** (`e2e/`, Chrome):
   - caret held at 50% across soft wraps, Enter, Backspace across lines, paste and IME (CDP `Input.imeSetComposition` + `Input.insertText`);
   - configured ratio and clamping;
@@ -219,7 +250,8 @@ interface RemoteUpdate {
   - external paste classified `pasted-external`, internal copy/paste classified `pasted-internal` with the `SliceCopied → PasteOccurred → TextEdited` chain;
   - scripted inserts and pastes refused;
   - Markdown shortcuts;
-  - the offline queue surviving a reload and flushing on reconnect.
+  - the offline queue surviving a reload and flushing on reconnect;
+  - `e2e/formatting.spec.ts`: the bubble toolbar's placement and buttons, keyboard access, links (Mod-K, refusal, the caret popover, no navigation, Mod-click to a new tab, Remove), pasting a URL over a selection, the `` `code` `` and `[text](url)` rules, and light and dark screenshots. **Written but not run yet** (it needs Chrome); the jsdom tests cover the same behaviour without layout.
 
 ## Known gaps
 
@@ -231,4 +263,5 @@ interface RemoteUpdate {
 - **Undo history is reset** when a snapshot reload replaces the document.
 - **IME and autocorrect classification is tested on desktop Chrome only.** Safari and Android composition paths are untested. Policy `flag` keeps writers from losing text there in production.
 - **The daily goal is per document by default.** Pass `dailyBaseline` for a project-wide figure.
+- **Bubble placement is untested without a browser.** jsdom has no layout, so the unit tests check visibility, state and commands, not position.
 - **Bundled Chromium is not installed** in this environment, so the e2e suite was run against installed Chrome only.

@@ -30,6 +30,8 @@ export const nodes = {
 } as const;
 
 export const marks = {
+  link: mark('link'),
   em: mark('em'),
   strong: mark('strong'),
+  code: mark('code'),
 } as const;

@@ -3,13 +3,22 @@
  * nested editor when selected. Edits in the nested editor are forwarded to the
  * main editor as steps offset into the footnote, so they pass through the same
  * input guard and capture pipeline as everything else.
+ *
+ * The nested editor has the mark shortcuts (Mod-B, Mod-I, Mod-E, Mod-K for a
+ * link, Alt-F10 for the toolbar), pasting a URL over a selection links it, and
+ * the main editor's bubble toolbar follows its selection with the mark buttons
+ * only.
  */
+import { toggleMark } from 'prosemirror-commands';
 import { keymap } from 'prosemirror-keymap';
 import type { Node as PMNode } from 'prosemirror-model';
 import { redo, undo } from 'prosemirror-history';
 import { EditorState, TextSelection, type Transaction } from 'prosemirror-state';
 import { StepMap } from 'prosemirror-transform';
 import { EditorView, type NodeView } from 'prosemirror-view';
+import { linkClickPlugin, linkPasteTr } from '../links';
+import { marks } from '../nodes';
+import { bubbleOf, setFootnoteEditor } from './bubbleState';
 
 /** Clipboard hook for the nested editor (copy/cut positions in the main document). */
 export type FootnoteCopyHandler = (
@@ -54,6 +63,10 @@ export class FootnoteView implements NodeView {
     pop.className = 'lh-footnote-editor';
     this.popover = pop;
     const offset = (): number => (this.getPos() ?? 0) + 1;
+    const bubble = (fn: 'openLink' | 'focus') => (): boolean => {
+      const b = bubbleOf(this.outer);
+      return !!b && !!this.inner && b[fn](this.inner);
+    };
     this.inner = new EditorView(pop, {
       state: EditorState.create({
         doc: this.node,
@@ -62,14 +75,26 @@ export class FootnoteView implements NodeView {
             'Mod-z': () => undo(this.outer.state, this.outer.dispatch),
             'Mod-y': () => redo(this.outer.state, this.outer.dispatch),
             'Shift-Mod-z': () => redo(this.outer.state, this.outer.dispatch),
+            'Mod-b': toggleMark(marks.strong),
+            'Mod-i': toggleMark(marks.em),
+            'Mod-e': toggleMark(marks.code),
+            'Mod-k': bubble('openLink'),
+            'Alt-F10': bubble('focus'),
             Escape: () => {
               this.exit();
               return true;
             },
           }),
+          linkClickPlugin(),
         ],
       }),
       dispatchTransaction: (tr) => this.dispatchInner(tr),
+      handlePaste: (view, event) => {
+        const tr = linkPasteTr(view.state, event);
+        if (!tr) return false;
+        view.dispatch(tr);
+        return true;
+      },
       handleDOMEvents: {
         mousedown: () => {
           if (this.inner && this.outer.hasFocus()) this.inner.focus();
@@ -80,6 +105,7 @@ export class FootnoteView implements NodeView {
       },
     });
     this.inner.focus();
+    setFootnoteEditor(this.outer, this.inner);
   }
 
   private exit(): void {
@@ -93,6 +119,7 @@ export class FootnoteView implements NodeView {
   }
 
   private close(): void {
+    if (this.inner) setFootnoteEditor(this.outer, null);
     this.inner?.destroy();
     this.inner = null;
     this.popover?.remove();
@@ -104,6 +131,7 @@ export class FootnoteView implements NodeView {
     const { state, transactions } = this.inner.state.applyTransaction(tr);
     if (tr.getMeta('fromOutside') || !transactions.some((t) => t.docChanged)) {
       this.inner.updateState(state);
+      bubbleOf(this.outer)?.refresh();
       return;
     }
     const pos = this.getPos();
@@ -133,6 +161,7 @@ export class FootnoteView implements NodeView {
     } else {
       this.inner.updateState(state);
     }
+    bubbleOf(this.outer)?.refresh();
   }
 
   update(node: PMNode): boolean {

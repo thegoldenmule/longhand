@@ -141,6 +141,17 @@
   --lh-caret: var(--app-accent);
   --lh-selection: var(--app-selection);
   --lh-font: var(--app-font-text);
+  --lh-ui-font: var(--app-font-ui);
+  --lh-mono-font: var(--app-font-mono);
+  --lh-code-bg: var(--app-hover);
+  --lh-danger: var(--app-danger);
+  --lh-bubble-bg: var(--app-card);
+  --lh-bubble-ink: var(--app-ink);
+  --lh-bubble-muted: var(--app-ink-muted);
+  --lh-bubble-rule: var(--app-rule);
+  --lh-bubble-hover: var(--app-hover);
+  --lh-bubble-on: var(--app-accent-soft);
+  --lh-bubble-shadow: var(--app-shadow);
 }
 :root[data-theme='light'] body.lh-app .lh-editor {
   --lh-ink-dim: #c4beb3;

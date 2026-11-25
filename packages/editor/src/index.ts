@@ -63,10 +63,28 @@ export {
   editorInputRules,
   editorKeymaps,
   granted,
+  inBlockquote,
   insertFootnote,
   insertHardBreak,
   insertSceneBreak,
+  isHeading,
+  toggleBlockquote,
+  toggleHeading,
+  toggleMarkAll,
 } from './commands';
+export {
+  firstLinkIn,
+  linkAt,
+  linkClickPlugin,
+  linkPastePlugin,
+  linkPasteTr,
+  openLink,
+  removeLinkTr,
+  setLinkTr,
+  type LinkRange,
+} from './links';
+export { bubblePlugin, type BubbleOptions } from './ui/bubble';
+export { bubbleKey, focusToolbar, openLinkEditor, type BubbleState } from './ui/bubbleState';
 export { focusKey, focusPlugin, currentSentence, type FocusMode } from './ui/focus';
 export {
   DEFAULT_PLACEHOLDER,

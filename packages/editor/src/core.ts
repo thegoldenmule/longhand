@@ -29,6 +29,8 @@ import {
 import type { Mapping } from 'prosemirror-transform';
 import { EditorView } from 'prosemirror-view';
 import { editorInputRules, editorKeymaps } from './commands';
+import { linkClickPlugin, linkPastePlugin } from './links';
+import { bubblePlugin } from './ui/bubble';
 import type { DecorationLayer, LayerDecoration } from './decorations';
 import { encodeMarker, MARKER_MIME, stampMarker, type SliceMarker } from './input/clipboard';
 import type { InputTag } from './input/classify';
@@ -123,6 +125,12 @@ export interface CreateEditorOptions {
    * widget). Default "Begin here."; `null` turns it off.
    */
   placeholder?: string | null;
+  /**
+   * The bubble toolbar above a text selection (and the link popover at a caret in
+   * a link). Default on. `suppress` returns true while it must hide; by default it
+   * hides while a `role="dialog"` element or an open `<dialog>` is in the page.
+   */
+  bubble?: boolean | { suppress?: () => boolean };
   onWordCount?: (counts: WordCounts) => void;
   onStatus?: (status: SyncStatus) => void;
   onVersion?: (change: VersionChange) => void;
@@ -310,6 +318,8 @@ export function createEditorView(opts: CreateEditorOptions): EditorHandle {
     dropCursor({ class: 'lh-dropcursor' }),
     gapCursor(),
     clipboardPlugin,
+    linkPastePlugin(guard),
+    linkClickPlugin(),
     typewriterPlugin({
       settings: { enabled: settings.typewriter, caretRatio: settings.caretRatio },
       ...(opts.scrollContainer ? { scrollContainer: opts.scrollContainer } : {}),
@@ -318,6 +328,16 @@ export function createEditorView(opts: CreateEditorOptions): EditorHandle {
     ...(opts.placeholder === null
       ? []
       : [placeholderPlugin(opts.placeholder ?? DEFAULT_PLACEHOLDER)]),
+    ...(opts.bubble === false
+      ? []
+      : [
+          bubblePlugin({
+            guard,
+            ...(typeof opts.bubble === 'object' && opts.bubble.suppress
+              ? { suppress: opts.bubble.suppress }
+              : {}),
+          }),
+        ]),
   ];
   let extraPlugins: readonly Plugin[] = opts.extraPlugins ?? [];
 

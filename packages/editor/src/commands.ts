@@ -9,7 +9,9 @@
  *
  * | Keys | Action |
  * | --- | --- |
- * | Mod-B / Mod-I | strong / emphasis |
+ * | Mod-B / Mod-I / Mod-E | strong / emphasis / inline code |
+ * | Mod-K | add or edit a link (opens the link field in the bubble toolbar) |
+ * | Alt-F10 | move focus into the bubble toolbar (Esc returns) |
  * | Mod-Alt-1/2/3, Mod-Alt-0 | heading 1–3, paragraph |
  * | Mod-Shift-8 / Mod-Shift-7 | bullet / ordered list |
  * | Mod-Shift-. (also Ctrl->) | block quote |
@@ -21,9 +23,12 @@
  *
  * Input rules: `# `, `## `, `### ` headings; `> ` quote; `- `/`* `/`+ ` bullets;
  * `1. ` ordered list; `***` or `---` on an empty line → scene break; `*em*`,
- * `_em_`, `**strong**`, `__strong__`; `^[` → footnote (Pandoc's inline note syntax).
- * Backspace right after a rule undoes it.
+ * `_em_`, `**strong**`, `__strong__`, `` `code` ``, `[text](url)` → link (only
+ * when the url passes the href policy); `^[` → footnote (Pandoc's inline note
+ * syntax). Mark rules never fire inside inline code. Backspace right after a
+ * rule undoes it.
  */
+import { normalizeHref } from '@longhand/schema';
 import {
   baseKeymap,
   chainCommands,
@@ -46,6 +51,7 @@ import {
 import { keymap } from 'prosemirror-keymap';
 import type { MarkType } from 'prosemirror-model';
 import { liftListItem, sinkListItem, splitListItem, wrapInList } from 'prosemirror-schema-list';
+import { liftTarget } from 'prosemirror-transform';
 import {
   NodeSelection,
   TextSelection,
@@ -57,6 +63,7 @@ import {
 import type { InputGrant } from './input/classify';
 import type { InputGuard } from './input/guard';
 import { marks, nodes } from './nodes';
+import { focusToolbar, openLinkEditor } from './ui/bubbleState';
 
 /** Wraps a command so its transactions carry a guard grant. */
 export function granted(guard: InputGuard, cmd: Command, grant: InputGrant): Command {
@@ -97,6 +104,54 @@ export const insertFootnote: Command = (state, dispatch) => {
   return true;
 };
 
+/** True when every textblock touched by the selection is a heading of `level`. */
+export function isHeading(state: EditorState, level: number): boolean {
+  const { from, to } = state.selection;
+  let any = false;
+  let all = true;
+  state.doc.nodesBetween(from, to, (node) => {
+    if (!node.isTextblock) return true;
+    any = true;
+    if (node.type !== nodes.heading || node.attrs.level !== level) all = false;
+    return false;
+  });
+  return any && all;
+}
+
+/** Makes the selected textblocks headings of `level`, or paragraphs again if they already are. */
+export function toggleHeading(level: 1 | 2 | 3): Command {
+  return (state, dispatch, view) =>
+    isHeading(state, level)
+      ? setBlockType(nodes.paragraph)(state, dispatch, view)
+      : setBlockType(nodes.heading, { level })(state, dispatch, view);
+}
+
+/** The block range of the selection inside its nearest block quote, if it is in one. */
+function quoteRange(state: EditorState) {
+  const { $from, $to } = state.selection;
+  return $from.blockRange($to, (n) => n.type === nodes.blockquote);
+}
+
+/** True when the selection is inside a writer's block quote. */
+export function inBlockquote(state: EditorState): boolean {
+  return !!quoteRange(state);
+}
+
+/** Wraps the selection in a block quote, or lifts it out of the one it is in. */
+export const toggleBlockquote: Command = (state, dispatch) => {
+  const range = quoteRange(state);
+  if (!range) return wrapIn(nodes.blockquote)(state, dispatch);
+  const target = liftTarget(range);
+  if (target === null) return false;
+  if (dispatch) dispatch(state.tr.lift(range, target).scrollIntoView());
+  return true;
+};
+
+/** Toggles a mark the way the bubble toolbar does: added unless the whole selection has it. */
+export function toggleMarkAll(type: MarkType): Command {
+  return toggleMark(type, null, { removeWhenPresent: false });
+}
+
 /** Keymaps for the main editor. */
 export function editorKeymaps(guard: InputGuard): Plugin[] {
   const fmt = (cmd: Command): Command => granted(guard, cmd, { units: 0, kind: 'format' });
@@ -124,6 +179,11 @@ export function editorKeymaps(guard: InputGuard): Plugin[] {
       'Mod-B': fmt(toggleMark(marks.strong)),
       'Mod-i': fmt(toggleMark(marks.em)),
       'Mod-I': fmt(toggleMark(marks.em)),
+      'Mod-e': fmt(toggleMark(marks.code)),
+      'Mod-E': fmt(toggleMark(marks.code)),
+      'Mod-k': openLinkEditor,
+      'Mod-K': openLinkEditor,
+      'Alt-F10': focusToolbar,
       'Mod-Alt-0': fmt(setBlockType(nodes.paragraph)),
       'Mod-Alt-1': fmt(setBlockType(nodes.heading, { level: 1 })),
       'Mod-Alt-2': fmt(setBlockType(nodes.heading, { level: 2 })),
@@ -149,17 +209,46 @@ type RuleHandler = (
 ) => Transaction | null;
 
 function markRule(guard: InputGuard, re: RegExp, delim: number, type: MarkType): InputRule {
-  return new InputRule(re, (state, match, start, end) => {
-    const full = match[0];
-    const inner = match[1] as string;
-    const openStart = start + (full.length - inner.length - 2 * delim);
-    const tr = state.tr;
-    if (delim > 1) tr.delete(end - (delim - 1), end);
-    tr.delete(openStart, openStart + delim);
-    tr.addMark(openStart, openStart + inner.length, type.create());
-    tr.removeStoredMark(type);
-    return guard.grant(tr, { units: 0, kind: 'format' });
-  });
+  return new InputRule(
+    re,
+    (state, match, start, end) => {
+      const full = match[0];
+      const inner = match[1] as string;
+      const openStart = start + (full.length - inner.length - 2 * delim);
+      const tr = state.tr;
+      if (delim > 1) tr.delete(end - (delim - 1), end);
+      tr.delete(openStart, openStart + delim);
+      tr.addMark(openStart, openStart + inner.length, type.create());
+      tr.removeStoredMark(type);
+      return guard.grant(tr, { units: 0, kind: 'format' });
+    },
+    { inCodeMark: false },
+  );
+}
+
+/**
+ * `[text](url)`: typing the closing parenthesis links `text` and removes the
+ * Markdown around it, when the url passes the href policy. Otherwise the
+ * parenthesis is typed as usual.
+ */
+function linkRule(guard: InputGuard): InputRule {
+  return new InputRule(
+    /\[([^[\]\n]+)\]\(([^()\s]+)\)$/,
+    (state, match, start, end) => {
+      const text = match[1] as string;
+      const href = normalizeHref(match[2] as string);
+      if (!href || text.trim() === '') return null;
+      const $start = state.doc.resolve(start);
+      if (!$start.parent.type.allowsMarkType(marks.link)) return null;
+      const tr = state.tr;
+      tr.delete(start + 1 + text.length, end);
+      tr.delete(start, start + 1);
+      tr.addMark(start, start + text.length, marks.link.create({ href }));
+      tr.removeStoredMark(marks.link);
+      return guard.grant(tr, { units: 0, kind: 'format' });
+    },
+    { inCodeMark: false },
+  );
 }
 
 /** Markdown-style input rules. */
@@ -215,6 +304,8 @@ export function editorInputRules(guard: InputGuard): Plugin {
       markRule(guard, /__([^_\s](?:[^_]*[^_\s])?)__$/, 2, marks.strong),
       markRule(guard, /(?:^|[^*])\*([^*\s](?:[^*]*[^*\s])?)\*$/, 1, marks.em),
       markRule(guard, /(?:^|[^_A-Za-z0-9])_([^_\s](?:[^_]*[^_\s])?)_$/, 1, marks.em),
+      markRule(guard, /(?:^|[^`])`([^`]*[^`\s][^`]*)`$/, 1, marks.code),
+      linkRule(guard),
       footnote,
     ],
   });
