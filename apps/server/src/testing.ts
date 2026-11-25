@@ -126,30 +126,28 @@ export async function startTestServer(opts: TestServerOptions = {}): Promise<Tes
       log: quiet,
     });
 
-  const make = (handle: ServerHandle): TestServer => {
-    const t: TestServer = {
-      url: handle.url,
-      handle,
-      db,
-      schema,
-      streamsUrl,
-      prefix,
-      signer,
-      restart: async ({ crash } = {}) => {
-        if (crash) await handle.closeHttpOnly();
-        else await handle.close();
-        const next = make(await boot());
-        Object.assign(t, next);
-        return t;
-      },
-      close: async () => {
-        await t.handle.close();
-        await db.close();
-        await dropSchema(TEST_DATABASE_URL, schema).catch(() => undefined);
-        await ds?.stop();
-      },
-    };
-    return t;
+  const first = await boot();
+  const t: TestServer = {
+    url: first.url,
+    handle: first,
+    db,
+    schema,
+    streamsUrl,
+    prefix,
+    signer,
+    restart: async ({ crash } = {}) => {
+      if (crash) await t.handle.closeHttpOnly();
+      else await t.handle.close();
+      t.handle = await boot();
+      t.url = t.handle.url;
+      return t;
+    },
+    close: async () => {
+      await t.handle.close();
+      await db.close();
+      await dropSchema(TEST_DATABASE_URL, schema).catch(() => undefined);
+      await ds?.stop();
+    },
   };
-  return make(await boot());
+  return t;
 }

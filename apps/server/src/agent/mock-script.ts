@@ -25,7 +25,18 @@ export function firstAnchor(
   const doc = DOC_RE.exec(prompt);
   if (!doc) return null;
   const rest = prompt.slice(doc.index);
-  const m = SENTENCE_RE.exec(rest);
+  // A selection pass names the sentences it covers; anchor inside them.
+  const covered = /selection covers sentences? (p\d+\.s\d+)/.exec(prompt)?.[1];
+  let m: RegExpExecArray | null = null;
+  if (covered) {
+    const re = new RegExp(
+      `\\[${covered.replace('.', '\\.')}\\]\\s+(.+?)(?=\\s+\\[p\\d+\\.s\\d+\\]|$)`,
+      'm',
+    );
+    const hit = re.exec(rest);
+    if (hit) m = [hit[0], covered, hit[1] as string] as unknown as RegExpExecArray;
+  }
+  m ??= SENTENCE_RE.exec(rest);
   if (!m) return null;
   const words = (m[2] as string).split(/\s+/).filter(Boolean);
   const quote = words.slice(0, Math.min(3, words.length)).join(' ');

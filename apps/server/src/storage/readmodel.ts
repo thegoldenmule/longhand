@@ -252,7 +252,8 @@ export class ReadModel {
       `INSERT INTO annotations (project_id, collection, annotation_id, seq, status, document_id, session_id, body)
        VALUES ($1,$2,$3,$4,$5,$6,$7,$8)
        ON CONFLICT (project_id, collection, annotation_id) DO UPDATE SET
-         status = EXCLUDED.status, document_id = EXCLUDED.document_id, body = EXCLUDED.body`,
+         seq = EXCLUDED.seq, status = EXCLUDED.status, document_id = EXCLUDED.document_id,
+         session_id = EXCLUDED.session_id, body = EXCLUDED.body`,
       [
         projectId,
         collection,

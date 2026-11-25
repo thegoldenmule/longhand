@@ -172,13 +172,7 @@ export class ProjectHistory {
     if (commit.type === 'TextEdited') {
       steps = (commit.payload as { steps: StepJSON[] }).steps.map((j) => Step.fromJSON(schema, j));
     } else {
-      const proposalId = (commit.payload as { proposalId: string }).proposalId;
-      steps = deriveProposalSteps(
-        prev.annotations.proposals[proposalId],
-        before,
-        after,
-        version - baseVersion,
-      ).steps;
+      steps = foldDerivedSteps(commit, prev, before, after, version - baseVersion);
     }
     const update: RemoteUpdate = {
       documentId: id,
@@ -192,6 +186,25 @@ export class ProjectHistory {
     h.push(update, steps, after);
     return update;
   }
+}
+
+/**
+ * The steps the fold derived for an accepted proposal.
+ *
+ * TODO(ledger derivedStepsFor): `@longhand/ledger` is gaining
+ * `derivedStepsFor(stateBefore, commit)` (and `validateDraft(...).derivedSteps`).
+ * Once it lands, return those steps here and drop the port in `proposal-steps.ts`;
+ * this is the only call site.
+ */
+export function foldDerivedSteps(
+  commit: CommitLike,
+  prev: ProjectState,
+  before: PMNode,
+  after: PMNode,
+  count: number,
+): Step[] {
+  const proposalId = (commit.payload as { proposalId: string }).proposalId;
+  return deriveProposalSteps(prev.annotations.proposals[proposalId], before, after, count).steps;
 }
 
 /** Plain JSON of a node. */
