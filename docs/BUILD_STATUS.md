@@ -73,7 +73,7 @@ Integration note (provenance-ui): the span inspector needs the folded `LedgerSta
 
 ## Known gaps after phase 5 (prioritized)
 
-1. **Not deployed.** Amplify (with Next 16), the EC2 image, KMS signing and Cognito sign-in are documented and unit-tested (KMS mocked, PKCE with a mocked token endpoint) but never run against AWS.
+1. **Not deployed.** Amplify (with Next 16), the EC2 image, KMS signing and Cognito sign-in are documented and unit-tested (KMS mocked, PKCE with a mocked token endpoint) but never run against AWS. The `apps/server/Dockerfile` has not been built yet (the Docker registry was unreachable from the build machine), and the new CI e2e job has not run (nothing was pushed).
 2. **Single ledger instance, in-memory sessions** (server). No failover; a crash between appending a `FeedbackRequested` and starting its session leaves it pending. Each loaded project keeps its commits and step history in memory.
 3. **Client folds the whole ledger** on open (no fold-state snapshot API in `@longhand/ledger`). Fine for one book; slow for very long histories.
 4. **One annotation controller per open document.** A project-wide review shows items in other documents as labels until you open them.

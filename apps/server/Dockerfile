@@ -17,14 +17,24 @@ RUN corepack enable && corepack prepare pnpm@${PNPM_VERSION} --activate \
 
 WORKDIR /app
 
-# Manifests first, so dependency layers cache across source changes.
+# Manifests first, so dependency layers cache across source changes. Every
+# workspace manifest is copied so the frozen lockfile matches the workspace;
+# the install itself is filtered to the server and its dependencies.
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml tsconfig.base.json ./
-COPY packages/schema/package.json packages/schema/
-COPY packages/ledger/package.json packages/ledger/
 COPY packages/agent/package.json packages/agent/
+COPY packages/annotations/package.json packages/annotations/
+COPY packages/binder/package.json packages/binder/
+COPY packages/client/package.json packages/client/
+COPY packages/editor/package.json packages/editor/
 COPY packages/export/package.json packages/export/
+COPY packages/ledger/package.json packages/ledger/
+COPY packages/provenance-ui/package.json packages/provenance-ui/
+COPY packages/report/package.json packages/report/
 COPY packages/research/package.json packages/research/
+COPY packages/schema/package.json packages/schema/
+COPY packages/verifier/package.json packages/verifier/
 COPY apps/server/package.json apps/server/
+COPY apps/web/package.json apps/web/
 RUN pnpm install --frozen-lockfile --filter "@longhand/server..."
 
 # Sources (TypeScript, run with tsx: no build step, docs/BUILD.md).
