@@ -21,6 +21,7 @@ import { TextSelection } from 'prosemirror-state';
 import type { Mapping } from 'prosemirror-transform';
 import { annotationDecorations } from './decorations';
 import {
+  chatMessageSent,
   discussRequested,
   feedbackRequested,
   newId as defaultNewId,
@@ -28,6 +29,7 @@ import {
   retryRequest,
   suggestionDismissed,
   type AnnotationEvent,
+  type ChatMessageInput,
   type FeedbackRequestInput,
 } from './drafts';
 import { installGhostClipboardGuard } from './ghost';
@@ -79,6 +81,16 @@ export interface SelectionScope {
   to: number;
   /** The editor's local version (the version the positions are in). */
   version: number;
+  /** The selected text (block breaks as newlines), for the chat's quoted chip. */
+  text: string;
+}
+
+/** A request to bring the chat forward: focus the composer, and maybe attach a note. */
+export interface ChatFocus {
+  /** Bumped on every request; 0 before the first. */
+  nonce: number;
+  /** The margin note to attach (Discuss), or null. */
+  aboutId: string | null;
 }
 
 /** Options for {@link AnnotationsController}. */
@@ -93,6 +105,19 @@ export interface AnnotationsControllerOptions {
   onAddSource?: (request: AddSourceRequest) => void;
   /** Called after every event the controller submits. */
   onSubmit?: (event: SubmittedEvent) => void;
+  /**
+   * Shows the host's chat (opens the side panel on it). When set, a card's
+   * Discuss opens the chat with that note attached instead of a thread on the
+   * card, and per-card threads are not shown.
+   */
+  onOpenChat?: () => void;
+  /** Stops a running agent session (the chat's Stop). */
+  onCancelSession?: (feedbackSessionId: string) => void;
+  /**
+   * Submits an event when no editor is attached (no document open). Without it,
+   * events need an editor.
+   */
+  submitWithoutEditor?: (event: AnnotationEvent) => void;
   /** Called when the editor refuses an action (no editor attached, wrong document…). */
   onError?: (error: Error) => void;
   /** Id generator for request and thread ids. */
@@ -129,6 +154,8 @@ export interface AnnotationsSnapshot {
   /** Bumped whenever the editor's layout may have changed (margin re-measures). */
   readonly layoutTick: number;
   readonly editorAttached: boolean;
+  /** The latest request to bring the chat forward. */
+  readonly chatFocus: ChatFocus;
 }
 
 type Listener = () => void;
@@ -155,6 +182,7 @@ export class AnnotationsController {
   private traceProgress: TraceProgress | null = null;
   private preferred: Record<string, number> = {};
   private selection: SelectionScope | null = null;
+  private chatFocus: ChatFocus = { nonce: 0, aboutId: null };
   private layoutTick = 0;
   private pending = false;
   private candidatesKey = '';
@@ -237,6 +265,7 @@ export class AnnotationsController {
       selection: this.selection,
       layoutTick: this.layoutTick,
       editorAttached: this.editor !== null,
+      chatFocus: this.chatFocus,
     });
   }
 
@@ -363,7 +392,8 @@ export class AnnotationsController {
     }
     const version = ed.version().local;
     if (prev && prev.from === sel.from && prev.to === sel.to && prev.version === version) return;
-    this.selection = { documentId: ed.documentId, from: sel.from, to: sel.to, version };
+    const text = ed.getState().doc.textBetween(sel.from, sel.to, '\n', ' ');
+    this.selection = { documentId: ed.documentId, from: sel.from, to: sel.to, version, text };
   }
 
   // ---------------------------------------------------------------------------
@@ -594,6 +624,16 @@ export class AnnotationsController {
   private submit(event: AnnotationEvent): boolean {
     const ed = this.editor;
     if (!ed) {
+      if (this.opts.submitWithoutEditor) {
+        try {
+          this.opts.submitWithoutEditor(event);
+        } catch (err) {
+          this.fail(err);
+          return false;
+        }
+        this.opts.onSubmit?.(event);
+        return true;
+      }
       this.fail(new Error(`no editor attached: cannot submit ${event.type}`));
       return false;
     }
@@ -611,6 +651,9 @@ export class AnnotationsController {
           break;
         case 'DiscussRequested':
           ed.submitEvent('DiscussRequested', event.payload);
+          break;
+        case 'ChatMessageSent':
+          ed.submitEvent('ChatMessageSent', event.payload);
           break;
       }
     } catch (err) {
@@ -689,6 +732,47 @@ export class AnnotationsController {
     return true;
   }
 
+  // ---------------------------------------------------------------------------
+  // The feedback chat
+  // ---------------------------------------------------------------------------
+
+  /** True when the host shows the chat: Discuss goes there instead of to a thread on the card. */
+  get chatMode(): boolean {
+    return Boolean(this.opts.onOpenChat);
+  }
+
+  /** Sends a chat message (`ChatMessageSent`). Returns its chat and message ids, or null. */
+  sendChat(input: ChatMessageInput): { chatId: string; messageId: string } | null {
+    let event;
+    try {
+      event = chatMessageSent(input, () => this.newId());
+    } catch (err) {
+      this.fail(err);
+      return null;
+    }
+    if (!this.submit(event)) return null;
+    return { chatId: event.payload.chatId, messageId: event.payload.messageId };
+  }
+
+  /** Brings the chat forward and focuses its composer; with `aboutId`, attaches that note. */
+  openChat(opts: { aboutId?: string | null } = {}): void {
+    this.chatFocus = { nonce: this.chatFocus.nonce + 1, aboutId: opts.aboutId ?? null };
+    this.opts.onOpenChat?.();
+    this.emit();
+  }
+
+  /** Discuss a card in the chat: opens it with the note attached. */
+  discussInChat(cardId: string): void {
+    this.openChat({ aboutId: cardId });
+  }
+
+  /** Stops a running session (the chat's Stop). False when the host cannot. */
+  cancel(feedbackSessionId: string): boolean {
+    if (!this.opts.onCancelSession) return false;
+    this.opts.onCancelSession(feedbackSessionId);
+    return true;
+  }
+
   /** Asks the editor a follow-up about a card (`DiscussRequested`). Returns the thread id. */
   discuss(targetId: string, message: string): string | null {
     let event;
@@ -727,7 +811,8 @@ export class AnnotationsController {
   }
 
   /** True when the host handles Cite / Add source. */
-  can(action: 'cite' | 'add-source'): boolean {
+  can(action: 'cite' | 'add-source' | 'cancel'): boolean {
+    if (action === 'cancel') return Boolean(this.opts.onCancelSession);
     return action === 'cite' ? !!this.opts.onCite : !!this.opts.onAddSource;
   }
 

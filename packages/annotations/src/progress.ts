@@ -36,6 +36,8 @@ export interface ArrivedItem {
   id: string | null;
   /** Short description ("Comment", "Word choice"). */
   label: string;
+  /** The quoted text the item points at, when it has an anchor ("sideways"). */
+  quote: string | null;
 }
 
 /** What the panel shows for a live session. */
@@ -67,6 +69,7 @@ const TOOL_ACTIVITY: Readonly<Record<string, string>> = {
   suggest_source: 'Matching claims to your library',
   finish_review: 'Writing the summary',
   answer_discussion: 'Writing a reply',
+  reply: 'Writing a reply',
 };
 
 const TYPE_LABEL: Readonly<Record<string, string>> = {
@@ -82,6 +85,7 @@ const TYPE_LABEL: Readonly<Record<string, string>> = {
   SourceSuggested: 'Source from your library',
   ReviewFinished: 'Summary',
   DiscussAnswered: 'Reply',
+  ChatReplied: 'Reply',
 };
 
 /** The activity label for a tool name (with or without the MCP prefix). */
@@ -104,6 +108,17 @@ function payloadId(payload: unknown): string | null {
   ])
     if (typeof p[k] === 'string') return p[k] as string;
   return null;
+}
+
+/** The anchor quote of an annotation payload (comment, question, suggestion, flag…), if any. */
+function payloadQuote(payload: unknown): string | null {
+  if (!payload || typeof payload !== 'object') return null;
+  const p = payload as {
+    target?: { anchor?: { quote?: unknown } } | null;
+    suggestion?: { target?: { anchor?: { quote?: unknown } } };
+  };
+  const q = p.target?.anchor?.quote ?? p.suggestion?.target?.anchor?.quote;
+  return typeof q === 'string' ? q : null;
 }
 
 function itemLabel(type: string, payload: unknown): string {
@@ -177,9 +192,10 @@ export function reduceProgress(
         type,
         id: payloadId(payload),
         label: itemLabel(type, payload),
+        quote: payloadQuote(payload),
       };
       next = { ...cur, arrived: [...cur.arrived, item].sort((x, y) => x.seq - y.seq) };
-      if (type === 'ReviewFinished' || type === 'DiscussAnswered')
+      if (type === 'ReviewFinished' || type === 'DiscussAnswered' || type === 'ChatReplied')
         next = { ...next, state: 'finished', activity: null };
       break;
     }

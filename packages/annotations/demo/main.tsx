@@ -8,11 +8,12 @@
  * cards are still open.
  *
  * Query parameters:
- * - `seed=suggestions|proposals|feedback-session|discuss|research|empty`
- *   (`empty`: nothing requested yet — ask for a review to watch one stream in);
+ * - `seed=suggestions|proposals|feedback-session|discuss|research|chat|empty`
+ *   (`empty`: nothing asked yet — say something in the chat to watch a reply stream in);
  * - `upto=all` to load the whole fixture instead of stopping after the first review;
  * - `theme=light|dark`; `idle=<ms>` batch idle time (default 600);
  * - `fail=1` makes the mock reviewer fail, to show the calm failure and retry;
+ * - the mock leaves notes when a chat message contains "review", and replies only otherwise;
  * - `step=<ms>` the mock reviewer's pace.
  *
  * The Playwright suite drives it through `window.__ann`.
@@ -24,7 +25,7 @@ import { StrictMode, useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   AnnotationMargin,
-  FeedbackPanel,
+  FeedbackChat,
   useAnnotations,
   type AnnotationsController,
   type CiteRequest,
@@ -108,6 +109,9 @@ function App(): React.JSX.Element {
       console.info('cite', r);
     },
     onAddSource: (r) => console.info('check and add', r),
+    // The chat is always on screen here; Discuss attaches the note to it.
+    onOpenChat: () => undefined,
+    onCancelSession: (id) => reviewer.cancel(id),
   });
   controllerRef = ann;
   window.__ann.controller = ann;
@@ -122,17 +126,23 @@ function App(): React.JSX.Element {
         <span className="demo-title">{state.settings.title}</span>
         <span className="demo-doc">{docState?.title}</span>
         <nav className="demo-seeds" aria-label="Seed ledger">
-          {['empty', 'suggestions', 'proposals', 'feedback-session', 'discuss', 'research'].map(
-            (s) => (
-              <a
-                key={s}
-                href={`?seed=${s}${theme ? `&theme=${theme}` : ''}`}
-                aria-current={s === seedName ? 'page' : undefined}
-              >
-                {s}
-              </a>
-            ),
-          )}
+          {[
+            'empty',
+            'suggestions',
+            'proposals',
+            'feedback-session',
+            'discuss',
+            'research',
+            'chat',
+          ].map((s) => (
+            <a
+              key={s}
+              href={`?seed=${s}${theme ? `&theme=${theme}` : ''}`}
+              aria-current={s === seedName ? 'page' : undefined}
+            >
+              {s}
+            </a>
+          ))}
         </nav>
         <button
           type="button"
@@ -168,11 +178,11 @@ function App(): React.JSX.Element {
         <AnnotationMargin controller={ann} className="demo-margin" />
       </main>
       <aside className="demo-panel">
-        <FeedbackPanel
+        <FeedbackChat
           controller={ann}
           editors={EDITORS}
           manageEditorsHref="#editors"
-          {...(docState ? { documentTitle: docState.title } : {})}
+          documentTitle={docState?.title ?? null}
         />
       </aside>
     </div>

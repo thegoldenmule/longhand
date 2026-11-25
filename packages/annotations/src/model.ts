@@ -12,12 +12,17 @@ import {
   docFromJSON,
   inlineTextBetween,
   type AgentSessionState,
+  type ChatMessage,
+  type ChatState,
+  type ChatWriterMessage,
   type CitationFlagState,
   type CommentState,
   type DiscussThreadState,
   type DismissReason,
   type Dismissal,
   type FeedbackRequestState,
+  type FeedbackScope,
+  type Intensity,
   type PMNode,
   type PMNodeJSON,
   type ProjectState,
@@ -644,4 +649,108 @@ export function scopeLabel(state: ProjectState | null, req: FeedbackRequestState
   const title = state?.documents[s.documentId]?.title ?? s.documentId;
   if (s.kind === 'document') return title;
   return `Selection in ${title}`;
+}
+
+/** Intensity labels and hints. */
+export const INTENSITY_OPTIONS: ReadonlyArray<{ value: Intensity; label: string; hint: string }> = [
+  { value: 'light', label: 'Light touch', hint: 'At most 5 items' },
+  { value: 'standard', label: 'Standard', hint: 'A full pass' },
+  { value: 'thorough', label: 'Thorough', hint: 'Everything worth raising' },
+];
+
+// ---------------------------------------------------------------------------
+// The feedback chat
+// ---------------------------------------------------------------------------
+
+/** One past conversation in the chat's history list (chats, and older reviews and threads). */
+export type ChatHistoryEntry =
+  | { kind: 'chat'; id: string; title: string; seq: number; createdAt: string }
+  | { kind: 'review'; id: string; title: string; seq: number; createdAt: string }
+  | { kind: 'discuss'; id: string; title: string; seq: number; createdAt: string };
+
+function clipTitle(s: string, max = 60): string {
+  const t = s.trim().replace(/\s+/g, ' ');
+  return t.length <= max ? t : `${t.slice(0, max - 1).trimEnd()}…`;
+}
+
+/**
+ * Every conversation, newest activity first: feedback chats (titled by their
+ * first message), and the reviews and Discuss threads of the form-and-review
+ * flow, which stay readable in history.
+ */
+export function chatHistory(state: ProjectState | null): ChatHistoryEntry[] {
+  if (!state) return [];
+  const a = state.annotations;
+  const out: ChatHistoryEntry[] = [];
+  for (const c of Object.values(a.chats)) {
+    const first = c.messages.find((m) => m.role === 'writer');
+    out.push({
+      kind: 'chat',
+      id: c.id,
+      title: clipTitle(first && first.role === 'writer' ? first.text : 'Chat'),
+      seq: c.updatedSeq,
+      createdAt: c.createdAt,
+    });
+  }
+  for (const r of Object.values(a.feedbackRequests)) {
+    out.push({
+      kind: 'review',
+      id: r.id,
+      title: r.editor ? `Review by ${r.editor.name}` : 'Review',
+      seq: r.seq,
+      createdAt: r.createdAt,
+    });
+  }
+  for (const t of Object.values(a.discussions)) {
+    const first = t.messages[0];
+    out.push({
+      kind: 'discuss',
+      id: t.id,
+      title: clipTitle(first?.body ?? 'Discussion'),
+      seq: t.messages[t.messages.length - 1]?.seq ?? 0,
+      createdAt: first?.createdAt ?? '',
+    });
+  }
+  return out.sort((x, y) => y.seq - x.seq);
+}
+
+/** The chat with the latest activity, or null. */
+export function latestChat(state: ProjectState | null): ChatState | null {
+  if (!state) return null;
+  let best: ChatState | null = null;
+  for (const c of Object.values(state.annotations.chats))
+    if (!best || c.updatedSeq > best.updatedSeq) best = c;
+  return best;
+}
+
+/** The writer message still waiting for a reply (pending or running), if any. */
+export function waitingMessage(chat: ChatState | null): ChatWriterMessage | null {
+  if (!chat) return null;
+  for (let i = chat.messages.length - 1; i >= 0; i--) {
+    const m = chat.messages[i] as ChatMessage;
+    if (m.role === 'writer') return m.status === 'pending' || m.status === 'running' ? m : null;
+  }
+  return null;
+}
+
+/** The text a message's scope points at now, clipped (a selection), or null. */
+export function scopeQuote(
+  state: ProjectState | null,
+  scope: FeedbackScope,
+  max = 120,
+): string | null {
+  if (!state || scope.kind !== 'selection') return null;
+  return snippet(state, scope.documentId, scope.from, scope.to, max);
+}
+
+/**
+ * A reply as paragraphs: blank lines split paragraphs, single newlines are
+ * line breaks within one. Plain text only.
+ */
+export function replyParagraphs(body: string): string[][] {
+  return body
+    .trim()
+    .split(/\n\s*\n/)
+    .map((p) => p.split('\n').map((l) => l.trim()))
+    .filter((p) => p.some((l) => l.length > 0));
 }

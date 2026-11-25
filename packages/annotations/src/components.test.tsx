@@ -1,8 +1,6 @@
 import { foldCommits, projectState } from '@longhand/ledger';
 import {
-  FeedbackRequestedSchema,
   STARTER_EDITORS,
-  TEXT_LIMITS,
   type EditorProfile,
   type ProjectState,
 } from '@longhand/schema';
@@ -21,9 +19,8 @@ import { AnnotationsController } from './controller';
 import type { AnnotationEventOf } from './drafts';
 import { cardsFromState } from './model';
 import { AnnotationCard } from './react/cards';
-import { FeedbackRequestForm, composeAsk } from './react/form';
 import { AnnotationMargin } from './react/margin';
-import { FeedbackPanel } from './react/panel';
+import { FeedbackChat } from './react/chat';
 
 const harnesses: Harness[] = [];
 afterEach(() => {
@@ -37,142 +34,6 @@ function prefixState(name: Parameters<typeof fixtureCommits>[0]): ProjectState {
 }
 
 const EDITORS: EditorProfile[] = STARTER_EDITORS.map((e, i) => ({ ...e, id: `ed-${i + 1}` }));
-const [MARGARET, THEO] = EDITORS as [EditorProfile, EditorProfile];
-
-describe('<FeedbackRequestForm>', () => {
-  it('asks the chosen editor: its lenses, intensity and a record of it, plus scope and ask', () => {
-    const onRequest = vi.fn<(e: AnnotationEventOf<'FeedbackRequested'>) => void>();
-    render(
-      <FeedbackRequestForm
-        documentId="doc-1"
-        documentTitle="Chapter 1"
-        editors={EDITORS}
-        onRequest={onRequest}
-        newId={() => 'req-x'}
-      />,
-    );
-    const form = screen.getByTestId('feedback-form');
-    // A short list of editors, one line each (name and role, never the brief), with no lens
-    // or intensity pickers.
-    expect(within(form).getAllByRole('radio', { name: /./ }).length).toBeGreaterThan(0);
-    expect(form.querySelectorAll('.lh-editor-option')).toHaveLength(EDITORS.length);
-    expect(within(form).queryByText('Light touch')).toBeNull();
-    expect(within(form).queryByText('Word choice')).toBeNull();
-    const theo = form.querySelector('[data-editor-id="ed-2"]')!;
-    expect(theo.querySelector('.lh-editor-role')?.textContent).toBe('Line editor');
-    expect(theo.textContent).toBe('TheoLine editor');
-    // Selection is unavailable without a selection; the document is the default.
-    expect((within(form).getByLabelText('Selection') as HTMLInputElement).disabled).toBe(true);
-    expect(within(form).getByRole('button', { name: 'Ask Margaret' })).toBeTruthy();
-    fireEvent.click(within(form).getByRole('radio', { name: /^Theo/ }));
-    fireEvent.click(within(form).getByRole('button', { name: THEO.questions[1]! }));
-    fireEvent.change(within(form).getByRole('textbox'), {
-      target: { value: '  Especially the dialogue. ' },
-    });
-    fireEvent.click(within(form).getByRole('button', { name: 'Ask Theo' }));
-    expect(onRequest).toHaveBeenCalledTimes(1);
-    const event = onRequest.mock.calls[0]![0];
-    expect(event.type).toBe('FeedbackRequested');
-    expect(event.payload).toEqual({
-      requestId: 'req-x',
-      scope: { kind: 'document', documentId: 'doc-1' },
-      lenses: ['clarity', 'word-choice', 'tone-voice'],
-      intensity: 'standard',
-      ask: `${THEO.questions[1]}\nEspecially the dialogue.`,
-      editor: { id: 'ed-2', name: 'Theo', role: 'Line editor', brief: THEO.brief },
-    });
-    expect(FeedbackRequestedSchema.safeParse(event.payload).success).toBe(true);
-  });
-
-  it('defaults to the selection, then the document; project on request; one canned question', () => {
-    const onRequest = vi.fn<(e: AnnotationEventOf<'FeedbackRequested'>) => void>();
-    const { rerender } = render(
-      <FeedbackRequestForm
-        documentId="doc-1"
-        selection={{ documentId: 'doc-1', from: 3, to: 20, version: 42 }}
-        editors={EDITORS}
-        onRequest={onRequest}
-        newId={() => 'r1'}
-      />,
-    );
-    fireEvent.click(screen.getByRole('button', { name: 'Ask Margaret' }));
-    expect(onRequest.mock.calls[0]![0].payload).toMatchObject({
-      scope: { kind: 'selection', documentId: 'doc-1', from: 3, to: 20, version: 42 },
-      lenses: MARGARET.lenses,
-      intensity: 'light',
-      ask: null,
-      editor: { id: 'ed-1', name: 'Margaret' },
-    });
-    rerender(
-      <FeedbackRequestForm
-        documentId="doc-1"
-        editors={EDITORS}
-        defaultEditorId="ed-3"
-        onRequest={onRequest}
-        newId={() => 'r2'}
-      />,
-    );
-    fireEvent.click(screen.getByLabelText('Whole project'));
-    const [q1, q2] = EDITORS[2]!.questions as [string, string];
-    // Tapping a second question replaces the first; tapping it again clears it.
-    fireEvent.click(screen.getByRole('button', { name: q1 }));
-    fireEvent.click(screen.getByRole('button', { name: q2 }));
-    expect(screen.getByRole('button', { name: q1 }).getAttribute('aria-pressed')).toBe('false');
-    expect(screen.getByRole('button', { name: q2 }).getAttribute('aria-pressed')).toBe('true');
-    fireEvent.click(screen.getByRole('button', { name: 'Ask Ruth' }));
-    expect(onRequest.mock.calls[1]![0].payload).toMatchObject({
-      scope: { kind: 'project' },
-      intensity: 'thorough',
-      ask: q2,
-      editor: { id: 'ed-3', name: 'Ruth' },
-    });
-  });
-
-  it('waits for editors, and points to setting one up when there are none', () => {
-    const onRequest = vi.fn();
-    const { rerender } = render(
-      <FeedbackRequestForm documentId="d" editors={null} onRequest={onRequest} />,
-    );
-    expect(screen.getByRole('status').textContent).toContain('Loading your editors');
-    expect((screen.getByRole('button', { name: 'Ask' }) as HTMLButtonElement).disabled).toBe(true);
-    rerender(
-      <FeedbackRequestForm
-        documentId="d"
-        editors={[]}
-        manageEditorsHref="/editors"
-        onRequest={onRequest}
-      />,
-    );
-    expect(screen.getByRole('link', { name: 'Set one up' }).getAttribute('href')).toBe('/editors');
-    expect((screen.getByRole('button', { name: 'Ask' }) as HTMLButtonElement).disabled).toBe(true);
-    rerender(
-      <FeedbackRequestForm
-        documentId="d"
-        editors={EDITORS}
-        manageEditorsHref="/editors"
-        onRequest={onRequest}
-      />,
-    );
-    expect(screen.getByRole('link', { name: 'Manage editors' }).getAttribute('href')).toBe(
-      '/editors',
-    );
-  });
-
-  it('keeps the ask within the limit', () => {
-    expect(composeAsk(null, '  ')).toBe('');
-    expect(composeAsk(' Too slow? ', '')).toBe('Too slow?');
-    expect(composeAsk('Too slow?', ' And long? ')).toBe('Too slow?\nAnd long?');
-    const onRequest = vi.fn<(e: AnnotationEventOf<'FeedbackRequested'>) => void>();
-    render(<FeedbackRequestForm documentId="d" editors={EDITORS} onRequest={onRequest} />);
-    const q = MARGARET.questions[0]!;
-    fireEvent.click(screen.getByRole('button', { name: q }));
-    fireEvent.change(screen.getByRole('textbox'), {
-      target: { value: 'x'.repeat(TEXT_LIMITS.feedbackAskMaxChars) },
-    });
-    fireEvent.click(screen.getByRole('button', { name: 'Ask Margaret' }));
-    expect(onRequest.mock.calls[0]![0].payload.ask!.length).toBe(TEXT_LIMITS.feedbackAskMaxChars);
-  });
-});
 
 describe('cards for every annotation kind', () => {
   it.each(ANNOTATION_FIXTURES)('renders a card for each annotation in %s', (name) => {
@@ -220,8 +81,20 @@ describe('cards for every annotation kind', () => {
     const h = harness('research', { controller: { onCite } });
     harnesses.push(h);
     await settle();
-    render(<FeedbackPanel controller={h.controller} editors={EDITORS} />);
-    const panel = screen.getByTestId('panel-cards');
+    const snap = h.controller.getSnapshot();
+    const { container: panel } = render(
+      <div>
+        {snap.cards.map((c) => (
+          <AnnotationCard
+            key={c.id}
+            controller={h.controller}
+            card={c}
+            snapshot={snap}
+            variant="list"
+          />
+        ))}
+      </div>,
+    );
     const flag = panel.querySelector('[data-card-id="flag-1"]') as HTMLElement;
     expect(flag.textContent).toContain('AI-surfaced — unverified');
     fireEvent.click(within(flag).getByRole('button', { name: 'Cite' }));
@@ -321,12 +194,12 @@ describe('card actions emit events', () => {
     const h = harness('discuss', { prefix: 'all' });
     harnesses.push(h);
     await settle();
-    render(<FeedbackPanel controller={h.controller} editors={EDITORS} />);
-    // sug-d was dismissed in the full fixture: show resolved cards.
-    fireEvent.click(screen.getByRole('button', { name: 'Everything' }));
-    const card = screen
-      .getByTestId('panel-cards')
-      .querySelector('[data-card-id="sug-d"]') as HTMLElement;
+    const snap = h.controller.getSnapshot();
+    const sug = snap.cards.find((c) => c.id === 'sug-d')!;
+    const { container } = render(
+      <AnnotationCard controller={h.controller} card={sug} snapshot={snap} variant="list" />,
+    );
+    const card = container.querySelector('[data-card-id="sug-d"]') as HTMLElement;
     expect(card.textContent).toContain('couldn’t reply this time (model unavailable)');
     fireEvent.click(within(card).getByRole('button', { name: 'Try again' }));
     expect(h.drafts.find((x) => x.type === 'DiscussRequested')!.payload).toEqual({
@@ -369,101 +242,266 @@ describe('card actions emit events', () => {
   });
 });
 
-describe('<FeedbackPanel>', () => {
-  it('offers only the request form until a review is requested', () => {
-    const commits = fixtureCommits('feedback-session');
-    const before = projectState(
-      foldCommits(
-        commits.slice(
-          0,
-          commits.findIndex((c) => c.type === 'FeedbackRequested'),
-        ),
-      ),
-    );
-    const controller = new AnnotationsController({ documentId: 'doc-ch1', state: before });
-    render(<FeedbackPanel controller={controller} editors={EDITORS} />);
-    expect(screen.getByTestId('feedback-form')).toBeTruthy();
-    expect(screen.queryByTestId('review-session')).toBeNull();
-    const margin = render(<AnnotationMargin controller={controller} />);
-    expect(margin.container.querySelector('[data-card-id]')).toBeNull();
-  });
+describe('<FeedbackChat>', () => {
+  const THEO = EDITORS[1]!;
 
-  it('shows the summary, a calm failure with retry, and questions for the writer', async () => {
-    const h = harness('feedback-session', { prefix: 'all' });
+  function chatHarness(fixture: Parameters<typeof harness>[0] = 'chat', extra = {}) {
+    const onOpenChat = vi.fn();
+    const onCancelSession = vi.fn();
+    const h = harness(fixture, {
+      prefix: 'all',
+      controller: { onOpenChat, onCancelSession, newId: idGen(), ...extra },
+    });
     harnesses.push(h);
+    return { h, onOpenChat, onCancelSession };
+  }
+
+  function idGen() {
+    let n = 0;
+    return () => `new-${++n}`;
+  }
+
+  const chatDrafts = (h: Harness) =>
+    h.drafts
+      .filter((d) => d.type === 'ChatMessageSent')
+      .map((d) => d.payload as AnnotationEventOf<'ChatMessageSent'>['payload']);
+
+  it('shows the latest chat: writer and editor turns, who replied, paragraphs and note chips', async () => {
+    const { h } = chatHarness();
     await settle();
-    render(<FeedbackPanel controller={h.controller} editors={EDITORS} />);
-    const sessions = screen.getAllByTestId('review-session');
-    expect(sessions.map((s) => s.dataset.phase)).toEqual(['failed', 'finished']);
-    expect(sessions[0]!.textContent).toContain('This review didn’t finish (model timeout)');
-    const summary = within(sessions[1]!).getByTestId('review-summary');
-    expect(summary.textContent).toContain('A quiet, confident opening.');
-    expect(summary.textContent).toContain('Restraint');
-    expect(summary.textContent).toContain('Plant the reason the light failed');
-    const questions = screen.getByTestId('panel-questions');
-    expect(questions.querySelectorAll('[data-kind="question"]')).toHaveLength(2);
-    fireEvent.click(within(sessions[0]!).getByRole('button', { name: 'Try again' }));
-    expect(h.drafts.find((d) => d.type === 'FeedbackRequested')!.payload).toMatchObject({
-      lenses: ['word-choice'],
+    render(<FeedbackChat controller={h.controller} editors={EDITORS} documentTitle="Chapter 1" />);
+    // chat-2 (the newest) failed before starting; history holds chat-1.
+    fireEvent.click(screen.getByRole('button', { name: 'History' }));
+    const history = screen.getByRole('navigation', { name: 'Chat history' });
+    expect(
+      within(history)
+        .getAllByRole('button')
+        .map((b) => b.textContent),
+    ).toEqual([
+      expect.stringContaining('Anything else?'),
+      expect.stringContaining('Is the title working?'),
+    ]);
+    fireEvent.click(within(history).getByRole('button', { name: /Is the title working/ }));
+    const msgs = screen.getAllByTestId('chat-message');
+    expect(msgs.map((m) => m.dataset.role)).toEqual([
+      'writer',
+      'editor',
+      'writer',
+      'editor',
+      'writer',
+    ]);
+    expect(msgs[1]!.textContent).toContain('Theo');
+    expect(msgs[1]!.querySelectorAll('.lh-chat-body p')).toHaveLength(2);
+    expect(msgs[3]!.textContent).toContain('Margaret');
+    // The selection the writer attached, mapped to the current text.
+    expect(msgs[2]!.textContent).toContain('“The rain fell sideways');
+    // The review's notes: chips that focus their cards.
+    const notes = within(msgs[3]!).getByTestId('chat-reply-notes');
+    const chips = within(notes).getAllByRole('button');
+    expect(chips).toHaveLength(2);
+    fireEvent.click(chips[0]!);
+    expect(h.controller.getSnapshot().activeId).toBe('cmt-c');
+    // A question about a note that failed: inline, with Retry.
+    expect(msgs[4]!.dataset.status).toBe('failed');
+    expect(msgs[4]!.textContent).toContain('About: Comment');
+    expect(msgs[4]!.textContent).toContain('Margaret couldn’t reply (model unavailable)');
+    fireEvent.click(within(msgs[4]!).getByRole('button', { name: 'Retry' }));
+    expect(chatDrafts(h)[0]).toMatchObject({
+      chatId: 'chat-1',
+      text: 'Why does the door matter?',
+      editor: { id: 'ed-margaret', name: 'Margaret' },
+      lenses: ['structure', 'word-choice'],
       intensity: 'light',
+      context: { aboutId: 'cmt-c' },
     });
   });
 
-  it('groups open cards by kind with filters', async () => {
-    const h = harness('suggestions');
-    harnesses.push(h);
+  it('sends with Enter (Shift+Enter is a newline) to the chosen editor, in a new chat', async () => {
+    const { h } = chatHarness();
     await settle();
-    render(<FeedbackPanel controller={h.controller} editors={EDITORS} />);
-    const panel = screen.getByTestId('panel-cards');
-    const groups = () =>
-      [...panel.querySelectorAll('[data-group]')].map((g) => (g as HTMLElement).dataset.group);
-    expect(groups()).toEqual(['suggestions', 'comments']);
-    fireEvent.click(within(panel).getByRole('button', { name: /^Comments/ }));
-    expect(groups()).toEqual(['comments']);
-    fireEvent.click(within(panel).getByRole('button', { name: 'All' }));
-    fireEvent.click(within(panel).getByRole('button', { name: 'Resolved' }));
-    expect(panel.querySelectorAll('[data-card-id]')).toHaveLength(0);
+    render(<FeedbackChat controller={h.controller} editors={EDITORS} documentTitle="Chapter 1" />);
+    fireEvent.click(screen.getByRole('button', { name: 'New chat' }));
+    // An empty chat offers the editor's questions; tapping one fills the composer.
+    fireEvent.change(screen.getByRole('combobox', { name: 'Editor' }), {
+      target: { value: THEO.id },
+    });
+    const starters = screen.getByTestId('chat-starters');
+    fireEvent.click(within(starters).getByRole('button', { name: THEO.questions[0]! }));
+    const box = screen.getByRole('textbox', { name: 'Message Theo' }) as HTMLTextAreaElement;
+    expect(box.value).toBe(THEO.questions[0]);
+    fireEvent.keyDown(box, { key: 'Enter', shiftKey: true });
+    expect(chatDrafts(h)).toHaveLength(0);
+    fireEvent.keyDown(box, { key: 'Enter' });
+    const sent = chatDrafts(h)[0]!;
+    expect(sent).toMatchObject({
+      chatId: 'new-1',
+      messageId: 'new-2',
+      text: THEO.questions[0],
+      editor: { id: THEO.id, name: 'Theo', role: THEO.role },
+      lenses: THEO.lenses,
+      intensity: THEO.intensity,
+      context: { scope: { kind: 'document', documentId: h.documentId }, aboutId: null },
+    });
+    // It shows at once, then the editor is reading; Stop is offered.
+    expect(screen.getAllByTestId('chat-message').at(-1)!.dataset.status).toBe('sending');
+    expect(screen.getByTestId('chat-working').textContent).toContain('Theo');
+    expect(box.value).toBe('');
   });
 
-  it('streams a live review from progress events and new annotations', async () => {
-    const commits = fixtureCommits('feedback-session');
-    const started = commits.findIndex((c) => c.type === 'FeedbackSessionStarted');
-    const controller = new AnnotationsController({
-      documentId: 'doc-ch1',
-      state: projectState(foldCommits(commits.slice(0, started + 1))),
+  it('attaches the selection as a removable quote, or the whole project', async () => {
+    const { h } = chatHarness('suggestions');
+    await settle();
+    render(<FeedbackChat controller={h.controller} editors={EDITORS} documentTitle="Chapter 1" />);
+    act(() => h.select(1, 12));
+    await settle();
+    const chip = screen.getByTestId('chat-attach-selection');
+    expect(chip.textContent).toContain('“');
+    const box = screen.getByRole('textbox', { name: /Message/ });
+    fireEvent.change(box, { target: { value: 'Is this clear?' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Send' }));
+    expect(chatDrafts(h)[0]!.context.scope).toMatchObject({
+      kind: 'selection',
+      documentId: h.documentId,
+      from: 1,
+      to: 12,
     });
-    render(<FeedbackPanel controller={controller} editors={EDITORS} />);
-    const session = screen.getByTestId('review-session');
-    expect(session.dataset.phase).toBe('reviewing');
-    expect(session.textContent).toContain('Reviewing');
-    act(() => {
-      controller.pushProgress({ kind: 'started', feedbackSessionId: 'fs-1', model: 'opus' });
-      controller.pushProgress({
-        kind: 'model',
-        feedbackSessionId: 'fs-1',
-        event: { type: 'tool-call', id: 't1', name: 'mcp__longhand__comment', input: {} },
-      });
+    // After sending, the selection chip clears.
+    expect(screen.queryByTestId('chat-attach-selection')).toBeNull();
+  });
+
+  it('Whole project switches the scope', async () => {
+    const { h } = chatHarness('suggestions');
+    await settle();
+    render(<FeedbackChat controller={h.controller} editors={EDITORS} documentTitle="Chapter 1" />);
+    const toggle = screen.getByRole('button', { name: 'Whole project' });
+    fireEvent.click(toggle);
+    expect(toggle.getAttribute('aria-pressed')).toBe('true');
+    fireEvent.change(screen.getByRole('textbox', { name: /Message/ }), {
+      target: { value: 'How does it hang together?' },
     });
-    expect(session.textContent).toContain('Writing a margin note');
+    fireEvent.click(screen.getByRole('button', { name: 'Send' }));
+    expect(chatDrafts(h)[0]!.context.scope).toEqual({ kind: 'project' });
+  });
+
+  it('Discuss on a card opens the chat with the note attached; no thread on the card', async () => {
+    const { h, onOpenChat } = chatHarness('suggestions');
+    await settle();
+    render(
+      <>
+        <AnnotationMargin controller={h.controller} />
+        <FeedbackChat controller={h.controller} editors={EDITORS} documentTitle="Chapter 1" />
+      </>,
+    );
+    const card = document.querySelector('.lh-margin [data-card-id]') as HTMLElement;
+    const id = card.dataset.cardId!;
+    fireEvent.click(within(card).getByRole('button', { name: 'Discuss' }));
+    expect(onOpenChat).toHaveBeenCalled();
+    expect(card.querySelector('.lh-thread')).toBeNull();
+    expect(screen.getByTestId('chat-attach-note').textContent).toContain('About:');
+    fireEvent.change(screen.getByRole('textbox', { name: /Message/ }), {
+      target: { value: 'Why this one?' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Send' }));
+    expect(chatDrafts(h)[0]!.context.aboutId).toBe(id);
+    expect(h.drafts.some((d) => d.type === 'DiscussRequested')).toBe(false);
+  });
+
+  it('shows live progress for a running reply, and Stop cancels its session', async () => {
+    const { h, onCancelSession } = chatHarness();
+    await settle();
+    render(<FeedbackChat controller={h.controller} editors={EDITORS} documentTitle="Chapter 1" />);
+    // Fold a new message and the start of its session.
+    const s0 = h.transport.projectState();
+    const draft = {
+      commitId: 'c-x',
+      projectId: s0.projectId,
+      clientTime: '2026-11-25T10:00:00.000Z',
+      actor: { kind: 'human' as const, id: 'writer-1' },
+      deviceId: 'd',
+      sessionId: 'e',
+      type: 'ChatMessageSent' as const,
+      schemaVersion: 1 as const,
+      payload: {
+        chatId: 'chat-2',
+        messageId: 'm-9',
+        text: 'Review this.',
+        editor: { id: THEO.id, name: 'Theo', brief: '' },
+        lenses: ['clarity' as const],
+        intensity: 'light' as const,
+        context: { scope: { kind: 'project' as const }, aboutId: null },
+      },
+    };
     act(() => {
-      controller.pushProgress({
+      h.transport.append(draft);
+      h.transport.append({
+        ...draft,
+        commitId: 'c-y',
+        actor: { kind: 'agent', id: 'sonnet' },
+        sessionId: 'fs-live',
+        deviceId: 'server',
+        type: 'FeedbackSessionStarted',
+        payload: {
+          feedbackSessionId: 'fs-live',
+          trigger: { kind: 'chat', chatId: 'chat-2', messageId: 'm-9' },
+          model: 'sonnet',
+        },
+      } as never);
+    });
+    await settle();
+    act(() => {
+      h.controller.pushProgress({ kind: 'started', feedbackSessionId: 'fs-live', model: 'sonnet' });
+      h.controller.pushProgress({
         kind: 'annotation',
-        seq: 10,
+        seq: 99,
         draft: {
           type: 'CommentAdded',
-          sessionId: 'fs-1',
-          payload: { commentId: 'com-1', feedbackSessionId: 'fs-1' },
+          sessionId: 'fs-live',
+          payload: {
+            commentId: 'c1',
+            feedbackSessionId: 'fs-live',
+            target: { kind: 'anchor', anchor: { quote: 'sideways' } },
+          },
         },
       });
     });
-    expect(session.textContent).toContain('1 note so far');
-    act(() => controller.setState(projectState(foldCommits(commits.slice(0, started + 3)))));
-    expect(session.textContent).toContain('2 notes so far');
-    act(() => controller.setState(fixtureState('feedback-session')));
-    const done = screen
-      .getAllByTestId('review-session')
-      .find((s) => s.dataset.requestId === 'req-1')!;
-    expect(done.dataset.phase).toBe('finished');
-    expect(done.textContent).toContain('4 notes');
+    const working = screen.getByTestId('chat-working');
+    expect(working.textContent).toContain('Theo');
+    expect(working.textContent).toContain('Left a note on “sideways”');
+    fireEvent.click(screen.getByTestId('chat-stop'));
+    expect(onCancelSession).toHaveBeenCalledWith('fs-live');
+  });
+
+  it('keeps older reviews readable in history', async () => {
+    const { h } = chatHarness('feedback-session');
+    await settle();
+    render(<FeedbackChat controller={h.controller} editors={EDITORS} documentTitle="Chapter 1" />);
+    fireEvent.click(screen.getByRole('button', { name: 'History' }));
+    const history = screen.getByRole('navigation', { name: 'Chat history' });
+    const reviews = within(history).getAllByRole('button', { name: /^Review/ });
+    expect(reviews.length).toBe(2);
+    fireEvent.click(reviews[reviews.length - 1]!);
+    const review = screen.getByTestId('chat-legacy-review');
+    expect(review.textContent).toContain('A quiet, confident opening.');
+    expect(screen.queryByTestId('chat-composer')).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: 'Back to chat' }));
+    expect(screen.getByTestId('chat-composer')).toBeTruthy();
+  });
+
+  it('waits for editors, and points to setting one up when there are none', () => {
+    const controller = new AnnotationsController({ documentId: 'd', state: null });
+    const { rerender } = render(
+      <FeedbackChat controller={controller} editors={null} documentTitle={null} />,
+    );
+    expect(screen.getByRole('status').textContent).toContain('Loading editors');
+    rerender(
+      <FeedbackChat
+        controller={controller}
+        editors={[]}
+        documentTitle={null}
+        manageEditorsHref="/editors"
+      />,
+    );
+    expect(screen.getByRole('link', { name: 'Set one up' }).getAttribute('href')).toBe('/editors');
+    expect((screen.getByRole('button', { name: 'Send' }) as HTMLButtonElement).disabled).toBe(true);
   });
 });

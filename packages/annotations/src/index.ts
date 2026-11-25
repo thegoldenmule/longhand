@@ -1,7 +1,7 @@
 /**
  * @longhand/annotations — everything the writer sees of the AI editor: the
- * feedback request form and panel, margin cards, ghost text and trace-over, and
- * proposal diff previews with accept, reject, dismiss and discuss.
+ * feedback chat, margin cards, ghost text and trace-over, and proposal diff
+ * previews with accept, reject, dismiss and discuss.
  *
  * The AI only ever writes to the annotation layer. This package draws that layer
  * as decorations and cards, and turns the writer's choices into human events;
@@ -14,6 +14,7 @@ export {
   type AnnotationsControllerOptions,
   type AnnotationsSnapshot,
   type CiteRequest,
+  type ChatFocus,
   type SelectionScope,
   type SubmittedEvent,
 } from './controller';
@@ -32,8 +33,15 @@ export {
   proposalOutcome,
   proposalRange,
   proposalTitle,
+  INTENSITY_OPTIONS,
+  chatHistory,
+  latestChat,
+  replyParagraphs,
   reviewsFromState,
   scopeLabel,
+  scopeQuote,
+  waitingMessage,
+  type ChatHistoryEntry,
   snippet,
   suggestionOutcome,
   suggestionTitle,
@@ -49,6 +57,7 @@ export {
   type ReviewView,
 } from './model';
 export {
+  chatMessageSent,
   discussRequested,
   feedbackRequested,
   feedbackRequestFor,
@@ -59,6 +68,7 @@ export {
   type AnnotationEvent,
   type AnnotationEventOf,
   type AnnotationEventType,
+  type ChatMessageInput,
   type FeedbackRequestInput,
 } from './drafts';
 export {
@@ -98,10 +108,4 @@ export {
   type AnnotationCardProps,
 } from './react/cards';
 export { AnnotationMargin, layoutCards, type AnnotationMarginProps } from './react/margin';
-export { FeedbackPanel, type FeedbackPanelProps } from './react/panel';
-export {
-  FeedbackRequestForm,
-  INTENSITY_OPTIONS,
-  composeAsk,
-  type FeedbackRequestFormProps,
-} from './react/form';
+export { FeedbackChat, arrivedLine, type FeedbackChatProps } from './react/chat';

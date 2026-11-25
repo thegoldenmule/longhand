@@ -129,7 +129,7 @@ describe('progress', () => {
       },
     });
     expect(p.fs!.arrived).toEqual([
-      { seq: 9, type: 'SuggestionProposed', id: 's1', label: 'Add a sentence' },
+      { seq: 9, type: 'SuggestionProposed', id: 's1', label: 'Add a sentence', quote: null },
     ]);
     const same = reduceProgress(p, { kind: 'model', event: { type: 'text', text: 'hi' } }, 'fs');
     expect(same).toBe(p);

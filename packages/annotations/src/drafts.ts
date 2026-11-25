@@ -7,6 +7,7 @@
  * `editor.acceptProposal`, which carries no text: the fold derives the steps.
  */
 import {
+  ChatMessageSentSchema,
   DiscussRequestedSchema,
   FeedbackRequestedSchema,
   ProposalRejectedSchema,
@@ -26,7 +27,11 @@ import { threadFor } from './model';
 
 /** The human event types this package submits (all non-manuscript). */
 export type AnnotationEventType =
-  'FeedbackRequested' | 'SuggestionDismissed' | 'ProposalRejected' | 'DiscussRequested';
+  | 'FeedbackRequested'
+  | 'SuggestionDismissed'
+  | 'ProposalRejected'
+  | 'DiscussRequested'
+  | 'ChatMessageSent';
 
 /** An event ready for `editor.submitEvent(type, payload)`. */
 export type AnnotationEvent = {
@@ -97,6 +102,37 @@ export function feedbackRequestFor(
     },
     makeId,
   );
+}
+
+/** What the chat composer sends. */
+export interface ChatMessageInput {
+  /** The conversation; null starts a new chat. */
+  chatId: string | null;
+  text: string;
+  /** The editor asked: its lenses and intensity bound any notes, and it is recorded as it is now. */
+  editor: Pick<EditorProfile, 'id' | 'name' | 'role' | 'brief' | 'lenses' | 'intensity'>;
+  scope: FeedbackScope;
+  /** The margin note asked about (Discuss in the chat). */
+  aboutId?: string | null;
+  messageId?: string;
+}
+
+/** Builds a `ChatMessageSent` event. Throws (zod) if the input is invalid. */
+export function chatMessageSent(
+  input: ChatMessageInput,
+  makeId: () => string = newId,
+): AnnotationEventOf<'ChatMessageSent'> {
+  const e = input.editor;
+  const payload = ChatMessageSentSchema.parse({
+    chatId: input.chatId ?? makeId(),
+    messageId: input.messageId ?? makeId(),
+    text: input.text.trim().slice(0, TEXT_LIMITS.chatMessageMaxChars),
+    editor: feedbackEditorOf({ ...e, questions: [] } as EditorProfile),
+    lenses: [...new Set(e.lenses)],
+    intensity: e.intensity,
+    context: { scope: input.scope, aboutId: input.aboutId ?? null },
+  });
+  return { type: 'ChatMessageSent', payload };
 }
 
 /** Builds a `SuggestionDismissed` event (any card except proposals). */

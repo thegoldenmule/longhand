@@ -211,60 +211,101 @@ test.describe('dismiss', () => {
   });
 });
 
-test.describe('reviews', () => {
-  test('nothing appears until asked; a review streams in and finishes with a summary', async ({
-    page,
-  }) => {
-    await openDemo(page, 'seed=empty&step=150');
+test.describe('feedback chat', () => {
+  const chat = (page: Page) => page.getByTestId('feedback-chat');
+  const messages = (page: Page) => page.getByTestId('chat-message');
+
+  test('nothing appears until asked; a plain question gets a reply only', async ({ page }) => {
+    await openDemo(page, 'seed=empty&step=120');
     await expect(page.locator('.lh-manuscript .lh-ann-mark, .lh-manuscript .lh-ghost')).toHaveCount(
       0,
     );
     await expect(page.getByTestId('annotation-margin').locator('[data-card-id]')).toHaveCount(0);
-    const form = page.getByTestId('feedback-form');
-    // Editors, not lenses: a short list, one line each (name and role).
-    await expect(form.locator('.lh-editor-option')).toHaveCount(4);
-    await expect(form.getByText('Word choice', { exact: true })).toHaveCount(0);
-    await form.locator('.lh-editor-option', { hasText: 'Sam' }).click();
-    await expect(form.getByRole('radio', { name: /^Sam/ })).toBeChecked();
-    await form.getByRole('button', { name: 'Where did you get confused?' }).click();
-    await form.getByRole('textbox').fill('Does it start too slowly?');
-    await form.getByRole('button', { name: 'Ask Sam' }).click();
-    const session = page.getByTestId('review-session').first();
-    await expect(session).toHaveAttribute('data-phase', 'reviewing');
-    await expect(session).toContainText('Reviewing');
-    await expect(session).toHaveAttribute('data-phase', 'finished', { timeout: 10_000 });
-    await expect(session.getByTestId('review-summary')).toContainText(
-      'A steady, atmospheric passage.',
+    // The persona is a dropdown; an empty chat offers the editor's questions.
+    await chat(page).getByRole('combobox', { name: 'Editor' }).selectOption('editor-4');
+    await chat(page)
+      .getByTestId('chat-starters')
+      .getByRole('button', { name: 'Where did you get confused?' })
+      .click();
+    const box = chat(page).getByRole('textbox', { name: 'Message Sam' });
+    await expect(box).toHaveValue('Where did you get confused?');
+    await box.press('Enter');
+    await expect(chat(page).getByTestId('chat-working')).toContainText('Sam');
+    await expect(messages(page).last()).toHaveAttribute('data-role', 'editor', { timeout: 10_000 });
+    await expect(messages(page).last()).toContainText('Ask me to review it');
+    await expect(page.getByTestId('annotation-margin').locator('[data-card-id]')).toHaveCount(0);
+    const sent = await page.evaluate(
+      () => window.__ann.transport.commits.find((c) => c.type === 'ChatMessageSent')!.payload,
     );
-    await expect(
-      page.getByTestId('annotation-margin').locator('[data-kind="comment"]'),
-    ).toHaveCount(1);
-    const req = await page.evaluate(
-      () => window.__ann.transport.commits.find((c) => c.type === 'FeedbackRequested')!.payload,
-    );
-    expect(req).toMatchObject({
+    expect(sent).toMatchObject({
+      text: 'Where did you get confused?',
       lenses: ['clarity', 'pacing', 'character-dialogue'],
       intensity: 'light',
-      ask: 'Where did you get confused?\nDoes it start too slowly?',
       editor: { id: 'editor-4', name: 'Sam' },
+      context: { scope: { kind: 'document' }, aboutId: null },
     });
-    await expect(session.getByTestId('review-editor')).toHaveText('Sam');
   });
 
-  test('a failed review is calm and can be retried', async ({ page }) => {
+  test('"review" leaves notes that stream in, and the reply links to them', async ({ page }) => {
+    await openDemo(page, 'seed=empty&step=700');
+    const box = chat(page).getByRole('textbox', { name: /Message/ });
+    await box.fill('Please review this.');
+    await box.press('Enter');
+    const working = chat(page).getByTestId('chat-working');
+    await expect(working).toContainText(/Left a note on “/, { timeout: 10_000 });
+    await expect(chat(page).getByTestId('chat-stop')).toBeVisible();
+    const reply = messages(page).last();
+    await expect(reply).toHaveAttribute('data-role', 'editor', { timeout: 15_000 });
+    const chips = reply.getByTestId('chat-reply-notes').getByRole('button');
+    await expect(chips).toHaveCount(2);
+    await chips.first().click();
+    await expect(page.locator('.lh-margin [data-card-id].is-active')).toHaveCount(1);
+  });
+
+  test('Discuss on a card opens the chat with the note attached', async ({ page }) => {
+    await openDemo(page, 'seed=suggestions&step=100');
+    const card = page.getByTestId('annotation-margin').locator('[data-card-id]').first();
+    await card.click();
+    await card.getByRole('button', { name: 'Discuss' }).click();
+    await expect(chat(page).getByTestId('chat-attach-note')).toContainText('About:');
+    await expect(chat(page).getByRole('textbox', { name: /Message/ })).toBeFocused();
+    await page.keyboard.type('Why this one?');
+    await page.keyboard.press('Enter');
+    await expect(messages(page).last()).toContainText('Fair challenge', { timeout: 10_000 });
+    expect(
+      await page.evaluate(() =>
+        window.__ann.transport.commits.some((c) => c.type === 'DiscussRequested'),
+      ),
+    ).toBe(false);
+  });
+
+  test('a failed reply is calm and can be retried', async ({ page }) => {
     await openDemo(page, 'seed=empty&step=100&fail=1');
-    await page.getByRole('button', { name: 'Ask Margaret' }).click();
-    const session = page.getByTestId('review-session').first();
-    await expect(session).toHaveAttribute('data-phase', 'failed', { timeout: 10_000 });
-    await expect(session).toContainText('Nothing in your text changed.');
-    await session.getByRole('button', { name: 'Try again' }).click();
-    await expect(page.getByTestId('review-session')).toHaveCount(2);
-    // The retry asks the same editor.
-    const reqs = await page.evaluate(() =>
+    const box = chat(page).getByRole('textbox', { name: /Message/ });
+    await box.fill('Is the title working?');
+    await box.press('Enter');
+    const failed = chat(page).getByTestId('chat-failed');
+    await expect(failed).toContainText('couldn’t reply', { timeout: 10_000 });
+    await failed.getByRole('button', { name: 'Retry' }).click();
+    await expect(chat(page).getByTestId('chat-failed')).toHaveCount(2, { timeout: 10_000 });
+    const texts = await page.evaluate(() =>
       window.__ann.transport.commits
-        .filter((c) => c.type === 'FeedbackRequested')
-        .map((c) => (c.payload as { editor?: { name: string } }).editor?.name),
+        .filter((c) => c.type === 'ChatMessageSent')
+        .map((c) => (c.payload as { text: string }).text),
     );
-    expect(reqs).toEqual(['Margaret', 'Margaret']);
+    expect(texts).toEqual(['Is the title working?', 'Is the title working?']);
+  });
+
+  test('Stop cancels a running reply', async ({ page }) => {
+    await openDemo(page, 'seed=empty&step=600');
+    const box = chat(page).getByRole('textbox', { name: /Message/ });
+    await box.fill('Please review this.');
+    await box.press('Enter');
+    const stop = chat(page).getByTestId('chat-stop');
+    await expect(stop).toBeEnabled({ timeout: 10_000 });
+    await stop.click();
+    await expect(chat(page).getByTestId('chat-failed')).toContainText('cancelled', {
+      timeout: 10_000,
+    });
   });
 });

@@ -66,11 +66,10 @@ for (const theme of ['light', 'dark'] as const) {
       await expect(page.getByTestId('annotation-margin').locator('[data-card-id]')).toHaveCount(0);
       await scrollToText(page);
       await page.screenshot({ path: `${SHOTS}/empty-${theme}.png` });
-      await page.getByRole('button', { name: 'Ask Margaret' }).click();
-      await expect(page.getByTestId('review-session').first()).toHaveAttribute(
-        'data-phase',
-        'reviewing',
-      );
+      const box = page.getByTestId('feedback-chat').getByRole('textbox', { name: /Message/ });
+      await box.fill('Please review this.');
+      await box.press('Enter');
+      await expect(page.getByTestId('chat-working')).toBeVisible();
       await page.waitForTimeout(1600);
       await page.screenshot({ path: `${SHOTS}/reviewing-${theme}.png` });
     });

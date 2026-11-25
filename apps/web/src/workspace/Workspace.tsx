@@ -12,7 +12,7 @@
  * reads the fold.
  */
 import {
-  FeedbackPanel,
+  FeedbackChat,
   useAnnotations,
   useAnnotationsSnapshot,
   type AnnotationsController,
@@ -230,7 +230,6 @@ function WorkspaceReady(props: {
     loadJson(LAYOUT_KEY, { left: true, quiet: false as boolean }),
   );
   const [tab, setTab] = useState<Tab | null>(null);
-  const [askNonce, setAskNonce] = useState(0);
   const [exporting, setExporting] = useState(false);
   const [cite, setCite] = useState<CiteIntent | null>(null);
   const [showKeys, setShowKeys] = useState(false);
@@ -286,6 +285,20 @@ function WorkspaceReady(props: {
       });
     },
     onAddSource: () => setTab('research'),
+    // The feedback chat: Discuss and Ask for feedback open it in the side panel.
+    onOpenChat: () => {
+      setLayout((l) => ({ ...l, quiet: false }));
+      setTab('feedback');
+    },
+    onCancelSession: (id) => {
+      client.cancelSession(projectId, id).catch((e: unknown) => {
+        setToast(`Could not stop the editor. ${e instanceof Error ? e.message : String(e)}`);
+      });
+    },
+    // With no document open there is no editor queue: post directly.
+    submitWithoutEditor: (e) => {
+      events.submit(e.type, e.payload as never);
+    },
     onError: (e) => setToast(e instanceof Error ? e.message : String(e)),
   });
   useEffect(
@@ -365,8 +378,9 @@ function WorkspaceReady(props: {
   const askForFeedback = () => {
     setLayout((l) => ({ ...l, quiet: false }));
     setTab('feedback');
-    setAskNonce((n) => n + 1);
     setView('write');
+    // Focuses the chat's composer; a selection is attached automatically.
+    ann.openChat();
   };
   const togglePanel = (t: Tab) => {
     setLayout((l) => ({ ...l, quiet: false }));
@@ -622,15 +636,9 @@ function WorkspaceReady(props: {
               <IconClose />
             </button>
           </div>
-          <div className="ws-right-body">
+          <div className={`ws-right-body${tab === 'feedback' ? ' is-chat' : ''}`}>
             {tab === 'feedback' && (
-              <FeedbackTab
-                controller={ann}
-                doc={doc}
-                nonce={askNonce}
-                editors={editors}
-                projectId={projectId}
-              />
+              <FeedbackTab controller={ann} doc={doc} editors={editors} projectId={projectId} />
             )}
             {tab === 'research' && (
               <ResearchPane
@@ -727,12 +735,11 @@ function CorkboardHead(props: {
 function FeedbackTab(props: {
   controller: AnnotationsController;
   doc: DocumentState | null;
-  nonce: number;
   editors: EditorsState;
   projectId: string;
 }) {
-  if (!props.doc || props.doc.kind === 'note')
-    return <p className="ws-note">Open a manuscript document to ask an editor about it.</p>;
+  // A manuscript document is the default context; with none (or a note) open, the project.
+  const title = props.doc && props.doc.kind === 'manuscript' ? props.doc.title : null;
   return (
     <>
       {props.editors.error && !props.editors.editors && (
@@ -743,13 +750,11 @@ function FeedbackTab(props: {
           </button>
         </p>
       )}
-      <FeedbackPanel
-        key={props.nonce}
+      <FeedbackChat
         controller={props.controller}
-        documentTitle={props.doc.title}
+        documentTitle={title}
         editors={props.editors.editors}
         manageEditorsHref={editorsHref(props.projectId)}
-        {...(props.nonce > 0 ? { formOpen: true } : {})}
       />
     </>
   );

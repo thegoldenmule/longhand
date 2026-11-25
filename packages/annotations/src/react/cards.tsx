@@ -572,7 +572,9 @@ export function AnnotationCard(props: AnnotationCardProps): React.JSX.Element {
               className="lh-btn lh-btn-quiet"
               onClick={(e) => {
                 e.stopPropagation();
-                setComposing(true);
+                // In chat mode the question goes to the chat, with this note attached.
+                if (controller.chatMode) controller.discussInChat(card.id);
+                else setComposing(true);
               }}
             >
               Discuss
@@ -583,13 +585,15 @@ export function AnnotationCard(props: AnnotationCardProps): React.JSX.Element {
           )}
         </footer>
       )}
-      <DiscussThread
-        controller={controller}
-        card={card}
-        state={snapshot.state}
-        composing={composing}
-        setComposing={setComposing}
-      />
+      {!controller.chatMode && (
+        <DiscussThread
+          controller={controller}
+          card={card}
+          state={snapshot.state}
+          composing={composing}
+          setComposing={setComposing}
+        />
+      )}
     </article>
   );
 }

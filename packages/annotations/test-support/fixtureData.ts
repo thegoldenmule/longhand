@@ -5,6 +5,7 @@
  * demo cannot use it; `fixtureData.test.ts` checks the two agree.)
  */
 import type { Commit, ProjectState } from '@longhand/schema';
+import chat from '../../ledger/fixtures/chat.json';
 import discuss from '../../ledger/fixtures/discuss.json';
 import feedbackSession from '../../ledger/fixtures/feedback-session.json';
 import proposals from '../../ledger/fixtures/proposals.json';
@@ -18,6 +19,7 @@ export const ANNOTATION_FIXTURES = [
   'proposals',
   'discuss',
   'research',
+  'chat',
 ] as const;
 
 /** A fixture name. */
@@ -34,6 +36,7 @@ const DATA: Record<AnnotationFixture, FixtureJson> = {
   proposals: proposals as unknown as FixtureJson,
   discuss: discuss as unknown as FixtureJson,
   research: research as unknown as FixtureJson,
+  chat: chat as unknown as FixtureJson,
 };
 
 /** A fixture's commits. */
