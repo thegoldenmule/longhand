@@ -30,7 +30,8 @@ export default defineConfig({
   webServer: {
     command: 'pnpm demo',
     url: `http://localhost:${PORT}`,
-    reuseExistingServer: !process.env.CI,
+    // `pnpm e2e` (LONGHAND_E2E_STRICT=1) never reuses a server already on the port.
+    reuseExistingServer: !process.env.CI && !process.env.LONGHAND_E2E_STRICT,
     timeout: 30_000,
   },
 });
