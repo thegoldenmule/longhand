@@ -226,3 +226,17 @@ describe('other payload rules', () => {
     expect(SuggestionProposedSchema.safeParse(withAlts(['a', 'b', 'c', 'd'])).success).toBe(false);
   });
 });
+
+describe('TextEdited steps', () => {
+  it('example steps are real prosemirror-transform steps', async () => {
+    const { Step } = await import('prosemirror-transform');
+    const { emptyDoc, schema } = await import('./document');
+    let doc = emptyDoc();
+    for (const json of EXAMPLE_PAYLOADS.TextEdited.steps) {
+      const result = Step.fromJSON(schema, json).apply(doc);
+      expect(result.failed).toBeNull();
+      doc = result.doc!;
+    }
+    expect(doc.textContent).toBe('The rain fell.');
+  });
+});
