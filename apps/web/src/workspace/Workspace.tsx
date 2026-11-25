@@ -2,8 +2,10 @@
 /**
  * The project workspace: binder on the left, the page in the middle (editor and
  * annotation margin in one scrolling column), and a side panel on the right
- * (feedback, research, provenance, settings). Replay, the report and the
- * corkboard take the middle when chosen. Everything collapses to the page alone.
+ * (feedback, research, provenance, settings). The header keeps only "Ask for
+ * feedback"; the tint, replay, report and export live in the Provenance tab.
+ * Replay, the report and the corkboard take the middle when chosen. Everything
+ * collapses to the page alone.
  *
  * State: the project's commits are kept and folded client-side (`ProjectStore`).
  * The editor syncs its document through `HttpCommitTransport`; every other part
@@ -364,7 +366,6 @@ function WorkspaceReady(props: {
     setAskNonce((n) => n + 1);
     setView('write');
   };
-  const toggleTint = () => tint.toggle();
   const togglePanel = (t: Tab) => {
     setLayout((l) => ({ ...l, quiet: false }));
     setTab((cur) => (cur === t ? null : t));
@@ -491,42 +492,6 @@ function WorkspaceReady(props: {
               disabled={!doc || doc.kind === 'note'}
             >
               Ask for feedback
-            </button>
-            <button
-              type="button"
-              className="ws-tool"
-              aria-pressed={tintSnap.enabled}
-              data-testid="toggle-tint"
-              title={`Tint text by origin (${keyLabel('Mod-Alt-KeyP')})`}
-              onClick={toggleTint}
-            >
-              Provenance
-            </button>
-            <button
-              type="button"
-              className="ws-tool"
-              aria-pressed={view === 'replay'}
-              data-testid="open-replay"
-              onClick={() => setView(view === 'replay' ? 'write' : 'replay')}
-            >
-              Replay
-            </button>
-            <button
-              type="button"
-              className="ws-tool"
-              aria-pressed={view === 'report'}
-              data-testid="open-report"
-              onClick={() => setView(view === 'report' ? 'write' : 'report')}
-            >
-              Report
-            </button>
-            <button
-              type="button"
-              className="ws-tool"
-              data-testid="open-export"
-              onClick={() => setExporting(true)}
-            >
-              Export
             </button>
             <span className="ws-tools-sep" aria-hidden />
             <ThemeToggle />
@@ -677,7 +642,18 @@ function WorkspaceReady(props: {
                 }}
               />
             )}
-            {tab === 'provenance' && <ProvenancePane tint={tint} document={doc} state={state} />}
+            {tab === 'provenance' && (
+              <ProvenancePane
+                tint={tint}
+                document={doc}
+                state={state}
+                tintKey={keyLabel('Mod-Alt-KeyP')}
+                view={view === 'replay' || view === 'report' ? view : 'other'}
+                onReplay={() => setView(view === 'replay' ? 'write' : 'replay')}
+                onReport={() => setView(view === 'report' ? 'write' : 'report')}
+                onExport={() => setExporting(true)}
+              />
+            )}
             {tab === 'settings' && (
               <SettingsPane
                 settings={state.settings}

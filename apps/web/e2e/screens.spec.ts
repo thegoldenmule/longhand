@@ -14,6 +14,8 @@ import {
   storyProject,
   test,
   waitForReview,
+  openProvenance,
+  tintSwitch,
 } from './helpers';
 
 for (const theme of ['light', 'dark'] as const) {
@@ -58,15 +60,14 @@ for (const theme of ['light', 'dark'] as const) {
     await page.waitForTimeout(300);
     await shot('05-cards-margin');
 
-    await page.getByTestId('toggle-tint').click();
-    await page.getByTestId('toggle-panel').click();
-    await page.getByTestId('tab-provenance').click();
+    await openProvenance(page);
+    await tintSwitch(page).click();
     await manuscript(page).getByText('Mara counted').click();
     await expect(page.getByRole('dialog').first()).toBeVisible();
     await page.waitForTimeout(300);
     await shot('06-tint-inspector');
     await page.keyboard.press('Escape');
-    await page.getByTestId('toggle-tint').click();
+    await tintSwitch(page).click();
 
     await page.getByTestId('open-replay').click();
     await expect(page.getByTestId('replay-doc')).toBeVisible();
@@ -98,6 +99,7 @@ for (const theme of ['light', 'dark'] as const) {
     await page.waitForTimeout(200);
     await shot('11-settings');
 
+    await openProvenance(page);
     await page.getByTestId('open-export').click();
     await page.waitForTimeout(200);
     await shot('12-export');

@@ -831,9 +831,14 @@ kbd {
   border-radius: 10px;
   background: var(--app-card);
 }
-.ws-provenance {
-  display: grid;
-  gap: 14px;
+.ws-record-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.ws-record-actions .lh-button[aria-pressed='true'] {
+  background: var(--app-hover);
+  color: var(--app-ink);
 }
 .ws-settings {
   display: grid;

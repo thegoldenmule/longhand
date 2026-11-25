@@ -18,6 +18,8 @@ import {
   test,
   tintClassesOf,
   waitForReview,
+  openProvenance,
+  tintSwitch,
 } from './helpers';
 
 async function reviewed(page: Page, title: string): Promise<string> {
@@ -101,7 +103,8 @@ test('5 · tracing over a word-choice suggestion adopts it as typed-from-suggest
     .flatMap((c) => (c.payload as { runs: Array<{ traceSuggestionId?: string }> }).runs);
   expect(traced.some((r) => r.traceSuggestionId === id)).toBe(true);
 
-  await page.getByTestId('toggle-tint').click();
+  await openProvenance(page);
+  await tintSwitch(page).click();
   await expect.poll(() => tintClassesOf(page, 'softly')).toEqual(['typed-from-suggestion']);
 });
 

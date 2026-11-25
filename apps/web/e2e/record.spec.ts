@@ -18,10 +18,12 @@ import {
   storyProject,
   test,
   waitSaved,
+  openProvenance,
 } from './helpers';
 
 test('11 · replay scrubs back to an earlier state of the document', async ({ page }) => {
   await storyProject(page, 'Replay');
+  await openProvenance(page);
   await page.getByTestId('open-replay').click();
   const view = page.getByTestId('replay-view');
   const doc = view.getByTestId('replay-doc');
@@ -56,6 +58,7 @@ test('12 · the report shows the right numbers and the disclosure statement', as
   await page.keyboard.press('ControlOrMeta+V');
   await waitSaved(page, pid, 'Ships came and went.');
 
+  await openProvenance(page);
   await page.getByTestId('open-report').click();
   const view = page.getByTestId('report-view');
   const disclosure = view.locator('.lh-report-disclosure-text');
@@ -91,6 +94,7 @@ test('13 · the verification bundle verifies, on /verify too, and one changed by
   page,
 }, testInfo) => {
   const pid = await storyProject(page, 'Bundle');
+  await openProvenance(page);
   await page.getByTestId('open-report').click();
   await expect(page.getByTestId('report-view').locator('.lh-report-disclosure-text')).toBeVisible({
     timeout: 20_000,
@@ -137,6 +141,7 @@ test('14 · export to Markdown, DOCX and PDF', async ({ page }) => {
   const pid = await storyProject(page, 'Export');
   expect(await ledgerText(pid)).toBe(STORY.join('\n'));
   const exportAs = async (label: string) => {
+    await openProvenance(page);
     await page.getByTestId('open-export').click();
     const dialog = page.getByTestId('export-dialog');
     await dialog.getByLabel(new RegExp(`^${label}`)).check();

@@ -14,6 +14,8 @@ import {
   tintClassesOf,
   typeParagraphs,
   waitSaved,
+  openProvenance,
+  tintSwitch,
 } from './helpers';
 
 test('1 · a typed paragraph is saved and survives a reload', async ({ page }) => {
@@ -59,7 +61,8 @@ test('2 · external paste is flagged in the tint and the legend', async ({ page 
   expect(pastes).toHaveLength(2);
   expect(pastes.every((p) => p.origin === 'external')).toBe(true);
 
-  await page.getByTestId('toggle-tint').click();
+  await openProvenance(page);
+  await tintSwitch(page).click();
   await expect
     .poll(() => tintClassesOf(page, 'came from somewhere else'))
     .toEqual(['pasted-external']);
@@ -78,8 +81,6 @@ test('2 · external paste is flagged in the tint and the legend', async ({ page 
       return [cs.backgroundColor, cs.textDecorationLine];
     });
   expect(typedLook).toEqual(['rgba(0, 0, 0, 0)', 'none']);
-  await page.getByTestId('toggle-panel').click();
-  await page.getByTestId('tab-provenance').click();
   await expect(page.getByTestId('legend-count-pasted-external')).toHaveText('7');
   await expect(page.getByTestId('legend-count-typed')).toHaveText('5');
   const shot = (name: string) =>
@@ -118,7 +119,8 @@ test('3 · an internal copy and paste inherits the copied text’s class', async
   const doc = Object.values((await getState(pid)).documents)[0]!;
   expect(new Set(doc.provenance.map((r) => r.class))).toEqual(new Set(['typed']));
 
-  await page.getByTestId('toggle-tint').click();
+  await openProvenance(page);
+  await tintSwitch(page).click();
   await expect.poll(() => tintClassesOf(page, 'Salt crusted')).toEqual(['typed']);
 });
 
@@ -150,6 +152,7 @@ test('15 · offline writing queues, flushes on reconnect, and the report shows t
   await context.setOffline(false);
   await waitSaved(page, pid, 'candlelight');
 
+  await openProvenance(page);
   await page.getByTestId('open-report').click();
   const report = page.getByTestId('report-view');
   await expect(report.locator('.lh-report-unwitnessed')).toBeVisible({ timeout: 20_000 });
@@ -180,7 +183,8 @@ test('16 · an imported draft is labeled imported (unverified) in the tint and t
   expect(imported.actor.kind).toBe('human');
   expect((imported.payload as { sourceFormat: string }).sourceFormat).toBe('markdown');
 
-  await page.getByTestId('toggle-tint').click();
+  await openProvenance(page);
+  await tintSwitch(page).click();
   await expect.poll(() => tintClassesOf(page, 'where they end')).toEqual(['imported']);
 
   await page.getByTestId('open-report').click();

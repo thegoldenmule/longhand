@@ -9,6 +9,8 @@ import {
   tintClassesOf,
   typeParagraphs,
   waitSaved,
+  openProvenance,
+  tintSwitch,
 } from './helpers';
 
 test('10 · research: add a source by hand, cite it, place a clipping, see the bibliography', async ({
@@ -71,8 +73,10 @@ test('10 · research: add a source by hand, cite it, place a clipping, see the b
       return [...new Set(doc.provenance.map((r) => r.class))].sort();
     })
     .toEqual(['quoted', 'typed']);
-  await page.getByTestId('toggle-tint').click();
+  await openProvenance(page);
+  await tintSwitch(page).click();
   await expect.poll(() => tintClassesOf(page, 'flooded every seventh')).toEqual(['quoted']);
+  await page.getByTestId('tab-research').click();
 
   // The bibliography lists the cited source.
   await pane.getByTestId('research-tab-bibliography').click();

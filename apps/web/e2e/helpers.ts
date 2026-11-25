@@ -217,3 +217,16 @@ export async function downloadBytes(page: Page, trigger: () => Promise<void>) {
   const { readFileSync } = await import('node:fs');
   return { name: download.suggestedFilename(), bytes: new Uint8Array(readFileSync(path)), path };
 }
+
+/** Opens the side panel on its Provenance tab (tint, replay, report, export). */
+export async function openProvenance(page: Page): Promise<void> {
+  if ((await page.getByTestId('side-panel').count()) === 0) {
+    await page.getByTestId('toggle-panel').click();
+  }
+  await page.getByTestId('tab-provenance').click();
+}
+
+/** The tint switch on the Provenance tab's legend (open the tab first). */
+export function tintSwitch(page: Page): Locator {
+  return page.getByTestId('provenance-pane').getByRole('switch', { name: 'Tint' });
+}
