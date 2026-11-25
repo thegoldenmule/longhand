@@ -5,6 +5,7 @@ import {
   segmentDoc,
   toolsForSession,
   type Intensity,
+  type SurfacedCandidate,
 } from '@longhand/schema';
 import {
   InMemoryAnnotationSink,
@@ -535,10 +536,20 @@ describe('ToolExecutor: proposals', () => {
 });
 
 describe('ToolExecutor: research tools', () => {
-  const items = [
-    { id: 'c1', type: 'article-journal', title: 'Rain and memory', DOI: '10.1/rain' },
-    { id: 'c2', type: 'book', title: 'Storms', ISBN: '9780000000000' },
-    { id: '', type: 'book' }, // invalid CSL, dropped
+  const items: SurfacedCandidate[] = [
+    {
+      csl: { id: 'c1', type: 'article-journal', title: 'Rain and memory', DOI: '10.1/rain' },
+      provider: 'crossref',
+      url: 'https://doi.org/10.1/rain',
+    },
+    // The provider comes from the search, not from the item's identifiers.
+    {
+      csl: { id: 'c2', type: 'book', title: 'Storms', ISBN: '9780000000000' },
+      provider: 'web',
+      url: null,
+    },
+    // Invalid CSL, dropped.
+    { csl: { id: '', type: 'book' }, provider: 'openlibrary', url: null },
   ];
 
   it('flag_citation_needed: anchor + claim ≤ 150 chars', async () => {
@@ -571,7 +582,7 @@ describe('ToolExecutor: research tools', () => {
     if (d.type === 'SourceSurfaced') {
       expect(d.payload.candidates.map((c) => [c.provider, c.url])).toEqual([
         ['crossref', 'https://doi.org/10.1/rain'],
-        ['openlibrary', null],
+        ['web', null],
       ]);
       expect(d.payload.target?.anchor.quote).toBe('rain');
     }

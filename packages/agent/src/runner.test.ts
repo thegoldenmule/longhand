@@ -308,7 +308,13 @@ describe('runFeedbackSession with MockModelAdapter', () => {
   });
 
   it('passes the injected SourceSearch through to search_sources', async () => {
-    const search = new StaticSourceSearch([{ id: 'c1', type: 'book', title: 'Rain', ISBN: '1' }]);
+    const search = new StaticSourceSearch([
+      {
+        csl: { id: 'c1', type: 'book', title: 'Rain', ISBN: '1' },
+        provider: 'openlibrary',
+        url: null,
+      },
+    ]);
     const adapter = new MockModelAdapter([
       { tool: 'search_sources', input: { query: 'storm psychology' } },
       finish,

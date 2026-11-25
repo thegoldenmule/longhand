@@ -28,7 +28,11 @@ describe('annotation MCP server over stdio', () => {
   });
   const sink = new InMemoryAnnotationSink();
   const search = new StaticSourceSearch([
-    { id: 'c1', type: 'book', title: 'Rain', ISBN: '9781234567897' },
+    {
+      csl: { id: 'c1', type: 'book', title: 'Rain', ISBN: '9781234567897' },
+      provider: 'openlibrary',
+      url: null,
+    },
   ]);
   const relay = new SessionRelay({
     projectId: state.projectId,
@@ -124,6 +128,10 @@ describe('annotation MCP server over stdio', () => {
     expect(search.queries).toEqual(['rain and mood']);
     const last = sink.drafts[sink.drafts.length - 1]!.draft;
     expect(last.type).toBe('SourceSurfaced');
+    // The provider the search reported survives the relay.
+    if (last.type === 'SourceSurfaced') {
+      expect(last.payload.candidates.map((c) => c.provider)).toEqual(['openlibrary']);
+    }
   });
 
   it('finish_review ends the session; later calls are refused', async () => {

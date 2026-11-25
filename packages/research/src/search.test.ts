@@ -1,15 +1,27 @@
-import { BOUNDS, SurfacedCandidateSchema, type CslItem } from '@longhand/schema';
+import { BOUNDS, SurfacedCandidateSchema, type CslItem, type SourceSearch } from '@longhand/schema';
 import { describe, expect, it } from 'vitest';
 import { crossrefSearchUrl } from './crossref';
 import { openLibrarySearchUrl } from './openlibrary';
-import { createSourceSearch, mergeResults, providerOf, type SourceSearch } from './search';
+import { createSourceSearch, mergeResults, providerOf } from './search';
 import { fixtureFetch, response } from './test-support/fixture-fetch';
 
 describe('createSourceSearch (recorded responses)', () => {
   it('satisfies SourceSearch and interleaves Crossref and Open Library', async () => {
     const search: SourceSearch = createSourceSearch({ fetch: fixtureFetch() });
-    const items = await search.search('deep learning', 5);
+    const candidates = await search.search('deep learning', 5);
+    expect(candidates.map((c) => c.provider)).toEqual([
+      'crossref',
+      'openlibrary',
+      'openlibrary',
+      'openlibrary',
+      'openlibrary',
+    ]);
+    const items = await createSourceSearch({ fetch: fixtureFetch() }).searchItems(
+      'deep learning',
+      5,
+    );
     expect(items).toHaveLength(5);
+    expect(candidates.map((c) => c.csl)).toEqual(items);
     expect(items.map(providerOf)).toEqual([
       'crossref',
       'openlibrary',
@@ -23,7 +35,7 @@ describe('createSourceSearch (recorded responses)', () => {
   });
 
   it('de-duplicates across and within providers', async () => {
-    const items = await createSourceSearch({ fetch: fixtureFetch() }).search(
+    const items = await createSourceSearch({ fetch: fixtureFetch() }).searchItems(
       'the structure of scientific revolutions',
       5,
     );
@@ -35,7 +47,7 @@ describe('createSourceSearch (recorded responses)', () => {
 
   it('returns SourceSurfaced-shaped candidates, clamped to the schema bound', async () => {
     const search = createSourceSearch({ fetch: fixtureFetch() });
-    const candidates = await search.searchCandidates('deep learning', 50);
+    const candidates = await search.search('deep learning', 50);
     expect(candidates.length).toBeLessThanOrEqual(BOUNDS.searchMaxCandidates);
     for (const c of candidates) expect(SurfacedCandidateSchema.safeParse(c).success).toBe(true);
     expect(candidates[0]!.provider).toBe('crossref');
@@ -48,7 +60,7 @@ describe('createSourceSearch (recorded responses)', () => {
     const items = await createSourceSearch({
       fetch,
       onProviderError: (p) => errors.push(p),
-    }).search('deep learning', 5);
+    }).searchItems('deep learning', 5);
     expect(errors).toEqual(['crossref']);
     expect(items.every((i) => providerOf(i) === 'openlibrary')).toBe(true);
     expect(items.length).toBeGreaterThan(0);

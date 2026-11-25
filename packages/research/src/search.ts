@@ -3,22 +3,13 @@
  * Crossref works search and Open Library search, run in parallel, interleaved and
  * de-duplicated.
  */
-import { BOUNDS, type CslItem, type SurfacedCandidate } from '@longhand/schema';
+import { BOUNDS, type CslItem, type SourceSearch, type SurfacedCandidate } from '@longhand/schema';
 import { searchCrossref } from './crossref';
 import { yearOf } from './csl';
 import type { HttpOptions } from './http';
 import { doiKey, normalizeIsbn } from './identifiers';
 import type { MetadataProvider } from './metadata';
 import { searchOpenLibrary } from './openlibrary';
-
-/**
- * Searches for candidate sources. The agent lane's `search_sources` handler
- * consumes this interface; results become `SourceSurfaced.candidates`, shown to the
- * writer labeled *AI-surfaced, unverified*.
- */
-export interface SourceSearch {
-  search(query: string, limit: number): Promise<CslItem[]>;
-}
 
 /** Options for {@link createSourceSearch}. */
 export interface SourceSearchOptions extends HttpOptions {
@@ -33,13 +24,14 @@ export interface SourceSearchOptions extends HttpOptions {
   onProviderError?: (provider: 'crossref' | 'openlibrary', error: unknown) => void;
 }
 
-/** A {@link SourceSearch} that can also return `SurfacedCandidate`s. */
+/**
+ * The schema's `SourceSearch` (what the agent lane's `search_sources` handler
+ * consumes): `search` returns `SurfacedCandidate`s with their provider, ready for
+ * `SourceSurfaced.candidates` (`limit` is clamped to `BOUNDS.searchMaxCandidates`).
+ * `searchItems` returns the bare CSL items, unclamped, for the Sources panel.
+ */
 export interface LonghandSourceSearch extends SourceSearch {
-  /**
-   * Like `search`, but shaped as `SourceSurfaced.candidates` (`limit` is clamped to
-   * `BOUNDS.searchMaxCandidates`).
-   */
-  searchCandidates(query: string, limit?: number): Promise<SurfacedCandidate[]>;
+  searchItems(query: string, limit: number): Promise<CslItem[]>;
 }
 
 /** Normalized title for duplicate detection: ASCII-lowercased, punctuation and articles dropped. */
@@ -101,7 +93,7 @@ export function toSurfacedCandidate(item: CslItem): SurfacedCandidate {
   return { csl: item, provider: providerOf(item), url: url && url.length <= 2000 ? url : null };
 }
 
-/** Creates the Crossref + Open Library {@link SourceSearch}. */
+/** Creates the Crossref + Open Library `SourceSearch`. */
 export function createSourceSearch(opts: SourceSearchOptions = {}): LonghandSourceSearch {
   const providers = opts.providers ?? ['crossref', 'openlibrary'];
   const run = async (query: string, limit: number): Promise<CslItem[]> => {
@@ -124,8 +116,8 @@ export function createSourceSearch(opts: SourceSearchOptions = {}): LonghandSour
     return mergeResults(lists, n);
   };
   return {
-    search: run,
-    async searchCandidates(query, limit = BOUNDS.searchMaxCandidates) {
+    searchItems: run,
+    async search(query, limit) {
       const items = await run(query, Math.min(limit, BOUNDS.searchMaxCandidates));
       return items.map(toSurfacedCandidate);
     },

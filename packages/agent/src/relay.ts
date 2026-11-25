@@ -10,7 +10,7 @@
  * the real sink, so nothing but valid annotation events can reach the sink.
  *
  * `POST /internal/sessions/:id/search` with `{query, limit}` proxies to the
- * injected `SourceSearch` and answers `{ok: true, items: CslItem[]}`.
+ * injected `SourceSearch` and answers `{ok: true, candidates: SurfacedCandidate[]}`.
  */
 import { randomBytes, timingSafeEqual } from 'node:crypto';
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from 'node:http';
@@ -19,14 +19,14 @@ import {
   capViolation,
   countCall,
   type AgentSessionKind,
-  type CslItem,
   type Intensity,
   type SessionCounts,
+  type SourceSearch,
+  type SurfacedCandidate,
   type ToolName,
 } from '@longhand/schema';
 import { draftError, isToolEventType, type ToolEventDraft } from './drafts';
 import { errMsg, sessionEventsPath, type AnnotationSink } from './sink';
-import type { SourceSearch } from './search';
 
 /** The tool whose call produces a draft (inverse of `TOOLS[name].emits`). */
 export function toolForDraft(draft: ToolEventDraft): ToolName {
@@ -237,8 +237,8 @@ export class SessionRelay {
       return err(400, 'invalid-request', 'expected {query, limit}');
     }
     try {
-      const items = await search.search(b.query, Math.max(1, Math.min(10, b.limit)));
-      return { status: 200, body: { ok: true, items } };
+      const candidates = await search.search(b.query, Math.max(1, Math.min(10, b.limit)));
+      return { status: 200, body: { ok: true, candidates } };
     } catch (e) {
       return err(502, 'search-failed', errMsg(e));
     }
@@ -253,7 +253,7 @@ export class RelaySourceSearch implements SourceSearch {
     private readonly token: string,
   ) {}
 
-  async search(query: string, limit: number): Promise<CslItem[]> {
+  async search(query: string, limit: number): Promise<SurfacedCandidate[]> {
     const path = sessionEventsPath(this.feedbackSessionId).replace(/\/events$/, '/search');
     const res = await fetch(new URL(path, this.baseUrl), {
       method: 'POST',
@@ -263,13 +263,13 @@ export class RelaySourceSearch implements SourceSearch {
     });
     const body = (await res.json().catch(() => null)) as {
       ok?: boolean;
-      items?: CslItem[];
+      candidates?: SurfacedCandidate[];
       error?: { message?: string };
     } | null;
-    if (!res.ok || !body?.ok || !Array.isArray(body.items)) {
+    if (!res.ok || !body?.ok || !Array.isArray(body.candidates)) {
       throw new Error(body?.error?.message ?? `search relay answered HTTP ${res.status}`);
     }
-    return body.items;
+    return body.candidates;
   }
 }
 

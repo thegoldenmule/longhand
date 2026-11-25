@@ -18,6 +18,7 @@ import {
   FeedbackRequestedSchema,
   toolsForSession,
   type ProjectState,
+  type SourceSearch,
 } from '@longhand/schema';
 import type { ModelAdapter, ModelEvent, ModelRunResult } from './adapters/types';
 import {
@@ -33,7 +34,6 @@ import { agentDraft, sessionFailedDraft, type ToolEventDraft } from './drafts';
 import { mcpConfigJson, toolServerLaunch, type ToolServerConfig } from './mcp/config';
 import { MCP_TOOL_PREFIX } from './mcp/server';
 import { SessionRelay } from './relay';
-import type { SourceSearch } from './search';
 import { errMsg, type AnnotationSink } from './sink';
 
 /** Default wall-clock limits per kind of session (ms). */

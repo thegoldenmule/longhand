@@ -18,7 +18,7 @@ pnpm --filter @longhand/research build-styles      # re-embed vendor/csl/* after
 | HTTP         | `FetchLike`, `HttpOptions` (`fetch`, `userAgent`), `USER_AGENT` (`Longhand/0.1`), `MetadataError` (`code`: `invalid-input`, `not-found`, `http-error`, `network-error`, `bad-response`)                                                                                                                                                                                                                                            |
 | Identifiers  | `normalizeDoi`, `doiKey`, `normalizeIsbn` (check digit, returns ISBN-13), `isbn10to13`, `normalizeUrl`, `classifyIdentifier`                                                                                                                                                                                                                                                                                                       |
 | Fetchers     | `fetchDoi` (Crossref `api.crossref.org/works/{doi}`), `fetchIsbn` (Open Library Books API), `fetchUrl` (page metadata), `createMetadataClient({ fetch, pageFetch?, userAgent?, now? })` → `{ fetchDoi, fetchIsbn, fetchUrl, lookup }`, each returning `{ csl, origin, provider }`. Lower-level mappers: `crossrefWorkToCsl`, `openLibraryBookToCsl`, `openLibraryDocToCsl`, `scanHtml`, `pageMetadataToCsl`, plus the URL builders |
-| Search       | `SourceSearch` (`search(query, limit): Promise<CslItem[]>`), `createSourceSearch(opts)` → `LonghandSourceSearch` (adds `searchCandidates(query, limit?)` → `SurfacedCandidate[]`), `mergeResults`, `providerOf`, `toSurfacedCandidate`                                                                                                                                                                                             |
+| Search       | `createSourceSearch(opts)` → `LonghandSourceSearch`: the schema's `SourceSearch` (`search(query, limit): Promise<SurfacedCandidate[]>`, re-exported) plus `searchItems(query, limit)` → `CslItem[]`; `mergeResults`, `providerOf`, `toSurfacedCandidate`                                                                                                                                                                           |
 | Manual entry | `ManualEntry`, `emptyManualEntry`, `validateManualEntry(form, id, base?)` → `{ ok, csl, warnings } \| { ok: false, errors }`, `cslToManualEntry`, `SOURCE_TYPES`, `sourceTypeLabel`                                                                                                                                                                                                                                                |
 | CSL helpers  | `parseName`, `parseNames`, `formatName`, `parseDate`, `formatDate`, `yearOf`, `cleanText`, `sourceLabel`                                                                                                                                                                                                                                                                                                                           |
 | Bibliography | `STYLES`, `StyleId` (`apa`, `modern-language-association`, `chicago-author-date`), `resolveStyle` (also takes `mla`, `chicago`), `formatCitation(items, sourceId, locator, style)`, `formatCitations(items, cites, style)`, `formatBibliography(items, style, ids?)` (text, HTML, per-entry and layout hints), `parseLocator`, `referencedSourceIds(docJSON)` (citations, footnote citations and quote blocks)                     |
@@ -39,7 +39,7 @@ pnpm --filter @longhand/research build-styles      # re-embed vendor/csl/* after
 
 ## Search (agent lane)
 
-`createSourceSearch({ fetch })` implements `SourceSearch`. It runs Crossref `works?query.bibliographic=` and Open Library `search.json` in parallel. It then interleaves the results (first from each provider, then second from each, and so on) and drops duplicates by DOI (case-insensitive), ISBN (10 and 13 compared) and normalized title, first author and year. A provider that fails is skipped; it is reported through `onProviderError`. `searchCandidates` returns `SurfacedCandidate[]` clamped to `BOUNDS.searchMaxCandidates`, ready for `SourceSurfaced.candidates`.
+`createSourceSearch({ fetch })` implements the schema's `SourceSearch`. It runs Crossref `works?query.bibliographic=` and Open Library `search.json` in parallel. It then interleaves the results (first from each provider, then second from each, and so on) and drops duplicates by DOI (case-insensitive), ISBN (10 and 13 compared) and normalized title, first author and year. A provider that fails is skipped; it is reported through `onProviderError`. `search` returns `SurfacedCandidate[]` (`{csl, provider, url}`, the provider taken from the fetcher that produced the item) clamped to `BOUNDS.searchMaxCandidates`, ready for `SourceSurfaced.candidates`. `searchItems` returns the bare CSL items.
 
 ## Editor integration
 
@@ -97,11 +97,10 @@ The components are controlled by `ProjectState` slices and make no network reque
 
 ## Contract changes requested (coordinator)
 
-Applied in the contract revision pass (phase 2c): the shared `INPUT_METHOD_META` / `DeclaredInput`, keystroke kinds `cite` and `clip`, and `ClippingSavedSchema` rejecting empty lines and leading or trailing newlines (the fold still collapses blank lines as defense).
+Applied in the contract revision pass (phase 2c): the shared `INPUT_METHOD_META` / `DeclaredInput`, keystroke kinds `cite` and `clip`, `ClippingSavedSchema` rejecting empty lines and leading or trailing newlines (the fold still collapses blank lines as defense), and `SourceSearch` in the schema returning `SurfacedCandidate[]`.
 
 Still open:
 
-- **`SourceSearch` in the schema.** The agent lane needs the `SourceSearch` interface. Defining it in `packages/schema`, next to the tool catalog, would mean neither lane has to depend on the other.
 - Optional: a CSL `source` convention, or a `provider` field on library sources, so the origin provider survives `SourceAdded`. Today it survives only in CSL `source`.
 
 ## Known gaps

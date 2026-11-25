@@ -48,7 +48,7 @@ The MCP server is a child of the CLI, so it can't call the runner's in-process s
 | `HttpAnnotationSink`, `interpretResponse`, `sessionEventsPath`                                                              | The HTTP sink.                                                                                                                                                                                                                                                                                                                                               |
 | `InMemoryAnnotationSink`                                                                                                    | For tests: validates, dedupes by `commitId`, assigns seqs, can `reject` chosen drafts. `ofType(type)`.                                                                                                                                                                                                                                                       |
 | `SessionRelay`, `RelaySourceSearch`, `toolForDraft`                                                                         | The loopback relay and its search client.                                                                                                                                                                                                                                                                                                                    |
-| `SourceSearch`, `StaticSourceSearch`, `toCandidates`                                                                        | `interface SourceSearch { search(query: string, limit: number): Promise<CslItem[]> }`, implemented by the research lane.                                                                                                                                                                                                                                     |
+| `SourceSearch`, `StaticSourceSearch`, `toCandidates`                                                                        | The schema's `interface SourceSearch { search(query: string, limit: number): Promise<SurfacedCandidate[]> }` (re-exported), implemented by the research lane; candidates carry their own `provider` and `url`. `toCandidates` drops invalid candidates and caps the count.                                                                                   |
 | `ClaudeCliAdapter`, `buildClaudeArgs`, `ISOLATION_ARGS`, `defaultClaudeCommand`                                             | The CLI adapter.                                                                                                                                                                                                                                                                                                                                             |
 | `MockModelAdapter`, `MockStep`, `MockScript`                                                                                | Scripted model: `{tool, input}`, `{text}`, `{fail}`, `{hang: true}`, `{delayMs}`.                                                                                                                                                                                                                                                                            |
 | `StreamJsonParser`, `parseStreamJson`, `eventsFromMessage`, `ModelEvent`, `ModelAdapter`, `ModelRunInput`, `ModelRunResult` | stream-json parsing and adapter types.                                                                                                                                                                                                                                                                                                                       |
@@ -156,7 +156,7 @@ Content-Type: application/json
 
 ### Relay-only endpoint
 
-`POST /internal/sessions/{id}/search` takes `{query, limit}` and returns `{ok: true, items: CslItem[]}`. The ledger service does not need to implement it.
+`POST /internal/sessions/{id}/search` takes `{query, limit}` and returns `{ok: true, candidates: SurfacedCandidate[]}`. The ledger service does not need to implement it.
 
 ## The CLI
 
@@ -195,19 +195,18 @@ claude -p --output-format stream-json --verbose --tools "" --strict-mcp-config
 - **Selections on a moved-on document.**
   - `FeedbackRequested.scope` positions are at `scope.version`.
   - If the document has moved on, pass `selection` already mapped to the current version. Otherwise the range is clamped and a warning is returned.
-  - See the contract requests below.
-- **Surfaced-source provider.** `SourceSearch` returns bare `CslItem`s, so `SourceSurfaced.candidates[].provider` is inferred: DOI → `crossref`, ISBN → `openlibrary`, else `web`. `url` is `URL`, or `https://doi.org/<DOI>`.
 - **Empty searches** count toward the session's search cap in the executor but emit no event, so the fold's `counts.searches` can be lower than the executor's. That is harmless, because the executor is stricter.
 - **The actor id is the model alias** (`sonnet`, `opus`), as the schema specifies. The resolved model id (e.g. `claude-sonnet-5-5`) is only visible in the `init` progress event.
-- **Annotations target manuscript text in scope only.** Notes are context and can't be annotated. Rejections use the agent-local code `out-of-scope`.
+- **Annotations target manuscript text in scope only.** Notes are context and can't be annotated. Rejections use the code `out-of-scope`.
 - **The tool server runs under `tsx`** in a separate process per session (about 300 ms to start). It needs `node ≥ 22` and the `tsx` dependency at runtime.
 - **The rephrase check is a heuristic** (`rephraseGuidanceViolation`: quoted new wording of 3 or more words). The suggestion matcher still catches retyped AI text.
 - **No spend limit beyond the wall clock.** Pass `extraArgs: ['--max-budget-usd', 'N']` if needed.
 
 ## Contract changes requested
 
-1. Add `'out-of-scope' | 'search-unavailable' | 'sink-rejected' | 'internal-error'` to `ToolErrorCode` in `packages/schema/src/tools.ts`. The agent currently uses a superset type, `AgentToolErrorCode`.
-2. Let `SourceSearch` return the provider and URL, for example `Promise<Array<{csl: CslItem; provider: 'crossref' | 'openlibrary' | 'web'; url: string | null}>>` (that is, `SurfacedCandidate[]`). The alternative is to bless the inference rule above.
-3. Have the fold map `FeedbackRequestState.scope` selection positions to the current version (or add a mapped `range`), so the runner can take the selection straight from `ProjectState`.
-4. Optional: add `systemPromptVersion` to `FeedbackSessionStarted`, so the ledger records which prompt version produced a session.
-5. `docs/BUILD.md` "AI runtime": bless the added `--setting-sources project` flag and passing the prompt on stdin.
+Applied in the contract revision pass (phase 2c):
+
+- `ToolErrorCode` includes `out-of-scope`, `search-unavailable`, `sink-rejected` and `internal-error`; the agent's superset `AgentToolErrorCode` is gone.
+- `SourceSearch` lives in the schema and returns `SurfacedCandidate[]` (`{csl, provider, url}`), so the agent no longer infers the provider. The relay's `/search` answers `{ok: true, candidates}`.
+
+`docs/BUILD.md` "AI runtime" already blesses `--setting-sources project` and the prompt on stdin. No requests are open.

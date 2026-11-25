@@ -24,7 +24,7 @@ import {
 } from './anchors';
 import { BOUNDS, capsFor } from './bounds';
 import { LensSchema, SeveritySchema, type Intensity } from './domain';
-import type { EventType } from './events';
+import type { EventType, SurfacedCandidate } from './events';
 import { IdSchema } from './ids';
 import { countWords, splitSentences } from './text';
 
@@ -622,9 +622,29 @@ export type ToolErrorCode =
   | 'unknown-thread'
   | 'cap-reached'
   | 'replacement-text'
-  | 'session-finished';
+  | 'session-finished'
+  /** The target is outside the feedback request's scope, or in a note. */
+  | 'out-of-scope'
+  /** `search_sources` has no `SourceSearch`, or the search failed. */
+  | 'search-unavailable'
+  /** The ledger service (annotation sink) refused the resulting event. */
+  | 'sink-rejected'
+  /** An unexpected failure in the tool handler. */
+  | 'internal-error';
 
 /** Result of a tool call as returned to the model. */
 export type ToolResult =
   | { ok: true; id?: string; content?: string }
   | { ok: false; error: { code: ToolErrorCode; message: string } };
+
+/**
+ * Candidate-source search behind the `search_sources` tool. The research lane
+ * implements it (Crossref and Open Library); the agent lane calls it and records
+ * the results as `SourceSurfaced.candidates`, labeled AI-surfaced and unverified.
+ * Implementations return at most `limit` candidates (callers pass at most
+ * `BOUNDS.searchMaxCandidates`), and an empty array for no results; they throw
+ * when the search itself fails.
+ */
+export interface SourceSearch {
+  search(query: string, limit: number): Promise<SurfacedCandidate[]>;
+}

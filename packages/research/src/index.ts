@@ -83,9 +83,10 @@ export {
   providerOf,
   toSurfacedCandidate,
   type LonghandSourceSearch,
-  type SourceSearch,
   type SourceSearchOptions,
 } from './search';
+/** Re-exported from `@longhand/schema`. */
+export type { SourceSearch } from '@longhand/schema';
 
 // Manual entry
 export {

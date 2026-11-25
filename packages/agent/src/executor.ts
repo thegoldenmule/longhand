@@ -36,6 +36,7 @@ import {
   type EventPayloads,
   type ResolvedAnchor,
   type SessionCounts,
+  type SourceSearch,
   type SpanRef,
   type Target,
   type ToolErrorCode,
@@ -45,20 +46,13 @@ import {
 import { agentDraft, draftError, type DraftContext, type ToolEventDraft } from './drafts';
 import { docWordCount, renderOutline, renderPlain, renderSegmented } from './format';
 import type { AnnotationSink } from './sink';
-import { toCandidates, type SourceSearch } from './search';
+import { toCandidates } from './search';
 import { DocumentCache, type LoadedDocument, type SessionSnapshot } from './snapshot';
-
-/**
- * Error codes a call can fail with: the schema's `ToolErrorCode` plus four this
- * package needs (listed as a contract addition in the README).
- */
-export type AgentToolErrorCode =
-  ToolErrorCode | 'out-of-scope' | 'search-unavailable' | 'sink-rejected' | 'internal-error';
 
 /** Result of one tool call. */
 export type ToolCallResult =
   | { ok: true; id?: string; content: string }
-  | { ok: false; error: { code: AgentToolErrorCode; message: string } };
+  | { ok: false; error: { code: ToolErrorCode; message: string } };
 
 /** What a call produced, for the MCP layer and progress reporting. */
 export interface ToolCallOutcome {
@@ -81,10 +75,10 @@ export interface ToolExecutorOptions {
   newId?: () => string;
 }
 
-type Fail = { ok: false; error: { code: AgentToolErrorCode; message: string } };
+type Fail = { ok: false; error: { code: ToolErrorCode; message: string } };
 type Ok<T> = { ok: true } & T;
 
-function fail(code: AgentToolErrorCode, message: string): Fail {
+function fail(code: ToolErrorCode, message: string): Fail {
   return { ok: false, error: { code, message } };
 }
 
