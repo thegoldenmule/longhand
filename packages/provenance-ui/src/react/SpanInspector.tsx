@@ -72,7 +72,8 @@ function usePlacement(
   rect: InspectRect | null,
   inline: boolean,
 ): CSSProperties {
-  const [style, setStyle] = useState<CSSProperties>({ visibility: 'hidden' });
+  // Unplaced, it stays transparent but focusable (keyboard opening focuses it at once).
+  const [style, setStyle] = useState<CSSProperties>({ top: 0, left: 0, opacity: 0 });
   useLayoutEffect(() => {
     if (inline) return;
     const el = ref.current;
@@ -102,7 +103,7 @@ export function SpanInspector(props: SpanInspectorProps): ReactElement {
   const style = usePlacement(ref, props.rect, props.inline ?? false);
 
   useEffect(() => {
-    if (props.autoFocus) ref.current?.focus();
+    if (props.autoFocus) ref.current?.focus({ preventScroll: true });
   }, [props.autoFocus, model]);
 
   const onKeyDown = (e: KeyboardEvent): void => {

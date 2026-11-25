@@ -301,7 +301,8 @@ export function inspectSpan(
       kindLabel: MATCHED_KIND_LABEL[h.run.matchedKind],
       group: h.matched.group,
       text: t.text === null ? null : excerpt(t.text, 140),
-      status: t.status,
+      // Only suggestions have an outcome worth showing (adopted, adapted…).
+      status: h.matched.group === 'suggestions' ? t.status : null,
     };
   }
 

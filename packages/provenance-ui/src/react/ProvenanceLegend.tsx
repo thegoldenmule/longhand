@@ -4,7 +4,7 @@
  */
 import type { CountScope } from '@longhand/ledger';
 import type { ProjectState } from '@longhand/schema';
-import { useId, useMemo, type ReactElement } from 'react';
+import { useId, useMemo, type ReactElement, type ReactNode } from 'react';
 import { CLASS_META, type TintClass } from '../classes';
 import { formatCount, plural } from '../format';
 import { documentLegend, projectLegend, type LegendData, type LegendDocument } from '../legendData';
@@ -30,6 +30,11 @@ export interface ProvenanceLegendProps {
   title?: string;
   /** Hide the toggle (for a legend next to a view that is always tinted). */
   showToggle?: boolean;
+  /**
+   * Text under the rows. Default: how to highlight and inspect (with the toggle),
+   * nothing without it. Pass null to hide it.
+   */
+  hint?: ReactNode | null;
   className?: string;
 }
 
@@ -78,6 +83,14 @@ export function ProvenanceLegend(props: ProvenanceLegendProps): ReactElement {
 
   const total = data?.total ?? 0;
   const showToggle = props.showToggle ?? true;
+  const hint =
+    props.hint !== undefined
+      ? props.hint
+      : !showToggle
+        ? null
+        : enabled
+          ? 'Choose a class to highlight its words. Click any text, or press Alt+Enter at the caret, to see its history.'
+          : 'Turn on the tint to see who wrote what.';
 
   return (
     <section
@@ -161,11 +174,7 @@ export function ProvenanceLegend(props: ProvenanceLegendProps): ReactElement {
           );
         })}
       </ul>
-      <p className="lh-prov-legend__hint">
-        {enabled
-          ? 'Choose a class to highlight its words. Click any text to see its history.'
-          : 'Turn on the tint to see who wrote what.'}
-      </p>
+      {hint !== null && <p className="lh-prov-legend__hint">{hint}</p>}
     </section>
   );
 }

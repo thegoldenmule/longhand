@@ -387,7 +387,7 @@ export function ReplayScrubber(props: ReplayScrubberProps): ReactElement {
         ))}
         <div className="lh-replay__lane lh-replay__lane--slider">
           <label className="lh-replay__lane-label" htmlFor={ids.slider}>
-            Seq
+            Ledger
           </label>
           <input
             id={ids.slider}

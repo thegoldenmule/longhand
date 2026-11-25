@@ -1,0 +1,162 @@
+:root {
+  color-scheme: light dark;
+  --demo-bg: #fbf9f5;
+  --demo-ink: #23211e;
+  --demo-soft: #6b665e;
+  --demo-rule: #e4ded3;
+  --demo-surface: #fffdf9;
+  --demo-selected: #efe9dd;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --demo-bg: #1c1b19;
+    --demo-ink: #e6e1d8;
+    --demo-soft: #a29b8f;
+    --demo-rule: #38352f;
+    --demo-surface: #23221f;
+    --demo-selected: #2f2d29;
+  }
+}
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --demo-bg: #1c1b19;
+  --demo-ink: #e6e1d8;
+  --demo-soft: #a29b8f;
+  --demo-rule: #38352f;
+  --demo-surface: #23221f;
+  --demo-selected: #2f2d29;
+}
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--demo-bg);
+  color: var(--demo-ink);
+}
+.demo {
+  min-height: 100vh;
+  font:
+    13px/1.4 ui-sans-serif,
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+.demo-bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.25rem;
+  padding: 0.65rem 1.5rem;
+  background: color-mix(in srgb, var(--demo-bg) 92%, transparent);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--demo-rule);
+  color: var(--demo-soft);
+}
+.demo-brand {
+  margin-right: auto;
+  font-family: 'Iowan Old Style', Charter, Georgia, serif;
+  font-size: 16px;
+  color: var(--demo-ink);
+}
+.demo-brand span {
+  color: var(--demo-soft);
+}
+.demo-bar label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+.demo-bar select {
+  padding: 0.2rem 0.4rem;
+  font: inherit;
+  color: var(--demo-ink);
+  background: var(--demo-surface);
+  border: 1px solid var(--demo-rule);
+  border-radius: 6px;
+}
+.demo-tabs,
+.demo-scope {
+  display: inline-flex;
+  padding: 2px;
+  border: 1px solid var(--demo-rule);
+  border-radius: 7px;
+}
+.demo-tabs button,
+.demo-scope button {
+  padding: 0.2rem 0.7rem;
+  font: inherit;
+  color: var(--demo-soft);
+  background: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.demo-tabs button[aria-selected='true'],
+.demo-scope button[aria-pressed='true'] {
+  color: var(--demo-ink);
+  background: var(--demo-selected);
+}
+.demo-scope {
+  margin-bottom: 1rem;
+}
+.demo-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 18rem;
+  gap: 2rem;
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+.demo-page {
+  min-width: 0;
+  padding-top: 1.5rem;
+}
+/* The demo has no typewriter scrolling; a calmer page margin. */
+.demo-page .lh-editor .lh-manuscript:not(.lh-replay__manuscript) {
+  padding: 2.5rem 1.5rem 30vh;
+}
+.demo-page > div > .lh-editor {
+  background: transparent;
+}
+.demo-side {
+  position: sticky;
+  top: 4rem;
+  align-self: start;
+  padding: 2rem 0 2rem 1.5rem;
+  border-left: 1px solid var(--demo-rule);
+}
+.demo-note,
+.demo-fixture {
+  margin: 1.25rem 0 0;
+  font-size: 12px;
+  color: var(--demo-soft);
+}
+.demo-fixture {
+  padding-top: 1rem;
+  border-top: 1px solid var(--demo-rule);
+}
+kbd {
+  padding: 0 0.3em;
+  font:
+    11px ui-monospace,
+    monospace;
+  border: 1px solid var(--demo-rule);
+  border-radius: 3px;
+}
+@media (max-width: 860px) {
+  .demo-main {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .demo-side {
+    position: static;
+    padding: 1rem 0;
+    border-left: none;
+    border-top: 1px solid var(--demo-rule);
+  }
+}
