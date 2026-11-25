@@ -6,7 +6,10 @@ import { goldenInput } from './fixtures.test-helpers';
 import { exportMarkdown } from './markdown';
 import type { ExportInput } from './types';
 
-const md = new MarkdownIt({ html: true }).use(footnotePlugin);
+// @types/markdown-it-footnote targets markdown-it 14's types; the plugin works with 15.
+const md = new MarkdownIt({ html: true }).use(
+  footnotePlugin as unknown as Parameters<InstanceType<typeof MarkdownIt>['use']>[0],
+);
 const html = (markdown: string): string => md.render(markdown);
 
 const one = (...content: PMNodeJSON[]): ExportInput => ({

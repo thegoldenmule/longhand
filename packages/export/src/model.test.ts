@@ -180,9 +180,9 @@ describe('buildExportModel', () => {
       ['missing-source', 'ghost', 0],
       ['missing-source', 'ghost2', 0],
     ]);
-    expect(inlineText((model.documents[0]!.blocks[0] as { content: never[] }).content)).toBe(
-      'x [missing source][missing source]',
-    );
+    expect(
+      inlineText((model.documents[0]!.blocks[0] as Extract<Block, { kind: 'paragraph' }>).content),
+    ).toBe('x [missing source][missing source]');
     expect(model.bibliography).toBeNull();
   });
 
