@@ -2,6 +2,7 @@ import { schema, type CommitDraft } from '@longhand/schema';
 import { Transform } from 'prosemirror-transform';
 import { describe, expect, it } from 'vitest';
 import { LedgerBuilder } from './builder';
+import { appendToChain } from './chain';
 import { validateDraft } from './validate';
 
 const human = { kind: 'human' as const, id: 'writer-1' };
@@ -46,9 +47,12 @@ function textEdited(b: LedgerBuilder, baseVersion = b.version('d')): CommitDraft
 describe('validateDraft', () => {
   it('accepts a valid draft and returns the folded state', () => {
     const b = setup();
-    const r = validateDraft(b.state, textEdited(b), human);
+    const draft = textEdited(b);
+    const serverTime = '2026-11-02T10:00:00.000Z';
+    const r = validateDraft(b.state, draft, human, { serverTime });
     expect(r.ok).toBe(true);
     if (r.ok) {
+      expect(r.commit).toEqual(appendToChain(b.head, draft, serverTime));
       expect(r.commit.seq).toBe(b.head.seq + 1);
       expect(r.commit.prevHash).toBe(b.head.hash);
       expect(r.resolutions).toEqual([]);
