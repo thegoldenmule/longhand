@@ -129,6 +129,7 @@ export {
   makeDraft,
   newId,
   normalizeClippingText,
+  researchCardDismissedDraft,
   sourceAddedDraft,
   sourceUpdatedDraft,
   surfacedSourceAddedDraft,
@@ -152,3 +153,18 @@ export {
   type PlaceableClipping,
   type ResearchInput,
 } from './commands';
+
+// React components
+export { SourcesPanel, type SourcesPanelProps } from './components/SourcesPanel';
+export { ClippingsList, type ClippingsListProps } from './components/ClippingsList';
+export { CitationPicker, type CitationPickerProps } from './components/CitationPicker';
+export { Bibliography, type BibliographyProps } from './components/Bibliography';
+export { SourceForm, type SourceFormProps } from './components/SourceForm';
+export {
+  AI_SURFACED_LABEL,
+  AiSurfacedBadge,
+  SourceSummary,
+  findDuplicate,
+  type Collection,
+  type DraftProps,
+} from './components/shared';

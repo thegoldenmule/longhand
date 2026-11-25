@@ -5,6 +5,7 @@ import {
   clippingRemovedDraft,
   clippingSavedDraft,
   normalizeClippingText,
+  researchCardDismissedDraft,
   sourceAddedDraft,
   sourceUpdatedDraft,
   surfacedSourceAddedDraft,
@@ -106,6 +107,12 @@ describe('draft builders', () => {
     });
     expect(c.type).toBe('CitationInserted');
     expect(CommitDraftSchema.safeParse(c).success).toBe(true);
+  });
+
+  it('SuggestionDismissed for a research card', () => {
+    const d = researchCardDismissedDraft(ctx(), 'surf1', 'wrong');
+    expect(d.payload).toEqual({ targetId: 'surf1', reason: 'wrong', note: null });
+    expect(CommitDraftSchema.safeParse(d).success).toBe(true);
   });
 
   it('refuses non-human actors', () => {

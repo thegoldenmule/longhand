@@ -35,7 +35,8 @@ export type ResearchDraft =
   | CommitDraftOf<'SourceUpdated'>
   | CommitDraftOf<'ClippingSaved'>
   | CommitDraftOf<'ClippingRemoved'>
-  | CommitDraftOf<'CitationInserted'>;
+  | CommitDraftOf<'CitationInserted'>
+  | CommitDraftOf<'SuggestionDismissed'>;
 
 /** Generates a Longhand id (a UUID). */
 export function newId(ctx?: Pick<DraftContext, 'newId'>): string {
@@ -183,4 +184,17 @@ export function citationInsertedDraft(
   payload: EventPayload<'CitationInserted'>,
 ): CommitDraftOf<'CitationInserted'> {
   return makeDraft(ctx, 'CitationInserted', payload);
+}
+
+/**
+ * `SuggestionDismissed` for a research card: an AI-surfaced source set
+ * (`SourceSurfaced.surfacedId`), a source suggestion or a citation-needed flag.
+ */
+export function researchCardDismissedDraft(
+  ctx: DraftContext,
+  targetId: string,
+  reason: EventPayload<'SuggestionDismissed'>['reason'] = null,
+  note: string | null = null,
+): CommitDraftOf<'SuggestionDismissed'> {
+  return makeDraft(ctx, 'SuggestionDismissed', { targetId, reason, note });
 }
