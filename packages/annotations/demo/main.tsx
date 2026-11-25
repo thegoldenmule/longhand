@@ -1,6 +1,6 @@
 /**
  * Demo of the annotation layer over the real editor.
- * `pnpm --filter @longhand/annotations demo`, then open http://localhost:4318.
+ * `pnpm --filter @longhand/annotations demo`, then open http://localhost:4319.
  *
  * The transport folds every draft with `@longhand/ledger` (`validateDraft`), so
  * trace-over resolutions and proposal acceptance run the real fold. The ledger is

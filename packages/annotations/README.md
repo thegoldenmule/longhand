@@ -12,7 +12,7 @@ The AI writes only to the annotation layer, and this package keeps it there:
 ```sh
 pnpm --filter @longhand/annotations typecheck
 pnpm --filter @longhand/annotations test    # Vitest + Testing Library (jsdom)
-pnpm --filter @longhand/annotations demo    # http://localhost:4318
+pnpm --filter @longhand/annotations demo    # http://localhost:4319
 pnpm --filter @longhand/annotations e2e     # Playwright against the demo (installed Chrome)
 ```
 

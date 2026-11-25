@@ -1,7 +1,7 @@
 import { defineConfig } from '@playwright/test';
 import { existsSync } from 'node:fs';
 
-const PORT = Number(process.env.DEMO_PORT ?? 4318);
+const PORT = Number(process.env.DEMO_PORT ?? 4319);
 
 /** Use installed Google Chrome when present, else Playwright's bundled Chromium. */
 function hasChrome(): boolean {
