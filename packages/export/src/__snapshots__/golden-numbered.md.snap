@@ -1,0 +1,82 @@
+# Chapter One
+
+## The Crossing
+
+The rain fell *sideways*, and **nobody** spoke. It was **very *very*** *late*.[^1]
+
+Line one of a poem\
+line two, after a hard break.
+
+### A smaller heading
+
+As Woolf argued [2, p. 12], a writer needs a room; others disagree [1].
+
+\# not a heading, \*not emphasis\*, 1. not a list, \[not\](a link) and \<b>not html\</b> & so on\_
+
+1\. Starts like a list
+
+#### Smallest heading
+
+> A writer’s own block quote, with *emphasis*.
+>
+> - a list inside the quote
+> - second item
+
+* * *
+
+- First bullet
+
+  3. third, nested
+  4. fourth, nested
+     - deepest
+
+- Second bullet
+
+> A woman must have money and a room of her own if she is to write fiction.
+>
+> A second quoted paragraph.
+>
+> — Virginia Woolf, *A Room of One's Own*, p. 4
+
+After the quote.[^2]
+
+[^1]: Or so the *logbook* says.\
+    Second line, citing [1, p. 50].
+
+[^2]: A second footnote.
+
+# Chapter Two
+
+Chapter two opens[^3] with a footnote.
+
+1. A loose item
+
+   with a second paragraph.
+
+2. Another item, citing the web [4].
+
+<!-- -->
+
+1. A separate list right after.
+
+* * *
+
+Woolf again [2, pp. 20–24].
+
+[^3]: Third footnote, **strongly** put, citing [3, ch. 2].
+
+# Afterword
+
+A short afterword.
+
+# References
+
+[1] Smith, Ada, and Ben Jones. 2019. “Salt and Memory.” *Journal of Coastal History* 12(3): 45–67. https://doi.org/10.1000/xyz123.
+
+[2] Woolf, Virginia. 1929. *A Room of One's Own*. London: Hogarth Press.
+
+[3] Okafor, Chidi, Maja Lind, and Soo Park, eds. 2001. *Tides: Collected Essays*. Harbour Books.
+
+[4] *Salt Roads of the North*. n.d. https://example.org/salt.
+
+[5] Anonymous Collective. 1880. *An Uncited Book*.

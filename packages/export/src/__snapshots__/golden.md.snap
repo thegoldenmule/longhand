@@ -1,0 +1,109 @@
+# The Salt Road
+
+*A Novel in Three Parts*
+
+Jane Writer
+
+November 2026
+
+## Chapter One
+
+### The Crossing
+
+The rain fell *sideways*, and **nobody** spoke. It was **very *very*** *late*.[^1]
+
+Line one of a poem\
+line two, after a hard break.
+
+#### A smaller heading
+
+As Woolf argued (Woolf 1929, p. 12), a writer needs a room; others disagree (Smith and Jones 2019).
+
+\# not a heading, \*not emphasis\*, 1. not a list, \[not\](a link) and \<b>not html\</b> & so on\_
+
+1\. Starts like a list
+
+##### Smallest heading
+
+> A writer’s own block quote, with *emphasis*.
+>
+> - a list inside the quote
+> - second item
+
+* * *
+
+- First bullet
+
+  3. third, nested
+  4. fourth, nested
+     - deepest
+
+- Second bullet
+
+> A woman must have money and a room of her own if she is to write fiction.
+>
+> A second quoted paragraph.
+>
+> — Virginia Woolf, *A Room of One's Own*, p. 4
+
+After the quote.[^2]
+
+[^1]: Or so the *logbook* says.\
+    Second line, citing (Smith and Jones 2019, p. 50).
+
+[^2]: A second footnote.
+
+## Chapter Two
+
+Chapter two opens[^3] with a footnote.
+
+1. A loose item
+
+   with a second paragraph.
+
+2. Another item, citing the web (“Salt Roads of the North” n.d.).
+
+<!-- -->
+
+1. A separate list right after.
+
+* * *
+
+Woolf again (Woolf 1929, pp. 20–24).
+
+[^3]: Third footnote, **strongly** put, citing (Okafor et al. 2001, ch. 2).
+
+## Afterword
+
+A short afterword.
+
+## Bibliography
+
+Okafor, Chidi, Maja Lind, and Soo Park, eds. 2001. *Tides: Collected Essays*. Harbour Books.
+
+*Salt Roads of the North*. n.d. https://example.org/salt.
+
+Smith, Ada, and Ben Jones. 2019. “Salt and Memory.” *Journal of Coastal History* 12(3): 45–67. https://doi.org/10.1000/xyz123.
+
+Woolf, Virginia. 1929. *A Room of One's Own*. London: Hogarth Press.
+
+## Provenance
+
+Written in 3 sessions over 2 days. 96.3% typed directly; 1.6% retyped from 2 AI word-choice suggestions; 0.6% pasted.
+
+| Words by origin | Words | Share |
+| --- | ---: | ---: |
+| Typed | 1,234 | 96.3% |
+| Typed from a suggestion | 21 | 1.6% |
+| Pasted (external) | 8 | 0.6% |
+| Imported (unverified) | 0 | 0.0% |
+| Quoted from a source | 19 | 1.5% |
+| **Total** | **1,282** | **100.0%** |
+
+| The record proves | It does not prove |
+| --- | --- |
+| The text came in through the editor’s input channel | That the account holder was the one typing |
+| The history hasn’t changed |  |
+
+Verify at https://longhand.example/verify\
+Head hash: 0123abcd

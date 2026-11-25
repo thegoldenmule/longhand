@@ -12,3 +12,5 @@ test-results/
 blob-report/
 playwright/.cache/
 .DS_Store
+
+.claude/worktrees/
