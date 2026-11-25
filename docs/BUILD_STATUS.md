@@ -39,6 +39,7 @@ Each applied in `packages/schema` first, then in its consumers; fixtures regener
 - `ProvenanceSummary` and `provenanceSummaryFromReport` moved to schema `bundle`; export imports and re-exports them. (2dd23fa)
 
 | provenance-ui | merged (139 unit + 9 Playwright) | see git log |
+| report + verifier | merged (7 Playwright; verifier fails every tamper case) | see git log |
 
 Integration note (provenance-ui): the span inspector needs the folded `LedgerState`, so the web app keeps the project's commit array client-side and folds it (shared `Replay` for scrubber + inspector).
 
@@ -48,6 +49,8 @@ Integration note (provenance-ui): the span inspector needs the folded `LedgerSta
 - Optional: a CSL `source` convention or a `provider` field on library sources, so the origin provider survives `SourceAdded`. (research)
 - Server lane implements the AnnotationSink HTTP contract in `packages/agent/README.md`.
 - Server/web must implement the editor's `CommitTransport` (`packages/editor/src/sync/transport.ts`): submit → ack/duplicate/conflict/rejected/offline; subscribe in ledger order incl. own commits; `fetchSince` with fold-derived steps for ProposalAccepted. (editor → server)
+
+- Repo has no root LICENSE; verifier package declares MIT. Needs the owner's decision. (report/verifier)
 
 ## Notes
 
