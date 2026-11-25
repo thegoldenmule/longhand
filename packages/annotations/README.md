@@ -5,6 +5,7 @@
 The AI writes only to the annotation layer, and this package keeps it there:
 
 - **Ghost text is decoration, never document text.** In the editor it is a widget decoration. On cards it is a span outside any editable. Either way it is `aria-hidden`, `contenteditable="false"` and `user-select: none`, and a clipboard guard strips it from any copy or cut.
+- **Links and inline code are the writer's formatting.** Annotation underlines draw inside `<a>` and `<code>`, ghost widgets carry no marks so they are never drawn as a link or as code, and adding or removing either mark changes no annotation's range or status (`src/marks.test.ts`, which also traces over a linked word).
 - **The writer's choices become human events.** Dismiss, reject, discuss and feedback requests go through `editor.submitEvent`. Accept goes through `editor.acceptProposal`, which carries no text: the fold derives the steps, so moved words keep their provenance.
 - **Outcomes come from the fold.** Adopted, adapted and stale are read from `ProjectState`; nothing here decides them.
 - **Calm by default.** Nothing appears until a review is requested. Word-choice ghosts show inline only for the suggestion the caret, pointer or a click is on. Proposal previews show only on hover or focus.
