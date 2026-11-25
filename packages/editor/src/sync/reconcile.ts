@@ -55,7 +55,9 @@ export function reconcileHeadless(
       version = u.version;
       continue;
     }
-    const remote = u.steps.slice(Math.max(0, version - u.baseVersion)).map((j) => Step.fromJSON(schema, j));
+    const remote = u.steps
+      .slice(Math.max(0, version - u.baseVersion))
+      .map((j) => Step.fromJSON(schema, j));
     const local = pending.flatMap((p) => p.steps);
     const result = rebaseStepsHeadless(local, remote);
     let i = 0;

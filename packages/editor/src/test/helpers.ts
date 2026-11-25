@@ -1,5 +1,11 @@
 /** Test helpers (not part of the public API). */
-import { CommitDraftSchema, docFromJSON, schema, type CommitDraft, type PMNodeJSON } from '@longhand/schema';
+import {
+  CommitDraftSchema,
+  docFromJSON,
+  schema,
+  type CommitDraft,
+  type PMNodeJSON,
+} from '@longhand/schema';
 import type { Node as PMNode } from 'prosemirror-model';
 import { EditorState, TextSelection, type Transaction } from 'prosemirror-state';
 import { expect } from 'vitest';
@@ -14,7 +20,9 @@ export function docOf(...paragraphs: string[]): PMNode {
 export function docJSON(...paragraphs: string[]): PMNodeJSON {
   return {
     type: 'doc',
-    content: paragraphs.map((t) => (t ? { type: 'paragraph', content: [{ type: 'text', text: t }] } : { type: 'paragraph' })),
+    content: paragraphs.map((t) =>
+      t ? { type: 'paragraph', content: [{ type: 'text', text: t }] } : { type: 'paragraph' },
+    ),
   };
 }
 

@@ -18,7 +18,10 @@ export type FocusMode = 'off' | 'sentence' | 'paragraph';
 export const focusKey = new PluginKey<FocusMode>('longhand-focus');
 
 /** Inline text of a textblock with the document position of each character. */
-export function textblockText(block: PMNode, contentStart: number): { text: string; pos: number[] } {
+export function textblockText(
+  block: PMNode,
+  contentStart: number,
+): { text: string; pos: number[] } {
   let text = '';
   const pos: number[] = [];
   block.forEach((child, offset) => {

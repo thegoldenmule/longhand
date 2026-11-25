@@ -25,12 +25,19 @@ export interface RebaseResult {
   survivorsBefore(k: number): number;
 }
 
-function makeResult(mapping: Mapping, n: number, m: number, appendedAt: number[], steps: Array<Step | null>): RebaseResult {
+function makeResult(
+  mapping: Mapping,
+  n: number,
+  m: number,
+  appendedAt: number[],
+  steps: Array<Step | null>,
+): RebaseResult {
   return {
     steps,
     mapAfter(k, pos, assoc = 1) {
       let end = n + m;
-      for (let i = 0; i < k; i++) if ((appendedAt[i] as number) >= 0) end = (appendedAt[i] as number) + 1;
+      for (let i = 0; i < k; i++)
+        if ((appendedAt[i] as number) >= 0) end = (appendedAt[i] as number) + 1;
       return mapping.slice(n - k, end).map(pos, assoc);
     },
     survivorsBefore(k) {
@@ -113,5 +120,9 @@ export function rebaseOnDoc<T extends Transform>(
       inv.push(null);
     }
   }
-  return { ...makeResult(tr.mapping, n, remote.length, appendedAt, out), transform: tr, inverted: inv };
+  return {
+    ...makeResult(tr.mapping, n, remote.length, appendedAt, out),
+    transform: tr,
+    inverted: inv,
+  };
 }

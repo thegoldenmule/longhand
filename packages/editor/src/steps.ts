@@ -5,12 +5,7 @@
  * nothing, footnote text included).
  */
 import type { Fragment, Node as PMNode } from 'prosemirror-model';
-import {
-  ReplaceAroundStep,
-  ReplaceStep,
-  type Step,
-  type Transform,
-} from 'prosemirror-transform';
+import { ReplaceAroundStep, ReplaceStep, type Step, type Transform } from 'prosemirror-transform';
 
 /** Inline-text length of a fragment: text characters plus one per `hard_break`. */
 export function inlineCharCount(fragment: Fragment): number {
@@ -87,13 +82,19 @@ export interface StepTotals {
 
 /** Sums inserted and deleted characters over a transform's steps. */
 export function transformTotals(tr: Transform): StepTotals {
-  const totals: StepTotals = { insertedChars: 0, insertedUnits: 0, deletedChars: 0, structural: false };
+  const totals: StepTotals = {
+    insertedChars: 0,
+    insertedUnits: 0,
+    deletedChars: 0,
+    structural: false,
+  };
   tr.steps.forEach((step, i) => {
     totals.insertedChars += insertedChars(step);
     totals.insertedUnits += insertedUnits(step);
     const d = deletedChars(step, tr.docs[i] as PMNode);
     totals.deletedChars += d;
-    if (!(step instanceof ReplaceStep) || (d === 0 && insertedChars(step) === 0)) totals.structural = true;
+    if (!(step instanceof ReplaceStep) || (d === 0 && insertedChars(step) === 0))
+      totals.structural = true;
   });
   return totals;
 }
@@ -120,9 +121,15 @@ export function changedRange(tr: Transform): { from: number; to: number } | null
 /** True if the step splits a textblock (what Enter does). */
 export function isSplitStep(step: Step): boolean {
   if (!(step instanceof ReplaceStep)) return false;
-  const slice = (step as unknown as { slice: { openStart: number; openEnd: number; content: Fragment } })
-    .slice;
-  return slice.openStart > 0 && slice.openEnd > 0 && slice.content.childCount >= 2 && inlineCharCount(slice.content) === 0;
+  const slice = (
+    step as unknown as { slice: { openStart: number; openEnd: number; content: Fragment } }
+  ).slice;
+  return (
+    slice.openStart > 0 &&
+    slice.openEnd > 0 &&
+    slice.content.childCount >= 2 &&
+    inlineCharCount(slice.content) === 0
+  );
 }
 
 /** Type names of every node a transform's steps insert (descendants included). */

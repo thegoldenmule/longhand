@@ -141,8 +141,7 @@ export interface Consumption {
 
 /** Classification result. */
 export type Classification =
-  | { ok: true; tag: InputTag | null; consume: Consumption }
-  | { ok: false; reason: string };
+  { ok: true; tag: InputTag | null; consume: Consumption } | { ok: false; reason: string };
 
 function fresh(at: number, s: TrackerState): boolean {
   return s.now - at <= s.windowMs;
@@ -151,7 +150,12 @@ function fresh(at: number, s: TrackerState): boolean {
 function pasteInfo(
   facts: TransactionFacts,
   ctx: ClassifyContext,
-  base: { origin: 'external' | 'internal'; via: 'clipboard' | 'drop'; copyId: string | null; mimeTypes: string[] },
+  base: {
+    origin: 'external' | 'internal';
+    via: 'clipboard' | 'drop';
+    copyId: string | null;
+    mimeTypes: string[];
+  },
 ): PasteInfo {
   const text = facts.insertedText();
   return {
@@ -173,7 +177,10 @@ function typedKind(facts: TransactionFacts): KeystrokeKind {
 }
 
 function withTrace(tag: InputTag, ctx: ClassifyContext): InputTag {
-  if (ctx.traceSuggestionId && (tag.method === 'typed' || tag.method === 'ime' || tag.method === 'autocorrect'))
+  if (
+    ctx.traceSuggestionId &&
+    (tag.method === 'typed' || tag.method === 'ime' || tag.method === 'autocorrect')
+  )
     return { ...tag, traceSuggestionId: ctx.traceSuggestionId };
   return tag;
 }
@@ -191,10 +198,21 @@ export function classifyTransaction(
 
   const violation = (reason: string): Classification => {
     if (ctx.policy === 'flag' && facts.insertedUnits > 0) {
-      const paste = pasteInfo(facts, ctx, { origin: 'external', via: 'clipboard', copyId: null, mimeTypes: [] });
+      const paste = pasteInfo(facts, ctx, {
+        origin: 'external',
+        via: 'clipboard',
+        copyId: null,
+        mimeTypes: [],
+      });
       return {
         ok: true,
-        tag: { method: 'pasted-external', kind: 'paste', pasteId: paste.pasteId, paste, flagged: true },
+        tag: {
+          method: 'pasted-external',
+          kind: 'paste',
+          pasteId: paste.pasteId,
+          paste,
+          flagged: true,
+        },
         consume: {},
       };
     }
@@ -203,17 +221,25 @@ export function classifyTransaction(
 
   if (facts.declared) {
     const d = facts.declared;
-    const refuse = (reason: string): Classification => ({ ok: false, reason: `declared input: ${reason}` });
+    const refuse = (reason: string): Classification => ({
+      ok: false,
+      reason: `declared input: ${reason}`,
+    });
     if (!activation) return refuse('no recent user gesture');
     const { run } = d;
-    if (run.steps !== facts.steps) return refuse(`run covers ${run.steps} steps, transaction has ${facts.steps}`);
+    if (run.steps !== facts.steps)
+      return refuse(`run covers ${run.steps} steps, transaction has ${facts.steps}`);
     if (facts.deletedChars > 0) return refuse('it deletes text');
     const names = facts.insertedNodeNames;
     if (run.method === 'citation') {
       if (!run.citationId) return refuse('citation run without citationId');
       if (facts.insertedChars > 0 || [...names].some((n) => n !== 'citation'))
         return refuse('a citation run may insert only citation nodes');
-      if (d.companions.some((c) => c.type !== 'CitationInserted' || c.payload.citationId !== run.citationId))
+      if (
+        d.companions.some(
+          (c) => c.type !== 'CitationInserted' || c.payload.citationId !== run.citationId,
+        )
+      )
         return refuse('companion does not match the citation');
     } else if (run.method === 'clipping') {
       if (!run.clippingId) return refuse('clipping run without clippingId');
@@ -237,7 +263,11 @@ export function classifyTransaction(
 
   if (facts.history) {
     if (!activation) return violation('undo/redo without user input');
-    return { ok: true, tag: { method: 'history', kind: facts.history.redo ? 'redo' : 'undo' }, consume: {} };
+    return {
+      ok: true,
+      tag: { method: 'history', kind: facts.history.redo ? 'redo' : 'undo' },
+      consume: {},
+    };
   }
 
   if (facts.uiEvent === 'paste') {
@@ -252,7 +282,12 @@ export function classifyTransaction(
         copyId = p.marker.copyId;
       }
     }
-    const paste = pasteInfo(facts, ctx, { origin, via: 'clipboard', copyId, mimeTypes: p.mimeTypes });
+    const paste = pasteInfo(facts, ctx, {
+      origin,
+      via: 'clipboard',
+      copyId,
+      mimeTypes: p.mimeTypes,
+    });
     return {
       ok: true,
       tag: {
@@ -268,8 +303,14 @@ export function classifyTransaction(
   if (facts.uiEvent === 'drop') {
     const d = s.drop;
     if (!d || !fresh(d.at, s)) return violation('drop transaction without a trusted drop event');
-    if (d.internal) return { ok: true, tag: { method: 'drop-internal', kind: 'drop' }, consume: { drop: true } };
-    const paste = pasteInfo(facts, ctx, { origin: 'external', via: 'drop', copyId: null, mimeTypes: d.mimeTypes });
+    if (d.internal)
+      return { ok: true, tag: { method: 'drop-internal', kind: 'drop' }, consume: { drop: true } };
+    const paste = pasteInfo(facts, ctx, {
+      origin: 'external',
+      via: 'drop',
+      copyId: null,
+      mimeTypes: d.mimeTypes,
+    });
     return {
       ok: true,
       tag: { method: 'pasted-external', kind: 'drop', pasteId: paste.pasteId, paste },
@@ -292,17 +333,25 @@ export function classifyTransaction(
       return violation(`IME inserted ${facts.insertedUnits} units, input allowed ${allowed}`);
     return {
       ok: true,
-      tag: withTrace({ method: 'ime', kind: facts.insertedChars > 0 ? 'compose' : typedKind(facts) }, ctx),
+      tag: withTrace(
+        { method: 'ime', kind: facts.insertedChars > 0 ? 'compose' : typedKind(facts) },
+        ctx,
+      ),
       consume: { text: Math.min(s.textBudget, facts.insertedUnits) },
     };
   }
 
   if (facts.insertedUnits === 0 && facts.deletedChars === 0) {
     if (!activation) return violation('format change without user input');
-    return { ok: true, tag: withTrace({ method: 'typed', kind: typedKind(facts) }, ctx), consume: {} };
+    return {
+      ok: true,
+      tag: withTrace({ method: 'typed', kind: typedKind(facts) }, ctx),
+      consume: {},
+    };
   }
 
-  if (!editorInput && !(grant?.activation && activation)) return violation('edit without user input');
+  if (!editorInput && !(grant?.activation && activation))
+    return violation('edit without user input');
 
   const budget = s.textBudget + granted;
   if (facts.insertedUnits > budget)
@@ -311,7 +360,11 @@ export function classifyTransaction(
   const consume: Consumption = { text: Math.min(s.textBudget, facts.insertedUnits) };
   if (fresh(s.autocorrectAt, s) && facts.insertedChars > 0) {
     consume.autocorrect = true;
-    return { ok: true, tag: withTrace({ method: 'autocorrect', kind: 'autocorrect' }, ctx), consume };
+    return {
+      ok: true,
+      tag: withTrace({ method: 'autocorrect', kind: 'autocorrect' }, ctx),
+      consume,
+    };
   }
   return { ok: true, tag: withTrace({ method: 'typed', kind: typedKind(facts) }, ctx), consume };
 }

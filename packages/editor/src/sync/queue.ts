@@ -48,7 +48,12 @@ export function draftDocumentId(draft: CommitDraft): string | null {
   return typeof p.documentId === 'string' ? p.documentId : null;
 }
 
-function entryOf(draft: CommitDraft, order: number, projectId: string, enqueuedAt: number): QueueEntry {
+function entryOf(
+  draft: CommitDraft,
+  order: number,
+  projectId: string,
+  enqueuedAt: number,
+): QueueEntry {
   return {
     order,
     commitId: draft.commitId,
@@ -116,7 +121,10 @@ function done(tx: IDBTransaction): Promise<void> {
 }
 
 /** Opens (and creates) the editor's IndexedDB database. */
-export function openQueueDatabase(factory: IDBFactory = indexedDB, name = DB_NAME): Promise<IDBDatabase> {
+export function openQueueDatabase(
+  factory: IDBFactory = indexedDB,
+  name = DB_NAME,
+): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
     const open = factory.open(name, 1);
     open.onupgradeneeded = () => {
@@ -174,7 +182,9 @@ export class IndexedDbQueue implements CommitQueue {
   list(): Promise<QueueEntry[]> {
     return this.run(async (db) => {
       const tx = db.transaction(STORE, 'readonly');
-      const all = (await req(tx.objectStore(STORE).index('projectId').getAll(this.projectId))) as QueueEntry[];
+      const all = (await req(
+        tx.objectStore(STORE).index('projectId').getAll(this.projectId),
+      )) as QueueEntry[];
       return all.sort((a, b) => a.order - b.order);
     });
   }
@@ -182,7 +192,9 @@ export class IndexedDbQueue implements CommitQueue {
   peek(): Promise<QueueEntry | undefined> {
     return this.run(async (db) => {
       const tx = db.transaction(STORE, 'readonly');
-      const cursor = await req(tx.objectStore(STORE).index('projectId').openCursor(IDBKeyRange.only(this.projectId)));
+      const cursor = await req(
+        tx.objectStore(STORE).index('projectId').openCursor(IDBKeyRange.only(this.projectId)),
+      );
       return cursor ? (cursor.value as QueueEntry) : undefined;
     });
   }
@@ -224,5 +236,7 @@ export class IndexedDbQueue implements CommitQueue {
 
 /** An IndexedDB queue when IndexedDB exists, else an in-memory one. */
 export function createCommitQueue(projectId: string): CommitQueue {
-  return typeof indexedDB !== 'undefined' ? new IndexedDbQueue(projectId) : new MemoryQueue(projectId);
+  return typeof indexedDB !== 'undefined'
+    ? new IndexedDbQueue(projectId)
+    : new MemoryQueue(projectId);
 }

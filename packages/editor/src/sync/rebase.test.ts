@@ -16,7 +16,10 @@ describe('rebase', () => {
 
   it('rebases local steps on the document (collab algorithm)', () => {
     const state = EditorState.create({ doc: localTr.doc, schema });
-    const local = localTr.steps.map((step, i) => ({ step, inverted: step.invert(localTr.docs[i]!) }));
+    const local = localTr.steps.map((step, i) => ({
+      step,
+      inverted: step.invert(localTr.docs[i]!),
+    }));
     const r = rebaseOnDoc(state.tr, local, remoteTr.steps);
     const next = state.apply(r.transform);
     expect(text(next)).toBe('Oh, Hello brave world!');

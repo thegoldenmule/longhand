@@ -7,7 +7,14 @@ import { createDecorationLayer } from './decorations';
 import type { GuardViolation } from './input/guard';
 import { MockTransport } from './sync/mockTransport';
 import { MemoryQueue } from './sync/queue';
-import { beforeInput, clipboardEvent, docJSON, expectValidDraft, FakeDataTransfer, settle } from './test/helpers';
+import {
+  beforeInput,
+  clipboardEvent,
+  docJSON,
+  expectValidDraft,
+  FakeDataTransfer,
+  settle,
+} from './test/helpers';
 
 const handles: EditorHandle[] = [];
 afterEach(() => {
@@ -39,13 +46,16 @@ function make(over: Partial<CreateEditorOptions> = {}, text = 'Hello world. Seco
   handles.push(handle);
   const view = handle.view;
   const text_ = (): string => view.state.doc.textBetween(0, view.state.doc.content.size, '\n');
-  const at = (pos: number): void => view.dispatch(view.state.tr.setSelection(TextSelection.create(view.state.doc, pos)));
+  const at = (pos: number): void =>
+    view.dispatch(view.state.tr.setSelection(TextSelection.create(view.state.doc, pos)));
   /** Simulates the browser delivering typed text: beforeinput, then ProseMirror's text input path. */
   const typeText = (t: string): void => {
     for (const ch of t) {
       view.dom.dispatchEvent(beforeInput('insertText', ch));
       const { from, to } = view.state.selection;
-      const handled = view.someProp('handleTextInput', (f) => f(view, from, to, ch, () => view.state.tr.insertText(ch, from, to)));
+      const handled = view.someProp('handleTextInput', (f) =>
+        f(view, from, to, ch, () => view.state.tr.insertText(ch, from, to)),
+      );
       if (!handled) view.dispatch(view.state.tr.insertText(ch, from, to));
     }
   };
@@ -86,7 +96,9 @@ describe('createEditorView: input guard', () => {
   it('refuses text appended by another plugin on a keystroke', () => {
     const sneaky = new Plugin({
       appendTransaction: (trs, _old, state) =>
-        trs.some((t) => t.docChanged) && !state.doc.textContent.includes('[ai]') ? state.tr.insertText('[ai]', 1) : null,
+        trs.some((t) => t.docChanged) && !state.doc.textContent.includes('[ai]')
+          ? state.tr.insertText('[ai]', 1)
+          : null,
     });
     const { typeText, at, text, violations } = make({ extraPlugins: [sneaky] });
     at(1);
@@ -101,7 +113,9 @@ describe('createEditorView: input guard', () => {
     view.updateState(EditorState.create({ doc: forged, plugins: view.state.plugins }));
     await settle();
     expect(text()).toBe('Hello world. Second sentence.');
-    expect(violations.map((v) => v.reason)).toContain('document replaced outside the transaction pipeline');
+    expect(violations.map((v) => v.reason)).toContain(
+      'document replaced outside the transaction pipeline',
+    );
   });
 });
 
@@ -123,9 +137,17 @@ describe('createEditorView: clipboard', () => {
     const paste = transport.commits('PasteOccurred')[0]!;
     const te = transport.commits('TextEdited')[0]!;
     for (const d of [copy, paste, te]) expectValidDraft(d);
-    expect(paste.payload).toMatchObject({ origin: 'internal', via: 'clipboard', copyId: copy.payload.copyId, characters: 5, words: 1 });
+    expect(paste.payload).toMatchObject({
+      origin: 'internal',
+      via: 'clipboard',
+      copyId: copy.payload.copyId,
+      characters: 5,
+      words: 1,
+    });
     expect(paste.payload.textHash).toBe(copy.payload.textHash);
-    expect(te.payload.runs).toEqual([{ steps: 1, method: 'pasted-internal', pasteId: paste.payload.pasteId }]);
+    expect(te.payload.runs).toEqual([
+      { steps: 1, method: 'pasted-internal', pasteId: paste.payload.pasteId },
+    ]);
   });
 
   it('classifies a foreign paste as pasted-external', async () => {
@@ -136,8 +158,16 @@ describe('createEditorView: clipboard', () => {
     view.dom.dispatchEvent(clipboardEvent('paste', data));
     await committed(handle);
     const paste = transport.commits('PasteOccurred')[0]!;
-    expect(paste.payload).toMatchObject({ origin: 'external', copyId: null, characters: 15, words: 2, mimeTypes: ['text/plain'] });
-    expect(transport.commits('TextEdited')[0]!.payload.runs[0]).toMatchObject({ method: 'pasted-external' });
+    expect(paste.payload).toMatchObject({
+      origin: 'external',
+      copyId: null,
+      characters: 15,
+      words: 2,
+      mimeTypes: ['text/plain'],
+    });
+    expect(transport.commits('TextEdited')[0]!.payload.runs[0]).toMatchObject({
+      method: 'pasted-external',
+    });
   });
 
   it('refuses programmatic pastes', () => {
@@ -153,8 +183,16 @@ describe('createEditorView: clipboard', () => {
     expect(text()).toBe('Hello. Second sentence.');
     await committed(handle);
     expect(transport.commits().map((c) => c.type)).toEqual(['SliceCopied', 'TextEdited']);
-    expect(transport.commits('SliceCopied')[0]!.payload).toMatchObject({ cut: true, from: 6, to: 12, version: 0 });
-    expect(transport.commits('TextEdited')[0]!.payload.timeline[0]).toMatchObject({ kind: 'cut', len: 6 });
+    expect(transport.commits('SliceCopied')[0]!.payload).toMatchObject({
+      cut: true,
+      from: 6,
+      to: 12,
+      version: 0,
+    });
+    expect(transport.commits('TextEdited')[0]!.payload.timeline[0]).toMatchObject({
+      kind: 'cut',
+      len: 6,
+    });
   });
 });
 
@@ -205,7 +243,9 @@ describe('createEditorView: formatting input rules', () => {
     const { view, at } = make();
     view.dispatch(view.state.tr.setSelection(TextSelection.create(view.state.doc, 1, 6)));
     const key = (k: string, mods: KeyboardEventInit = {}): void => {
-      view.dom.dispatchEvent(new KeyboardEvent('keydown', { key: k, bubbles: true, cancelable: true, ...mods }));
+      view.dom.dispatchEvent(
+        new KeyboardEvent('keydown', { key: k, bubbles: true, cancelable: true, ...mods }),
+      );
     };
     key('b', /Mac/.test(navigator.platform) ? { metaKey: true } : { ctrlKey: true });
     const first = view.state.doc.firstChild!.firstChild!;
@@ -227,16 +267,26 @@ describe('createEditorView: commands for other lanes', () => {
     expect(id).toBeTruthy();
     await committed(handle);
     expect(transport.commits().map((c) => c.type)).toEqual(['CitationInserted', 'TextEdited']);
-    expect(transport.commits('TextEdited')[0]!.payload.runs).toEqual([{ steps: 1, method: 'citation', citationId: id }]);
+    expect(transport.commits('TextEdited')[0]!.payload.runs).toEqual([
+      { steps: 1, method: 'citation', citationId: id },
+    ]);
   });
 
   it('accepts transactions declared through the research meta alias', async () => {
     const { handle, view, transport } = make();
     document.dispatchEvent(new Event('click'));
-    const tr = view.state.tr.insert(13, schema.nodes.citation!.create({ sourceId: 's9', locator: null }));
+    const tr = view.state.tr.insert(
+      13,
+      schema.nodes.citation!.create({ sourceId: 's9', locator: null }),
+    );
     tr.setMeta('longhand/research-input', {
       run: { steps: 1, method: 'citation', citationId: 'cit-r' },
-      companions: [{ type: 'CitationInserted', payload: { citationId: 'cit-r', documentId: 'doc1', sourceId: 's9', locator: null } }],
+      companions: [
+        {
+          type: 'CitationInserted',
+          payload: { citationId: 'cit-r', documentId: 'doc1', sourceId: 's9', locator: null },
+        },
+      ],
       characters: 0,
       keystroke: { kind: 'paste', len: 0 },
     });
@@ -248,7 +298,9 @@ describe('createEditorView: commands for other lanes', () => {
   it('places a clipping as a quote block', async () => {
     const { handle, transport, view } = make();
     document.dispatchEvent(new Event('pointerdown'));
-    expect(handle.insertClipping({ clippingId: 'clip1', sourceId: 'src1', text: 'Line one\nLine two' })).toBe(true);
+    expect(
+      handle.insertClipping({ clippingId: 'clip1', sourceId: 'src1', text: 'Line one\nLine two' }),
+    ).toBe(true);
     expect(view.state.doc.child(1).type.name).toBe('quote_block');
     await committed(handle);
     const te = transport.commits('TextEdited')[0]!;
@@ -298,7 +350,13 @@ describe('createEditorView: UI state', () => {
     const { handle, typeText, at, view } = make({ extraPlugins: [layer.plugin] });
     at(1);
     typeText('Oh ');
-    expect(handle.setDecorations(layer, [{ kind: 'inline', from: 1, to: 6, attrs: { class: 'tint' } }], 0)).toBe(true);
+    expect(
+      handle.setDecorations(
+        layer,
+        [{ kind: 'inline', from: 1, to: 6, attrs: { class: 'tint' } }],
+        0,
+      ),
+    ).toBe(true);
     expect(view.dom.querySelector('.tint')?.textContent).toBe('Hello');
     expect(handle.setDecorations(layer, [], 99)).toBe(false);
   });

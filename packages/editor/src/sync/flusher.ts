@@ -169,7 +169,11 @@ export class CommitFlusher {
           this.conflicts.delete(head.commitId);
           this.lastError = null;
           this.retryDelay = this.opts.retryBaseMs ?? 1000;
-          this.acked.emit({ entry: head, seq: result.seq, ...(result.version !== undefined ? { version: result.version } : {}) });
+          this.acked.emit({
+            entry: head,
+            seq: result.seq,
+            ...(result.version !== undefined ? { version: result.version } : {}),
+          });
           this.owner(head.commitId)?.onAck(head, result);
           break;
         }
@@ -219,7 +223,9 @@ export class CommitFlusher {
       return;
     }
     const drafts = entries
-      .filter((e) => e.documentId === documentId && isTextEdited(e.draft) && !this.owner(e.commitId))
+      .filter(
+        (e) => e.documentId === documentId && isTextEdited(e.draft) && !this.owner(e.commitId),
+      )
       .map((e) => e.draft as CommitDraftOf<'TextEdited'>);
     const base = head.draft.payload.baseVersion;
     const catchUp = await this.transport.fetchSince(documentId, base);

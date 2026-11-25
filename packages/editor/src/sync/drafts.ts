@@ -141,7 +141,8 @@ export function buildTextEdited(
   baseVersion: number,
 ): CommitDraftOf<'TextEdited'> {
   if (batch.steps.length === 0) throw new RangeError('empty batch');
-  if (batch.steps.length > MAX_STEPS_PER_COMMIT) throw new RangeError('batch exceeds MAX_STEPS_PER_COMMIT');
+  if (batch.steps.length > MAX_STEPS_PER_COMMIT)
+    throw new RangeError('batch exceeds MAX_STEPS_PER_COMMIT');
   const { timeline, durationMs } = relativeTimeline(batch);
   return makeDraft(
     ctx,
@@ -149,7 +150,9 @@ export function buildTextEdited(
     {
       documentId,
       baseVersion,
-      steps: batch.steps.map((s) => s.step.toJSON() as EventPayloads['TextEdited']['steps'][number]),
+      steps: batch.steps.map(
+        (s) => s.step.toJSON() as EventPayloads['TextEdited']['steps'][number],
+      ),
       runs: runsOf(batch.steps),
       timeline,
       characters: batch.steps.reduce((n, s) => n + s.chars, 0),

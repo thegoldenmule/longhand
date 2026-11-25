@@ -12,7 +12,12 @@ import { StepMap } from 'prosemirror-transform';
 import { EditorView, type NodeView } from 'prosemirror-view';
 
 /** Clipboard hook for the nested editor (copy/cut positions in the main document). */
-export type FootnoteCopyHandler = (view: EditorView, event: ClipboardEvent, cut: boolean, offset: number) => boolean;
+export type FootnoteCopyHandler = (
+  view: EditorView,
+  event: ClipboardEvent,
+  cut: boolean,
+  offset: number,
+) => boolean;
 
 const FORWARDED_META = ['uiEvent', 'paste', 'composition', 'pointer'];
 
@@ -80,7 +85,9 @@ export class FootnoteView implements NodeView {
   private exit(): void {
     const pos = this.getPos();
     if (pos === undefined) return;
-    const tr = this.outer.state.tr.setSelection(TextSelection.create(this.outer.state.doc, pos + this.node.nodeSize));
+    const tr = this.outer.state.tr.setSelection(
+      TextSelection.create(this.outer.state.doc, pos + this.node.nodeSize),
+    );
     this.outer.dispatch(tr);
     this.outer.focus();
   }
@@ -103,10 +110,11 @@ export class FootnoteView implements NodeView {
     if (pos === undefined) return;
     const outerTr = this.outer.state.tr;
     const offsetMap = StepMap.offset(pos + 1);
-    for (const t of transactions) for (const step of t.steps) {
-      const mapped = step.map(offsetMap);
-      if (mapped) outerTr.step(mapped);
-    }
+    for (const t of transactions)
+      for (const step of t.steps) {
+        const mapped = step.map(offsetMap);
+        if (mapped) outerTr.step(mapped);
+      }
     for (const key of FORWARDED_META) {
       const v = tr.getMeta(key);
       if (v !== undefined) outerTr.setMeta(key, v);
@@ -115,7 +123,13 @@ export class FootnoteView implements NodeView {
     this.outer.dispatch(outerTr);
     // If the outer editor refused the change, keep the nested editor in sync with it.
     if (this.outer.state === before) {
-      this.inner.updateState(EditorState.create({ doc: this.node, plugins: this.inner.state.plugins, selection: this.inner.state.selection }));
+      this.inner.updateState(
+        EditorState.create({
+          doc: this.node,
+          plugins: this.inner.state.plugins,
+          selection: this.inner.state.selection,
+        }),
+      );
     } else {
       this.inner.updateState(state);
     }
@@ -136,7 +150,9 @@ export class FootnoteView implements NodeView {
             endA += overlap;
             endB += overlap;
           }
-          this.inner.dispatch(state.tr.replace(start, endB, node.slice(start, endA)).setMeta('fromOutside', true));
+          this.inner.dispatch(
+            state.tr.replace(start, endB, node.slice(start, endA)).setMeta('fromOutside', true),
+          );
         }
       }
     }
@@ -161,4 +177,3 @@ export function footnoteNodeView(onCopy: FootnoteCopyHandler) {
   return (node: PMNode, view: EditorView, getPos: () => number | undefined): NodeView =>
     new FootnoteView(node, view, getPos, onCopy);
 }
-

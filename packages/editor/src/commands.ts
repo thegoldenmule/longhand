@@ -58,7 +58,6 @@ import type { InputGrant } from './input/classify';
 import type { InputGuard } from './input/guard';
 import { marks, nodes } from './nodes';
 
-
 /** Wraps a command so its transactions carry a guard grant. */
 export function granted(guard: InputGuard, cmd: Command, grant: InputGrant): Command {
   return (state, dispatch, view) =>
@@ -102,7 +101,8 @@ export const insertFootnote: Command = (state, dispatch) => {
 export function editorKeymaps(guard: InputGuard): Plugin[] {
   const fmt = (cmd: Command): Command => granted(guard, cmd, { units: 0, kind: 'format' });
   const brk = (cmd: Command): Command => granted(guard, cmd, { units: 0, kind: 'break' });
-  const ins = (cmd: Command, units: number): Command => granted(guard, cmd, { units, kind: 'insert' });
+  const ins = (cmd: Command, units: number): Command =>
+    granted(guard, cmd, { units, kind: 'insert' });
   const enter = chainCommands(
     splitListItem(nodes.list_item),
     newlineInCode,
@@ -179,7 +179,10 @@ export function editorInputRules(guard: InputGuard): Plugin {
     if ($start.parent.content.size !== end - start) return null;
     const before = $start.before(1);
     const after = $start.after(1);
-    const tr = state.tr.replaceWith(before, after, [nodes.scene_break.create(), nodes.paragraph.create()]);
+    const tr = state.tr.replaceWith(before, after, [
+      nodes.scene_break.create(),
+      nodes.paragraph.create(),
+    ]);
     tr.setSelection(TextSelection.create(tr.doc, before + 2));
     return guard.grant(tr, { units: 1, kind: 'format' });
   });
@@ -192,7 +195,11 @@ export function editorInputRules(guard: InputGuard): Plugin {
   });
   return inputRules({
     rules: [
-      wrap(textblockTypeInputRule(/^(#{1,3})\s$/, nodes.heading, (m) => ({ level: (m[1] as string).length }))),
+      wrap(
+        textblockTypeInputRule(/^(#{1,3})\s$/, nodes.heading, (m) => ({
+          level: (m[1] as string).length,
+        })),
+      ),
       wrap(wrappingInputRule(/^\s*>\s$/, nodes.blockquote)),
       wrap(wrappingInputRule(/^\s*([-+*])\s$/, nodes.bullet_list)),
       wrap(

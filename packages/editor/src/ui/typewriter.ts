@@ -157,7 +157,9 @@ export class TypewriterController {
     this.cancel();
     const from = this.scrollTop();
     const to = from + delta;
-    const reduced = this.view.dom.ownerDocument.defaultView?.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+    const reduced =
+      this.view.dom.ownerDocument.defaultView?.matchMedia?.('(prefers-reduced-motion: reduce)')
+        .matches ?? false;
     const duration = this.opts.durationMs ?? 120;
     if (!animate || reduced || duration <= 0) {
       this.setScrollTop(to);
@@ -173,7 +175,8 @@ export class TypewriterController {
         this.anim = null;
         // Content may have moved during the animation; settle exactly.
         const y2 = this.caretY();
-        if (y2 !== null && Math.abs(y2 - this.targetY()) >= 0.5) this.setScrollTop(this.scrollTop() + y2 - this.targetY());
+        if (y2 !== null && Math.abs(y2 - this.targetY()) >= 0.5)
+          this.setScrollTop(this.scrollTop() + y2 - this.targetY());
       }
     };
     this.anim = requestAnimationFrame(step);

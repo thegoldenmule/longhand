@@ -16,7 +16,13 @@
  * `pasted-external`, so the writer never loses text and nothing is overclaimed.
  */
 import { inlineTextBetween, KeystrokeKindSchema } from '@longhand/schema';
-import { EditorState, Plugin, PluginKey, type EditorStateConfig, type Transaction } from 'prosemirror-state';
+import {
+  EditorState,
+  Plugin,
+  PluginKey,
+  type EditorStateConfig,
+  type Transaction,
+} from 'prosemirror-state';
 import type { EditorView } from 'prosemirror-view';
 import { changedRange, insertedNodeNames, isSplitStep, transformTotals } from '../steps';
 import { Emitter, isProduction, newId } from '../util';
@@ -47,14 +53,17 @@ export function isRemoteTransaction(tr: Transaction): boolean {
 
 /** The declared input on a transaction ({@link EDITOR_INPUT_META}, or the research alias). */
 export function readDeclaredInput(tr: Transaction): DeclaredInput | undefined {
-  const v = (tr.getMeta(EDITOR_INPUT_META) ?? tr.getMeta(RESEARCH_INPUT_META_ALIAS)) as DeclaredInput | undefined;
+  const v = (tr.getMeta(EDITOR_INPUT_META) ?? tr.getMeta(RESEARCH_INPUT_META_ALIAS)) as
+    DeclaredInput | undefined;
   if (!v || typeof v !== 'object' || !v.run || typeof v.run !== 'object') return undefined;
   return {
     run: v.run,
     companions: Array.isArray(v.companions) ? v.companions : [],
     characters: typeof v.characters === 'number' ? v.characters : 0,
     keystroke:
-      v.keystroke && KeystrokeKindSchema.safeParse(v.keystroke.kind).success && Number.isInteger(v.keystroke.len)
+      v.keystroke &&
+      KeystrokeKindSchema.safeParse(v.keystroke.kind).success &&
+      Number.isInteger(v.keystroke.len)
         ? { kind: v.keystroke.kind, len: Math.max(0, v.keystroke.len) }
         : { kind: 'paste', len: 0 },
   };
@@ -137,7 +146,10 @@ export function createInputGuard(opts: InputGuardOptions): InputGuard {
 
   const report = (v: GuardViolation): void => {
     if (!v.flagged) console.error(`[longhand/editor] refused a transaction: ${v.reason}`);
-    else console.warn(`[longhand/editor] flagged an unverifiable insertion as pasted-external: ${v.reason}`);
+    else
+      console.warn(
+        `[longhand/editor] flagged an unverifiable insertion as pasted-external: ${v.reason}`,
+      );
     opts.onViolation?.(v);
     violations.emit(v);
   };
@@ -169,7 +181,12 @@ export function createInputGuard(opts: InputGuardOptions): InputGuard {
       if (consume.drop) tracker.consumeDrop();
       if (consume.autocorrect) tracker.consumeAutocorrect();
       if (tag) {
-        if (tag.flagged) report({ reason: 'insertion without matching input', flagged: true, steps: tr.steps.length });
+        if (tag.flagged)
+          report({
+            reason: 'insertion without matching input',
+            flagged: true,
+            steps: tr.steps.length,
+          });
         TAGS.set(tr, tag);
       }
       return true;
@@ -179,18 +196,24 @@ export function createInputGuard(opts: InputGuardOptions): InputGuard {
       const detach = tracker.attach(view.dom as HTMLElement);
       const verified = (state: EditorState): boolean => guardKey.getState(state)?.doc === state.doc;
       const revert = (v: EditorView, good: EditorState): void => {
-        report({ reason: 'document replaced outside the transaction pipeline', flagged: false, steps: 0 });
+        report({
+          reason: 'document replaced outside the transaction pipeline',
+          flagged: false,
+          steps: 0,
+        });
         queueMicrotask(() => {
           if (!v.isDestroyed && !verified(v.state)) v.updateState(good);
         });
       };
       // Plugin views are recreated when a state with a new plugin array is swapped in.
-      if (!verified(view.state) && lastGood && lastGood.doc !== view.state.doc) revert(view, lastGood);
+      if (!verified(view.state) && lastGood && lastGood.doc !== view.state.doc)
+        revert(view, lastGood);
       else if (verified(view.state)) lastGood = view.state;
       return {
         update(v, prevState) {
           if (verified(v.state)) lastGood = v.state;
-          else if (v.state.doc !== prevState.doc) revert(v, verified(prevState) ? prevState : (lastGood ?? prevState));
+          else if (v.state.doc !== prevState.doc)
+            revert(v, verified(prevState) ? prevState : (lastGood ?? prevState));
         },
         destroy() {
           detach();

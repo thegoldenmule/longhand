@@ -50,7 +50,13 @@ export {
   type TransactionFacts,
 } from './input/classify';
 export { InputTracker, type TrackerState } from './input/tracker';
-export { MARKER_ATTR, MARKER_MIME, decodeMarker, encodeMarker, type SliceMarker } from './input/clipboard';
+export {
+  MARKER_ATTR,
+  MARKER_MIME,
+  decodeMarker,
+  encodeMarker,
+  type SliceMarker,
+} from './input/clipboard';
 export {
   editorInputRules,
   editorKeymaps,
@@ -83,7 +89,12 @@ export {
   type SyncStatus,
   type VersionChange,
 } from './sync/engine';
-export { CommitFlusher, sharedFlusher, type FlushParticipant, type FlusherStatus } from './sync/flusher';
+export {
+  CommitFlusher,
+  sharedFlusher,
+  type FlushParticipant,
+  type FlusherStatus,
+} from './sync/flusher';
 export {
   createCommitQueue,
   IndexedDbQueue,
@@ -92,7 +103,13 @@ export {
   type QueueEntry,
 } from './sync/queue';
 export { MockTransport, type MockCommit, type MockTransportOptions } from './sync/mockTransport';
-export type { CatchUp, CommitTransport, ConnectionState, RemoteUpdate, SubmitResult } from './sync/transport';
+export type {
+  CatchUp,
+  CommitTransport,
+  ConnectionState,
+  RemoteUpdate,
+  SubmitResult,
+} from './sync/transport';
 export { rebaseOnDoc, rebaseStepsHeadless, type RebaseResult } from './sync/rebase';
 export { reconcileHeadless } from './sync/reconcile';
 export {

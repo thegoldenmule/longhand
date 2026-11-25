@@ -17,15 +17,33 @@ import { dropCursor } from 'prosemirror-dropcursor';
 import { gapCursor } from 'prosemirror-gapcursor';
 import { history } from 'prosemirror-history';
 import type { Node as PMNode } from 'prosemirror-model';
-import { Plugin, Selection, TextSelection, type EditorState, type Transaction } from 'prosemirror-state';
+import {
+  Plugin,
+  Selection,
+  TextSelection,
+  type EditorState,
+  type Transaction,
+} from 'prosemirror-state';
 import type { Mapping } from 'prosemirror-transform';
 import { EditorView } from 'prosemirror-view';
 import { editorInputRules, editorKeymaps } from './commands';
 import type { DecorationLayer, LayerDecoration } from './decorations';
 import { encodeMarker, MARKER_MIME, stampMarker, type SliceMarker } from './input/clipboard';
 import { EDITOR_INPUT_META, type DeclaredInput, type InputTag } from './input/classify';
-import { createInputGuard, inputTagOf, isRemoteTransaction, type GuardViolation, type InputGuard } from './input/guard';
-import { DocumentSync, type SubmittableEventType, type SyncError, type SyncStatus, type VersionChange } from './sync/engine';
+import {
+  createInputGuard,
+  inputTagOf,
+  isRemoteTransaction,
+  type GuardViolation,
+  type InputGuard,
+} from './input/guard';
+import {
+  DocumentSync,
+  type SubmittableEventType,
+  type SyncError,
+  type SyncStatus,
+  type VersionChange,
+} from './sync/engine';
 import { sharedFlusher, type CommitFlusher } from './sync/flusher';
 import { createCommitQueue, type CommitQueue } from './sync/queue';
 import type { CommitTransport } from './sync/transport';
@@ -144,13 +162,22 @@ export interface EditorHandle {
   /** Replaces the extra plugins. */
   setExtraPlugins(plugins: readonly Plugin[]): void;
   /** Sets a decoration layer's decorations, given in positions at ledger `version` (default: current doc). */
-  setDecorations(layer: DecorationLayer, decorations: readonly LayerDecoration[], version?: number): boolean;
+  setDecorations(
+    layer: DecorationLayer,
+    decorations: readonly LayerDecoration[],
+    version?: number,
+  ): boolean;
   /** Marks typed input as tracing over a suggestion (adds `traceSuggestionId` to typed runs). */
   setTraceSuggestion(suggestionId: string | null): void;
   /** Inserts a citation node at the caret (Cite command). Needs a user gesture. Returns the citation id. */
   insertCitation(args: { sourceId: string; locator?: string | null }): string | null;
   /** Places a saved clipping as a quote block after the current block. Needs a user gesture. */
-  insertClipping(args: { clippingId: string; sourceId: string; locator?: string | null; text: string }): boolean;
+  insertClipping(args: {
+    clippingId: string;
+    sourceId: string;
+    locator?: string | null;
+    text: string;
+  }): boolean;
   /** Accepts a proposal (queues `ProposalAccepted` at the local version). */
   acceptProposal(proposalId: string): CommitDraftOf<'ProposalAccepted'>;
   /** Submits another human event through the ordered queue (flushes pending steps first). */
@@ -159,7 +186,10 @@ export interface EditorHandle {
   flush(): void;
   /** Caret rectangle in viewport coordinates. */
   caretRect(): { top: number; bottom: number; left: number; right: number } | null;
-  on<E extends keyof EditorEvents>(event: E, listener: (value: EditorEvents[E]) => void): () => void;
+  on<E extends keyof EditorEvents>(
+    event: E,
+    listener: (value: EditorEvents[E]) => void,
+  ): () => void;
   setEditable(editable: boolean): void;
   focus(): void;
   destroy(): void;
@@ -222,7 +252,12 @@ export function createEditorView(opts: CreateEditorOptions): EditorHandle {
   opts.mount.appendChild(root);
 
   // `view` and `sync` are created below; these closures only run after that.
-  const handleCopy = (pmView: EditorView, event: ClipboardEvent, cut: boolean, offset = 0): boolean => {
+  const handleCopy = (
+    pmView: EditorView,
+    event: ClipboardEvent,
+    cut: boolean,
+    offset = 0,
+  ): boolean => {
     if (!guard.tracker.trusted(event) || !event.clipboardData) return false;
     const sel = pmView.state.selection;
     if (sel.empty) return false;
@@ -276,7 +311,11 @@ export function createEditorView(opts: CreateEditorOptions): EditorHandle {
   let extraPlugins: readonly Plugin[] = opts.extraPlugins ?? [];
 
   const initialDoc: PMNode = docFromJSON(opts.doc ?? EMPTY_DOC_JSON);
-  const state = guard.createState({ doc: initialDoc, schema, plugins: [...corePlugins, ...extraPlugins] });
+  const state = guard.createState({
+    doc: initialDoc,
+    schema,
+    plugins: [...corePlugins, ...extraPlugins],
+  });
   const counter = new WordCounter(initialDoc, {
     documentId,
     dailyGoal: settings.dailyGoal,
@@ -436,7 +475,9 @@ export function createEditorView(opts: CreateEditorOptions): EditorHandle {
       tr.setSelection(TextSelection.create(tr.doc, at + node.nodeSize));
       const input: DeclaredInput = {
         run: { steps: tr.steps.length, method: 'citation', citationId },
-        companions: [{ type: 'CitationInserted', payload: { citationId, documentId, sourceId, locator } }],
+        companions: [
+          { type: 'CitationInserted', payload: { citationId, documentId, sourceId, locator } },
+        ],
         characters: 0,
         keystroke: { kind: 'paste', len: 0 },
       };

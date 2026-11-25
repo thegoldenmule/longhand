@@ -14,8 +14,20 @@ import { Decoration, DecorationSet, type DecorationAttrs, type EditorView } from
 
 /** A decoration described by plain positions. */
 export type LayerDecoration =
-  | { kind: 'inline'; from: number; to: number; attrs: DecorationAttrs; spec?: Record<string, unknown> }
-  | { kind: 'node'; from: number; to: number; attrs: DecorationAttrs; spec?: Record<string, unknown> }
+  | {
+      kind: 'inline';
+      from: number;
+      to: number;
+      attrs: DecorationAttrs;
+      spec?: Record<string, unknown>;
+    }
+  | {
+      kind: 'node';
+      from: number;
+      to: number;
+      attrs: DecorationAttrs;
+      spec?: Record<string, unknown>;
+    }
   | {
       kind: 'widget';
       pos: number;

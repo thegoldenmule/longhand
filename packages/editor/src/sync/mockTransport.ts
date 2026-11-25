@@ -17,7 +17,13 @@ import {
 import type { Node as PMNode } from 'prosemirror-model';
 import { Step } from 'prosemirror-transform';
 import { Emitter, newId } from '../util';
-import type { CatchUp, CommitTransport, ConnectionState, RemoteUpdate, SubmitResult } from './transport';
+import type {
+  CatchUp,
+  CommitTransport,
+  ConnectionState,
+  RemoteUpdate,
+  SubmitResult,
+} from './transport';
 
 /** One appended commit. */
 export interface MockCommit {
@@ -103,8 +109,12 @@ export class MockTransport implements CommitTransport {
     const s = this.storage();
     if (!s) return;
     const docs: Persisted['docs'] = {};
-    for (const [id, d] of this.docs) docs[id] = { doc: d.doc.toJSON() as PMNodeJSON, version: d.version, updates: d.updates };
-    s.setItem(this.opts.persistKey as string, JSON.stringify({ log: this.log, docs } satisfies Persisted));
+    for (const [id, d] of this.docs)
+      docs[id] = { doc: d.doc.toJSON() as PMNodeJSON, version: d.version, updates: d.updates };
+    s.setItem(
+      this.opts.persistKey as string,
+      JSON.stringify({ log: this.log, docs } satisfies Persisted),
+    );
   }
 
   // ------------------------------------------------------------- inspection
@@ -124,7 +134,15 @@ export class MockTransport implements CommitTransport {
 
   private ensure(documentId: string): MockDoc {
     let d = this.docs.get(documentId);
-    if (!d) this.docs.set(documentId, (d = { doc: docFromJSON({ type: 'doc', content: [{ type: 'paragraph' }] }), version: 0, updates: [] }));
+    if (!d)
+      this.docs.set(
+        documentId,
+        (d = {
+          doc: docFromJSON({ type: 'doc', content: [{ type: 'paragraph' }] }),
+          version: 0,
+          updates: [],
+        }),
+      );
     return d;
   }
 
@@ -243,10 +261,17 @@ export class MockTransport implements CommitTransport {
     if (!this.online) throw new Error('offline');
     const d = this.ensure(documentId);
     const first = d.updates[0];
-    if (version > 0 && first && first.baseVersion > version) return { kind: 'snapshot', doc: d.doc.toJSON() as PMNodeJSON, version: d.version };
-    if (version === 0 && first && first.baseVersion > 0) return { kind: 'snapshot', doc: d.doc.toJSON() as PMNodeJSON, version: d.version };
-    if (!first && d.version > version) return { kind: 'snapshot', doc: d.doc.toJSON() as PMNodeJSON, version: d.version };
-    return { kind: 'updates', updates: d.updates.filter((u) => u.version > version), version: d.version };
+    if (version > 0 && first && first.baseVersion > version)
+      return { kind: 'snapshot', doc: d.doc.toJSON() as PMNodeJSON, version: d.version };
+    if (version === 0 && first && first.baseVersion > 0)
+      return { kind: 'snapshot', doc: d.doc.toJSON() as PMNodeJSON, version: d.version };
+    if (!first && d.version > version)
+      return { kind: 'snapshot', doc: d.doc.toJSON() as PMNodeJSON, version: d.version };
+    return {
+      kind: 'updates',
+      updates: d.updates.filter((u) => u.version > version),
+      version: d.version,
+    };
   }
 
   /**

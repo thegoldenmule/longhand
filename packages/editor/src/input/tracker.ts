@@ -170,7 +170,8 @@ export class InputTracker {
           case 'insertTranspose':
           case 'insertFromDictation':
             this.addBudget(data.length, now);
-            if (ie.inputType !== 'insertText') this.s.compositionLength = Math.max(this.s.compositionLength, data.length);
+            if (ie.inputType !== 'insertText')
+              this.s.compositionLength = Math.max(this.s.compositionLength, data.length);
             break;
           case 'insertReplacementText':
             this.s.autocorrectAt = now;
@@ -208,7 +209,11 @@ export class InputTracker {
         const dt = ce.clipboardData;
         this.s.paste = {
           at: now,
-          mimeTypes: dt ? Array.from(dt.types).slice(0, 20).map((t) => t.slice(0, 100)) : [],
+          mimeTypes: dt
+            ? Array.from(dt.types)
+                .slice(0, 20)
+                .map((t) => t.slice(0, 100))
+            : [],
           marker: dt ? readMarkerFromTransfer(dt) : null,
         };
         break;
@@ -220,7 +225,11 @@ export class InputTracker {
         this.s.drop = {
           at: now,
           internal: this.isDraggingInternally(),
-          mimeTypes: dt ? Array.from(dt.types).slice(0, 20).map((t) => t.slice(0, 100)) : [],
+          mimeTypes: dt
+            ? Array.from(dt.types)
+                .slice(0, 20)
+                .map((t) => t.slice(0, 100))
+            : [],
         };
         break;
       }
@@ -270,4 +279,3 @@ export class InputTracker {
     };
   }
 }
-

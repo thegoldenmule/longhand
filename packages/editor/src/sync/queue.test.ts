@@ -8,7 +8,13 @@ import { IndexedDbQueue, MemoryQueue, type CommitQueue } from './queue';
 const ctx = { projectId: 'proj', actorId: 'u', deviceId: 'd', sessionId: 's' };
 
 function draft(i: number): CommitDraft {
-  return makeDraft(ctx, 'SuggestionDismissed', { suggestionId: `s${i}`, reason: null, note: null } as never, 1000 + i, `c${i}`) as CommitDraft;
+  return makeDraft(
+    ctx,
+    'SuggestionDismissed',
+    { suggestionId: `s${i}`, reason: null, note: null } as never,
+    1000 + i,
+    `c${i}`,
+  ) as CommitDraft;
 }
 
 function sharedBehaviour(name: string, make: () => CommitQueue): void {
@@ -50,7 +56,10 @@ function sharedBehaviour(name: string, make: () => CommitQueue): void {
 sharedBehaviour('MemoryQueue', () => new MemoryQueue('proj'));
 
 let dbCounter = 0;
-sharedBehaviour('IndexedDbQueue', () => new IndexedDbQueue('proj', { factory: new IDBFactory(), dbName: `q${++dbCounter}` }));
+sharedBehaviour(
+  'IndexedDbQueue',
+  () => new IndexedDbQueue('proj', { factory: new IDBFactory(), dbName: `q${++dbCounter}` }),
+);
 
 describe('IndexedDbQueue persistence', () => {
   it('survives a new instance (page reload) and scopes by project', async () => {
@@ -73,7 +82,15 @@ describe('IndexedDbQueue persistence', () => {
 describe('draft documentId', () => {
   it('records the documentId of document-scoped drafts', async () => {
     const q = new MemoryQueue('proj');
-    await q.enqueue(makeDraft(ctx, 'CitationInserted', { citationId: 'c', documentId: 'docA', sourceId: 's', locator: null }, 0, 'x1'));
+    await q.enqueue(
+      makeDraft(
+        ctx,
+        'CitationInserted',
+        { citationId: 'c', documentId: 'docA', sourceId: 's', locator: null },
+        0,
+        'x1',
+      ),
+    );
     await q.enqueue(draft(1));
     const [a, b] = await q.list();
     expect(a?.documentId).toBe('docA');

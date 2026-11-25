@@ -18,7 +18,8 @@
   --lh-selection: #eadfc9;
   --lh-caret: #8a6a3b;
   --lh-caret-ratio: 0.5;
-  --lh-end-padding: 50vh;
+  /* End padding lets the last line reach the caret line: 50vh at the default 50%. */
+  --lh-end-padding: calc((1 - var(--lh-caret-ratio)) * 100vh);
 
   color: var(--lh-ink);
   background: var(--lh-paper);

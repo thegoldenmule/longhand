@@ -1,6 +1,14 @@
 import { describe, expect, it } from 'vitest';
 import { docOf, expectValidDraft, StateHost } from '../test/helpers';
-import { buildTextEdited, rebuildTextEdited, relativeTimeline, runsOf, stepTagsOf, type LocalBatch, type LocalStep } from './drafts';
+import {
+  buildTextEdited,
+  rebuildTextEdited,
+  relativeTimeline,
+  runsOf,
+  stepTagsOf,
+  type LocalBatch,
+  type LocalStep,
+} from './drafts';
 
 const ctx = { projectId: 'proj', actorId: 'user1', deviceId: 'dev1', sessionId: 'sess1' };
 
@@ -35,9 +43,11 @@ describe('runsOf', () => {
   });
 
   it('keeps citation runs separate from typed runs', () => {
-    const steps = [{ method: 'typed' as const }, { method: 'citation' as const, citationId: 'c1' }, { method: 'typed' as const }].map(
-      (tag) => ({ tag }) as LocalStep,
-    );
+    const steps = [
+      { method: 'typed' as const },
+      { method: 'citation' as const, citationId: 'c1' },
+      { method: 'typed' as const },
+    ].map((tag) => ({ tag }) as LocalStep);
     expect(runsOf(steps).map((r) => r.method)).toEqual(['typed', 'citation', 'typed']);
   });
 });
@@ -90,7 +100,11 @@ describe('buildTextEdited', () => {
 
   it('rebuilds a draft after rebasing, keeping tags of surviving steps', () => {
     const host = new StateHost(docOf(''));
-    const batch = batchOf(host, [{ method: 'typed' }, { method: 'pasted-external', pasteId: 'p1' }, { method: 'typed' }]);
+    const batch = batchOf(host, [
+      { method: 'typed' },
+      { method: 'pasted-external', pasteId: 'p1' },
+      { method: 'typed' },
+    ]);
     const draft = buildTextEdited(ctx, 'doc1', batch, 0);
     const steps = batch.steps.map((s) => s.step);
     const rebuilt = rebuildTextEdited(draft, [steps[1]!, steps[2]!], [1, 2], 5)!;

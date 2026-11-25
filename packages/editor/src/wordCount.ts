@@ -27,14 +27,18 @@ export function countingText(doc: PMNode, from = 0, to = doc.content.size): stri
   doc.nodesBetween(from, to, (node, pos) => {
     if (node.type.name === 'footnote') {
       let note = '';
-      node.nodesBetween(Math.max(0, from - pos - 1), Math.min(node.content.size, to - pos - 1), (n, p) => {
-        if (n.isText) {
-          const start = pos + 1 + p;
-          const t = n.text as string;
-          note += t.slice(Math.max(0, from - start), Math.min(t.length, to - start));
-        } else if (n.type.name === 'hard_break') note += '\n';
-        return true;
-      });
+      node.nodesBetween(
+        Math.max(0, from - pos - 1),
+        Math.min(node.content.size, to - pos - 1),
+        (n, p) => {
+          if (n.isText) {
+            const start = pos + 1 + p;
+            const t = n.text as string;
+            note += t.slice(Math.max(0, from - start), Math.min(t.length, to - start));
+          } else if (n.type.name === 'hard_break') note += '\n';
+          return true;
+        },
+      );
       notes.push(note);
       line += ' ';
       return false;
@@ -122,7 +126,8 @@ export class WordCounter {
     const key = `longhand:daily:${this.opts.documentId}:${(this.opts.today ?? localDay)()}`;
     try {
       const stored = storage?.getItem(key);
-      if (stored !== null && stored !== undefined && Number.isFinite(Number(stored))) return Number(stored);
+      if (stored !== null && stored !== undefined && Number.isFinite(Number(stored)))
+        return Number(stored);
       storage?.setItem(key, String(words));
     } catch {
       // Storage unavailable: count from now.
@@ -146,7 +151,9 @@ export class WordCounter {
       document,
       selection: countSelectionWords(state),
       session: Math.max(0, document - this.sessionStart),
-      daily: this.goal ? { goal: this.goal, written, progress: Math.min(1, written / this.goal) } : null,
+      daily: this.goal
+        ? { goal: this.goal, written, progress: Math.min(1, written / this.goal) }
+        : null,
     };
   }
 }

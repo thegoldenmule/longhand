@@ -152,7 +152,12 @@ export class DocumentSync implements FlushParticipant {
     this.documentId = opts.documentId;
     this.confirmedVersion = opts.version;
     this.mapsBase = opts.version;
-    this.ctx = { projectId: opts.projectId, actorId: opts.actorId, deviceId: opts.deviceId, sessionId: opts.sessionId };
+    this.ctx = {
+      projectId: opts.projectId,
+      actorId: opts.actorId,
+      deviceId: opts.deviceId,
+      sessionId: opts.sessionId,
+    };
     this.idleMs = opts.idleMs ?? 2000;
     this.maxSteps = opts.maxSteps ?? 50;
     this.clock = opts.now ?? (() => Date.now());
@@ -173,7 +178,11 @@ export class DocumentSync implements FlushParticipant {
   }
 
   get localVersion(): number {
-    return this.confirmedVersion + this.batches.reduce((n, b) => n + b.steps.length, 0) + this.pending.steps.length;
+    return (
+      this.confirmedVersion +
+      this.batches.reduce((n, b) => n + b.steps.length, 0) +
+      this.pending.steps.length
+    );
   }
 
   /**
@@ -258,9 +267,14 @@ export class DocumentSync implements FlushParticipant {
       );
     }
     for (const c of tag.companions ?? []) {
-      if (c.type === 'CitationInserted') this.enqueue(makeDraft(this.ctx, 'CitationInserted', c.payload, at));
+      if (c.type === 'CitationInserted')
+        this.enqueue(makeDraft(this.ctx, 'CitationInserted', c.payload, at));
     }
-    if (this.pending.steps.length > 0 && this.pending.steps.length + tr.steps.length > this.maxSteps) this.flush();
+    if (
+      this.pending.steps.length > 0 &&
+      this.pending.steps.length + tr.steps.length > this.maxSteps
+    )
+      this.flush();
 
     const runTag: RunTag = { method: tag.method };
     if (tag.pasteId) runTag.pasteId = tag.pasteId;
@@ -280,7 +294,8 @@ export class DocumentSync implements FlushParticipant {
       this.pending.steps.push({ step, inverted: step.invert(before), tag: runTag, chars });
     });
     this.pending.lastAt = at;
-    if (tag.timelineLen !== undefined) this.pending.timeline.push({ at, kind: tag.kind, len: tag.timelineLen });
+    if (tag.timelineLen !== undefined)
+      this.pending.timeline.push({ at, kind: tag.kind, len: tag.timelineLen });
     else this.pending.timeline.push(...timelineEntries(tag, inserted, deleted, at));
 
     if (this.pending.steps.length >= this.maxSteps) this.flush();
@@ -317,12 +332,16 @@ export class DocumentSync implements FlushParticipant {
     this.drafts.emit(draft);
     void this.opts.queue.enqueue(draft).then(
       () => this.opts.flusher.kick(),
-      (err: unknown) => this.fail('transport', `could not queue ${draft.type}: ${String(err)}`, draft.commitId),
+      (err: unknown) =>
+        this.fail('transport', `could not queue ${draft.type}: ${String(err)}`, draft.commitId),
     );
   }
 
   /** Submits another human event through the ordered queue (flushing pending steps first). */
-  submitEvent<K extends SubmittableEventType>(type: K, payload: EventPayloads[K]): CommitDraftOf<K> {
+  submitEvent<K extends SubmittableEventType>(
+    type: K,
+    payload: EventPayloads[K],
+  ): CommitDraftOf<K> {
     this.flush();
     const draft = makeDraft(this.ctx, type, payload, this.clock());
     this.enqueue(draft as CommitDraft);
@@ -344,14 +363,28 @@ export class DocumentSync implements FlushParticipant {
    * steps, then queues `SliceCopied`. Returns the copy id and text hash for the
    * clipboard marker.
    */
-  sliceCopied(from: number, to: number, cut: boolean, text: string): { copyId: string; textHash: string } {
+  sliceCopied(
+    from: number,
+    to: number,
+    cut: boolean,
+    text: string,
+  ): { copyId: string; textHash: string } {
     this.flush();
     const copyId = newId();
     const textHash = sha256Hex(text);
     const draft = makeDraft(
       this.ctx,
       'SliceCopied',
-      { copyId, documentId: this.documentId, from, to, version: this.localVersion, cut, textHash, characters: text.length },
+      {
+        copyId,
+        documentId: this.documentId,
+        from,
+        to,
+        version: this.localVersion,
+        cut,
+        textHash,
+        characters: text.length,
+      },
       this.clock(),
     );
     this.copies.push({ commitId: draft.commitId, k: this.localSteps().length, draft });
@@ -556,7 +589,10 @@ export class DocumentSync implements FlushParticipant {
     if (this.catchingUp) return this.catchingUp;
     this.catchingUp = (async () => {
       try {
-        const res = await this.opts.transport.fetchSince(this.documentId, hard ? 0 : this.confirmedVersion);
+        const res = await this.opts.transport.fetchSince(
+          this.documentId,
+          hard ? 0 : this.confirmedVersion,
+        );
         if (res.kind === 'snapshot') this.resetFromSnapshot(res.doc, res.version);
         else if (hard && res.updates.length === 0 && res.version !== this.confirmedVersion)
           this.fail('resync', 'catch-up returned no updates');
@@ -575,7 +611,10 @@ export class DocumentSync implements FlushParticipant {
   private replayFromScratch(updates: RemoteUpdate[], version: number): void {
     // Hard resync without a snapshot: only possible if updates start at 0 on an empty doc.
     if (updates.length === 0 || updates[0]?.baseVersion !== 0) {
-      this.fail('resync', `cannot rebuild document from version 0 (have ${updates.length} updates, version ${version})`);
+      this.fail(
+        'resync',
+        `cannot rebuild document from version 0 (have ${updates.length} updates, version ${version})`,
+      );
       return;
     }
     let doc = docFromJSON({ type: 'doc', content: [{ type: 'paragraph' }] });
@@ -621,7 +660,8 @@ export class DocumentSync implements FlushParticipant {
     this.opts.host.resetDoc(tr.doc);
     this.reassign(kept, inv);
     this.regenerate(null);
-    if (lost > 0) this.fail('lost-steps', `${lost} unsynced step(s) no longer applied after a reload`);
+    if (lost > 0)
+      this.fail('lost-steps', `${lost} unsynced step(s) no longer applied after a reload`);
     this.emitVersion();
     this.emitStatus();
   }
@@ -636,8 +676,11 @@ export class DocumentSync implements FlushParticipant {
   async restore(): Promise<number> {
     const entries = (await this.opts.queue.list()).filter((e) => e.documentId === this.documentId);
     if (entries.length === 0) return 0;
-    let texts = entries.filter((e) => isTextEdited(e.draft)).map((e) => e.draft as CommitDraftOf<'TextEdited'>);
-    for (const e of entries) if (!isTextEdited(e.draft) && e.type !== 'SliceCopied') this.outstanding.add(e.commitId);
+    let texts = entries
+      .filter((e) => isTextEdited(e.draft))
+      .map((e) => e.draft as CommitDraftOf<'TextEdited'>);
+    for (const e of entries)
+      if (!isTextEdited(e.draft) && e.type !== 'SliceCopied') this.outstanding.add(e.commitId);
     if (texts.length === 0) {
       this.emitStatus();
       return 0;
@@ -646,13 +689,20 @@ export class DocumentSync implements FlushParticipant {
     if (first.payload.baseVersion !== this.confirmedVersion) {
       let res;
       try {
-        res = await this.opts.transport.fetchSince(this.documentId, Math.min(first.payload.baseVersion, this.confirmedVersion));
+        res = await this.opts.transport.fetchSince(
+          this.documentId,
+          Math.min(first.payload.baseVersion, this.confirmedVersion),
+        );
       } catch {
         // Offline: leave the drafts to the flusher; they will come back as ledger updates.
         return 0;
       }
       if (res.kind === 'snapshot') return 0;
-      const r = reconcileHeadless(texts, res.updates.filter((u) => u.baseVersion >= first.payload.baseVersion), first.payload.baseVersion);
+      const r = reconcileHeadless(
+        texts,
+        res.updates.filter((u) => u.baseVersion >= first.payload.baseVersion),
+        first.payload.baseVersion,
+      );
       for (const id of r.applied) await this.opts.queue.remove(id);
       // Bring the view up to the ledger's version first.
       for (const u of res.updates) this.receive(u);
@@ -684,7 +734,11 @@ export class DocumentSync implements FlushParticipant {
       const batch: LocalBatch = {
         commitId: d.commitId,
         steps: [],
-        timeline: d.payload.timeline.map((k): TimelineEntry => ({ at: clientMs + k.t, kind: k.kind, len: k.len })),
+        timeline: d.payload.timeline.map((k): TimelineEntry => ({
+          at: clientMs + k.t,
+          kind: k.kind,
+          len: k.len,
+        })),
         firstAt: clientMs,
         lastAt: clientMs + d.payload.durationMs,
       };
@@ -697,7 +751,12 @@ export class DocumentSync implements FlushParticipant {
           ok = false;
           return;
         }
-        batch.steps.push({ step, inverted: step.invert(before), tag: tags[i] ?? { method: 'pasted-external' }, chars: insertedChars(step) });
+        batch.steps.push({
+          step,
+          inverted: step.invert(before),
+          tag: tags[i] ?? { method: 'pasted-external' },
+          chars: insertedChars(step),
+        });
       });
       if (!ok) {
         this.fail('lost-steps', `queued draft ${d.commitId} no longer applies`);
@@ -725,7 +784,12 @@ export class DocumentSync implements FlushParticipant {
   }
 }
 
-function timelineEntries(tag: InputTag, inserted: number, deleted: number, at: number): TimelineEntry[] {
+function timelineEntries(
+  tag: InputTag,
+  inserted: number,
+  deleted: number,
+  at: number,
+): TimelineEntry[] {
   switch (tag.kind) {
     case 'insert':
     case 'compose':
