@@ -19,7 +19,9 @@ import { request as httpsRequest } from 'node:https';
 import { BlockList, isIP, type LookupFunction } from 'node:net';
 import { USER_AGENT } from '@longhand/research';
 
-const blocked = new BlockList();
+// Separate lists: an IPv6 rule covering ::ffff:0:0/96 would also match every IPv4 address.
+const blocked4 = new BlockList();
+const blocked6 = new BlockList();
 for (const [net, prefix] of [
   ['0.0.0.0', 8],
   ['10.0.0.0', 8],
@@ -37,12 +39,11 @@ for (const [net, prefix] of [
   ['224.0.0.0', 4],
   ['240.0.0.0', 4],
 ] as const) {
-  blocked.addSubnet(net, prefix, 'ipv4');
+  blocked4.addSubnet(net, prefix, 'ipv4');
 }
 for (const [net, prefix] of [
   ['::', 128],
   ['::1', 128],
-  ['::ffff:0:0', 96],
   ['64:ff9b::', 96],
   ['64:ff9b:1::', 48],
   ['100::', 64],
@@ -54,18 +55,18 @@ for (const [net, prefix] of [
   ['fec0::', 10],
   ['ff00::', 8],
 ] as const) {
-  blocked.addSubnet(net, prefix, 'ipv6');
+  blocked6.addSubnet(net, prefix, 'ipv6');
 }
 
 /** True if `address` (an IPv4 or IPv6 literal) is not a public unicast address. */
 export function isPrivateAddress(address: string): boolean {
   const family = isIP(address);
-  if (family === 4) return blocked.check(address, 'ipv4');
+  if (family === 4) return blocked4.check(address, 'ipv4');
   if (family === 6) {
     const lower = address.toLowerCase();
-    const mapped = /^::ffff:(\d+\.\d+\.\d+\.\d+)$/.exec(lower);
-    if (mapped) return true;
-    return blocked.check(lower, 'ipv6');
+    // IPv4-mapped (::ffff:a.b.c.d or ::ffff:7f00:1) and IPv4-compatible forms: refuse them all.
+    if (/^(0{0,4}:){0,5}:?ffff:/.test(lower) || /^::\d+\.\d+\.\d+\.\d+$/.test(lower)) return true;
+    return blocked6.check(lower, 'ipv6');
   }
   return true;
 }
@@ -191,16 +192,25 @@ function once(
       (res) => {
         const chunks: Buffer[] = [];
         let size = 0;
+        let failed = false;
         res.on('data', (c: Buffer) => {
+          if (failed) return;
           size += c.length;
           if (size > opts.maxBytes) {
-            req.destroy(new BlockedUrlError(`response larger than ${opts.maxBytes} bytes`));
+            failed = true;
+            reject(new BlockedUrlError(`response larger than ${opts.maxBytes} bytes`));
+            res.destroy();
+            req.destroy();
             return;
           }
           chunks.push(c);
         });
-        res.on('end', () => resolve({ res, body: Buffer.concat(chunks) }));
-        res.on('error', reject);
+        res.on('end', () => {
+          if (!failed) resolve({ res, body: Buffer.concat(chunks) });
+        });
+        res.on('error', (e) => {
+          if (!failed) reject(e);
+        });
       },
     );
     req.on('timeout', () => req.destroy(new Error(`timed out after ${opts.timeoutMs} ms`)));
