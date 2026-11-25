@@ -13,6 +13,7 @@ import {
   Replay,
   type LedgerState,
 } from '@longhand/ledger';
+import { linkClickPlugin } from '@longhand/editor';
 import { schema, type Commit, type DocumentState, type ProvenanceRun } from '@longhand/schema';
 import type { Node as PMNode } from 'prosemirror-model';
 import { EditorState } from 'prosemirror-state';
@@ -90,12 +91,14 @@ function ReplayDocument(props: ReplayDocumentProps): ReactElement {
   const mountRef = useRef<HTMLDivElement | null>(null);
   const viewRef = useRef<EditorView | null>(null);
   const tint = useMemo(() => createProvenanceTint({ name: 'replay', inspectOnClick: false }), []);
+  // Links in the replay never navigate on a click (⌘/Ctrl-click opens a new tab), as in the editor.
+  const plugins = useMemo(() => [...tint.plugins, linkClickPlugin()], [tint]);
 
   useLayoutEffect(() => {
     const mount = mountRef.current;
     if (!mount) return;
     const view = new EditorView(mount, {
-      state: EditorState.create({ schema, plugins: [...tint.plugins] }),
+      state: EditorState.create({ schema, plugins }),
       editable: () => false,
       attributes: {
         class: 'lh-manuscript lh-replay__manuscript',
@@ -112,16 +115,16 @@ function ReplayDocument(props: ReplayDocumentProps): ReactElement {
       viewRef.current = null;
     };
     // The label is updated through setProps below.
-  }, [tint]);
+  }, [tint, plugins]);
 
   useLayoutEffect(() => {
     const view = viewRef.current;
     if (!view) return;
     const next = doc ?? schema.topNodeType.createAndFill();
     if (next && next !== view.state.doc)
-      view.updateState(EditorState.create({ doc: next, plugins: [...tint.plugins] }));
+      view.updateState(EditorState.create({ doc: next, plugins }));
     tint.setRuns(doc ? runs : []);
-  }, [doc, runs, tint]);
+  }, [doc, runs, tint, plugins]);
 
   useLayoutEffect(() => tint.setEnabled(tinted), [tinted, tint]);
 

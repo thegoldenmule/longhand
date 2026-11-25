@@ -146,7 +146,7 @@ Rows show each of the five run classes with a sample of its tint and underline, 
 | `maxGapMs`                                              | 4000                 | Cap on one idle gap, in ledger ms                                     |
 | `formatTime`, `clock`, `className`                      |                      | Formatting, a playback clock (tests)                                  |
 
-- **The view.** The document is drawn by a read-only ProseMirror view (`editable: false`) with the editor's stylesheet. Each step folds at most `snapshotEvery − 1` commits from the nearest `Replay` snapshot, so scrubbing stays fast on long ledgers.
+- **The view.** The document is drawn by a read-only ProseMirror view (`editable: false`) with the editor's stylesheet. Links and inline code render as in the editor; a click on a replayed link never navigates (the editor's `linkClickPlugin`), and ⌘/Ctrl-click opens it in a new tab. Each step folds at most `snapshotEvery − 1` commits from the nearest `Replay` snapshot, so scrubbing stays fast on long ledgers.
 - **Playback.** Wall time advances ledger time at the chosen speed. Ledger time between frames is the real time between commits, measured as `clientTime` plus `durationMs` for text batches, so the frame shows when the batch was finished. Each gap is clamped to `[0, maxGapMs]`, so overnight gaps play as a short pause. When several commits fall within one tick (16 ms), the player skips to the latest instead of falling behind. Scrubbing pauses playback, and pressing play at the end starts again from the beginning.
 - **Markers.** Markers come from the head `ProjectState`:
   - AI sessions, from `FeedbackSessionStarted` to `ReviewFinished` or `FeedbackSessionFailed`, drawn as bands (a session still running extends to the head);
@@ -207,6 +207,10 @@ Typing in the demo editor works and the tint maps around new text, but the demo 
   - moves after an accepted proposal;
   - keyboard scrubbing against `stateAtSeq` text, and 64× playback reaching the head in order;
   - the project-wide timeline over another document.
+
+## Links and inline code
+
+Links and code are marks, so they never change runs: the tint draws inside `<a>` and `<code>` like anywhere else, and the inspector quotes a span's words, never its href (`src/marks.test.tsx`).
 
 ## Known gaps
 
