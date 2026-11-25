@@ -9,8 +9,8 @@ The coordinator updates this file after every phase. A resumed session reads it 
 | 2a | Ledger core + golden fixtures (`packages/ledger`) | done (136 tests, 13 fixtures + 6 tampered) | merged |
 | 2b | Lanes needing contracts: editor, agent, binder, export, research | done | merged |
 | 2c | Contract revision pass (applied list below) | done (schema 273 tests, ledger 137, 13 fixtures + 6 tampered regenerated; SCHEMA_VERSION stays 1) | 2dd23fa |
-| 3 | Lanes needing ledger core: server, provenance-ui, report + verifier | pending | |
-| 4 | Annotations lane | pending | |
+| 3 | Lanes needing ledger core: server (+ packages/client), provenance-ui, report + verifier | running | |
+| 4 | Annotations lane | running (started alongside phase 3) | |
 | 5 | Integration: `apps/web`, dev orchestration, end-to-end in Chrome | pending | |
 
 ## Lane results
