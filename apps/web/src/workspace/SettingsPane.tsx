@@ -1,5 +1,8 @@
 'use client';
-/** Project settings (what the editor reads) and this device's writing preferences. */
+/**
+ * Project settings (what the editor reads) and this device's writing preferences.
+ * The project title is edited where it is shown (the page header or the binder).
+ */
 import { ProjectSettingsForm, type BinderDraft } from '@longhand/binder';
 import type { EditorSettings } from '@longhand/editor';
 import { STYLES } from '@longhand/research';
@@ -76,6 +79,7 @@ export function SettingsPane(props: {
         onDraft={props.onDraft}
         citationStyles={STYLES.map((s) => ({ id: s.id, label: s.label }))}
         heading="Project"
+        showTitle={false}
       />
     </div>
   );

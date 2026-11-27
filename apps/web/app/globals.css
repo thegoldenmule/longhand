@@ -695,7 +695,17 @@ kbd {
   background: var(--app-hover);
   color: var(--app-ink);
 }
-.ws-project-title {
+.ws-home-link-text {
+  width: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 8px 0 4px;
+  font-size: 13px;
+  text-decoration: none;
+  color: var(--app-ink-muted);
+}
+.ws-left-head .ws-project-title {
   font-family: var(--app-font-text);
   font-size: 16px;
   white-space: nowrap;
@@ -777,6 +787,36 @@ kbd {
 .ws-crumb::after {
   content: '›';
   margin-left: 8px;
+  color: var(--app-ink-faint);
+}
+.ws-crumb-button {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+.ws-crumb-button:hover {
+  color: var(--app-ink);
+}
+/* A title edited where it is read: an input that looks like text. */
+.ws-title-field {
+  font: inherit;
+  color: var(--app-ink);
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  padding: 2px 6px;
+  margin: 0 -2px;
+  min-width: 0;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  outline: none;
+}
+.ws-title-field:hover,
+.ws-title-field:focus {
+  background: var(--app-hover);
+}
+.ws-title-field.is-untitled {
   color: var(--app-ink-faint);
 }
 .ws-doc-title {

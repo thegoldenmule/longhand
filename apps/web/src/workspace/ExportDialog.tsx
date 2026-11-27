@@ -2,6 +2,7 @@
 /**
  * Export (F9): Markdown, DOCX or PDF through the ledger service's export route,
  * with an optional provenance appendix computed here by `@longhand/report`.
+ * A one-document project exports the project, with no "What" to choose.
  */
 import type { ExportFormat, LonghandClient } from '@longhand/client';
 import { computeReport, provenanceSummaryForExport } from '@longhand/report';
@@ -21,7 +22,8 @@ export function ExportDialog(props: {
   commits: readonly Commit[];
   headHash: string;
   documentId: string | null;
-  documentTitle: string | null;
+  /** The manuscript is one document: no scope choice, project scope. */
+  single: boolean;
   onClose: () => void;
 }) {
   const [format, setFormat] = useState<ExportFormat>('docx');
@@ -40,7 +42,7 @@ export function ExportDialog(props: {
     setBusy(true);
     setError(null);
     try {
-      const docScoped = scope === 'document' && props.documentId;
+      const docScoped = !props.single && scope === 'document' && props.documentId;
       let provenance = null;
       if (appendix && props.commits.length) {
         const report = computeReport(props.commits, {
@@ -99,28 +101,30 @@ export function ExportDialog(props: {
             </label>
           ))}
         </fieldset>
-        <fieldset className="ws-choices">
-          <legend>What</legend>
-          <label className="ws-choice">
-            <input
-              type="radio"
-              name="scope"
-              checked={scope === 'project'}
-              onChange={() => setScope('project')}
-            />
-            The whole manuscript
-          </label>
-          <label className="ws-choice">
-            <input
-              type="radio"
-              name="scope"
-              disabled={!props.documentId}
-              checked={scope === 'document'}
-              onChange={() => setScope('document')}
-            />
-            {props.documentTitle ? `“${props.documentTitle}” only` : 'This document only'}
-          </label>
-        </fieldset>
+        {!props.single && (
+          <fieldset className="ws-choices">
+            <legend>What</legend>
+            <label className="ws-choice">
+              <input
+                type="radio"
+                name="scope"
+                checked={scope === 'project'}
+                onChange={() => setScope('project')}
+              />
+              The whole manuscript
+            </label>
+            <label className="ws-choice">
+              <input
+                type="radio"
+                name="scope"
+                disabled={!props.documentId}
+                checked={scope === 'document'}
+                onChange={() => setScope('document')}
+              />
+              This document only
+            </label>
+          </fieldset>
+        )}
         <label className="ws-choice">
           <input
             type="checkbox"

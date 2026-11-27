@@ -1,5 +1,5 @@
 'use client';
-/** Word counts and save state, in one quiet line under the page. */
+/** Word counts and save state, in one quiet line under the page. It never shows a title. */
 import type { SaveState, WordCounts } from '@longhand/editor';
 
 const SAVE_LABEL: Record<SaveState, string> = {
@@ -18,14 +18,13 @@ export function StatusLine(props: {
   save: SaveState | null;
   queued: number;
   live: boolean;
-  documentTitle: string | null;
 }) {
   const c = props.counts;
   const save = props.save;
   return (
     <footer className="ws-status" aria-label="Status">
       <span className="ws-status-group">
-        {c ? (
+        {c && (
           <>
             <span data-testid="count-document">{n(c.document)} words</span>
             {c.selection > 0 && (
@@ -45,8 +44,6 @@ export function StatusLine(props: {
               </span>
             )}
           </>
-        ) : (
-          <span>{props.documentTitle ?? ''}</span>
         )}
       </span>
       <span className="ws-status-group">

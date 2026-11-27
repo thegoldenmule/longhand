@@ -3,6 +3,7 @@
  * The authorship report (F7) for the project or the open document, recomputed
  * from the ledger with the server's witnesses, and the verification bundle,
  * built client-side with `@longhand/report`'s `buildBundle` from `/bundle`.
+ * A one-document project has no scope to choose: the report covers the project.
  */
 import type { BundleData, LonghandClient } from '@longhand/client';
 import { AuthorshipReport, buildBundle, computeReport, type Report } from '@longhand/report';
@@ -46,12 +47,16 @@ export function ReportView(props: {
   client: LonghandClient;
   projectId: string;
   title: string;
+  /** The manuscript is one document: no scope switch, project scope. */
+  single: boolean;
   headSeq: number;
   documentId: string | null;
+  /** The open document's title as shown. */
   documentTitle: string | null;
   onExport: () => void;
 }) {
-  const [scope, setScope] = useState<'project' | 'document'>('project');
+  const [chosen, setScope] = useState<'project' | 'document'>('project');
+  const scope = props.single ? 'project' : chosen;
   const [data, setData] = useState<BundleData | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
@@ -96,23 +101,25 @@ export function ReportView(props: {
     <div className="ws-view ws-report" data-testid="report-view">
       <div className="ws-view-toolbar">
         <div className="ws-view-actions">
-          <div className="ws-seg ws-seg-small" role="group" aria-label="Report scope">
-            <button
-              type="button"
-              aria-pressed={scope === 'project'}
-              onClick={() => setScope('project')}
-            >
-              Whole project
-            </button>
-            <button
-              type="button"
-              aria-pressed={scope === 'document'}
-              disabled={!props.documentId}
-              onClick={() => setScope('document')}
-            >
-              {props.documentTitle ?? 'This document'}
-            </button>
-          </div>
+          {!props.single && (
+            <div className="ws-seg ws-seg-small" role="group" aria-label="Report scope">
+              <button
+                type="button"
+                aria-pressed={scope === 'project'}
+                onClick={() => setScope('project')}
+              >
+                Whole project
+              </button>
+              <button
+                type="button"
+                aria-pressed={scope === 'document'}
+                disabled={!props.documentId}
+                onClick={() => setScope('document')}
+              >
+                This document
+              </button>
+            </div>
+          )}
           <button
             type="button"
             className="lh-button"
@@ -123,7 +130,7 @@ export function ReportView(props: {
                 const r = await downloadBundle(client, projectId, props.title, reportScope);
                 setNotice(
                   r.unwitnessed
-                    ? `${r.unwitnessed} recent changes were not witnessed yet; download again in a moment for a bundle that verifies.`
+                    ? `${r.unwitnessed} recent changes were not witnessed yet. Download again in a moment for a bundle that verifies.`
                     : 'Bundle downloaded. Anyone can check it at /verify, entirely in their browser.',
                 );
               } catch (e) {

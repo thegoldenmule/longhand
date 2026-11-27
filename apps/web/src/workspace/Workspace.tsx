@@ -7,6 +7,11 @@
  * Replay, the report and the corkboard take the middle when chosen. Everything
  * collapses to the page alone.
  *
+ * One document, one name: when the manuscript is a single document it goes by
+ * the project's name, shown once (in the header) and edited there. Renaming it
+ * renames the project too. A one-document project opens with the binder closed.
+ * With several documents the project and each document keep their own names.
+ *
  * State: the project's commits are kept and folded client-side (`ProjectStore`).
  * The editor syncs its document through `HttpCommitTransport`; every other part
  * reads the fold.
@@ -19,8 +24,15 @@ import {
 } from '@longhand/annotations';
 import {
   Corkboard,
+  UNTITLED,
+  applyBinderDraft,
   applyBinderDrafts,
+  changeProjectSettings,
   getNode,
+  renameNode,
+  renameProjectAndDocument,
+  soleManuscriptDocument,
+  withTitleLink,
   type BinderDraft,
   type BinderModel,
 } from '@longhand/binder';
@@ -46,7 +58,7 @@ import { editorsHref, useEditors, type EditorsState } from '../lib/editors';
 import { HumanEvents } from '../lib/drafts';
 import { deviceId, editorSessionId, newId } from '../lib/ids';
 import { ProjectStore, type ProjectSnapshot } from '../store/projectStore';
-import { IconClose, IconSidebarLeft, IconSidebarRight } from '../ui/icons';
+import { IconBack, IconClose, IconSidebarLeft, IconSidebarRight } from '../ui/icons';
 import { ThemeToggle } from '../ui/ThemeToggle';
 import { BinderPane } from './BinderPane';
 import { createCitationLabels } from './citationLabels';
@@ -59,6 +71,8 @@ import { ResearchPane, type CiteIntent } from './ResearchPane';
 import { SettingsPane } from './SettingsPane';
 import { keyLabel, useShortcuts, type Shortcut } from './shortcuts';
 import { StatusLine } from './StatusLine';
+import { TitleField } from './TitleField';
+import { workspaceTitles } from './titles';
 
 type View = 'write' | 'corkboard' | 'replay' | 'report';
 type Tab = 'feedback' | 'research' | 'provenance' | 'settings';
@@ -229,12 +243,17 @@ function WorkspaceReady(props: {
   const [layout, setLayout] = useState(() =>
     loadJson(LAYOUT_KEY, { left: true, quiet: false as boolean }),
   );
+  // A one-document project opens with the binder closed. Otherwise it opens the way
+  // you left it, and `layout.left` remembers only multi-document projects.
+  const [openedSingle] = useState(() => soleManuscriptDocument(state) !== null);
+  const [binderOpen, setBinderOpen] = useState<boolean | null>(null);
+  const leftPref = binderOpen ?? (openedSingle ? false : layout.left);
   const [tab, setTab] = useState<Tab | null>(null);
   const [exporting, setExporting] = useState(false);
   const [cite, setCite] = useState<CiteIntent | null>(null);
   const [showKeys, setShowKeys] = useState(false);
   useEffect(() => saveJson(LAYOUT_KEY, layout), [layout]);
-  const leftOpen = layout.left && !layout.quiet;
+  const leftOpen = leftPref && !layout.quiet;
   const rightOpen = tab !== null && !layout.quiet;
 
   // ----------------------------------------------------------- preferences
@@ -333,10 +352,18 @@ function WorkspaceReady(props: {
       ).model,
     [state, pending],
   );
+  // The model as of the drafts emitted so far, even between renders.
+  const latestModel = useRef(binderModel);
+  latestModel.current = binderModel;
   const onBinderDraft = useCallback(
     (d: BinderDraft) => {
-      const commitId = events.submit(d.type, d.payload as never);
-      setPending((p) => [...p, { commitId, draft: d }]);
+      // Ending single-document mode first renames the sole document to the name it was shown with.
+      for (const draft of withTitleLink(latestModel.current, d)) {
+        const commitId = events.submit(draft.type, draft.payload as never);
+        setPending((p) => [...p, { commitId, draft }]);
+        const next = applyBinderDraft(latestModel.current, draft);
+        if (next.ok) latestModel.current = next.model;
+      }
     },
     [events],
   );
@@ -357,6 +384,59 @@ function WorkspaceReady(props: {
     }),
     [projectId, actorId],
   );
+
+  // ---------------------------------------------------------------- titles
+  const titles = workspaceTitles(binderModel, docId);
+  const { mode, soleId, projectTitle } = titles;
+  const isSingle = mode === 'single';
+  useEffect(() => {
+    document.title = `${projectTitle} · Longhand`;
+  }, [projectTitle]);
+  useEffect(() => {
+    if (isSingle && view === 'corkboard') setView('write');
+  }, [isSingle, view]);
+  // Archiving down to one document: it goes by the project's name from now on.
+  const prevMode = useRef(mode);
+  useEffect(() => {
+    const was = prevMode.current;
+    prevMode.current = mode;
+    if (was !== 'multi' || mode !== 'single' || !soleId) return;
+    if (binderModel.documents[soleId]?.title !== projectTitle)
+      setToast('One document left. It goes by the project’s name now.');
+  }, [mode, soleId, binderModel, projectTitle]);
+
+  const showRefusal = (
+    res: { ok: true } | { ok: false; error: { code: string; message: string } },
+  ) => {
+    if (!res.ok && res.error.code !== 'no-op') setToast(res.error.message);
+  };
+  /** Renames from the header: the project and its sole document, a document or note, or (empty) the project. */
+  const renameFromHeader = (title: string) => {
+    const m = latestModel.current;
+    if (soleId && docId === soleId) {
+      const res = renameProjectAndDocument(m, soleId, title);
+      if (res.ok) res.drafts.forEach(onBinderDraft);
+      else showRefusal(res);
+    } else if (docId && m.documents[docId]) {
+      const res = renameNode(m, { kind: 'document', id: docId }, title);
+      if (res.ok) onBinderDraft(res.draft);
+      else showRefusal(res);
+    } else renameProject(title);
+  };
+  const renameProject = (title: string) => {
+    const res = changeProjectSettings(latestModel.current, { title });
+    if (res.ok) onBinderDraft(res.draft);
+    else showRefusal(res);
+  };
+  const backToPage = () => handle?.focus();
+
+  /** Shows or hides the binder; only multi-document projects remember it. */
+  const setLeft = (open: boolean) => {
+    setBinderOpen(open);
+    setLayout((l) => ({ ...l, ...(isSingle ? {} : { left: open }), quiet: false }));
+  };
+  const toggleBinder = useRef<() => void>(() => undefined);
+  toggleBinder.current = () => setLeft(!leftOpen);
 
   const select = (ref: BinderRef) => {
     if (ref.kind === 'document') {
@@ -398,7 +478,7 @@ function WorkspaceReady(props: {
       {
         keys: 'Mod-Backslash',
         label: 'Show or hide the binder',
-        run: () => setLayout((l) => ({ ...l, left: !l.left, quiet: false })),
+        run: () => toggleBinder.current(),
       },
       {
         keys: 'Mod-Shift-Backslash',
@@ -428,7 +508,7 @@ function WorkspaceReady(props: {
       payload: {
         documentId,
         kind: 'manuscript',
-        title: 'Untitled',
+        title: UNTITLED,
         parentId: null,
         index: state.binder.manuscript.length,
       },
@@ -437,7 +517,18 @@ function WorkspaceReady(props: {
   };
 
   const hasCards = annSnap.marginCards.length > 0;
-  const title = state.settings.title;
+  // The open document as the binder sees it (optimistic), for the header.
+  const shownDoc = docId ? binderModel.documents[docId] : undefined;
+  const docLabel = shownDoc?.kind === 'note' ? 'Note title' : 'Document title';
+  const badge = shownDoc?.imported && (
+    <span
+      className="ws-badge"
+      data-testid="imported-badge"
+      title="Brought in from an existing draft. Longhand did not see it being written."
+    >
+      imported (unverified)
+    </span>
+  );
 
   return (
     <div
@@ -449,8 +540,9 @@ function WorkspaceReady(props: {
     >
       {leftOpen && (
         <BinderPane
-          title={title}
           model={binderModel}
+          single={mode !== 'multi'}
+          {...(soleId ? { hide: [{ kind: 'document', id: soleId }] } : {})}
           selected={
             view === 'corkboard' && corkFolder
               ? { kind: 'folder', id: corkFolder }
@@ -476,26 +568,50 @@ function WorkspaceReady(props: {
               title={`${leftOpen ? 'Hide' : 'Show'} binder (${keyLabel('Mod-Backslash')})`}
               aria-pressed={leftOpen}
               data-testid="toggle-binder"
-              onClick={() => setLayout((l) => ({ ...l, left: !leftOpen, quiet: false }))}
+              onClick={() => setLeft(!leftOpen)}
             >
               <IconSidebarLeft />
             </button>
             {!leftOpen && (
-              <a href="/" className="ws-crumb" title="All projects">
-                {title}
+              <a href="/" className="ws-home-link" title="All projects" aria-label="All projects">
+                <IconBack />
               </a>
             )}
-            {doc && (
-              <span className="ws-doc-title" data-testid="document-title">
-                {doc.title}
-                {doc.imported && (
-                  <span
-                    className="ws-badge"
-                    title="Brought in from an existing draft; Longhand did not see it being written."
-                  >
-                    imported (unverified)
-                  </span>
-                )}
+            {mode === 'multi' && !leftOpen && <span className="ws-crumb">{projectTitle}</span>}
+            {mode === 'empty' && (
+              <span className={shownDoc ? 'ws-crumb' : 'ws-doc-title'}>
+                <TitleField
+                  value={projectTitle}
+                  label="Project title"
+                  testId="project-title"
+                  onCommit={renameProject}
+                  onDone={backToPage}
+                />
+              </span>
+            )}
+            {titles.crumb && (
+              <button
+                type="button"
+                className="ws-crumb ws-crumb-button"
+                aria-label={`Open ‘${titles.crumb.title}’`}
+                onClick={() => {
+                  setDocId(titles.crumb?.documentId ?? null);
+                  setView('write');
+                }}
+              >
+                {titles.crumb.title}
+              </button>
+            )}
+            {titles.docTitle !== null && (
+              <span className="ws-doc-title">
+                <TitleField
+                  value={titles.docTitle}
+                  label={isSingle && docId === soleId ? 'Title' : docLabel}
+                  testId="document-title"
+                  onCommit={renameFromHeader}
+                  onDone={backToPage}
+                />
+                {badge}
               </span>
             )}
           </span>
@@ -587,10 +703,11 @@ function WorkspaceReady(props: {
             <ReportView
               client={client}
               projectId={projectId}
-              title={title}
+              title={projectTitle}
+              single={isSingle}
               headSeq={snap.headSeq}
               documentId={docId}
-              documentTitle={doc?.title ?? null}
+              documentTitle={titles.docTitle}
               onExport={() => setExporting(true)}
             />
           )}
@@ -601,7 +718,6 @@ function WorkspaceReady(props: {
           save={save?.state ?? null}
           queued={save?.queued ?? 0}
           live={snap.live}
-          documentTitle={doc?.title ?? null}
         />
       </div>
 
@@ -638,7 +754,13 @@ function WorkspaceReady(props: {
           </div>
           <div className={`ws-right-body${tab === 'feedback' ? ' is-chat' : ''}`}>
             {tab === 'feedback' && (
-              <FeedbackTab controller={ann} doc={doc} editors={editors} projectId={projectId} />
+              <FeedbackTab
+                controller={ann}
+                doc={doc}
+                docTitle={titles.docTitle}
+                editors={editors}
+                projectId={projectId}
+              />
             )}
             {tab === 'research' && (
               <ResearchPane
@@ -665,6 +787,7 @@ function WorkspaceReady(props: {
                 tint={tint}
                 document={doc}
                 state={state}
+                single={isSingle}
                 tintKey={keyLabel('Mod-Alt-KeyP')}
                 view={view === 'replay' || view === 'report' ? view : 'other'}
                 onReplay={() => setView(view === 'replay' ? 'write' : 'replay')}
@@ -694,7 +817,7 @@ function WorkspaceReady(props: {
           commits={snap.commits}
           headHash={state.headHash}
           documentId={docId}
-          documentTitle={doc?.title ?? null}
+          single={isSingle}
           onClose={() => setExporting(false)}
         />
       )}
@@ -735,11 +858,13 @@ function CorkboardHead(props: {
 function FeedbackTab(props: {
   controller: AnnotationsController;
   doc: DocumentState | null;
+  /** The open document's title as shown. */
+  docTitle: string | null;
   editors: EditorsState;
   projectId: string;
 }) {
   // A manuscript document is the default context; with none (or a note) open, the project.
-  const title = props.doc && props.doc.kind === 'manuscript' ? props.doc.title : null;
+  const title = props.doc && props.doc.kind === 'manuscript' ? props.docTitle : null;
   return (
     <>
       {props.editors.error && !props.editors.editors && (
