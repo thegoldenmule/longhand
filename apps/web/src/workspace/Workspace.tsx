@@ -718,6 +718,8 @@ function WorkspaceReady(props: {
           save={save?.state ?? null}
           queued={save?.queued ?? 0}
           live={snap.live}
+          typewriter={view === 'write' && doc ? prefs.typewriter : null}
+          onTypewriter={(typewriter) => setPrefs((cur) => ({ ...cur, typewriter }))}
         />
       </div>
 

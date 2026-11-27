@@ -951,6 +951,58 @@ kbd {
   align-items: center;
   white-space: nowrap;
 }
+.ws-status-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  background: none;
+  padding: 2px 4px;
+  border-radius: 5px;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+.ws-status-switch:hover {
+  color: var(--app-ink-muted);
+}
+.ws-status-switch:focus-visible {
+  outline: 2px solid var(--app-focus);
+  outline-offset: 1px;
+}
+.ws-status-switch-track {
+  position: relative;
+  width: 22px;
+  height: 12px;
+  border-radius: 999px;
+  background: var(--app-rule);
+  transition: background 120ms ease;
+}
+.ws-status-switch-track > span {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--app-paper);
+  transition: transform 120ms ease;
+}
+.ws-status-switch[aria-checked='true'] {
+  color: var(--app-ink-muted);
+}
+.ws-status-switch[aria-checked='true'] .ws-status-switch-track {
+  background: var(--app-ink-muted);
+}
+.ws-status-switch[aria-checked='true'] .ws-status-switch-track > span {
+  transform: translateX(10px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ws-status-switch-track,
+  .ws-status-switch-track > span {
+    transition: none;
+  }
+}
 .ws-goal {
   display: inline-flex;
   align-items: center;

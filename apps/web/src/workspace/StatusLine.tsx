@@ -1,5 +1,8 @@
 'use client';
-/** Word counts and save state, in one quiet line under the page. It never shows a title. */
+/**
+ * Word counts, the typewriter switch and save state, in one quiet line under the
+ * page. It never shows a title.
+ */
 import type { SaveState, WordCounts } from '@longhand/editor';
 
 const SAVE_LABEL: Record<SaveState, string> = {
@@ -18,6 +21,9 @@ export function StatusLine(props: {
   save: SaveState | null;
   queued: number;
   live: boolean;
+  /** Typewriter scrolling, while writing. `null` hides the switch. */
+  typewriter: boolean | null;
+  onTypewriter: (on: boolean) => void;
 }) {
   const c = props.counts;
   const save = props.save;
@@ -47,6 +53,22 @@ export function StatusLine(props: {
         )}
       </span>
       <span className="ws-status-group">
+        {props.typewriter !== null && (
+          <button
+            type="button"
+            role="switch"
+            aria-checked={props.typewriter}
+            className="ws-status-switch"
+            data-testid="toggle-typewriter"
+            title="Keep the line you are typing at the same height on screen"
+            onClick={() => props.onTypewriter(!props.typewriter)}
+          >
+            <span className="ws-status-switch-track" aria-hidden>
+              <span />
+            </span>
+            Typewriter
+          </button>
+        )}
         {save && (
           <span
             className="ws-save"
