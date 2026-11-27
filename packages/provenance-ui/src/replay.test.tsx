@@ -247,6 +247,18 @@ describe('<ReplayScrubber>', () => {
     expect(slider.max).toBe(String(commits.length));
   });
 
+  it('offers the document chooser only when there is more than one document', () => {
+    const one = fixture('plain-typing');
+    expect(Object.keys(one.fixture.expected.state.documents)).toHaveLength(1);
+    render(<ReplayScrubber commits={one.commits} />);
+    expect(screen.queryByTestId('replay-document')).toBeNull();
+    expect(screen.queryByText('Document')).toBeNull();
+    cleanup();
+    const many = fixture('novel');
+    render(<ReplayScrubber commits={many.commits} />);
+    expect(screen.getByTestId('replay-document')).toBeTruthy();
+  });
+
   it('tints the replayed document on request', () => {
     const { commits } = fixture('research');
     render(<ReplayScrubber commits={commits} />);

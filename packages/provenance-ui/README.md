@@ -133,18 +133,18 @@ Rows show each of the five run classes with a sample of its tint and underline, 
 
 `<ReplayScrubber commits={commits} />` takes the commit array the host supplies and makes no network calls.
 
-| Prop                                                    | Default              | What                                                                  |
-| ------------------------------------------------------- | -------------------- | --------------------------------------------------------------------- |
-| `commits`                                               | required             | The project's commits, seq 1…n                                        |
-| `replay`                                                | made from `commits`  | A shared `Replay` (so the inspector and the scrubber share snapshots) |
-| `snapshotEvery`                                         | 64                   | Snapshot interval when the component makes the `Replay`               |
-| `documentId` / `defaultDocumentId` / `onDocumentChange` | first manuscript doc | Which document to draw (controlled or not)                            |
-| `defaultScope`                                          | `'document'`         | `'document'`: the document's commits. `'project'`: every commit       |
-| `defaultSeq`, `onSeqChange(seq, state)`                 | head                 | Where to start, and a callback with the `LedgerState` shown           |
-| `defaultSpeed`                                          | 8                    | 1, 2, 4, 8, 16, 32 or 64                                              |
-| `defaultTint`                                           | false                | Tint the replayed document                                            |
-| `maxGapMs`                                              | 4000                 | Cap on one idle gap, in ledger ms                                     |
-| `formatTime`, `clock`, `className`                      |                      | Formatting, a playback clock (tests)                                  |
+| Prop                                                    | Default              | What                                                                                                                    |
+| ------------------------------------------------------- | -------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `commits`                                               | required             | The project's commits, seq 1…n                                                                                          |
+| `replay`                                                | made from `commits`  | A shared `Replay` (so the inspector and the scrubber share snapshots)                                                   |
+| `snapshotEvery`                                         | 64                   | Snapshot interval when the component makes the `Replay`                                                                 |
+| `documentId` / `defaultDocumentId` / `onDocumentChange` | first manuscript doc | Which document to draw (controlled or not). The Document chooser shows only when the project has more than one document |
+| `defaultScope`                                          | `'document'`         | `'document'`: the document's commits. `'project'`: every commit                                                         |
+| `defaultSeq`, `onSeqChange(seq, state)`                 | head                 | Where to start, and a callback with the `LedgerState` shown                                                             |
+| `defaultSpeed`                                          | 8                    | 1, 2, 4, 8, 16, 32 or 64                                                                                                |
+| `defaultTint`                                           | false                | Tint the replayed document                                                                                              |
+| `maxGapMs`                                              | 4000                 | Cap on one idle gap, in ledger ms                                                                                       |
+| `formatTime`, `clock`, `className`                      |                      | Formatting, a playback clock (tests)                                                                                    |
 
 - **The view.** The document is drawn by a read-only ProseMirror view (`editable: false`) with the editor's stylesheet. Links and inline code render as in the editor. A click on a replayed link never navigates (the editor's `linkClickPlugin`), and ⌘/Ctrl-click opens it in a new tab. Each step folds at most `snapshotEvery − 1` commits from the nearest `Replay` snapshot, so scrubbing stays fast on long ledgers.
 - **Playback.** Wall time advances ledger time at the chosen speed. Ledger time between frames is the real time between commits, measured as `clientTime` plus `durationMs` for text batches, so the frame shows when the batch was finished. Each gap is clamped to `[0, maxGapMs]`, so overnight gaps play as a short pause. When several commits fall within one tick (16 ms), the player skips to the latest instead of falling behind. Scrubbing pauses playback, and pressing play at the end starts again from the beginning.

@@ -264,23 +264,25 @@ export function ReplayScrubber(props: ReplayScrubberProps): ReactElement {
       data-playing={playing ? 'true' : 'false'}
     >
       <div className="lh-replay__toolbar">
-        <label className="lh-replay__field">
-          <span>Document</span>
-          <select
-            id={ids.doc}
-            value={documentId ?? ''}
-            onChange={(e) => chooseDocument(e.target.value)}
-            data-testid="replay-document"
-          >
-            {documents.map((d) => (
-              <option key={d.id} value={d.id}>
-                {d.title}
-                {d.kind === 'note' ? ' (note)' : ''}
-                {d.archived ? ' (archived)' : ''}
-              </option>
-            ))}
-          </select>
-        </label>
+        {documents.length > 1 && (
+          <label className="lh-replay__field">
+            <span>Document</span>
+            <select
+              id={ids.doc}
+              value={documentId ?? ''}
+              onChange={(e) => chooseDocument(e.target.value)}
+              data-testid="replay-document"
+            >
+              {documents.map((d) => (
+                <option key={d.id} value={d.id}>
+                  {d.title}
+                  {d.kind === 'note' ? ' (note)' : ''}
+                  {d.archived ? ' (archived)' : ''}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
         <fieldset className="lh-replay__scope">
           <legend>Timeline</legend>
           {(['document', 'project'] as const).map((s) => (
