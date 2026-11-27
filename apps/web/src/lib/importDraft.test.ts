@@ -3,10 +3,13 @@ import { describe, expect, it } from 'vitest';
 import {
   draftToDoc,
   formatForName,
+  importTitle,
+  leadingTitle,
   markdownToDoc,
   parseInline,
   sha256Hex,
   textToDoc,
+  withoutLeadingTitle,
 } from './importDraft';
 
 describe('importing a draft', () => {
@@ -102,5 +105,57 @@ describe('importing a draft', () => {
     expect(await sha256Hex(new TextEncoder().encode('abc'))).toBe(
       'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad',
     );
+  });
+});
+
+describe('the title of an imported draft', () => {
+  const storm = markdownToDoc('# The *Storm*\n\nIt rained.');
+
+  it('reads a leading level-1 heading', () => {
+    expect(leadingTitle(storm)).toBe('The Storm');
+    expect(leadingTitle(markdownToDoc('## Part One\n\nText.'))).toBeNull();
+    expect(leadingTitle(markdownToDoc('Text first.\n\n# Later'))).toBeNull();
+    expect(leadingTitle(markdownToDoc(`# ${'x'.repeat(201)}`))).toBeNull();
+    expect(leadingTitle(markdownToDoc('#   \n\nText.'))).toBeNull();
+  });
+
+  it('drops the heading, leaving one empty paragraph when nothing is left', () => {
+    expect(withoutLeadingTitle(storm)).toEqual(markdownToDoc('It rained.'));
+    expect(withoutLeadingTitle(markdownToDoc('# Only a title'))).toEqual({
+      type: 'doc',
+      content: [{ type: 'paragraph' }],
+    });
+    const plain = markdownToDoc('No heading.');
+    expect(withoutLeadingTitle(plain)).toBe(plain);
+  });
+
+  it('takes the Title field first, and keeps a heading that differs from it', () => {
+    expect(importTitle({ title: ' My Essay ', doc: storm, fileName: 'storm.md' })).toEqual({
+      title: 'My Essay',
+      content: storm,
+    });
+  });
+
+  it('takes the heading next, and moves it out of the body', () => {
+    const r = importTitle({ title: '  ', doc: storm, fileName: 'storm.md' });
+    expect(r.title).toBe('The Storm');
+    expect(r.content).toEqual(markdownToDoc('It rained.'));
+    expect(docFromJSON(r.content)).toBeTruthy();
+  });
+
+  it('drops the heading when the Title field says the same', () => {
+    const r = importTitle({ title: 'The Storm ', doc: storm, fileName: null });
+    expect(r).toEqual({ title: 'The Storm', content: markdownToDoc('It rained.') });
+  });
+
+  it('falls back to the file name, then Untitled', () => {
+    const doc = markdownToDoc('It rained.');
+    expect(importTitle({ title: '', doc, fileName: 'the-storm.final.md' }).title).toBe(
+      'the-storm.final',
+    );
+    expect(importTitle({ title: '', doc, fileName: null })).toEqual({
+      title: 'Untitled',
+      content: doc,
+    });
   });
 });

@@ -1,8 +1,11 @@
 'use client';
 /**
- * Projects: open one, start one (title, genre, audience), or bring in an
- * existing draft, which is labeled *imported (unverified)* in every report.
+ * Projects: open one, start one (it's Untitled until you name it), or bring in
+ * an existing draft, which is labeled *imported (unverified)* in every report.
+ * New project is one click: it lands on the page with the caret in the body,
+ * and the title is named at the top of the page.
  */
+import { UNTITLED } from '@longhand/binder';
 import type { ProjectSummary } from '@longhand/client';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { currentUser, signOut } from '../auth/session';
@@ -10,7 +13,7 @@ import { runtimeConfig } from '../config';
 import { getClient } from '../lib/client';
 import { humanDraft, postDraft } from '../lib/drafts';
 import { newId } from '../lib/ids';
-import { draftToDoc, formatForName, sha256Hex } from '../lib/importDraft';
+import { draftToDoc, formatForName, importTitle, sha256Hex } from '../lib/importDraft';
 import { ThemeToggle } from '../ui/ThemeToggle';
 
 function when(iso: string): string {
@@ -23,22 +26,12 @@ function when(iso: string): string {
   return d.toLocaleDateString([], { year: 'numeric', month: 'short', day: 'numeric' });
 }
 
-type Mode = 'none' | 'new' | 'import';
+type Mode = 'none' | 'import';
 
-async function createProject(input: {
-  title: string;
-  genre: string;
-  audience: string;
-}): Promise<{ projectId: string; actorId: string }> {
+async function createProject(title: string): Promise<{ projectId: string; actorId: string }> {
   const client = getClient();
   const me = await client.me();
-  const { projectId } = await client.createProject({ title: input.title.trim() });
-  const patch: Record<string, string> = {};
-  if (input.genre.trim()) patch.genre = input.genre.trim();
-  if (input.audience.trim()) patch.audience = input.audience.trim();
-  if (Object.keys(patch).length) {
-    await postDraft(client, humanDraft(projectId, me.actorId, 'ProjectSettingsChanged', { patch }));
-  }
+  const { projectId } = await client.createProject({ title });
   return { projectId, actorId: me.actorId };
 }
 
@@ -64,6 +57,29 @@ export function ProjectsHome() {
   }, [cfg.ledgerUrl]);
 
   const open = (projectId: string) => location.assign(`/p/${encodeURIComponent(projectId)}`);
+
+  /** One click: an Untitled project with one Untitled document, opened. */
+  const startProject = async () => {
+    setBusy(true);
+    setError(null);
+    try {
+      const { projectId, actorId } = await createProject(UNTITLED);
+      await postDraft(
+        getClient(),
+        humanDraft(projectId, actorId, 'DocumentCreated', {
+          documentId: newId(),
+          kind: 'manuscript',
+          title: UNTITLED,
+          parentId: null,
+          index: 0,
+        }),
+      );
+      open(projectId);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : String(e));
+      setBusy(false);
+    }
+  };
 
   return (
     <div className="lh-home">
@@ -93,8 +109,8 @@ export function ProjectsHome() {
             <button
               type="button"
               className="lh-button lh-button-primary"
-              onClick={() => setMode(mode === 'new' ? 'none' : 'new')}
-              aria-expanded={mode === 'new'}
+              disabled={busy}
+              onClick={() => void startProject()}
             >
               New project
             </button>
@@ -109,33 +125,6 @@ export function ProjectsHome() {
           </div>
         </section>
 
-        {mode === 'new' && (
-          <NewProjectForm
-            busy={busy}
-            onCancel={() => setMode('none')}
-            onSubmit={async (v) => {
-              setBusy(true);
-              setError(null);
-              try {
-                const { projectId, actorId } = await createProject(v);
-                await postDraft(
-                  getClient(),
-                  humanDraft(projectId, actorId, 'DocumentCreated', {
-                    documentId: newId(),
-                    kind: 'manuscript',
-                    title: 'Untitled',
-                    parentId: null,
-                    index: 0,
-                  }),
-                );
-                open(projectId);
-              } catch (e) {
-                setError(e instanceof Error ? e.message : String(e));
-                setBusy(false);
-              }
-            }}
-          />
-        )}
         {mode === 'import' && (
           <ImportForm
             busy={busy}
@@ -144,14 +133,18 @@ export function ProjectsHome() {
               setBusy(true);
               setError(null);
               try {
-                const content = draftToDoc(v.text, v.format);
-                const { projectId, actorId } = await createProject(v);
+                const { title, content } = importTitle({
+                  title: v.title,
+                  doc: draftToDoc(v.text, v.format),
+                  fileName: v.fileName,
+                });
+                const { projectId, actorId } = await createProject(title);
                 await postDraft(
                   getClient(),
                   humanDraft(projectId, actorId, 'DocumentImported', {
                     documentId: newId(),
                     kind: 'manuscript',
-                    title: v.documentTitle.trim() || v.title.trim(),
+                    title,
                     parentId: null,
                     index: 0,
                     content,
@@ -204,8 +197,6 @@ function Field(props: {
   value: string;
   onChange: (v: string) => void;
   placeholder?: string;
-  required?: boolean;
-  autoFocus?: boolean;
 }) {
   return (
     <label className="lh-field">
@@ -213,8 +204,6 @@ function Field(props: {
       <input
         name={props.name}
         value={props.value}
-        required={props.required}
-        autoFocus={props.autoFocus}
         placeholder={props.placeholder}
         maxLength={200}
         onChange={(e) => props.onChange(e.target.value)}
@@ -223,63 +212,10 @@ function Field(props: {
   );
 }
 
-function NewProjectForm(props: {
-  busy: boolean;
-  onSubmit: (v: { title: string; genre: string; audience: string }) => void;
-  onCancel: () => void;
-}) {
-  const [title, setTitle] = useState('');
-  const [genre, setGenre] = useState('');
-  const [audience, setAudience] = useState('');
-  return (
-    <form
-      className="lh-card-form"
-      aria-label="New project"
-      onSubmit={(e: FormEvent) => {
-        e.preventDefault();
-        if (title.trim()) props.onSubmit({ title, genre, audience });
-      }}
-    >
-      <Field label="Title" name="title" value={title} onChange={setTitle} required autoFocus />
-      <div className="lh-field-row">
-        <Field
-          label="Genre"
-          name="genre"
-          value={genre}
-          onChange={setGenre}
-          placeholder="Literary fiction, essay, report…"
-        />
-        <Field
-          label="Audience"
-          name="audience"
-          value={audience}
-          onChange={setAudience}
-          placeholder="Who is it for?"
-        />
-      </div>
-      <div className="lh-form-actions">
-        <button type="button" className="lh-button lh-button-quiet" onClick={props.onCancel}>
-          Cancel
-        </button>
-        <button
-          type="submit"
-          className="lh-button lh-button-primary"
-          disabled={props.busy || !title.trim()}
-        >
-          Create project
-        </button>
-      </div>
-    </form>
-  );
-}
-
 function ImportForm(props: {
   busy: boolean;
   onSubmit: (v: {
     title: string;
-    genre: string;
-    audience: string;
-    documentTitle: string;
     text: string;
     format: 'markdown' | 'text';
     fileName: string | null;
@@ -287,8 +223,6 @@ function ImportForm(props: {
   onCancel: () => void;
 }) {
   const [title, setTitle] = useState('');
-  const [genre, setGenre] = useState('');
-  const [audience, setAudience] = useState('');
   const [text, setText] = useState('');
   const [fileName, setFileName] = useState<string | null>(null);
   const [format, setFormat] = useState<'markdown' | 'text'>('markdown');
@@ -299,19 +233,14 @@ function ImportForm(props: {
       aria-label="Import a draft"
       onSubmit={(e: FormEvent) => {
         e.preventDefault();
-        if (title.trim() && text.trim())
-          props.onSubmit({ title, genre, audience, documentTitle: '', text, format, fileName });
+        if (text.trim()) props.onSubmit({ title, text, format, fileName });
       }}
     >
       <p className="lh-muted lh-form-note">
         An imported draft is labeled <em>imported (unverified)</em> in the provenance view and in
         every report: Longhand did not see it being written.
       </p>
-      <Field label="Project title" name="title" value={title} onChange={setTitle} required />
-      <div className="lh-field-row">
-        <Field label="Genre" name="genre" value={genre} onChange={setGenre} />
-        <Field label="Audience" name="audience" value={audience} onChange={setAudience} />
-      </div>
+      <Field label="Title" name="title" value={title} onChange={setTitle} placeholder={UNTITLED} />
       <label className="lh-field">
         <span>Draft</span>
         <textarea
@@ -334,10 +263,12 @@ function ImportForm(props: {
           onChange={async (e) => {
             const f = e.target.files?.[0];
             if (!f) return;
-            setText(await f.text());
+            const body = await f.text();
+            const fmt = formatForName(f.name);
+            setText(body);
             setFileName(f.name);
-            setFormat(formatForName(f.name));
-            if (!title.trim()) setTitle(f.name.replace(/\.[^.]+$/, ''));
+            setFormat(fmt);
+            if (!title.trim()) setTitle(suggestedTitle(body, fmt, f.name));
           }}
         />
         <label className="lh-inline-choice">
@@ -366,11 +297,20 @@ function ImportForm(props: {
         <button
           type="submit"
           className="lh-button lh-button-primary"
-          disabled={props.busy || !title.trim() || !text.trim()}
+          disabled={props.busy || !text.trim()}
         >
           Import
         </button>
       </div>
     </form>
   );
+}
+
+/** The name an import would get with an empty Title field: the `# Heading`, else the file name. */
+function suggestedTitle(text: string, format: 'markdown' | 'text', fileName: string): string {
+  try {
+    return importTitle({ title: '', doc: draftToDoc(text, format), fileName }).title;
+  } catch {
+    return importTitle({ title: '', doc: { type: 'doc' }, fileName }).title;
+  }
 }

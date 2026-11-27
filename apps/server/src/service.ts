@@ -279,7 +279,7 @@ export class LedgerService {
         sessionId: input.sessionId ?? 'api',
         schemaVersion: SCHEMA_VERSION,
         type: 'ProjectCreated',
-        payload: { title: input.title ?? 'Untitled project' },
+        payload: { title: input.title ?? 'Untitled' },
       } as CommitDraft);
     if (draft?.type !== 'ProjectCreated') {
       throw new HttpError(

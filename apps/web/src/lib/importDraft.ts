@@ -6,7 +6,14 @@
  * policy refuses (anything but http, https and mailto) stays literal text, as
  * does anything else. The fold labels the result `imported` (unverified).
  */
-import { docFromJSON, normalizeHref, type PMMarkJSON, type PMNodeJSON } from '@longhand/schema';
+import { UNTITLED, titleOrUntitled } from '@longhand/binder';
+import {
+  TEXT_LIMITS,
+  docFromJSON,
+  normalizeHref,
+  type PMMarkJSON,
+  type PMNodeJSON,
+} from '@longhand/schema';
 
 type Inline = PMNodeJSON;
 
@@ -184,4 +191,49 @@ export function draftToDoc(text: string, format: 'markdown' | 'text'): PMNodeJSO
 /** Guesses the format from a file name (`.md`/`.markdown` → markdown). */
 export function formatForName(name: string | null): 'markdown' | 'text' {
   return name && /\.(md|markdown|mdown)$/i.test(name) ? 'markdown' : 'text';
+}
+
+/** The plain text of an inline run (hard breaks read as spaces). */
+function inlineText(node: PMNodeJSON): string {
+  if (node.type === 'text') return node.text ?? '';
+  if (node.type === 'hard_break') return ' ';
+  return (node.content ?? []).map(inlineText).join('');
+}
+
+/**
+ * The draft's title when its first block is a level-1 heading (`# Title`) with
+ * text of 200 characters or fewer, else null.
+ */
+export function leadingTitle(doc: PMNodeJSON): string | null {
+  const first = doc.content?.[0];
+  if (first?.type !== 'heading' || first.attrs?.level !== 1) return null;
+  const text = inlineText(first).replace(/\s+/g, ' ').trim();
+  return text && text.length <= TEXT_LIMITS.titleMaxChars ? text : null;
+}
+
+/** The draft without its leading title heading. A draft left empty is one empty paragraph. */
+export function withoutLeadingTitle(doc: PMNodeJSON): PMNodeJSON {
+  if (leadingTitle(doc) === null) return doc;
+  const rest = (doc.content ?? []).slice(1);
+  return { ...doc, content: rest.length ? rest : [{ type: 'paragraph' }] };
+}
+
+/**
+ * An imported draft's name, and its content: the Title field, else the leading
+ * `# Heading`, else the file name without its extension, else Untitled. A leading
+ * heading equal to that name becomes the name and leaves the body.
+ */
+export function importTitle(input: { title: string; doc: PMNodeJSON; fileName: string | null }): {
+  title: string;
+  content: PMNodeJSON;
+} {
+  const heading = leadingTitle(input.doc);
+  const fromFile = (input.fileName ?? '')
+    .replace(/\.[^.]+$/, '')
+    .slice(0, TEXT_LIMITS.titleMaxChars);
+  const pick = [input.title, heading ?? '', fromFile].find((t) => t.trim() !== '');
+  const title = titleOrUntitled(pick ?? UNTITLED);
+  const content =
+    heading !== null && heading === title ? withoutLeadingTitle(input.doc) : input.doc;
+  return { title, content };
 }
