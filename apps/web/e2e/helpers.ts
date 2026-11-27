@@ -119,21 +119,46 @@ export { expect };
 
 // ------------------------------------------------------------------- the UI
 
-/** Creates a project from the home page and opens it; returns its id. */
+/**
+ * Starts a project from the home page (one click: it is Untitled) and opens it;
+ * returns its id. A `title` is typed into the title at the top of the page, which
+ * names the project and its one document. Genre and audience go in through the
+ * Settings tab.
+ */
 export async function newProject(
   page: Page,
-  title = 'Harbour',
+  title?: string,
   opts: { genre?: string; audience?: string } = {},
 ): Promise<string> {
   await page.goto('/');
   await page.getByRole('button', { name: 'New project' }).click();
-  await page.getByLabel('Title').fill(title);
-  if (opts.genre) await page.getByLabel('Genre').fill(opts.genre);
-  if (opts.audience) await page.getByLabel('Audience').fill(opts.audience);
-  await page.getByRole('button', { name: 'Create project' }).click();
   await page.waitForURL(/\/p\/[^/?]+/);
   await expect(page.getByTestId('manuscript')).toBeVisible();
-  return projectIdOf(page);
+  const pid = projectIdOf(page);
+  if (title !== undefined) {
+    const field = page.getByTestId('document-title');
+    await field.fill(title);
+    await field.press('Enter');
+    await expect.poll(async () => (await getState(pid)).settings.title).toBe(title);
+  }
+  if (opts.genre || opts.audience) {
+    if ((await page.getByTestId('side-panel').count()) === 0) {
+      await page.getByTestId('toggle-panel').click();
+    }
+    await page.getByTestId('tab-settings').click();
+    const pane = page.getByTestId('settings-pane');
+    if (opts.genre) await pane.getByLabel('Genre').fill(opts.genre);
+    if (opts.audience) await pane.getByLabel('Audience').fill(opts.audience);
+    await pane.getByLabel(opts.audience ? 'Audience' : 'Genre').blur();
+    await expect
+      .poll(async () => {
+        const s = (await getState(pid)).settings;
+        return [s.genre, s.audience];
+      })
+      .toEqual([opts.genre ?? '', opts.audience ?? '']);
+    await page.getByRole('button', { name: 'Close side panel' }).click();
+  }
+  return pid;
 }
 
 export function projectIdOf(page: Page): string {

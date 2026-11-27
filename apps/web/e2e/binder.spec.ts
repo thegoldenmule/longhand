@@ -23,11 +23,15 @@ test('9 · binder: nested folders, keyboard and drag moves, corkboard synopsis, 
   page,
 }) => {
   const pid = await newProject(page, 'Novel');
-  await expect(tree(page, 'Manuscript').getByRole('treeitem')).toHaveCount(1);
+  // One document: the binder opens closed, and the document has no row (its name is at the top).
+  await expect(page.getByTestId('binder-pane')).toHaveCount(0);
+  await page.getByTestId('toggle-binder').click();
+  await expect(tree(page, 'Manuscript').getByRole('treeitem')).toHaveCount(0);
 
-  // Part One › Chapter 1 › Scene 1
+  // Part One › Chapter 1 › Scene 1. With a folder the document gets its row, named "Novel".
   await page.getByRole('button', { name: 'New folder in Manuscript' }).click();
   await renameNew(page, 'New folder', 'Part One');
+  await expect(item(page, 'Novel')).toBeVisible();
   await item(page, 'Part One').click();
   await page.getByRole('button', { name: 'New folder in Manuscript' }).click();
   await renameNew(page, 'New folder', 'Chapter 1');
@@ -46,8 +50,8 @@ test('9 · binder: nested folders, keyboard and drag moves, corkboard synopsis, 
   await expect(item(page, 'Chapter 1')).toHaveAttribute('aria-level', '2');
   await expect(item(page, 'Scene 1')).toHaveAttribute('aria-level', '3');
 
-  // Keyboard: move "Untitled" below Part One (M, Down, Enter).
-  await item(page, 'Untitled').focus();
+  // Keyboard: move "Novel" below Part One (M, Down, Enter).
+  await item(page, 'Novel').focus();
   await page.keyboard.press('m');
   await page.keyboard.press('ArrowDown');
   await page.keyboard.press('Enter');
@@ -58,15 +62,15 @@ test('9 · binder: nested folders, keyboard and drag moves, corkboard synopsis, 
         r.kind === 'folder' ? s.folders[r.id]!.title : s.documents[r.id]!.title,
       );
     })
-    .toEqual(['Part One', 'Untitled']);
+    .toEqual(['Part One', 'Novel']);
 
-  // Drag: drop "Untitled" into the middle of the Chapter 1 row (inside the folder).
+  // Drag: drop "Novel" into the middle of the Chapter 1 row (inside the folder).
   const target = item(page, 'Chapter 1').locator('.lh-binder-row').first();
-  await item(page, 'Untitled').locator('.lh-binder-row').first().dragTo(target);
+  await item(page, 'Novel').locator('.lh-binder-row').first().dragTo(target);
   await expect
     .poll(async () => {
       const s = await getState(pid);
-      return docNamed(s, 'Untitled')?.parentId === folderNamed(s, 'Chapter 1')?.id;
+      return docNamed(s, 'Novel')?.parentId === folderNamed(s, 'Chapter 1')?.id;
     })
     .toBe(true);
 
@@ -94,7 +98,7 @@ test('9 · binder: nested folders, keyboard and drag moves, corkboard synopsis, 
     .getByRole('button', { name: 'Write' })
     .click();
   await item(page, 'Characters').click();
-  await expect(page.getByTestId('document-title')).toHaveText('Characters');
+  await expect(page.getByTestId('document-title')).toHaveValue('Characters');
   await manuscript(page).click();
   await page.keyboard.type('Mara: harbour pilot, counts everything twice.', { delay: 4 });
   const note = docNamed(await getState(pid), 'Characters')!;

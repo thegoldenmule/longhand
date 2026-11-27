@@ -169,13 +169,14 @@ test('16 · an imported draft is labeled imported (unverified) in the tint and t
   await page.goto('/');
   await page.getByRole('button', { name: 'Import a draft' }).click();
   const form = page.getByRole('form', { name: 'Import a draft' });
-  await form.getByLabel('Project title').fill('Imported essay');
+  await form.getByLabel('Title').fill('Imported essay');
   await form
     .getByLabel('Draft')
     .fill('# On Harbours\n\nHarbours are where *cities* begin.\n\nThey are also where they end.');
   await form.getByRole('button', { name: 'Import' }).click();
   await page.waitForURL(/\/p\//);
-  await expect(page.getByTestId('document-title')).toContainText('imported (unverified)');
+  await expect(page.getByTestId('document-title')).toHaveValue('Imported essay');
+  await expect(page.getByTestId('imported-badge')).toHaveText('imported (unverified)');
   await expect(page.getByTestId('manuscript')).toContainText('Harbours are where cities begin.');
   const pid = decodeURIComponent(new URL(page.url()).pathname.split('/')[2]!);
   const commits = await getCommits(pid);

@@ -81,6 +81,12 @@ for (const theme of ['light', 'dark'] as const) {
     await page.waitForTimeout(300);
     await shot('08-report');
 
+    // A corkboard needs more than one document: open the binder and add one.
+    await page.getByTestId('toggle-binder').click();
+    await page.getByRole('button', { name: 'New document' }).click();
+    const rename = page.getByRole('textbox', { name: 'Rename ‘Untitled’' });
+    await rename.fill('The Morning After');
+    await rename.press('Enter');
     await page.getByTestId('corkboard-toggle').click();
     await page.waitForTimeout(300);
     await shot('09-corkboard');
@@ -88,7 +94,10 @@ for (const theme of ['light', 'dark'] as const) {
 
     await page.getByTestId('tab-research').click();
     await page.getByRole('button', { name: 'Enter a source by hand' }).click();
-    await page.getByLabel('Title', { exact: true }).fill('Rainfall Records of the Upper Valley');
+    await page
+      .getByTestId('side-panel')
+      .getByLabel('Title', { exact: true })
+      .fill('Rainfall Records of the Upper Valley');
     await page.getByLabel('Authors').fill('Okafor, Nnamdi');
     await page.getByLabel('Date').fill('2014');
     await page.getByRole('button', { name: 'Add to library' }).click();
