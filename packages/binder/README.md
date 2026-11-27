@@ -43,6 +43,7 @@ function Binder({ state /* ProjectState from the read model */ }) {
 
 - `BinderModel`: `{ binder, folders, documents, settings }`, the slice of `ProjectState` the binder reads.
 - `Placement`: `{ parentId, index }`. `Location` adds `area`. `DropPosition`: `'before' | 'after' | 'inside'`.
+- `soleManuscriptDocument(model)`: the id of the manuscript's only document, when the Manuscript area's root holds exactly one live node and it is a document (notes and archived nodes don't count). Otherwise null.
 - Queries: `locate`, `getNode`, `childrenOf`, `visibleChildren`, `ancestorIds`, `descendants`, `isSelfOrDescendant`, `isEffectivelyArchived`, `archivedNodes`, `flattenVisible`, `titleOf`, `refKey`, `sameRef`, `areaForKind`, `kindForArea`, `BINDER_AREAS`.
 - Placement helpers:
   - `placementForDrop(model, moving, target, position)`: the after-removal index for a drop.
@@ -66,10 +67,24 @@ Each builder returns `DraftResult<D> = { ok: true, draft } | { ok: false, error:
 
 Builders trim titles, clamp indexes and default `index` to the end. They validate the payload against the schema before returning. `id` defaults to `crypto.randomUUID()`.
 
+Titles:
+
+- `UNTITLED` is `'Untitled'`, the name of anything nobody has named yet. Names need not be unique.
+- `titleOrUntitled(raw)` trims, turns newlines into spaces, and makes a blank title `UNTITLED`.
+
 To add the commit envelope:
 
 - `toCommitDraft(draft, { commitId, projectId, clientTime, actorId, deviceId, sessionId })` returns a human `CommitDraft` that passes `CommitDraftSchema`.
 - `createCommitDrafter(ctx)` fills in the commit id and time for you.
+
+### One document, one name (`titleLink.ts`)
+
+While the manuscript is a single document, it goes by the project's name. The link is a UI rule kept with ordinary events; the fold stores both titles as before.
+
+- `renameProjectAndDocument(model, documentId, raw)` returns `{ ok, drafts }` with 0, 1 or 2 drafts: `ProjectSettingsChanged {title}` first, then `DocumentRenamed`, each only if it changes something. Refuses invalid titles, and returns `no-op` when neither changes.
+- `withTitleLink(model, draft)` returns the drafts to emit for `draft`: just `draft`, unless it ends single-document mode (a second manuscript document, a manuscript folder, a restore) while the sole document's stored title differs from the project's. Then a `DocumentRenamed` to the project's name comes first.
+
+It lives apart from `drafts.ts` because it applies drafts with the reducer, which imports `drafts.ts`.
 
 ### Optimistic reducer (`reducer.ts`)
 
@@ -88,7 +103,8 @@ It is immutable with structural sharing, and other `ProjectState` fields pass th
 **`<BinderTree>`** props:
 
 - Required: `model`, `onDraft`.
-- Optional: `selected`, `onSelect`, `areas`, `showWordCounts`, `wordCounts`, `defaultExpanded` (`'all'` or folder ids), `newId`, `onError`, `label`, `className`.
+- Optional: `selected`, `onSelect`, `areas`, `showWordCounts`, `wordCounts`, `defaultExpanded` (`'all'` or folder ids), `newId`, `onError`, `hide`, `label`, `className`.
+- `hide` leaves nodes (and their subtrees) out of the tree: they are not rendered, not reachable by keyboard and never the target of Archive. A hidden selection still places new nodes after it, and an area whose rows are all hidden shows no empty message.
 
 What it renders and does:
 
@@ -122,7 +138,7 @@ What it does:
 **`<ProjectSettingsForm>`** props:
 
 - Required: `settings`, `onDraft`.
-- Optional: `citationStyles`, `onError`, `heading`, `className`.
+- Optional: `citationStyles`, `onError`, `heading`, `showTitle` (default true), `className`.
 
 What it does:
 
@@ -157,11 +173,12 @@ Rules the ledger fold confirms (`packages/ledger/README.md`, "Binder", and the `
 
 - `drafts.test.ts`: every builder, ok and refused, plus the envelope checked against `CommitDraftSchema`.
 - `reducer.test.ts`: creation defaults, after-removal indexes, clamping, cross-area moves, cycles, archive, settings and immutability. It also has a fast-check property: whatever a builder emits, the reducer accepts, and the tree stays well formed.
-- `model.test.ts`: queries, drop placement, keyboard steps and word counts.
+- `model.test.ts`: queries, drop placement, keyboard steps, word counts and `soleManuscriptDocument`.
+- `titleLink.test.ts`: `titleOrUntitled`, `renameProjectAndDocument` (0, 1 and 2 drafts, blank, too long) and `withTitleLink` (each way out of single mode, notes, multi mode).
 - Component tests use `@testing-library/react` in jsdom:
-  - The tree: rendering and ARIA, navigation, rename, create, keyboard moves (including Escape), archive and restore, and drag and drop, including refused drops.
+  - The tree: rendering and ARIA, navigation, rename, create, keyboard moves (including Escape), archive and restore, hidden rows, and drag and drop, including refused drops.
   - Corkboard: reorder by keyboard and by drag, and synopsis edits.
-  - Settings form: each field and its validation.
+  - Settings form: each field and its validation, and `showTitle={false}`.
   - `src/test/setup.ts` polyfills `DragEvent`, which jsdom lacks.
 
 All test models are built by hand from the schema types (`src/test/fixtures.ts`). Nothing depends on the ledger package.

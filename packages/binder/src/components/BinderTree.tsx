@@ -19,6 +19,7 @@ import {
   moveNode,
   renameNode,
   restoreNode,
+  UNTITLED,
   type BinderDraft,
   type BinderError,
   type DraftResult,
@@ -81,6 +82,12 @@ export interface BinderTreeProps {
   newId?: () => string;
   /** Called when an action is refused (the message is also announced). */
   onError?: (error: BinderError) => void;
+  /**
+   * Nodes left out of the tree (and their subtrees): not rendered, not reachable
+   * by keyboard, never the target of Archive. A hidden selection still places new
+   * nodes after it. An area whose every row is hidden shows no empty message.
+   */
+  hide?: readonly BinderRef[];
   /** Accessible label of the whole binder. */
   label?: string;
   className?: string;
@@ -148,9 +155,15 @@ export function BinderTree(props: BinderTreeProps) {
     defaultExpanded = 'all',
     newId,
     onError,
+    hide,
     label = 'Binder',
     className,
   } = props;
+  const hideKey = (hide ?? []).map(refKey).join('|');
+  const hidden = useMemo<ReadonlySet<string>>(
+    () => new Set(hideKey ? hideKey.split('|') : []),
+    [hideKey],
+  );
 
   const baseId = useId();
   const domId = (part: string) => `${baseId}-${part.replace(/[^A-Za-z0-9_-]/g, '_')}`;
@@ -205,11 +218,28 @@ export function BinderTree(props: BinderTreeProps) {
     () => new Set(Object.keys(view.folders).filter(isExpanded)),
     [view.folders, isExpanded],
   );
-  const rowsByArea = useMemo(() => {
+  // Every visible row, and the rows left once hidden nodes (and their subtrees) are out.
+  const allRowsByArea = useMemo(() => {
     const out = {} as Record<BinderArea, FlatNode[]>;
     for (const area of BINDER_AREAS) out[area] = flattenVisible(view, area, expandedSet);
     return out;
   }, [view, expandedSet]);
+  const rowsByArea = useMemo(() => {
+    if (hidden.size === 0) return allRowsByArea;
+    const out = {} as Record<BinderArea, FlatNode[]>;
+    for (const area of BINDER_AREAS) {
+      const shown: FlatNode[] = [];
+      let skipBelow: number | null = null;
+      for (const row of allRowsByArea[area]) {
+        if (skipBelow !== null && row.level > skipBelow) continue;
+        skipBelow = null;
+        if (hidden.has(refKey(row.ref))) skipBelow = row.level;
+        else shown.push(row);
+      }
+      out[area] = shown;
+    }
+    return out;
+  }, [allRowsByArea, hidden]);
 
   // A node created here enters rename mode once it shows up in the model.
   useEffect(() => {
@@ -245,10 +275,13 @@ export function BinderTree(props: BinderTreeProps) {
     focusSoon(key);
   };
 
-  /** The node actions apply to in an area: the focused row, else the selection. */
-  const currentIn = (area: BinderArea): BinderRef | null => {
+  /**
+   * The node actions apply to in an area: the focused row, else the selection.
+   * Hidden nodes count only with `includeHidden` (placement of new nodes).
+   */
+  const currentIn = (area: BinderArea, includeHidden = false): BinderRef | null => {
     for (const ref of [focusKey ? parseKey(focusKey) : null, selected]) {
-      if (!ref) continue;
+      if (!ref || (!includeHidden && hidden.has(refKey(ref)))) continue;
       const node = getNode(model, ref);
       if (node && node.area === area && !isEffectivelyArchived(model, ref)) return ref;
     }
@@ -258,7 +291,7 @@ export function BinderTree(props: BinderTreeProps) {
   // ---- actions -------------------------------------------------------------
 
   const create = (area: BinderArea, kind: BinderRef['kind']) => {
-    const cur = currentIn(area);
+    const cur = currentIn(area, true);
     let parentId: string | null = null;
     let index: number | undefined;
     if (cur?.kind === 'folder') {
@@ -271,8 +304,7 @@ export function BinderTree(props: BinderTreeProps) {
         index = loc.index + 1;
       }
     }
-    const title =
-      kind === 'folder' ? 'New folder' : area === 'notes' ? 'Untitled note' : 'Untitled';
+    const title = kind === 'folder' ? 'New folder' : area === 'notes' ? 'Untitled note' : UNTITLED;
     const opts = { area, title, parentId, index, id: newId?.() };
     const res = kind === 'folder' ? createFolder(model, opts) : createDocument(model, opts);
     if (!emit(res, `Created ${quoted(title)}. Type a name and press Enter.`) || !res.ok) return;
@@ -555,7 +587,7 @@ export function BinderTree(props: BinderTreeProps) {
   // ---- rendering -------------------------------------------------------------
 
   const renderItems = (area: BinderArea, parentId: string | null, level: number): ReactNode => {
-    const kids = visibleChildren(view, area, parentId);
+    const kids = visibleChildren(view, area, parentId).filter((r) => !hidden.has(refKey(r)));
     const tabKey = tabKeyFor(area);
     return kids.map((ref, i) => {
       const node = getNode(view, ref);
@@ -563,7 +595,9 @@ export function BinderTree(props: BinderTreeProps) {
       const key = refKey(ref);
       const isFolder = ref.kind === 'folder';
       const open = isFolder && isExpanded(ref.id);
-      const kidCount = isFolder ? visibleChildren(view, area, ref.id).length : 0;
+      const kidCount = isFolder
+        ? visibleChildren(view, area, ref.id).filter((r) => !hidden.has(refKey(r))).length
+        : 0;
       const isRenaming = !!renaming && sameRef(renaming.ref, ref);
       const isMoving = !!moving && sameRef(moving.ref, ref);
       const isSelected = sameRef(selected, ref);
@@ -686,7 +720,6 @@ export function BinderTree(props: BinderTreeProps) {
       </p>
       {areas.map((area) => {
         const headingId = domId(`area-${area}`);
-        const rows = rowsByArea[area];
         const current = currentIn(area);
         const endKey = `end:${area}`;
         return (
@@ -736,7 +769,7 @@ export function BinderTree(props: BinderTreeProps) {
             >
               {renderItems(area, null, 1)}
             </ul>
-            {rows.length === 0 && (
+            {allRowsByArea[area].length === 0 && (
               <p className="lh-binder-empty">
                 {area === 'notes' ? 'No notes yet.' : 'No documents yet.'}
               </p>

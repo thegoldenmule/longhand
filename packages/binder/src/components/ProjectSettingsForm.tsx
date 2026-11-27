@@ -29,6 +29,8 @@ export interface ProjectSettingsFormProps {
   onError?: (error: BinderError) => void;
   /** Heading text; pass null to render no heading. */
   heading?: string | null;
+  /** Show the project title field (default true). Hide it where the title is edited elsewhere. */
+  showTitle?: boolean;
   className?: string;
 }
 
@@ -95,6 +97,7 @@ export function ProjectSettingsForm(props: ProjectSettingsFormProps) {
     citationStyles = DEFAULT_CITATION_STYLES,
     onError,
     heading = 'Project',
+    showTitle = true,
     className,
   } = props;
   const baseId = useId();
@@ -201,58 +204,60 @@ export function ProjectSettingsForm(props: ProjectSettingsFormProps) {
       <p className="lh-settings-intro">
         The editor reads this context to calibrate its feedback. None of it enters your manuscript.
       </p>
-      {FIELDS.map(({ field, label, hint, multiline = false, maxLength }) => {
-        const id = `${baseId}-${field}`;
-        const hintId = `${id}-hint`;
-        const errorId = `${id}-error`;
-        const error = errors[field];
-        const describedBy = cx(hint && hintId, error && errorId) || undefined;
-        const common = {
-          id,
-          className: 'lh-settings-input',
-          value: valueOf(field),
-          maxLength,
-          'aria-describedby': describedBy,
-          'aria-invalid': error ? true : undefined,
-          onFocus: () => setFocused(field),
-          onBlur: () => {
-            setFocused(null);
-            commit(field);
-          },
-          onKeyDown: onKeyDown(field, multiline),
-        };
-        return (
-          <div key={field} className={cx('lh-settings-field', error && 'is-invalid')}>
-            <label htmlFor={id} className="lh-settings-label">
-              {label}
-            </label>
-            {multiline ? (
-              <textarea
-                {...common}
-                rows={field === 'styleNotes' ? 6 : 4}
-                onChange={(e) => setDrafts((d) => ({ ...d, [field]: e.target.value }))}
-              />
-            ) : (
-              <input
-                {...common}
-                type="text"
-                inputMode={field === 'dailyWordGoal' ? 'numeric' : undefined}
-                onChange={(e) => setDrafts((d) => ({ ...d, [field]: e.target.value }))}
-              />
-            )}
-            {hint && (
-              <p id={hintId} className="lh-settings-hint">
-                {hint}
-              </p>
-            )}
-            {error && (
-              <p id={errorId} className="lh-settings-error" role="alert">
-                {error}
-              </p>
-            )}
-          </div>
-        );
-      })}
+      {FIELDS.filter((f) => showTitle || f.field !== 'title').map(
+        ({ field, label, hint, multiline = false, maxLength }) => {
+          const id = `${baseId}-${field}`;
+          const hintId = `${id}-hint`;
+          const errorId = `${id}-error`;
+          const error = errors[field];
+          const describedBy = cx(hint && hintId, error && errorId) || undefined;
+          const common = {
+            id,
+            className: 'lh-settings-input',
+            value: valueOf(field),
+            maxLength,
+            'aria-describedby': describedBy,
+            'aria-invalid': error ? true : undefined,
+            onFocus: () => setFocused(field),
+            onBlur: () => {
+              setFocused(null);
+              commit(field);
+            },
+            onKeyDown: onKeyDown(field, multiline),
+          };
+          return (
+            <div key={field} className={cx('lh-settings-field', error && 'is-invalid')}>
+              <label htmlFor={id} className="lh-settings-label">
+                {label}
+              </label>
+              {multiline ? (
+                <textarea
+                  {...common}
+                  rows={field === 'styleNotes' ? 6 : 4}
+                  onChange={(e) => setDrafts((d) => ({ ...d, [field]: e.target.value }))}
+                />
+              ) : (
+                <input
+                  {...common}
+                  type="text"
+                  inputMode={field === 'dailyWordGoal' ? 'numeric' : undefined}
+                  onChange={(e) => setDrafts((d) => ({ ...d, [field]: e.target.value }))}
+                />
+              )}
+              {hint && (
+                <p id={hintId} className="lh-settings-hint">
+                  {hint}
+                </p>
+              )}
+              {error && (
+                <p id={errorId} className="lh-settings-error" role="alert">
+                  {error}
+                </p>
+              )}
+            </div>
+          );
+        },
+      )}
       <div className="lh-settings-field">
         <label htmlFor={styleId} className="lh-settings-label">
           Citation style

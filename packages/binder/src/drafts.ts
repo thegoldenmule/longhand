@@ -111,6 +111,15 @@ export function normalizeTitle(title: string): string {
   return title.trim();
 }
 
+/** The name of a project or document nobody has named yet. Names need not be unique. */
+export const UNTITLED = 'Untitled';
+
+/** Trims, turns newlines into spaces. Empty becomes {@link UNTITLED}. */
+export function titleOrUntitled(raw: string): string {
+  const title = raw.replace(/\r\n?|\n/g, ' ').trim();
+  return title === '' ? UNTITLED : title;
+}
+
 function checkTitle(title: string): BinderError | null {
   if (title.length === 0) return { code: 'invalid-title', message: 'A title cannot be empty.' };
   if (title.length > TEXT_LIMITS.titleMaxChars) {

@@ -10,13 +10,14 @@ afterEach(cleanup);
 
 const base: ProjectSettings = { title: 'My Novel', ...DEFAULT_PROJECT_SETTINGS };
 
-function setup(initial: ProjectSettings = base) {
+function setup(initial: ProjectSettings = base, showTitle?: boolean) {
   const spy = vi.fn<(d: BinderDraft) => void>();
   function Harness() {
     const [settings, setSettings] = useState(initial);
     return (
       <ProjectSettingsForm
         settings={settings}
+        {...(showTitle === undefined ? {} : { showTitle })}
         onDraft={(d) => {
           spy(d);
           if (d.type === 'ProjectSettingsChanged')
@@ -119,6 +120,18 @@ describe('ProjectSettingsForm', () => {
     expect(spy).toHaveBeenLastCalledWith({
       type: 'ProjectSettingsChanged',
       payload: { patch: { citationStyle: 'modern-language-association' } },
+    });
+  });
+
+  it('leaves the title out with showTitle false', async () => {
+    const { spy, user } = setup(base, false);
+    expect(screen.queryByLabelText('Project title')).toBeNull();
+    expect(screen.queryByDisplayValue('My Novel')).toBeNull();
+    await user.type(screen.getByLabelText('Genre'), 'essay');
+    await user.tab();
+    expect(spy).toHaveBeenLastCalledWith({
+      type: 'ProjectSettingsChanged',
+      payload: { patch: { genre: 'essay' } },
     });
   });
 });

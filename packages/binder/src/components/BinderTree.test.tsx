@@ -304,6 +304,56 @@ describe('BinderTree keyboard', () => {
   });
 });
 
+describe('BinderTree hide', () => {
+  const sole = () =>
+    makeModel({ manuscript: [{ id: 'd', title: 'Essay' }], notes: [{ id: 'n', title: 'Ideas' }] });
+  const hidden = { kind: 'document' as const, id: 'd' };
+
+  it('leaves hidden rows out, with no empty message', () => {
+    setup(sole(), { hide: [hidden], selected: hidden });
+    const manuscript = screen.getByRole('tree', { name: 'Manuscript' });
+    expect(within(manuscript).queryAllByRole('treeitem')).toHaveLength(0);
+    expect(screen.queryByText('No documents yet.')).toBeNull();
+    expect(screen.queryByText('Essay')).toBeNull();
+    expect(item('Ideas')).toBeTruthy();
+  });
+
+  it('never archives a hidden node', async () => {
+    const { user, spy } = setup(sole(), { hide: [hidden], selected: hidden });
+    const area = screen.getByRole('region', { name: 'Manuscript' });
+    const archive = within(area).getByRole('button', { name: 'Archive (nothing selected)' });
+    expect((archive as HTMLButtonElement).disabled).toBe(true);
+    await user.click(archive);
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('places a new document after the hidden selection and opens it for naming', async () => {
+    const { user, spy } = setup(sole(), { hide: [hidden], selected: hidden });
+    const area = screen.getByRole('region', { name: 'Manuscript' });
+    await user.click(within(area).getByRole('button', { name: 'New document' }));
+    expect(spy).toHaveBeenLastCalledWith({
+      type: 'DocumentCreated',
+      payload: {
+        documentId: 'new1',
+        kind: 'manuscript',
+        title: 'Untitled',
+        parentId: null,
+        index: 1,
+      },
+    });
+    const input = screen.getByRole('textbox', { name: 'Rename ‘Untitled’' });
+    expect(document.activeElement).toBe(input);
+    await user.keyboard('Second{Enter}');
+    expect(item('Second')).toBeTruthy();
+    expect(screen.queryByRole('treeitem', { name: 'Essay' })).toBeNull();
+  });
+
+  it('shows the empty message when the area really is empty', () => {
+    setup(makeModel({ notes: [{ id: 'n', title: 'Ideas' }] }), { hide: [hidden] });
+    expect(screen.getByText('No documents yet.')).toBeTruthy();
+  });
+});
+
 describe('BinderTree pointer drag and drop', () => {
   const dataTransfer = () => ({
     setData: vi.fn(),

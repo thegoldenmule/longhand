@@ -164,7 +164,7 @@ export function descendants(model: Pick<BinderModel, 'folders'>, folderId: strin
 
 /** Children of a parent that are not archived, in order. */
 export function visibleChildren(
-  model: BinderModel,
+  model: Pick<BinderModel, 'binder' | 'folders' | 'documents'>,
   area: BinderArea,
   parentId: string | null,
 ): BinderRef[] {
@@ -172,6 +172,19 @@ export function visibleChildren(
     const node = getNode(model, r);
     return node !== undefined && !node.archived;
   });
+}
+
+/**
+ * The id of the manuscript's only document, if the manuscript is exactly one
+ * document: one live node at the root of the Manuscript area, and it is a document.
+ * Notes don't count, archived nodes don't count, and a live folder means null.
+ */
+export function soleManuscriptDocument(
+  model: Pick<BinderModel, 'binder' | 'folders' | 'documents'>,
+): string | null {
+  const kids = visibleChildren(model, 'manuscript', null);
+  const only = kids.length === 1 ? kids[0] : undefined;
+  return only?.kind === 'document' ? only.id : null;
 }
 
 /** Title of a node ('' if missing). */

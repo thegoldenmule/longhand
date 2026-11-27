@@ -6,6 +6,7 @@
  * - `model`     — `BinderModel` (a slice of `ProjectState`) and read-only queries
  * - `drafts`    — draft builders: binder action → `BinderDraft` (`{type, payload}`) or a refusal
  * - `reducer`   — the optimistic reducer that applies drafts the way the ledger fold does
+ * - `titleLink` — one document, one name: rename the project and its sole document together
  * - `wordCount` — per-document and per-folder word counts
  * - components  — `<BinderTree>`, `<Corkboard>`, `<ProjectSettingsForm>`; styles in
  *                 `@longhand/binder/styles.css`
@@ -13,5 +14,6 @@
 export * from './model';
 export * from './drafts';
 export * from './reducer';
+export * from './titleLink';
 export * from './wordCount';
 export * from './components';

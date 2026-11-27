@@ -8,6 +8,7 @@ import {
   isEffectivelyArchived,
   locate,
   placementForDrop,
+  soleManuscriptDocument,
   stepPlacement,
   type MoveStep,
 } from './model';
@@ -187,5 +188,49 @@ describe('word counts', () => {
       payload: { documentId: 's2', archived: true },
     });
     expect(archived.ok && nodeWordCount(archived.model, F('part1'))).toBe(4);
+  });
+});
+
+describe('soleManuscriptDocument', () => {
+  it('is the only document at the manuscript root', () => {
+    expect(soleManuscriptDocument(makeModel({ manuscript: [{ id: 'd' }] }))).toBe('d');
+  });
+
+  it('ignores notes', () => {
+    const m = makeModel({
+      manuscript: [{ id: 'd' }],
+      notes: [{ id: 'n' }, { id: 'f', children: [{ id: 'n2' }] }],
+    });
+    expect(soleManuscriptDocument(m)).toBe('d');
+  });
+
+  it('is null for a document inside a folder', () => {
+    expect(
+      soleManuscriptDocument(makeModel({ manuscript: [{ id: 'f', children: [{ id: 'd' }] }] })),
+    ).toBeNull();
+  });
+
+  it('is null for two documents', () => {
+    expect(
+      soleManuscriptDocument(makeModel({ manuscript: [{ id: 'a' }, { id: 'b' }] })),
+    ).toBeNull();
+  });
+
+  it('ignores archived documents and folders', () => {
+    expect(
+      soleManuscriptDocument(makeModel({ manuscript: [{ id: 'a' }, { id: 'b', archived: true }] })),
+    ).toBe('a');
+    expect(
+      soleManuscriptDocument(
+        makeModel({
+          manuscript: [{ id: 'f', archived: true, children: [{ id: 'x' }] }, { id: 'a' }],
+        }),
+      ),
+    ).toBe('a');
+  });
+
+  it('is null with no manuscript document', () => {
+    expect(soleManuscriptDocument(makeModel({ notes: [{ id: 'n' }] }))).toBeNull();
+    expect(soleManuscriptDocument(novel())).toBeNull();
   });
 });
