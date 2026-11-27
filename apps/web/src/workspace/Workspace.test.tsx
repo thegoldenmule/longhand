@@ -79,8 +79,11 @@ afterEach(() => {
 
 async function open(builder: LedgerBuilder) {
   h.builder = builder;
+  document.title = '';
   render(<Workspace projectId={builder.projectId} />);
   await screen.findByTestId('editor-stub');
+  // Let the workspace's effects settle (the tab title, the toast, the URL).
+  await waitFor(() => expect(document.title).not.toBe(''));
 }
 
 /** Every visible place a title can show: text nodes and input values. */
@@ -138,7 +141,7 @@ describe('Workspace titles', () => {
     ]);
     expect(title.value).toBe('The Storm');
     expect(occurrences('The Storm')).toBe(1);
-    expect(document.title).toBe('The Storm · Longhand');
+    await waitFor(() => expect(document.title).toBe('The Storm · Longhand'));
   });
 
   it('single to multi: the sole document takes the project name first', async () => {
