@@ -38,6 +38,7 @@ export function TitleField(props: {
   return (
     <input
       type="text"
+      data-own-escape
       className={`ws-title-field${shown === UNTITLED ? ' is-untitled' : ''}${className ? ` ${className}` : ''}`}
       aria-label={label}
       data-testid={testId}

@@ -1,5 +1,7 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { useMemo } from 'react';
+import { useShortcuts } from './shortcuts';
 import { TitleField } from './TitleField';
 
 afterEach(cleanup);
@@ -91,5 +93,23 @@ describe('TitleField', () => {
     rerender(<TitleField value="Typing" label="Title" onCommit={onCommit} />);
     expect(input.value).toBe('Typing');
     expect(onCommit).toHaveBeenCalledExactlyOnceWith('Typing');
+  });
+});
+
+describe('Escape in the title field', () => {
+  it('cancels the rename without triggering the workspace Escape shortcut', () => {
+    const back = vi.fn<() => void>();
+    function Host() {
+      useShortcuts(useMemo(() => [{ keys: 'Escape', label: 'Back to writing', run: back }], []));
+      return <TitleField value="Essay" label="Title" onCommit={() => {}} />;
+    }
+    render(<Host />);
+    const input = screen.getByRole('textbox', { name: 'Title' });
+    fireEvent.focus(input);
+    fireEvent.keyDown(input, { key: 'Escape' });
+    expect(back).not.toHaveBeenCalled();
+    // Elsewhere, Escape still runs the shortcut.
+    fireEvent.keyDown(document.body, { key: 'Escape' });
+    expect(back).toHaveBeenCalledOnce();
   });
 });

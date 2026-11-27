@@ -49,8 +49,12 @@ export function keyLabel(keys: string): string {
 export function useShortcuts(shortcuts: readonly Shortcut[]): void {
   useEffect(() => {
     const on = (e: KeyboardEvent) => {
-      // Escape belongs to whatever dialog or popover is open.
-      if (e.key === 'Escape' && document.querySelector('dialog[open], [role="dialog"]')) return;
+      // Escape belongs to whatever dialog or popover is open, or to a field that
+      // handles it itself (e.g. the title field, where it cancels the rename).
+      if (e.key === 'Escape') {
+        if (document.querySelector('dialog[open], [role="dialog"]')) return;
+        if (e.target instanceof Element && e.target.closest('[data-own-escape]')) return;
+      }
       for (const s of shortcuts) {
         if (matches(e, s.keys)) {
           e.preventDefault();
