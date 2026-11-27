@@ -135,6 +135,23 @@ The owner asked for "the basics that Medium allows": bold, italics, links and so
 - **Not run.** `packages/editor/e2e/formatting.spec.ts` (toolbar placement and buttons, keyboard, links, URL paste, the input rules, light and dark screenshots) is written but has not run: this session ran no browser at all. Bubble placement is therefore untested.
 - **For the owner to decide.** Heading and Subheading map to h1 and h2 (h2 and h3 is the other reading). Code excludes bold and italic but not links. The link popover shows for a caret in a link, not on hover. A pasted URL links a selection only when it plainly is one (`http(s)://`, `mailto:`, `www.`). Mod-B and Mod-I keep ProseMirror's toggle (remove when any of the selection has the mark) while the toolbar buttons add unless the whole selection has it. DOCX links use Word's blue Hyperlink style.
 
+## One document, one name
+
+The owner: "Most of my work will be single document." A new project should start before it has a name, as Untitled (names need not be unique), and in a single-document project the document's name is the project's, always, edited at the top of the page. Before this the title showed three times (binder head, header crumb, document title).
+
+- **Contract: none.** No new event, no payload change, no fold change, `SCHEMA_VERSION` stays 1, no golden fixture changed. The project title stays stored, not derived: the report embeds `settings.title` and the verifier recomputes it, so deriving it in the fold would break bundles already shared. The link is a UI rule kept with ordinary events.
+- **The rule.** Single mode is when the Manuscript root holds exactly one live node and it is a document (notes and archived nodes don't count, a folder means multi). Its title as shown is always `settings.title`. Renaming it at the top writes `ProjectSettingsChanged {title}` then `DocumentRenamed`, each only if it changes something. A blank title is Untitled. Leaving single mode (a second document, a folder, a restore) first renames the sole document to the project's name if its stored title differs. Archiving down to one writes nothing and says "One document left. It goes by the project’s name now." when the names differ. Old projects whose titles differ show the project's name and are fixed lazily.
+- **Binder** (`packages/binder`): `soleManuscriptDocument`, `UNTITLED`, `titleOrUntitled`, `renameProjectAndDocument` and `withTitleLink` (in `titleLink.ts`, apart from `drafts.ts` because they use the reducer), `<BinderTree hide>`, `<ProjectSettingsForm showTitle>`.
+- **Provenance-ui**: the replay's Document chooser shows only with more than one document.
+- **Web.**
+  - Single mode: the header is `[binder toggle] [‹ All projects] [Title]`, the title a `TitleField` (an input that looks like text: Enter or blur commits, Esc reverts, Enter and Esc return the caret to the page). A note open shows `[Essay ›] [Characters]`. The binder opens closed; opened, its head says only "All projects", the document has no row and there is no corkboard switch. Provenance, the report and export show no scope choice.
+  - Multi mode: the binder head edits the project title, the header edits the open document's, and with the binder closed the project is a muted crumb. Scope buttons say "This document" rather than the title.
+  - Everywhere: the status line never shows a title, Settings has no title field, the tab reads "<project> · Longhand". `longhand:layout` remembers the binder only for multi-document projects. Two UI strings lost their semicolons.
+  - Home: New project is one click (Untitled project, Untitled document, caret in the body). The import form drops genre and audience; its Title is optional, and the name is the Title field, else the leading `# Heading` (which then leaves the body), else the file name, else Untitled.
+- **Server**: the default project title is Untitled.
+- **Tests** (jsdom or Node): binder 119 (24 new), provenance-ui 149 (1), web 47 (32, including a workspace render that counts every visible title in each mode), server 122 (1, with Postgres). Repo: 1558 passed, 4 skipped.
+- **Not run.** The Playwright changes are written but have not run: this session ran no browser. `apps/web/e2e`: `helpers.ts` (`newProject` names the project at the top, sets genre and audience in Settings), `binder.spec.ts` (9), `writing.spec.ts` (16), `screens.spec.ts`, and the new `single-document.spec.ts` (19 to 22).
+
 ## Notes
 
 - Commits go straight to `main` and are pushed after each phase.

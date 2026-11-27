@@ -46,7 +46,7 @@ The MVP is a single-user web app with every feature below, F1–F9, in full. Onl
   - About 50vh of padding at the end so the last line can still reach the center.
   - Clicking or scrolling elsewhere never jumps the view. The next keystroke re-centers over about 120 ms, and the jump is instant under `prefers-reduced-motion`.
 - **Focus mode** dims everything except the current sentence or paragraph.
-- Minimal chrome: a ~66ch writing column, with the sidebar and margin hideable.
+- Minimal chrome: a ~66ch writing column, with the sidebar and margin hideable. A one-document project opens with just the page and its title.
 - Light formatting, the basics Medium allows: bold, italic, links, inline code, headings, block quotes, lists, scene breaks and footnotes, all with Markdown-style input shortcuts.
   - A quiet bubble toolbar above a text selection: Bold, Italic, Link, Heading, Subheading, Quote and Code. It never takes focus while you type. Alt+F10 (or Tab) moves into it and Esc returns. In a footnote it offers only the marks.
   - Links: ⌘K or the toolbar's inline URL field, `[text](url)`, or paste a URL over a selection. Only http, https and mailto links, and a bare `example.com` becomes `https://`. A click never navigates, and ⌘-click opens a new tab. With the caret in a link, a small popover shows the URL with Edit and Remove.
@@ -58,6 +58,7 @@ The MVP is a single-user web app with every feature below, F1–F9, in full. Onl
 
 - A project holds documents (chapters, scenes, essays), a **Notes** area (characters, outline, style guide, thesis) and a **Sources** library (F8).
 - Nested folders (Part › Chapter › Scene), drag to reorder, and a corkboard view with synopses.
+- **One document, one name.** A project whose manuscript is a single document goes by one name, shown once at the top of the page and edited there. Renaming it renames the project. A new project starts as Untitled, and names needn't be unique. Add a second document and each keeps its own name.
 
 ### F3 — Ask for feedback
 
