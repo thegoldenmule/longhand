@@ -127,7 +127,7 @@
   display: none;
 }
 .lh-editor .lh-manuscript p + p {
-  text-indent: 1.5em;
+  margin-top: 1em;
 }
 .lh-editor .lh-manuscript h1,
 .lh-editor .lh-manuscript h2,
@@ -155,7 +155,6 @@
   color: var(--lh-ink-soft);
 }
 .lh-editor .lh-manuscript blockquote p + p {
-  text-indent: 0;
   margin-top: 0.5em;
 }
 .lh-editor .lh-manuscript blockquote[data-quote-block] {
@@ -168,7 +167,7 @@
   padding-left: 1.5em;
 }
 .lh-editor .lh-manuscript li p + p {
-  text-indent: 0;
+  margin-top: 0.5em;
 }
 .lh-editor .lh-manuscript hr[data-scene-break] {
   border: none;
